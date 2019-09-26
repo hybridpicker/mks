@@ -1,0 +1,30 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+<title>Honorarnoten Generator</title>
+{% endblock %}
+
+
+{% block navbar %}
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+  <h1>Honorarnoten Generator</h1>
+  <br>
+  <form action="newbill" method="get">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

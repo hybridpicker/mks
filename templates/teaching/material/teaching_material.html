@@ -1,0 +1,97 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+
+<meta name="title" content="Unser Lernmaterial für alle zum kostenlosen Download">
+<meta name="description" content="Kostenlose Fingersätze Lern und Unterrichtsmaterialien für den Gitarrenunterricht. Für alle Gitarrenschülerinnen und schüler sowie deren Lehrkräfte.">
+
+<!-- Social Media Meta --->
+<meta property="og:title" content="Unser Lernmaterial für alle zum kostenlosen Download">
+<meta property="og:description" content="Kostenlose Fingersätze Lern und Unterrichtsmaterialien für den Gitarrenunterricht. Für alle Gitarrenschülerinnen und schüler sowie deren Lehrkräfte.">
+<meta property="og:image" content="static/media/thumbnail/facebook/teachingmaterial.jpg">
+<meta property="og:url" content="https://blessond.com/lernmaterial">
+
+<meta name="twitter:title" content="Unser Lernmaterial für alle zum kostenlosen Download">
+<meta name="twitter:description" content="Kostenlose Fingersätze Lern und Unterrichtsmaterialien für den Gitarrenunterricht. Für alle Gitarrenschülerinnen und schüler sowie deren Lehrkräfte.">
+<meta name="twitter:image" content="static/media/thumbnail/twitter/teachingmaterial.jpg">
+<meta name="twitter:card" content="summary_large_image">
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+<img src="/static/media/banner/teachingmaterial_banner.jpg" alt="">
+<img id="mbimg" src="/static/media/banner/mobile/teachingmaterial_banner.jpg" alt="">
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h1>Lernmaterialien</h1>
+    <p>Hier findest du unser Lernmaterial: Übungen, Fingersätze, Vorlagen als PDF-Dateien.</p>
+    <p>Alles steht dir kostenlos zur Verfügung. Für ganz persönliche Tipps, welche Materialien sich für dein selbstständiges Üben zuhause am besten eignen, frag deine Lehrerin/deinen Lehrer. Solltest du noch nicht bei uns Unterricht nehmen und Fragen zum Material haben, zögere nicht uns zu schreiben!</p>
+    <p>Don’t practice until you get it right. Practice until you can’t get it wrong.</p>
+    </div>
+  <div class="tmcon">
+    <div class="tmcb">
+      {% for material in material_data %}
+      {% if forloop.counter <= 3 %}
+      <div class="tmcbg">
+        <div class="mti">
+          <h2>{{ material.name }}</h2>
+          <a href="{{ material.file.url }}" download>
+            <img src="{{ material.thumbnail.url }}" alt="">
+          </a>
+          <div class="tctm">
+            <p>{{ material.description|linebreaks  }}</p>
+          </div>
+        </div>
+      </div>
+      {% elif forloop.counter <= 6 %}
+      <div class="tmcby">
+        <div class="mti">
+          <h2>{{ material.name }}</h2>
+          <a href="{{ material.file.url }}" download>
+            <img src="{{ material.thumbnail.url }}" alt="">
+          </a>
+          <div class="tctm">
+            <p>{{ material.description|linebreaks  }}</p>
+          </div>
+        </div>
+      </div>
+      {% elif forloop.counter <= 12 %}
+      <div class="tmcbg">
+        <div class="mti">
+          <h2>{{ material.name }}</h2>
+          <a href="{{ material.file.url }}" download>
+            <img src="{{ material.thumbnail.url }}" alt="">
+          </a>
+          <div class="tctm">
+            <p>{{ material.description|linebreaks  }}</p>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="tmcby">
+        <div class="mti">
+          <h2>{{ material.name }}</h2>
+          <a href="{{ material.file.url }}" download>
+            <img src="{{ material.thumbnail.url }}" alt="">
+          </a>
+          <div class="tctm">
+            <p>{{ material.description|linebreaks  }}</p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

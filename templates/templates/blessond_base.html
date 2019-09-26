@@ -1,0 +1,85 @@
+{% load i18n static %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>{% if site_name %}{{ site_name }} : {% endif %}{% block head_title %}{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static "bootstrap/dist/css/bootstrap.css" %}" type="text/css" media="screen">
+  <link rel="stylesheet" href="{% static "css/base.css" %}" type="text/css" media="screen">
+  <!-- Device Fix -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+  <script type="text/javascript" src="{% static "jquery/dist/jquery.js" %}"></script>
+  <script type="text/javascript" src="{% static "bootstrap/dist/js/bootstrap.js" %}"></script>
+  <script type="text/javascript" src="static/js/blessond.js"></script>
+  <script>
+  function openNav() {
+    document.getElementById("blessondNav").style.width = "100%";
+  }
+
+  function closeNav() {
+    document.getElementById("blessondNav").style.width = "0%";
+  }
+  </script>
+
+</head>
+
+{% block extra_head %}
+{% endblock %}
+
+<header>
+  <!-- NAV -->
+  <div id="blessondNav" class="overlay">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="overlay-content">
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <span id="menuIcon" style="font-size:2.5rem;cursor:pointer" onclick="openNav()">&#9776;</span>
+
+</header>
+
+{% block navbar %}
+{% endblock %}
+
+
+
+<body>
+
+{% block body %}
+{% endblock %}
+
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 footerLinks" align="left">
+        <span class="text-muted">
+          Blessond © 2019 | <a href="#">Impressum</a> | <a href="#" target="_blank">Social Media</a>
+        </span>
+      </div>
+      <div class="col md-2">
+      </div>
+      <div class="col-md-2" align="center">
+        <a href="#" target="_blank"><img src="{% static "media/facebook.png" %}" alt="" width="27" height="27" hspace="5">
+          <a href="#" target="_blank"><img src="{% static "media/instagram.png" %}" alt="" width="27" height="27" hspace="5">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% block footer %}
+{% endblock %}
+
+</body>
+</html>

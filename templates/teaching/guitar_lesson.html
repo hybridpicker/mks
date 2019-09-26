@@ -1,0 +1,112 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% load i18n static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+<meta name="title" content="Gitarrenunterricht in St. Pölten | Gitarrenlehrer in der Landeshauptstadt">
+<meta name="description" content="Unser Gitarrenunterricht in St. Pölten wird von unserem Gitarrenlehrer Simon Cremer direkt in der Innenstadt von St. Pölten angeboten.">
+
+<!-- Social Media Meta --->
+<meta property="og:title" content="Gitarrenunterricht in St. Pölten | Gitarrenlehrer in der Landeshauptstadt">
+<meta property="og:description" content="Unser Gitarrenunterricht in St. Pölten wird von unserem Gitarrenlehrer Simon Cremer direkt in der Innenstadt von St. Pölten angeboten.">
+<meta property="og:image" content="static/media/thumbnail/facebook/teaching_guitar.jpg">
+<meta property="og:url" content="https://blessond.com/gitarrenunterricht">
+
+<meta name="twitter:title" content="Gitarrenunterricht in St. Pölten | Gitarrenlehrer in der Landeshauptstadt">
+<meta name="twitter:description" content="Unser Gitarrenunterricht in St. Pölten wird von unserem Gitarrenlehrer Simon Cremer direkt in der Innenstadt von St. Pölten angeboten.">
+<meta name="twitter:image" content="static/media/thumbnail/twitter/teaching_guitar.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+.bfsc {
+  background: url(/static/media/lenny/lenny_footer.jpg);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.bcls {
+  visibility: hidden;
+}
+.bcrs {
+  visibility: hidden;
+}
+.fbls {
+  background: none;
+}
+@media only screen and (max-width: 1000px) {
+  .bfsc {
+    background: none;
+  }
+}
+
+@media only screen and (max-width: 772px){
+  .bcls {
+    display:none;
+  }
+  .bcrs {
+  display: none;
+  }
+}
+</style>
+
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+<img src="/static/media/banner/gitarrenunterricht_banner.jpg" alt="">
+<img id="mbimg" src="/static/media/banner/mobile/gitarrenunterricht_banner.jpg" alt="">
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h1>Gitarrenunterricht</h1>
+    <p>Hier findest du eine kurze biografische Vorstellung samt Fotos unserer Gitarrenlehrer, sowie jeweils 2 Youtube Links, damit du dir auch auditiv einen Eindruck von ihrem musikalischen Können machen kannst.</p>
+  </div>
+    {% for teacher in teacher_data %}
+    <div class="tnmc">
+      <div class="tnmhl">  <h2>{{ teacher.first_name }} {{teacher.last_name}}</h2></div>
+      {% if teacher.image.height <= teacher.image.width %}
+      <div class="tpcf">
+      <div class="tpcflsc">  <img class="teacher_img" src="{{ teacher.image.url }}" alt=""></div>
+      </div>
+      {% else %}
+      <div class="tpfcf">
+      <div class="tpcfptr">  <img class="teacher_img" src="{{ teacher.image.url }}" alt=""></div>
+      </div>
+      {% endif %}
+      <div class="tbt">
+        <div class="info_text">
+            <p>{{ teacher.bio|linebreaks  }}</p>
+        </div>
+      </div>
+      <div class="htyt"><h2>Musikalische Referenzen</h2></div>
+      <div class="yt_id_1">
+        <iframe src="https://www.youtube.com/embed/{{ teacher.youtube_id_one }}"
+        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+      </iframe>
+    </div>
+    <div class="yt_id_2"><iframe src="https://www.youtube.com/embed/{{ teacher.youtube_id_two }}"
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+{% endfor %}
+
+</div>
+</div>
+<div class="mbs">
+
+    <h3>Wir freuen uns auf deine Nachricht:</h3>
+    <a href="{% url 'contact_email' %}"><button>Anfrage stellen</button></a>
+
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

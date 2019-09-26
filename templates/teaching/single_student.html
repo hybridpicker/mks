@@ -1,0 +1,46 @@
+{% extends "templates/teaching_base.html" %}
+
+{% load static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+<style media="screen">
+.studentProfileImg {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+  display: block;
+}
+</style>
+{% endblock %}
+
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+<img src="/static/media/images/banner/home-slide01.jpg" alt="">
+<img id="mbimg" src="/static/media/banner/mobile/home_banner.jpg" alt="">
+
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container">
+  <img class="studentProfileImg" src="{{ image }}" width=150>
+  <h1>{{ first_name }} {{ last_name }}</h1>
+  <hr class="my-4">
+  <br>
+  <p> Unterrichtsform: {{ lesson_form }}</p>
+  <p>Eintritt: {{ start_date }}</p>
+  <p>Straße: {{ adressline }} {{ house_number }}</p>
+  <p>Ort: {{ postal_code }} {{ city }}</p>
+  <p>Unterrichtsort: {{ location }}</p>
+  <p>Email: {{ email }}</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

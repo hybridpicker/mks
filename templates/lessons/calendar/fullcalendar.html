@@ -1,0 +1,79 @@
+{% extends "templates/teaching_base_calendar.html" %}
+
+{% load static %}
+{% load i18n static %}
+
+{% block head_title %}
+{% if user.is_authenticated %}
+ Calendar - {{ request.user }}
+{% else %}
+{% trans "Stundenübersicht USER" %}
+{% endif %}
+{% endblock %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+<link rel='stylesheet' type='text/css' href="{% static 'fullcalendar/dist/fullcalendar.css' %}" />
+<script type='text/javascript' src="{% static 'moment/moment.js' %}"></script>
+<script type='text/javascript' src="{% static 'js/blessond.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/teaching_blessond.js' %}"></script>
+<script type='text/javascript' src="{% static 'fullcalendar/dist/fullcalendar.js' %}"></script>
+<script type='text/javascript' src="{% static 'fullcalendar/dist/locale-all.js' %}"></script>
+<style>
+.fc-view, .fc-view > table {
+    position: relative;
+    z-index: 0;
+}
+</style>
+{% endblock %}
+
+
+{% block navbar %}
+{% endblock %}
+
+{% block eventmaker %}
+{% endblock %}
+
+{% block calendar %}
+
+<div id="calendar"></div>
+
+<script type='text/javascript'>
+
+$(document).ready(function() {
+  $('#calendar').fullCalendar({
+    locale: 'de',
+    defaultDate: Date.now(),
+    defaultView: 'basicWeek',
+    nowIndicator: true,
+    header: {
+      left: 'prev,next today',
+      center: 'addEventButton',
+      right: 'basicWeek,listWeek'
+    },
+
+    navLinks: true, // can click day/week names to navigate views
+    editable: true,
+    eventLimit: true, // allow "more" link when too many events
+    events: '/schedule/api/occurrences?calendar_slug={{ slug }}',
+    eventClick: function(calEvent, jsEvent, view) {
+      alert('Event: ' + calEvent.title);
+    },
+
+    //      customButtons: {
+    //        custom1: {
+    //          text: 'newEvent',
+    //          click: function() {
+    //            openWin();
+    //          }
+    //        }
+    //      }
+  });
+});
+</script>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

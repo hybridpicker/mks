@@ -1,0 +1,78 @@
+{% extends "templates/base.html" %}
+{% load i18n static %}
+
+{% load static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+<meta name="description" content="Unser Klavieruntericht in St. Pölten wird vdirekt in der Innenstadt von St. Pölten angeboten.">
+<meta name="title" content="Klavierunterricht in St. Pölten | Klavierlehrer in der Landeshauptstadt">
+
+<!-- Social Media Meta --->
+<meta property="og:title" content="Klavierunterricht in St. Pölten | Klavierlehrer in der Landeshauptstadt">
+<meta property="og:description" content="Unser Klavieruntericht in St. Pölten wird vdirekt in der Innenstadt von St. Pölten angeboten.">
+<meta property="og:image" content="static/media/thumbnail/facebook/teaching_piano.jpg">
+<meta property="og:url" content="https://blessond.com/klavierunterricht">
+
+<meta name="twitter:title" content="Klavierunterricht in St. Pölten | Klavierlehrer in der Landeshauptstadt">
+<meta name="twitter:description" content="Unser Klavieruntericht in St. Pölten wird vdirekt in der Innenstadt von St. Pölten angeboten.">
+<meta name="twitter:image" content="static/media/thumbnail/twitter/teaching_piano.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+<img src="/static/media/banner/klavierunterricht_banner.jpg" alt="">
+<img id="mbimg" src="/static/media/banner/mobile/klavierunterricht_banner.jpg" alt="">
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h1>Klavierunterricht</h1>
+    <p>Hier findest du eine kurze biografische Vorstellung samt Fotos unserer Klavierlehrerin, sowie jeweils 2 Youtube Links, damit du dir auch auditiv einen Eindruck von ihrem musikalischen Können machen kannst.</p>
+    </div>
+    {% for teacher in teacher_data %}
+    <div class="tnmc">
+      <div class="tnmhl">  <h2>{{ teacher.first_name }} {{teacher.last_name}}</h2></div>
+      {% if teacher.image.height <= teacher.image.width %}
+      <div class="tpcf">
+      <div class="tpcflsc">  <img class="teacher_img" src="{{ teacher.image.url }}" alt=""></div>
+      </div>
+      {% else %}
+      <div class="tpfcf">
+      <div class="tpcfptr">  <img class="teacher_img" src="{{ teacher.image.url }}" alt=""></div>
+      </div>
+      {% endif %}
+      <div class="tbt">
+        <div class="info_text">
+            <p>{{ teacher.bio|linebreaks  }}</p>
+        </div>
+      </div>
+      <div class="htyt"><h2>Musikalische Referenzen</h2></div>
+      <div class="yt_id_1">
+        <iframe src="https://www.youtube.com/embed/{{ teacher.youtube_id_one }}"
+        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+      </iframe>
+    </div>
+    <div class="yt_id_2"><iframe src="https://www.youtube.com/embed/{{ teacher.youtube_id_two }}"
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+{% endfor %}
+<div class="mbs">
+
+    <h3>Wir freuen uns auf deine Nachricht:</h3>
+    <a href="{% url 'contact_email' %}"><button>Anfrage stellen</button></a>
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "templates/teaching_base.html" %}
+
+{% load static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+<img src="/static/media/images/banner/home-slide01.jpg" alt="">
+{% endblock %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h2>Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block footer %}
+{% endblock %}

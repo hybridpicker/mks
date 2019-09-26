@@ -1,0 +1,1 @@
+[{"model": "schedule.calendar", "pk": 1, "fields": {"name": "Simon Cremer", "slug": "simon-cremer"}}, {"model": "schedule.calendar", "pk": 2, "fields": {"name": "Julian Polak", "slug": "julian-polak"}}, {"model": "schedule.calendar", "pk": 3, "fields": {"name": "Max Neumann", "slug": "max-neumann"}}]
