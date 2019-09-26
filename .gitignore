@@ -1,7 +1,3 @@
-
-# Created by https://www.gitignore.io/api/macos,django
-# Edit at https://www.gitignore.io/?templates=macos,django
-
 ### Django ###
 *.log
 *.pot
@@ -147,5 +143,3 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
-# End of https://www.gitignore.io/api/macos,django
