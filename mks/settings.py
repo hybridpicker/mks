@@ -39,16 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     # extra_apps
-    #'users.apps.UsersConfig',
-    #'allauth',
-    #'allauth.account',
-    #'allauth.socialaccount',
+    'users.apps.UsersConfig',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'phone_field',
-    #'contact.apps.ContactConfig',
-    #'home.apps.HomeConfig',
+    'contact',
+    'home',
     'location.apps.LocationConfig',
-    #'students.apps.StudentsConfig',
-    #'teaching.apps.TeachingConfig',
+    'students.apps.StudentsConfig',
+    'teaching.apps.TeachingConfig',
 
 ]
 
@@ -102,7 +102,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
-'''
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -127,7 +127,7 @@ AUTHENTICATION_BACKENDS = (
     # `allauth` specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
 )
-'''
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
