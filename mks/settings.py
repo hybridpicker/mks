@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    #'django.contrib.sites',
     # extra_apps
     'phone_field',
     'contact',

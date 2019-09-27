@@ -5,7 +5,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Blessond</title>
+  <title>MKS</title>
   <!-- write your code here -->
 
   <!-- CSS -->
@@ -60,17 +60,11 @@
               <div class="dropdown arrow">
                 <button class="dropbtn">Unterricht</button>
                 <div class="dropdown-content">
-                  <a href="{% url 'guitar_lessons' %}">Gitarre lernen</a>
-                  <a href="{% url 'piano_lessons' %}">Klavier lernen</a>
-                  <a href="{% url 'vocal_lessons' %}">Gesangsunterricht</a>
-                  <a href="{% url 'teaching_prices_view' %}">Preisliste</a>
                 </div>
               </div>
               <div class="dropdown-b arrow">
                 <button class="dropbtn-b">Online</button>
                 <div class="dropdown-content-b">
-                  <a href="{% url 'show_scale_fretboard' %}">Fingersatzfinder</a>
-                  <a href="{% url 'teaching_material' %}">Lernmaterialien</a>
                 </div>
               </div>
               <div class="dropdown-c arrow">
@@ -83,7 +77,6 @@
                 <button class="dropbtn-d">Über</button>
                 <div class="dropdown-content-d">
                   <a href="{% url 'contact_email' %}">Kontakt</a>
-                  <a href="{% url 'impressum' %}">Impressum</a>
                 </div>
               </div>
             </div>
@@ -108,18 +101,11 @@
               <div class="overlay-content">
 
                 <a class="mainHeadingMobile" href="#">Unterricht</a>
-                <a class="categoryHeadingMobileNoCursor" href="{% url 'guitar_lessons' %}">Gitarre lernen</a>
-                <a class="categoryHeadingMobileNoCursor" href="{% url 'piano_lessons' %}">Klavier lernen</a>
-                <a class="categoryHeadingMobileNoCursor" href="{% url 'vocal_lessons' %}">Gesangsunterricht</a>
-                <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_prices_view' %}">Preisliste</a>
                 <a class="mainHeadingMobile" href="#">Online</a>
-                <a class="categoryHeadingMobileNoCursor" href="{% url 'show_scale_fretboard' %}">Fingersatzfinder</a>
-                <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_material' %}">Lernmaterial</a>
                 <a class="mainHeadingMobile" href="#">Blog</a>
                 <a class="categoryHeadingMobileNoCursor" href="{% url 'blog_guitar_summary' %}">Gitarre</a>
                 <a class="mainHeadingMobile" href="#">Über</a>
                 <a class="categoryHeadingMobileNoCursor" href="{% url 'contact_email' %}">Kontakt</a>
-                <a class="categoryHeadingMobileNoCursor" href="{% url 'impressum' %}">Impressum</a>
               </div>
             </div>
           </div>
