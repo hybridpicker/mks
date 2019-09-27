@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'location.apps.LocationConfig',
     'students.apps.StudentsConfig',
     'teaching.apps.TeachingConfig',
+    'ckeditor',
+    'ckeditor_uploader',
+    'blog.apps.BlogConfig',
 
 ]
 
