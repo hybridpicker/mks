@@ -38,11 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    # extra_apps
+    'django_extensions',
+    #'debug_toolbar',
     'users.apps.UsersConfig',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    #'django.contrib.sites',
+    # extra_apps
     'phone_field',
     'contact',
     'home',
@@ -131,6 +134,17 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+SITE_ID = 1
+
+#LOGIN SUCESS TO URL
+LOGIN_REDIRECT_URL = '/users/home'
+
+#LOGUT
+LOGOUT_REDIRECT_URL = '/'
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
