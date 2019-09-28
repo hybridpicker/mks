@@ -5,7 +5,6 @@ import datetime
 from teaching.subject import Subject
 from teaching.models import Teacher
 from teaching.lesson_form import LessonForm
-from schedule.models.calendars import Calendar
 from location.models import Country, Location
 from students.models import Student
 from students.gender import Gender
@@ -29,9 +28,7 @@ class CheckGetStudentViewTest(TestCase):
         country_id = country.id
         location = Location.objects.create(location_name="Vienna", country_id=country_id)
         location_id = location.id
-        calendar = Calendar.objects.create(name='maria-musterfrau',
-                                           slug='maria-musterfrau')
-        calendar_id = calendar.id
+
         teacher = Teacher.objects.create(
             gender_id=gender_id,
             first_name='Maria',
@@ -44,7 +41,6 @@ class CheckGetStudentViewTest(TestCase):
             house_number="28/5/5",
             postal_code="1100",
             city="Mattighofen",
-            calendar_id=calendar_id,
             country_id=country_id,
             location_id=location_id,
             user_id=user.id,

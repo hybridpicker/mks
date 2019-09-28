@@ -4,7 +4,6 @@ from django.urls import reverse
 
 from teaching.subject import Subject
 from teaching.models import Teacher
-from schedule.models.calendars import Calendar
 from location.models import Country, Location
 from students.gender import Gender
 
@@ -23,9 +22,6 @@ class ShowGuitarTeacherViewTest(TestCase):
         location_id = location.id
 
         for teacher_id in range (number_of_teachers):
-            calendar = Calendar.objects.create(name=f'maria-musterfrau{teacher_id}',
-                                               slug=f'maria-musterfrau{teacher_id}')
-            calendar_id = calendar.id
             Teacher.objects.create(
                 gender_id=gender_id,
                 first_name=f'Maria {teacher_id}',
@@ -38,7 +34,6 @@ class ShowGuitarTeacherViewTest(TestCase):
                 house_number="28/5/5",
                 postal_code="1100",
                 city="Mattighofen",
-                calendar_id=calendar_id,
                 country_id=country_id,
                 location_id=location_id,
                 )

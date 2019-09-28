@@ -9,7 +9,6 @@ from users.models import CustomUser
 from location.models import Country, Location
 from teaching.subject import Subject
 from teaching.lesson_form import LessonForm
-from schedule.models.calendars import Calendar
 
 # Create your tests here.
 class StudentMetaTest(TestCase):
@@ -21,9 +20,8 @@ class StudentMetaTest(TestCase):
         country_id = country.id
         location = Location.objects.create(location_name="Vienna", country_id=country_id)
         location_id = location.id
-        calendar = Calendar.objects.create(name='maria-musterfrau', slug='maria-musterfrau')
         teacher = Teacher.objects.create(
-            gender_id=gender.id, country_id=country.id, calendar_id=calendar.id,
+            gender_id=gender.id, country_id=country.id,
             location_id=location.id,
             first_name='Maria', last_name='Musterfrau',
             image='teacher_imageDefault', email='teacher@teacher.at',
