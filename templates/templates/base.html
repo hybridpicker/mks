@@ -48,9 +48,6 @@
           <div class="bun">
             <ul>
               <li><a href="#">Hallo, {{ request.user }}</a></li>
-              <li><a href="/teaching/calendar">Calendar</a></li>
-              <li><a href="/teaching/allstudents">Students</a></li>
-              <li><a href="/controlling/events">Controlling</a></li>
               <li><a href="#">Hilfe</a></li>
             </ul>
           </div>
@@ -70,7 +67,7 @@
               <div class="dropdown-c arrow">
                 <button class="dropbtn-c">Blog</button>
                 <div class="dropdown-content-c">
-                  <a href="{% url 'blog_guitar_summary' %}">Gitarre</a>
+                  <a href="{% url 'blog_summary' %}">All Posts</a>
                 </div>
               </div>
               <div class="dropdown-d arrow">
@@ -103,7 +100,7 @@
                 <a class="mainHeadingMobile" href="#">Unterricht</a>
                 <a class="mainHeadingMobile" href="#">Online</a>
                 <a class="mainHeadingMobile" href="#">Blog</a>
-                <a class="categoryHeadingMobileNoCursor" href="{% url 'blog_guitar_summary' %}">Gitarre</a>
+                <a class="categoryHeadingMobileNoCursor" href="{% url 'blog_summary' %}">All Blog Posts</a>
                 <a class="mainHeadingMobile" href="#">Über</a>
                 <a class="categoryHeadingMobileNoCursor" href="{% url 'contact_email' %}">Kontakt</a>
               </div>

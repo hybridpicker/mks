@@ -6,8 +6,8 @@ from blog.models import BlogPost
 
 # Create your views here.
 
-def blog_guitar_summary(request):
-    all_blogs = BlogPost.objects.filter(category_id=1)
+def blog_summary(request):
+    all_blogs = BlogPost.objects.all()
     context = {
         'all_blogs': all_blogs
         }

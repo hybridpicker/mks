@@ -24,15 +24,7 @@
 
 <script src='https://www.google.com/recaptcha/api.js?render=6LfAm6kUAAAAAFy7phFkAoYO-hgwFC9tg2sYf4nk'></script>
 
-<style media="screen">
-  .container{
-    text-align:center;
-  }
-  p a{
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-</style>{% endblock %}
+{% endblock %}
 
 {% block navbar %}
 {% endblock %}
@@ -44,8 +36,69 @@
 <div class="mbs">
   <div class="container">
     <h1>Schreibe uns eine Anfrage</h1>
-    <p>Aufgrund technischer Problem erreichen Sie uns derzeit nur unter folgender Mailadresse:</p>
-    <p><a href="mailto:service@gitarrenschuel.at">service@gitarrenschule.at</a></p>
+    <form id="contact_form_post" method="post">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-4">
+          <p>Anrede:</p>
+        </div>
+        <div class="sfbsfcon">
+          <div class="col-8">
+            <select name="gender" required>
+              <option value="1">-------</option>
+              <option value="1">{% trans 'Herr' %}</option>
+              <option value="2">{% trans 'Frau' %}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-4">
+          <p>Vorname:</p>
+        </div>
+        <div class="col-8">
+          {{ form.first_name }}
+        </div>
+        <div class="col-4">
+          <p>Familienname:</p>
+        </div>
+        <div class="col-8">
+          {{ form.last_name }}
+        </div>
+        <div class="col-4">
+          <p>Email:</p>
+        </div>
+        <div class="col-8">
+          {{ form.from_email }}
+        </div>
+        <div class="col-4">
+          <p>Nachricht optional:</p>
+        </div>
+        <div class="col-8">
+          {{ form.message }}
+        </div>
+        <div class="col-4">
+          <p>Wunschfach:</p>
+        </div>
+        <div class="sfbsfcon">
+          <div class="col-8">
+            {{ form.subject }}
+          </div>
+        </div>
+        <div class="col-4">
+          <p>Unterrichtsort:</p>
+        </div>
+        <div class="sfbsfcon">
+          <div class="col-8">
+            {{ form.location }}
+          </div>
+        </div>
+        <div class="col-8">
+          <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" value="">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit">Senden</button>
+      </div>
+    </form>
   </div>
 
 
