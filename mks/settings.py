@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'blog.apps.BlogConfig',
     'school.apps.SchoolConfig',
+    'instruments.apps.InstrumentsConfig',
 ]
 
 MIDDLEWARE = [

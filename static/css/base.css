@@ -217,17 +217,15 @@ header {
   text-align: center;
 }
 .nvb{
-  height: 100px;
+  height: 60px;
   z-index: 1;
-  padding-top: 2em;
-  padding-right: 2em;
 }
 .bs {
   margin-top: 1em;
   text-align: center;
 }
 .bs > img{
-  width: 80%;
+  width: 100%;
 }
 @media only screen and (max-width: 771px) {
 .bs {
@@ -244,7 +242,6 @@ header {
 .bnbs {
   display: grid;
   grid-template-areas:
-  'logo user user user'
   'logo nav nav nav';
   height:100%;
 }
@@ -260,7 +257,8 @@ header {
 .bls a img{
   position: absolute;
   bottom: 14px;
-  right: 0px;
+  right: 0;
+  max-width: 16rem;
 }
 .bnbs .bns{
   position: relative;
@@ -497,7 +495,7 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
   }
 }
 .container {
-  width: 80%;
+  width: 95%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
@@ -538,60 +536,22 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
   background: none;
 }
 /* The container <div> - needed to position the dropdown content */
-.dropdown {
+.dropdown, .nodown, .dropdown-b, .dropdown-c, .dropdown-d {
   position: relative;
   display: inline-block;
-  width: 7.8rem;
+  width: 7rem;
   padding: 0.7rem 0.7rem;
-  -webkit-transition: width 1s; /* Safari */
-  transition: width 1s;
 }
-.dropdown:hover{
+.dropdown:hover, .dropdown-b:hover, .dropdown-c:hover, .dropdown-d:hover, .nodown:hover{
   background: #BA1A63;
-  width: 8.5rem;
   cursor: pointer;
 }
-.dropdown-b {
-  position: relative;
-  display: inline-block;
-  width: 6.3rem;
-  padding: 0.7rem 0.7rem;
-  -webkit-transition: width 1s; /* Safari */
-  transition: width 1s;
-}
-.dropdown-b:hover{
-  background: #BA1A63;
-  width: 7.1rem;
-  cursor: pointer;
-}
-.dropdown-c {
-  position: relative;
-  display: inline-block;
-  width: 6rem;
-  padding: 0.7rem 0.7rem;
-  -webkit-transition: width 1s; /* Safari */
-  transition: width 1s;
-}
-.dropdown-c:hover{
-  background: #BA1A63;
-  width: 7.1rem;
-  cursor: pointer;
-}
-.dropdown-d {
-  position: relative;
-  display: inline-block;
-  width: 6rem;
-  padding: 0.7rem 0.7rem;
-  -webkit-transition: width 1s; /* Safari */
-  transition: width 1s;
-}
-.dropdown-d:hover{
-  background: #BA1A63;
-  width: 7.1rem;
-  cursor: pointer;
+
+.nodown:hover .dropbtn {
+    color: #fff;
 }
 /* Dropdown Content (Hidden by Default) */
-.dropdown-content {
+.dropdown-content, .dropdown-content-b, .dropdown-content-c, .dropdown-content-d  {
   display: none;
   position: absolute;
   background-color: #fff;
@@ -601,36 +561,7 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
   margin-top: 12px;
   left:0;
 }
-.dropdown-content-b {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  width: 8.5rem;
-  box-shadow: 3px 3px 2px #0F262B33;
-  z-index: 1;
-  margin-top: 12px;
-  left:0;
-}
-.dropdown-content-c {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  width: 8.5rem;
-  box-shadow: 3px 3px 2px #0F262B33;
-  z-index: 1;
-  margin-top: 12px;
-  left:0;
-}
-.dropdown-content-d {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  width: 8.5rem;
-  box-shadow: 3px 3px 2px #0F262B33;
-  z-index: 1;
-  margin-top: 12px;
-  left:0;
-}
+
 /* Links inside the dropdown */
 .dropdown-content a {
   color: black;

@@ -40,18 +40,10 @@
         <div class="bnbs">
           <div class="bls">
             <a href="{% url 'home_view' %}">
-            <img src="{% static "media/nav/blessond-logo.svg" %}" alt="blessond logo navbar"
+            <img src="{{ logo.url }}" alt="blessond logo navbar"
             href="#">
             </a>
           </div>
-          {% if user.is_authenticated %}
-          <div class="bun">
-            <ul>
-              <li><a href="#">Hallo, {{ request.user }}</a></li>
-              <li><a href="#">Hilfe</a></li>
-            </ul>
-          </div>
-          {% endif %}
           <div class="bns">
             <div class="drops">
               <div class="dropdown arrow">
@@ -75,6 +67,9 @@
                 <div class="dropdown-content-d">
                   <a href="{% url 'contact_email' %}">Kontakt</a>
                 </div>
+              </div>
+              <div class="nodown">
+                <button class="dropbtn" href="{% url 'contact_email' %}">Kontakt</button>
               </div>
             </div>
           </div>
@@ -102,7 +97,7 @@
                 <a class="mainHeadingMobile" href="#">Blog</a>
                 <a class="categoryHeadingMobileNoCursor" href="{% url 'blog_summary' %}">All Blog Posts</a>
                 <a class="mainHeadingMobile" href="#">Über</a>
-                <a class="categoryHeadingMobileNoCursor" href="{% url 'contact_email' %}">Kontakt</a>
+                <a class="mainHeadingMobile" href="{% url 'contact_email' %}">Kontakt</a>
               </div>
             </div>
           </div>
@@ -126,7 +121,7 @@
         <!--Footer Grid Section -->
         <div class="bfsc">
           <div class="fbls">
-            <img src="{% static "media/footer/logo_footer.svg" %}" alt="Footer Logo Blessond">
+            <img src="{{ logo.url }}" alt="Footer Logo {{ name }}">
           </div>
           <div class="bcls">
 

@@ -21,3 +21,6 @@ class MusicSchoolMetaTest(TestCase):
         x = MusicSchool.objects.get(id=1)
         self.assertTrue(isinstance(x, MusicSchool))
         self.assertEqual(x.__str__(), (x.school_name) + ', ' + (x.city))
+
+    def test_name_in_index_page(self):
+        x = MusicSchool.objects.get(id=1)

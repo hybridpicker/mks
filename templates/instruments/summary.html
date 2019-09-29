@@ -1,0 +1,69 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% block extra_head %}
+<meta name="title" content="Blog - Regelmäßige Artikel rund um unsere Gitarre">
+<meta name="description" content="Ab sofort werden hier in regelmäßigen Abständen Blog-Einträge rund um die Welt der Gitarre online gestellt. Wir freuen uns über Themenvorschläge.">
+
+<style media="screen">
+  .mti img {
+    max-width: 75%;
+    height: auto;
+  }
+  .tmcb {
+    min-height: 520px;
+    grid-template-areas: 'mti mti';
+  }
+  @media only screen and (max-width: 1080px) {
+    .tmcb {
+      grid-template-areas:
+      'mti';
+    }
+  }
+  @media only screen and (max-width: 410px) {
+    .container {
+      padding-left: 0px;
+      padding-right: 0px;
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+    .tmcb {
+      width: 100%;
+    }
+  }
+</style>
+
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+<img src="/static/media/banner/blog_summary_banner.jpg" alt="">
+<img id="mbimg" src="/static/media/banner/mobile/blog_summary_banner.jpg" alt="">
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h1>Our Instruments</h1>
+    <div class="tmcon">
+      <div class="tmcb">
+        {% for instrument in all_instruments %}
+        <div class="tmcbpb">
+          <div class="mti">
+            <a href="{{ blog.slug }}">
+              <h2>#{{ instrument.instrument_name }}</h2>
+              <img src="{{ instrument.image.url }}" alt="">
+            </a>
+            <div class="tctm">
+              <p>{{ instrument.meta_description|linebreaks  }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+  {% block footer %}
+
+  {% endblock %}

@@ -1,0 +1,40 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% block extra_head %}
+<meta name="title" content="{{ instrument.title }}">
+<meta name="description" content="{{ instrument.meta_description }}">
+<style media="screen">
+.bs > img {
+    width: 80%;
+    border-radius: 4rem 0 4rem 0;
+}
+@media only screen and (max-width: 772px) {
+  .bs > img {
+      width: 100%;
+      padding-top: 3rem;
+      border-radius: 0 0 4rem 0;
+  }
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+<img src="{{ instrument.image.url }}" alt="">
+<img id="mbimg" src="{{ instrument.image.url }}" alt="">
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <div class="blogpost">
+      <h1>{{ instrument.instrument_name }}</h1>
+      {{ instrument.content|safe }}
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block footer %}
+
+{% endblock %}
