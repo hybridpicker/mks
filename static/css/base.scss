@@ -3,18 +3,20 @@ $bgcolor: #FDFDFD;
 $textcolor: #222528;
 
 $firstHeadingFamily:'Montserrat', sans-serif;
-$firstHeadingFontSize:50px;
+$firstHeadingFontSize:45px;
 $firstHeadingFontColor:#222528;
 $firstHeadingFontLineHeight:61px;
 
 $paragraphFontFamily:'Lato', sans-serif;
-$paragraphFontSize:28px;
+$paragraphFontSize:24px;
 $paragraphFontColor:#222528;
-$paragraphFontLineHeight:40px;
+$paragraphFontLineHeight:35px;
 
 $primaryColor:#D73538;
 $secondaryColor:#222528;
 
+$menuFontSize: 24px;
+$menudFontFamily: 'Montserrat', sans-serif;
 /* Use the variables */
 body {
   background-color: $bgcolor;
@@ -25,6 +27,8 @@ html, body {
     max-height: 100%;
     overflow-x: hidden;
     padding: env(safe-area-inset); // Overflow IPhoneXS
+    margin-left: 0;
+    margin-right: 0
 }
 footer{
   clear: both;
@@ -169,6 +173,7 @@ h1{
   background: url(/static/media/heading/underline_h1.png) no-repeat;
   background-position-x: center;
   background-position-y: bottom;
+  padding-bottom: 1.4rem;
 }
 h2{
   font-family: 'Dosis', Semibold;
@@ -196,6 +201,8 @@ p {
   font-size: $paragraphFontSize;
   line-height: $paragraphFontLineHeight;
   color: $paragraphFontColor;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 @media screen and (max-height: 450px) {
@@ -257,11 +264,10 @@ header {
   'logo nav nav nav';
   height:100%;
 }
-
 .bnbs > div {
   text-align: center;
-  font-size: 18px;
-  font-family: 'Dosis', sans-serif;
+  font-size: $menuFontSize;
+  font-family: $menudFontFamily;
 }
 .bls{
   position:relative;
@@ -519,39 +525,18 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
 }
 }
 /* Style The Dropdown Button */
-.dropbtn {
-  font-size: 18px;
-  color: #0F262B;
-  font-family: 'Dosis', sans-serif;
+.dropbtn, .dropbtn-b, .dropbtn-c, .dropbtn-d {
+  font-size: $menuFontSize;
+  font-family: $menudFontFamily;
   border: none;
   background: none;
-}
-.dropbtn-b {
-  font-size: 18px;
-  color: #0F262B;
-  font-family: 'Dosis', sans-serif;
-  border: none;
-  background: none;
-}
-.dropbtn-c {
-  font-size: 18px;
-  color: #0F262B;
-  font-family: 'Dosis', sans-serif;
-  border: none;
-  background: none;
-}
-.dropbtn-d {
-  font-size: 18px;
-  color: #0F262B;
-  font-family: 'Dosis', sans-serif;
-  border: none;
-  background: none;
+  width:auto;
 }
 /* The container <div> - needed to position the dropdown content */
 .dropdown, .nodown, .dropdown-b, .dropdown-c, .dropdown-d {
   position: relative;
   display: inline-block;
-  width: 7rem;
+  width: auto;
   padding: 0.7rem 0.7rem;
 }
 .dropdown:hover, .dropdown-b:hover, .dropdown-c:hover, .dropdown-d:hover, .nodown:hover{
@@ -643,32 +628,9 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
 }
 .drops {
   position:absolute;
-  padding-left: 2em;
-  bottom:0;
-}
-.drops > .dropdown::after {
-  content: url(/static/media/nav/arrow_down_black.png);
-}
-.dropdown:hover::after {
-  filter:invert(100%);
-}
-.drops > .dropdown-b::after {
-  content: url(/static/media/nav/arrow_down_black.png);
-}
-.dropdown-b:hover::after {
-  filter:invert(100%);
-}
-.drops > .dropdown-c::after {
-  content: url(/static/media/nav/arrow_down_black.png);
-}
-.dropdown-c:hover::after {
-  filter:invert(100%);
-}
-.drops > .dropdown-d::after {
-  content: url(/static/media/nav/arrow_down_black.png);
-}
-.dropdown-d:hover::after {
-  filter:invert(100%);
+  padding-right: 2em;
+  bottom: 0;
+  right: 0;
 }
 .bls > img {
   padding-bottom: 0.9em;
