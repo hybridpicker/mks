@@ -1,20 +1,31 @@
+/* Standard Variables */
+$bgcolor: #FDFDFD;
+$textcolor: #222528;
+
+$firstHeadingFamily:'Montserrat', sans-serif;
+$firstHeadingFontSize:50px;
+$firstHeadingFontColor:#222528;
+$firstHeadingFontLineHeight:61px;
+
+$paragraphFontFamily:'Lato', sans-serif;
+$paragraphFontSize:28px;
+$paragraphFontColor:#222528;
+$paragraphFontLineHeight:40px;
+
+$primaryColor:#D73538;
+$secondaryColor:#222528;
+
+/* Use the variables */
+body {
+  background-color: $bgcolor;
+  color: $textcolor;
+}
 html, body {
     max-width: 100%;
     max-height: 100%;
     overflow-x: hidden;
     padding: env(safe-area-inset); // Overflow IPhoneXS
 }
-
-body {
-  color: #2f2f2f;
-  font-family: 'Alegreya Sans', sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  margin: 0;
-  height: 100%;
-  background-color: #fff;
-}
-
 footer{
   clear: both;
   position: relative;
@@ -151,9 +162,9 @@ a:hover {
 
 /* Font */
 h1{
-  font-family: 'Dosis', Semibold;
-  font-size: 50px;
-  color: rgba(0,0,0,.84);
+  font-family: $firstHeadingFamily;
+  font-size: $firstHeadingFontSize;
+  color: $firstHeadingFontColor;
   text-align: center;
   background: url(/static/media/heading/underline_h1.png) no-repeat;
   background-position-x: center;
@@ -180,10 +191,11 @@ h3{
   background-position-y: bottom;
 }
 p {
+  font-family: $paragraphFontFamily;
   text-align: inherit;
-  font-size: 22px;
-  line-height: 30px;
-  color: rgba(0,0,0,.84);
+  font-size: $paragraphFontSize;
+  line-height: $paragraphFontLineHeight;
+  color: $paragraphFontColor;
 }
 
 @media screen and (max-height: 450px) {
@@ -639,28 +651,24 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
 }
 .dropdown:hover::after {
   filter:invert(100%);
-  rotate:
 }
 .drops > .dropdown-b::after {
   content: url(/static/media/nav/arrow_down_black.png);
 }
 .dropdown-b:hover::after {
   filter:invert(100%);
-  rotate:
 }
 .drops > .dropdown-c::after {
   content: url(/static/media/nav/arrow_down_black.png);
 }
 .dropdown-c:hover::after {
   filter:invert(100%);
-  rotate:
 }
 .drops > .dropdown-d::after {
   content: url(/static/media/nav/arrow_down_black.png);
 }
 .dropdown-d:hover::after {
   filter:invert(100%);
-  rotate:
 }
 .bls > img {
   padding-bottom: 0.9em;

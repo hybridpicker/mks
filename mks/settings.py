@@ -44,8 +44,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    # extra_apps
+    # mks_apps
     'phone_field',
+    'sass_processor',
     'contact',
     'home',
     'location.apps.LocationConfig',
@@ -182,6 +183,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
 ]
 
 FIXTURE_DIRS = [

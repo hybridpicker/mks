@@ -7,17 +7,15 @@
   <meta charset="UTF-8">
   <title>MKS</title>
   <!-- write your code here -->
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="{% static "css/base.css" %}" type="text/css" media="screen">
+  <!-- SASS -->
+  {% load sass_tags %}
+  <link href="{% sass_src 'css/base.scss' %}" rel="stylesheet" type="text/css" />
   <!-- Device Fix -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
-
-
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300|Montserrat:500,600&display=swap" rel="stylesheet">
+
   <!-- Fav -->
   <link rel="icon" href="{% static "favicon/blessondfav.ico" %}"/>
 
