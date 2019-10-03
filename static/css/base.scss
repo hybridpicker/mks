@@ -1,5 +1,4 @@
 /* Standard Variables */
-$bgcolor: #FDFDFD;
 $textcolor: #222528;
 
 $firstHeadingFamily:'Montserrat', sans-serif;
@@ -15,13 +14,18 @@ $paragraphFontLineHeight:35px;
 $primaryColor:#D73538;
 $secondaryColor:#222528;
 
-$whiteColor: #fff;
+$whiteColor: #FDFDFD;
+$bgcolor: $whiteColor;
+
+$menuHeight: 70px;
 
 $menuFontSize: 20px;
 $menudFontFamily: 'Montserrat', sans-serif;
 
 $linkFontSize: 22px;
-$linkColor: $whiteColor;
+$linkColor: $primaryColor;
+$linkFontFamily: 'Montserrat', sans-serif;
+
 /* Use the variables */
 body {
   background-color: $bgcolor;
@@ -71,12 +75,11 @@ left:0;right:0;
 }
 
 a {
-  color: rgb(205, 0, 92);
+  color: $linkColor;
   text-decoration: none;
 }
-
 a:hover {
-  color: rgb(205, 0, 92);
+  text-decoration: underline;
 }
 .section.main-nav {
   position: fixed;
@@ -154,7 +157,7 @@ a:hover {
   padding: 0.74rem;
   text-decoration: none;
   display: block;
-  color: #fff;
+  color: $linkColor;
   transition: 0.3s;
   padding-left: 1em;
 }
@@ -220,7 +223,14 @@ p {
   }
 }
 header {
+  display: block;
   text-align: right;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: $whiteColor;
+  opacity: 0.98;
 }
 .nvb { grid-area: nvb; }
 .bs { grid-area: bs; }
@@ -242,13 +252,15 @@ header {
   text-align: center;
 }
 .nvb{
-  height: 70px;
+  height: $menuHeight;
   z-index: 1;
 }
 .bs {
-  margin-top: 0;
+  margin-top: $menuHeight;
+  margin-bottom: 0;
   text-align: center;
-  margin-bottom: -.3rem;
+  display: grid;
+  grid-auto-columns: 1fr;
 }
 .bs > img{
   width: 100%;
@@ -599,7 +611,7 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
 .dropdown-hover-section-e{
   display: none;
   width: auto;
-  height: 20px;
+  height: 22px;
   background-color:$primaryColor;
   margin-bottom: -2rem;
 }
@@ -656,6 +668,9 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
   background-position-y: center;
   background-position-x: center;
 }
+.fbls > img {
+  max-width: 33%;
+}
 .bfsc > div {
   text-align: center;
   padding: 20px 0;
@@ -685,6 +700,8 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
   background: url(/static/media/footer/normal_line_footer_bottom.jpg) no-repeat;
   background-position-y: top;
   background-position-x: center;
+  color:$primaryColor;
+  padding-top: 100px !important;
 }
 .bscmbs > img {
   padding: 0 2em;
@@ -692,14 +709,12 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
 .bscmbs {
   padding-bottom: 0;
 }
-.cbsf{
-  color:#BA1A63;
-  padding-top: 100px !important;
-}
 .bcmk {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 0px;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
 }
 .bcmk > div {
   text-align: center;
@@ -708,21 +723,18 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
 }
 .bcmk > .left{
   background-color: $secondaryColor;
-  width: 110%;
-  margin-right: 10%;
-  z-index: 1;
 }
 .bcmk > .right {
   background-color: $primaryColor;
-  width: 110%;
-  margin-left: -10%;
 }
 .bcmk > .middle{
-  width: auto;
+  overflow: hidden;
   z-index: -1;
+  display: flex;
+  justify-content: center;
 }
 .bcmk > .middle > img{
-  height:100%;
+  height:110%;
 }
 .bcmk section{
   margin-top: 12rem;
@@ -731,13 +743,27 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
   margin-left: 2rem;
   margin-right: 2rem;
 }
+
 .bcmk .left section:hover, .bcmk .right section:hover{
   background-color: $whiteColor;
+  box-shadow: inset inset 0px 0px 10px 0px #22252836;
+  -webkit-box-shadow: inset 0px 0px 10px 0px #22252836;
+  -moz-box-shadow: inset 0px 0px 10px 0px #22252836;
+  -o-box-shadow: inset 0px 0px 10px 0px #22252836;
+
+}
+.bcmk .left section:hover a{
+  color: $secondaryColor;
+  text-decoration: none;
 }
 .bcmk .left section a, .bcmk .right section a{
   color: $whiteColor;
   font-family: $firstHeadingFamily;
   font-size: $linkFontSize;
+}
+.bcmk .right section:hover a{
+  color: $primaryColor;
+  text-decoration: none;
 }
 @media only screen and (max-width: 771px) {
   .bfsc {

@@ -16,9 +16,6 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Lato:300|Montserrat:500,600&display=swap" rel="stylesheet">
 
-  <!-- Fav -->
-  <link rel="icon" href="{% static "favicon/blessondfav.ico" %}"/>
-
   <!-- JQuery Ajax --->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
@@ -26,91 +23,15 @@
   <!-- Blessond Nav Script -->
   <script type="text/javascript" src="{% static "js/blessond.js" %}"></script>
 
+  {% include "templates/favicon.html" %}
 
   {% block extra_head %}
   {% endblock %}
 </head>
 
 <body>
-  <!-- NAV -->
-  <header>
-    <div class="nvb">
-      <div class="bnbs">
-        <div class="bls">
-          <a href="{% url 'home_view' %}">
-            <img src="{{ logo.url }}" alt="blessond logo navbar"
-            href="#">
-          </a>
-        </div>
-        <div class="bns">
-          <div class="drops">
-            <div class="dropdown arrow">
-              <button class="dropbtn">Unterricht</button>
-              <div class="dropdown-content">
-              </div>
-              <div class="dropdown-hover-section">
-              </div>
-            </div>
-            <div class="dropdown-b arrow">
-              <button class="dropbtn-b">Online</button>
-              <div class="dropdown-content-b">
-              </div>
-              <div class="dropdown-hover-section-b">
-              </div>
-            </div>
-            <div class="dropdown-c arrow">
-              <button class="dropbtn-c">Blog</button>
-              <div class="dropdown-content-c">
-                <a href="{% url 'blog_summary' %}">All Posts</a>
-              </div>
-              <div class="dropdown-hover-section-c">
-              </div>
-            </div>
-            <div class="dropdown-d arrow">
-              <button class="dropbtn-d">Über</button>
-              <div class="dropdown-content-d">
-                <a href="{% url 'contact_email' %}">Kontakt</a>
-              </div>
-              <div class="dropdown-hover-section-d">
-              </div>
-            </div>
-            <div class="dropdown-e arrow">
-              <button class="dropbtn-e" href="{% url 'contact_email' %}">Kontakt</button>
-              <div class="dropdown-hover-section-e">
-              </div>
-            </div>
-          </div>
-        </div>
 
-      </div>
-      <!-- Mobile Nav -->
-
-      <div id="blessondNavMobile" class="menu">
-        <div>
-          <span id="menuIcon" onclick="openNav()">
-            <img id="mobileHamburger" onclick="openNav()" src="{% static "media/nav/mobile/hamburger_mobile.png" %}" alt="mobile Hamburger icon">
-            Menü
-          </span>
-        </div>
-        <div id="mobileLogo"><a href="{% url 'home_view' %}"><img src="{% static "media/nav/mobile/mobile_logo.svg" %}" alt="mobile blessond logo"></a></div>
-
-        <div><a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
-          <img id="closemobleHamburger" src="{% static "media/nav/mobile/hamburger_mobile_active.png" %}" alt="mobile Hamburger icon">Menü</a></div>
-        </div>
-        <div id="blessondNavMobileMenu" class="overlay">
-          <div class="overlay-content">
-
-            <a class="mainHeadingMobile" href="#">Unterricht</a>
-            <a class="mainHeadingMobile" href="#">Online</a>
-            <a class="mainHeadingMobile" href="#">Blog</a>
-            <a class="categoryHeadingMobileNoCursor" href="{% url 'blog_summary' %}">All Blog Posts</a>
-            <a class="mainHeadingMobile" href="#">Über</a>
-            <a class="mainHeadingMobile" href="{% url 'contact_email' %}">Kontakt</a>
-          </div>
-        </div>
-      </div>
-
-    </header>
+  {% include "templates/navbar.html" %}
 
 
     {% block navbar %}
@@ -123,33 +44,11 @@
     {% block body %}
     {% endblock %}
 
-  </div>
 
   <div class="bf">
-    <!--Footer Grid Section -->
-    <div class="bfsc">
-      <div class="fbls">
-        <img src="{{ logo.url }}" alt="Footer Logo {{ name }}">
-      </div>
-      <div class="bcls">
-
-      </div>
-      <div class="bscmbs">
-        <img src="{% static "media/footer/yt_icon_footer.jpg" %}" alt="Footer Youtube Channel Icon">
-        <img src="{% static "media/footer/fb_icon_footer.jpg" %}" alt="Footer Facebook Account Icon">
-        <img src="{% static "media/footer/insta_icon_footer.jpg" %}" alt="Footer Instagram Channel Icon">
-      </div>
-      <div class="bcrs">
-
-      </div>
-      <div class="cbsf">
-        © {% now "Y" %}
-      </div>
-    </div>
+    {% include "templates/footer.html" %}
   </div>
-</div>
-</div>
-</div>
+
 
 </body>
 </html>
