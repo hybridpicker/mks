@@ -18,13 +18,22 @@ $whiteColor: #FDFDFD;
 $bgcolor: $whiteColor;
 
 $menuHeight: 70px;
-
+$menuColor: $secondaryColor;
 $menuFontSize: 20px;
 $menudFontFamily: 'Montserrat', sans-serif;
+
+$mobileMenuFontSize: 24px;
+$mobileMenuFontFamily: 'Montserrat', sans-serif;
 
 $linkFontSize: 22px;
 $linkColor: $primaryColor;
 $linkFontFamily: 'Montserrat', sans-serif;
+
+/* mobile Variables */
+$mobileFirstHeadingFontSize:30px;
+$mobileParagraphFontSize:24px;
+$mobileLinkFontSize: 22px;
+$mobileMenuFontSize: 24px;
 
 /* Use the variables */
 body {
@@ -139,7 +148,7 @@ a:hover {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #0F262B;
+  background-color: $whiteColor;
   overflow-x: hidden;
   transition: 0.5s;
 }
@@ -147,29 +156,28 @@ a:hover {
 .overlay-content {
   top: 25%;
   width: 100%;
-  margin-top: 10px;
-  text-align: left;
+  padding-top: 20%;
+  text-align: right;
   color: #fffc;
-  font-size: 22px;
+  font-size: $mobileMenuFontSize;
+  font-family: $mobileMenuFontFamily;
 }
 
 .overlay a {
   padding: 0.74rem;
+  padding-right: 4rem;
+  text-align: right;
   text-decoration: none;
   display: block;
-  color: $linkColor;
+  color: $menuColor;
   transition: 0.3s;
   padding-left: 1em;
 }
 
-.overlay a:hover, .overlay a:focus {
-  color: #f1f1f1;
-}
-
 .overlay .closebtn {
   position: absolute;
-  top: 20px;
-  right: 45px;
+  top: 2%;
+  right: 0;
   font-size: 60px;
 }
 
@@ -424,8 +432,11 @@ canvas {
 #blessondNavMobile {
   display: none;
 }
-#blessondNavMobileMenu {
+#mks-nav-mobile-menu {
   display: none;
+  -webkit-box-shadow: 6px 7px 17px -2px rgba(0,0,0,0.32);
+  -moz-box-shadow: 6px 7px 17px -2px rgba(0,0,0,0.32);
+  box-shadow: 6px 7px 17px -2px rgba(0,0,0,0.32);
 }
 #mobileHamburger {
   padding-right: 0.5em;
@@ -443,19 +454,18 @@ canvas {
 }
 #closeMobileMenu{
   display: none;
-  color: #009E96;
   justify-content: right;
   align-items: center;
-  padding-right: 20%;
+  padding-right: 1%;
+}
+#menuIcon{
+  margin-left: 2rem;
 }
 #menuIcon:hover {
     cursor: pointer;
 }
 .mainHeadingMobile{
   text-align: center;
-}
-a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
-  background-color: #00a39975;
 }
 .categorySecondHeadingMobile{
   text-align: left;
@@ -467,13 +477,16 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
 }
 
 @media only screen and (max-width: 771px), only screen and (max-height: 375px) {
-  #blessondNavMobileMenu {
+  #mks-nav-mobile-menu {
     display: block;
-    height: auto;
-    border-radius: 0 0 2rem 0;
+    height: 100%;
+  }
+  header{
+    text-align:left;
   }
   body {
-    background: #fff;
+    background: $whiteColor;
+    margin-bottom: 0;
   }
   .nvb{
     padding-bottom: 0;
@@ -492,8 +505,8 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
   #blessondNavMobile > div {
     width: 33%;
     font-size: 20px;
-    color: #fff;
-    font-family: 'Dosis', sans-serif;
+    color: $paragraphFontColor;
+    font-family: $linkFontFamily;
   }
   .bnbs{
     display:none;
@@ -501,12 +514,11 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
   .nvb{
     height: 4rem;
     width: 100%;
-    background: #0F262B;
+    background: $whiteColor;
     z-index: 1;
   }
   h1{
-    font-family: 'Dosis', Normal;
-    font-size: 40px;
+    font-size: $mobileFirstHeadingFontSize;
     background-size: 60%;
     word-break: break-word;
     background: url(/static/media/heading/underline_h1_mobile.png) no-repeat;
@@ -514,21 +526,18 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
     background-position-y: bottom;
   }
   h2{
-    font-family: 'Dosis',Normal;
-    font-size: 30px;
     word-break: break-word;
   }
   h3{
-    font-family: 'Dosis',Normal;
-    font-size: 30px;
     word-break: break-word;
   }
-}
-
-/* small devices */
-@media only screen and (max-height: 630px) {
-  #blessondNavMobileMenu {
-    height: 86%;
+  p {
+    font-size: $mobileMenuFontSize;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  a {
+    font-size: $mobileLinkFontSize
   }
 }
 .container {
@@ -679,7 +688,7 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
   text-align: center;
   padding: 20px 0;
   font-size: 18px;
-  font-family: 'Dosis', sans-serif;
+  font-family: $linkFontFamily;
 }
 .bcrs > a{
   display: block;
@@ -698,7 +707,7 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
   position: relative;
 }
 .cbsf{
-  font-family: 'Alegreya Sans', sans-serif !important;
+  font-family: $linkFontFamily;
   font-size: 18px !important;
   line-height: 1.5 !important;
   background: url(/static/media/footer/normal_line_footer_bottom.jpg) no-repeat;
@@ -784,8 +793,8 @@ a.categoryHeadingMobileNoCursor, a.categorySecondHeadingMobile {
   }
   .cbsf{
     background: none;
-    background-color: #BA1A63;
-    color: #fff;
+    background-color: $primaryColor;
+    color: $whiteColor;
     padding: 20px 0 !important;
   }
   .fbls {

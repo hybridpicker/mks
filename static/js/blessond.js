@@ -1,11 +1,11 @@
 function openNav() {
-  document.getElementById("blessondNavMobileMenu").style.width = "70%";
+  document.getElementById("mks-nav-mobile-menu").style.width = "95%";
   document.getElementById("menuIcon").style.visibility = "hidden";
   document.getElementById("closeMobileMenu").style.display = "flex";
 }
 
 function closeNav() {
-  document.getElementById("blessondNavMobileMenu").style.width = "0%";
+  document.getElementById("mks-nav-mobile-menu").style.width = "0%";
   document.getElementById("menuIcon").style.visibility = "visible";
   document.getElementById("closeMobileMenu").style.display = "none";
 }

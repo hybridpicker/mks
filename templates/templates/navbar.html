@@ -57,21 +57,21 @@
       <div>
         <span id="menuIcon" onclick="openNav()">
           <img id="mobileHamburger" onclick="openNav()" src="{% static "media/nav/mobile/hamburger_mobile.png" %}" alt="mobile Hamburger icon">
-          Menü
         </span>
       </div>
-      <div id="mobileLogo"><a href="{% url 'home_view' %}"><img src="{% static "media/nav/mobile/mobile_logo.svg" %}" alt="mobile blessond logo"></a></div>
-
-      <div><a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
-        <img id="closemobleHamburger" src="{% static "media/nav/mobile/hamburger_mobile_active.png" %}" alt="mobile Hamburger icon">Menü</a></div>
+      <div class="">        
       </div>
-      <div id="blessondNavMobileMenu" class="overlay">
+      <div id="mobileLogo">
+        <a href="{% url 'home_view' %}"><img src="{% static "media/nav/mobile/mobile_logo.svg" %}" alt="mobile blessond logo"></a>
+      </div>
+      </div>
+      <div id="mks-nav-mobile-menu" class="overlay">
         <div class="overlay-content">
-
+          <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+            <img id="closemobleHamburger" src="{% static "media/nav/mobile/hamburger_mobile_active.png" %}" alt="mobile Hamburger icon"></a>
           <a class="mainHeadingMobile" href="#">Unterricht</a>
           <a class="mainHeadingMobile" href="#">Online</a>
-          <a class="mainHeadingMobile" href="#">Blog</a>
-          <a class="categoryHeadingMobileNoCursor" href="{% url 'blog_summary' %}">All Blog Posts</a>
+          <a class="mainHeadingMobile" href=""{% url 'blog_summary' %}">Blog</a>
           <a class="mainHeadingMobile" href="#">Über</a>
           <a class="mainHeadingMobile" href="{% url 'contact_email' %}">Kontakt</a>
         </div>
