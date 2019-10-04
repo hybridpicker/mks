@@ -446,8 +446,8 @@ canvas {
 }
 #mobileLogo{
   display:flex;
-  align-content: center;
-  justify-content: center;
+  justify-content: right;
+  padding-right: 1rem;
 }
 #mobileLogo img{
   width: 2.9rem;
@@ -476,7 +476,7 @@ canvas {
   padding-left: 3em !important;
 }
 
-@media only screen and (max-width: 771px), only screen and (max-height: 375px) {
+@media only screen and (max-width: 1040px), only screen and (max-height: 375px) {
   #mks-nav-mobile-menu {
     display: block;
     height: 100%;
@@ -501,6 +501,7 @@ canvas {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: 0.2rem;
   }
   #blessondNavMobile > div {
     width: 33%;
@@ -519,7 +520,7 @@ canvas {
   }
   h1{
     font-size: $mobileFirstHeadingFontSize;
-    background-size: 60%;
+    padding-bottom: 1rem;
     word-break: break-word;
     background: url(/static/media/heading/underline_h1_mobile.png) no-repeat;
     background-position-x: center;
@@ -538,6 +539,16 @@ canvas {
   }
   a {
     font-size: $mobileLinkFontSize
+  }
+  .bcmk{
+    grid-template-areas: 'left''right';
+    grid-template-columns: none !important;
+  }
+  .bcmk > .middle{
+    display: none !important;
+  }
+  #mbimg{
+    padding-top: $menuHeight;
   }
 }
 .container {
@@ -818,7 +829,12 @@ canvas {
   .bcrs {
     padding-top: 0 !important;
   }
-
+  .bcmk > div{
+    height: 200px;
+  }
+  .bcmk section {
+    margin-top: 4rem;
+  }
 }
 
 /* Contact Form */
