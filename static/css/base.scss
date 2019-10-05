@@ -446,8 +446,11 @@ canvas {
   justify-content: right;
   padding-right: 1rem;
 }
-#mobileLogo img{
+#small-mobile-logo img{
   width: 2.9rem;
+}
+#medium-mobile-logo img{
+  height: 2.9rem;
 }
 #closeMobileMenu{
   display: none;
@@ -544,6 +547,12 @@ canvas {
   }
   #mbimg{
     padding-top: $menuHeight;
+  }
+  #small-mobile-logo{
+    display:none;
+  }
+  #medium-mobile-logo{
+    display:block
   }
 }
 .container {
@@ -778,12 +787,13 @@ canvas {
   text-decoration: none;
 }
 @media only screen and (max-width: 771px) {
+  .bcls, .bcrs{
+    display:none;
+  }
   .bfsc {
     display: grid;
     grid-template-areas:
     'fbls'
-    'bcls'
-    'bcrs'
     'cbsf';
     grid-gap: 0px;
     padding: 0;
@@ -791,27 +801,12 @@ canvas {
   }
   .cbsf{
     background: none;
-    background-color: $primaryColor;
+    background-color: $blackColor;
     color: $whiteColor;
     padding: 20px 0 !important;
   }
-  .fbls {
-    background: url(/static/media/footer/mobile_line_footer.png) no-repeat;
-    background-position-y: center;
-    background-position-x: center;
-  }
   .fbls > img{
-    width: 15rem;
-  }
-  .bcls{
-    padding-bottom: 0 !important;
-    padding-top: 4rem !important;
-    background: url(/static/media/footer/mobile_line_footer_bottom.jpg) no-repeat;
-    background-position-y: top;
-    background-position-x: center;
-  }
-  .bcrs {
-    padding-top: 0 !important;
+    max-height: 5rem;
   }
   .bcmk > div{
     height: 200px;
@@ -821,6 +816,14 @@ canvas {
   }
 }
 
+@media only screen and (max-width: 500px) {
+#small-mobile-logo{
+  display:block;
+}
+#medium-mobile-logo{
+  display:none;
+}
+}
 /* Contact Form */
 
 #contact_form_post {
