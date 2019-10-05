@@ -28,7 +28,7 @@ class Teacher(models.Model):
     image = models.ImageField(
         upload_to='teachers/images/',
         default='teacher_imageDefault', blank=True,)
-    email = models.EmailField()
+    email = models.EmailField(blank=True)
     homepage = models.URLField(_(u'Deine Website'), blank=True, max_length=80)
     phone = PhoneField(_(u'Telefonnummer'), blank=True, default='+43 ', help_text='Telefonnummer')
     socialSecurityField = models.CharField(
@@ -36,10 +36,10 @@ class Teacher(models.Model):
         max_length=11, blank=True)
     iban = models.CharField(_(u'IBAN'), max_length=24, blank=True)
     bic = models.CharField(_(u'BIC'), max_length=20, blank=True)
-    adress_line = models.CharField(_(u'Straße'), max_length=80)
-    house_number = models.CharField(_(u'Hausnummer'), max_length=80)
-    postal_code = models.CharField(_(u'Postleitzahl'), max_length=4)
-    city = models.CharField(_(u'Wohnort'), max_length=30)
+    adress_line = models.CharField(_(u'Straße'), max_length=80, blank=True)
+    house_number = models.CharField(_(u'Hausnummer'), max_length=80, blank=True)
+    postal_code = models.CharField(_(u'Postleitzahl'), max_length=4, blank=True)
+    city = models.CharField(_(u'Wohnort'), max_length=30, blank=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     bio = models.TextField(null=True, blank=True)
