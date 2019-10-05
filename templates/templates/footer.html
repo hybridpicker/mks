@@ -1,21 +1,53 @@
 {% load static %}
 <!--Footer Grid Section -->
-<div class="bfsc">
-  <div class="fbls">
-    <img src="{% static "logo/musik-kunst-schule-logo-1024x120.jpg" %}" alt="Footer Logo MKS">
+<style>
+.logo-footer-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-column-gap: 70px;
+  grid-row-gap: 100px;
+  padding: 10px;
+}
+</style>
+
+<div class="logo-footer-container">
+  <div>
+    <img src="{% static "logo/footer/Europaballett_logo-1.png" %}" alt="">
   </div>
+  <div>
+    <img src="{% static "logo/footer/festwochen_2018.png" %}" alt="">
+  </div>
+  <div>
+    <img src="{% static "logo/footer/Logo_Kreativakademie-1024x1024.png" %}" alt="">
+  </div>
+  <div>
+    <img src="{% static "logo/footer/MKM_Logo_RGB.png" %}" alt="">
+  </div>
+  <div>
+    <img src="{% static "logo/footer/MKM_Logo_RGB.png" %}" alt="">
+  </div>
+  <div>
+    <img src="{% static "logo/footer/NOE_Kreativ-GmbH-1024x326.png" %}" alt="">
+  </div>
+  <div>
+    <img src="{% static "logo/footer/Europaballett_logo-1.png" %}" alt="">
+  </div>
+  <div>
+    <img src="{% static "logo/footer/Europaballett_logo-1.png" %}" alt="">
+  </div>
+</div>
+
+<div class="bfsc">
   <div class="bcls">
 
-  </div>
-  <div class="bscmbs">
-    <img src="{% static "media/footer/yt_icon_footer.jpg" %}" alt="Footer Youtube Channel Icon">
-    <img src="{% static "media/footer/fb_icon_footer.jpg" %}" alt="Footer Facebook Account Icon">
-    <img src="{% static "media/footer/insta_icon_footer.jpg" %}" alt="Footer Instagram Channel Icon">
   </div>
   <div class="bcrs">
 
   </div>
   <div class="cbsf">
-    © {% now "Y" %}
+    © {% now "Y" %} Musikschule & Kuntschule St. Pölten
+  </div>
+  <div class="fbls">
+    <img src="{% static "logo/abteilungslogo.png" %}" alt="Footer Logo MKS">
   </div>
 </div>
