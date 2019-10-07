@@ -6,7 +6,7 @@ class SubjectCategory(models.Model):
         return "%s" % (self.name)
 
 class Subject(models.Model):
-    subject = models.CharField(max_length=30)
+    subject = models.CharField(max_length=80)
     category = models.ForeignKey(SubjectCategory, on_delete=models.CASCADE)
 
     def __str__(self):

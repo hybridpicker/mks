@@ -6,6 +6,16 @@ $firstHeadingFontSize:45px;
 $firstHeadingFontColor:#222528;
 $firstHeadingFontLineHeight:61px;
 
+$secondHeadingFamily:'Montserrat', sans-serif;
+$secondHeadingFontSize:40px;
+$secondHeadingFontColor:#222528;
+$secondHeadingFontLineHeight:61px;
+
+$thirdHeadingFamily:'Montserrat', sans-serif;
+$thirdHeadingFontSize:30px;
+$thirdHeadingFontColor:#222528;
+$thirdHeadingFontLineHeight:61px;
+
 $paragraphFontFamily:'Lato', sans-serif;
 $paragraphFontSize:24px;
 $paragraphFontColor:#222528;
@@ -190,24 +200,18 @@ h1{
   padding-bottom: 1rem;
 }
 h2{
-  font-family: 'Dosis', Semibold;
-  color: rgba(0,0,0,.84);
-  font-size: 35px;
+  font-family: $secondHeadingFamily;
+  font-size: $secondHeadingFontSize;
+  color: $secondHeadingFontColor;
   text-align: center;
-  background: url(/static/media/heading/underline_h2.png) no-repeat;
   padding-bottom: 0.1em;
-  background-position-x: center;
-  background-position-y: bottom;
 }
 h3{
-  font-family: 'Dosis', Semibold;
-  color: rgba(0,0,0,.84);
-  font-size: 33px;
+  font-family: $thirdHeadingFamily;
+  font-size: $thirdHeadingFontSize;
+  color: $thirdHeadingFontColor;
   text-align: center;
-  background: url(/static/media/heading/underline_h3.png) no-repeat;
   padding-bottom: 0.1em;
-  background-position-x: center;
-  background-position-y: bottom;
 }
 p {
   font-family: $paragraphFontFamily;
@@ -647,6 +651,9 @@ canvas {
 .dropdown:hover .dropdown-hover-section {
   display: block;
 }
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 /* Show the dropdown menu on hover */
 .dropdown-b:hover .dropdown-hover-section-b {
   display: block;
@@ -1026,22 +1033,58 @@ a button {
   grid-gap: 10px;
   padding: 10px;
 }
-
 .tnmc > div {
   text-align: center;
-  padding: 20px 0;
 }
-.tbt {
-  background: url(/static/media/boxes/box_yellow_01.png);
-  margin-left: 2em;
-  background-repeat: no-repeat;
-  background-size: cover;
+.tnmc{
+  grid-template-areas: 'tpcf' 'tnmhl' 'tbt' 'htyt' 'yt_id_1' 'yt_id_2';
+  border: solid 1px #2225281c;
+  -webkit-box-shadow: 6px 7px 17px -2px #22252829;
+  -moz-box-shadow: 6px 7px 17px -2px #22252829;
+  box-shadow: 6px 7px 17px -2px #22252829;
+  border-bottom-right-radius: 0.8rem;
+  border-bottom-left-radius: 0.8rem;
 }
-
-.info_text {
-  padding-top: 1em;
-  margin: auto;
-  width: 80%;
+.tnmhl > .teaching-name {
+  background: url(/static/media/heading/underline_h3_teacher.png) no-repeat;
+  background-position-x: center;
+  background-position-y: bottom;
+}
+.teaching-name > h3{
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.grtnmc {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 0.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  margin-left: auto;
+  margin-right: auto;
+}
+.grtnmc > div{
+  grid-gap: 1rem;
+}
+.icc-tpcfptr{
+  overflow: hidden;
+  height: 22rem;
+  width: 18rem;
+}
+.info-text > p{
+  padding:0;
+  margin: 0;
+  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 18rem;
+}
+.info-text > a{
+  font-size: $linkFontSize;
+}
+.icc-tpcfptr{
+  border-bottom-width: 1rem;
+  border-bottom-style: solid;
+  border-color:$primaryColor;
 }
 .tpcf {
   width: auto;
@@ -1055,12 +1098,6 @@ a button {
   background-size: contain;
   background-position: center;
 }
-.tpcfptr {
-  background: url(/static/media/boxes/border_green_01.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-}
 .tpcf img{
   max-width: 420px;
   padding-top: 1.9em;
@@ -1068,21 +1105,25 @@ a button {
   padding-right: 0.5em;
   padding-bottom: 0.8em;
 }
-.tbt {
-  width: auto;
-}
 .tnmc {
-  margin-left: 7%;
-  margin-right: 7%
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  height: 40rem;
+  max-width: 18rem;
+  margin-bottom: 2rem;
+}
+.heading-teaching{
+  color:$primaryColor;
+  text-align: left;
 }
 .tpcfptr img {
-  padding-right: 0.5em;
-  padding-top: 2.5em;
-  padding-bottom: 1em;
-  padding-left: 0.5em;
-  max-width: 300px;
+  max-width: 100%;
 }
-
+.tbt > .info-text{
+  height:8rem;
+  word-break: break-word;
+}
 @media only screen and (max-width: 1200px) {
 .tnmc{
   grid-template-areas:
@@ -1114,9 +1155,6 @@ a button {
     margin-left: 0;
     margin-right: 0;
   }
-  .info_text {
-    width: 70%;
-  }
 }
 /* Mobile */
 @media only screen and (max-width: 772px){
@@ -1124,14 +1162,6 @@ a button {
     grid-gap: 0;
     padding: 0;
     display:unset;
-  }
-  .tbt {
-   margin-left: 0;
-   background: #d1c062;
-   padding-bottom: 30px;
-  }
-  .info_text {
-    width: 90%;
   }
   .tpcflsc img {
    width: 83%;

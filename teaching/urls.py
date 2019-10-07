@@ -5,10 +5,10 @@ from django.views.generic import TemplateView
 from . import views
 import teaching.get_students
 from teaching.get_students import get_all_students, get_student
-from teaching.views import calendar_request
+from teaching.show_teacher_view import show_teacher_view
 
 urlpatterns = [
-    path('calendar', teaching.views.calendar_request, name='teaching_calendar'),
     path('allstudents', teaching.get_students.get_all_students, name='get_all_students'),
     path('singlestudent', teaching.get_students.get_student, name='get_student'),
+    path('all_teachers', teaching.show_teacher_view.show_teacher_view, name="all_teachers")
 ]

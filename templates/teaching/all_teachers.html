@@ -1,0 +1,106 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% load i18n static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+<meta name="title" content="Gitarrenunterricht in St. Pölten | Gitarrenlehrer in der Landeshauptstadt">
+<meta name="description" content="Unser Gitarrenunterricht in St. Pölten wird von unserem Gitarrenlehrer Simon Cremer direkt in der Innenstadt von St. Pölten angeboten.">
+
+<!-- Social Media Meta --->
+<meta property="og:title" content="Gitarrenunterricht in St. Pölten | Gitarrenlehrer in der Landeshauptstadt">
+<meta property="og:description" content="Unser Gitarrenunterricht in St. Pölten wird von unserem Gitarrenlehrer Simon Cremer direkt in der Innenstadt von St. Pölten angeboten.">
+<meta property="og:image" content="static/media/thumbnail/facebook/teaching_guitar.jpg">
+<meta property="og:url" content="https://blessond.com/gitarrenunterricht">
+
+<meta name="twitter:title" content="Gitarrenunterricht in St. Pölten | Gitarrenlehrer in der Landeshauptstadt">
+<meta name="twitter:description" content="Unser Gitarrenunterricht in St. Pölten wird von unserem Gitarrenlehrer Simon Cremer direkt in der Innenstadt von St. Pölten angeboten.">
+<meta name="twitter:image" content="static/media/thumbnail/twitter/teaching_guitar.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h1>Unsere Pädagog_innen</h1>
+    <p>Hier findest du eine kurze biografische Vorstellung samt Fotos unserer Gitarrenlehrer, sowie jeweils 2 Youtube Links, damit du dir auch auditiv einen Eindruck von ihrem musikalischen Können machen kannst.</p>
+
+    <h2 class="heading-teaching">Zupfinstrumente</h2>
+    <section class="grtnmc">
+      {% for teacher in teacher_picked %}
+      <div class="tnmc">
+        <div class="tnmhl">
+          <section class="teaching-name">
+            <h3>{{teacher.first_name}}</h3>
+            <h3>{{teacher.last_name}}</h3>
+          </section>
+        </div>
+        <div class="tpfcf">
+          <div class="tpcfptr">
+            <div class="icc-tpcfptr">
+              <img class="teacher_img" src="{{ teacher.image.url }}" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="tbt">
+          <div class="info-text">
+            <p>{{ teacher.subject }}</p>
+            <a href="{{ teacher.homepage }}">{{ teacher.homepage }}</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+
+    <h2 class="heading-teaching">Tasteninstrumente</h2>
+    {% for teacher in teacher_keys %}
+    <div class="tnmc">
+      <div class="tnmhl">
+        <section class="teaching-name">
+          <h3>{{teacher.first_name}}</h3>
+          <h3>{{teacher.last_name}}</h3>
+        </section>
+      </div>
+      <div class="tpfcf">
+        <div class="tpcfptr">
+          <div class="icc-tpcfptr">
+            <img class="teacher_img" src="{{ teacher.image.url }}" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="tbt">
+        <div class="info-text">
+          <p>{{ teacher.subject }}</p>
+          <a href="{{ teacher.homepage }}">{{ teacher.homepage }}</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+{{ category }}
+{% for teacher in teacher_strings %}
+{{ teacher }}
+{% endfor %}
+
+
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

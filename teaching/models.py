@@ -27,7 +27,7 @@ class Teacher(models.Model):
         blank=True,)
     image = models.ImageField(
         upload_to='teachers/images/',
-        default='teacher_imageDefault', blank=True,)
+        default='teachers/teacher_image_default.svg', blank=True,)
     email = models.EmailField(blank=True)
     homepage = models.URLField(_(u'Deine Website'), blank=True, max_length=80)
     phone = PhoneField(_(u'Telefonnummer'), blank=True, default='+43 ', help_text='Telefonnummer')
@@ -45,7 +45,6 @@ class Teacher(models.Model):
     bio = models.TextField(null=True, blank=True)
     youtube_id_one = models.CharField(_(u'Youtube Video ID 1'), max_length=24, blank=True)
     youtube_id_two = models.CharField(_(u'Youtube Video ID 2'), max_length=24, blank=True)
-
 
     def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)
