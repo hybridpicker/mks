@@ -590,6 +590,12 @@ canvas {
   width: auto;
   padding: 0.75rem 1.3rem;
 }
+.dropdown a, .nodown a, .dropdown-b a, .dropdown-c a, .dropdown-d a, .dropdown-e a {
+  text-decoration: none;
+  color: $menuColor;
+  font-size: $menuFontSize;
+  font-family: $menudFontFamily;
+}
 .dropdown:hover, .dropdown-b:hover, .dropdown-c:hover, .dropdown-d:hover, .dropdown-e:hover{
   cursor: pointer;
 }
