@@ -3,13 +3,33 @@
 <style>
 .logo-footer-container {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto;
   grid-column-gap: 70px;
   grid-row-gap: 100px;
   padding: 10px;
 }
 .logo-footer-container > div > img{
   width:100%;
+}
+@media screen and (max-width: 1200px) {
+  .logo-footer-container{
+  grid-template-columns: auto auto auto auto;
+  }
+}
+@media screen and (max-width: 800px) {
+  .logo-footer-container{
+  grid-template-columns: auto auto auto;
+  }
+}
+@media screen and (max-width: 650px) {
+  .logo-footer-container{
+  grid-template-columns: auto auto;
+  }
+}
+@media screen and (max-width: 490px) {
+  .logo-footer-container{
+  grid-template-columns: auto;
+  }
 }
 </style>
 

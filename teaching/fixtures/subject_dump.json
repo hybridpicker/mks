@@ -1,1 +1,0 @@
-[{"model": "teaching.subject", "pk": 1, "fields": {"subject": "Gitarre"}}, {"model": "teaching.subject", "pk": 2, "fields": {"subject": "Klavier"}}, {"model": "teaching.subject", "pk": 3, "fields": {"subject": "Gesang"}}]

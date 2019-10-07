@@ -15,28 +15,21 @@
           <div class="dropdown arrow">
             <button class="dropbtn">Bildungsangebot</button>
             <div class="dropdown-content">
-            <a href="{% url 'all_teachers'%}">Unsere Pädagog_innen</a>
             </div>
             <div class="dropdown-hover-section">
             </div>
           </div>
           <div class="dropdown-b arrow">
-            <button class="dropbtn-b">Online</button>
-            <div class="dropdown-content-b">
+            <button class="dropbtn-b">Galerie</button>
+            <div class="dropdown-content">
             </div>
             <div class="dropdown-hover-section-b">
             </div>
           </div>
-          <div class="dropdown-c arrow">
-            <button class="dropbtn-c">Blog</button>
-            <div class="dropdown-content-c">
-              <a href="{% url 'blog_summary' %}">All Posts</a>
-            </div>
-            <div class="dropdown-hover-section-c">
-            </div>
-          </div>
           <div class="dropdown-d arrow">
-            <button class="dropbtn-d">Über</button>
+            <button class="dropbtn-d">
+              <a href="{% url 'all_teachers'%}">Über Uns</a>
+            </button>
             <div class="dropdown-content-d">
               <a href="{% url 'contact_email' %}">Kontakt</a>
             </div>
@@ -74,10 +67,10 @@
           <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
             <img id="closemobleHamburger" src="{% static "media/nav/mobile/hamburger_mobile_active.png" %}" alt="mobile Hamburger icon"></a>
           <a class="mainHeadingMobile" href="#">Bildungsangebot</a>
-          <a href="{% url 'all_teachers'%}">Unsere Pädagog_innen</a>
-          <a class="mainHeadingMobile" href="#">Online</a>
+          <a href="{% url 'all_teachers'%}">Über Uns</a>
+          <a class="mainHeadingMobile" href="#">Galerie</a>
           <a class="mainHeadingMobile" href=""{% url 'blog_summary' %}">Blog</a>
-          <a class="mainHeadingMobile" href="#">Über</a>
+          <a class="mainHeadingMobile" href="#">Über Uns</a>
           <a class="mainHeadingMobile" href="{% url 'contact_email' %}">Kontakt</a>
         </div>
       </div>

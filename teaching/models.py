@@ -46,6 +46,10 @@ class Teacher(models.Model):
     youtube_id_one = models.CharField(_(u'Youtube Video ID 1'), max_length=24, blank=True)
     youtube_id_two = models.CharField(_(u'Youtube Video ID 2'), max_length=24, blank=True)
 
+    def homepage_adress(self):
+        hp = self.homepage.replace('https://', '').replace('http://', '').replace('/', '') 
+        return hp
+
     def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)
 

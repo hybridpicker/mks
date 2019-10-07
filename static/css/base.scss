@@ -95,6 +95,7 @@ left:0;right:0;
 a {
   color: $linkColor;
   text-decoration: none;
+  font-family: $paragraphFontFamily;
 }
 a:hover {
   text-decoration: underline;
@@ -703,7 +704,7 @@ canvas {
 }
 .fbls {
   background-color: #FED700;
-  height: 80px;
+  height: 50px;
 }
 .fbls > img {
   max-height: 100%;
@@ -739,8 +740,8 @@ canvas {
   font-size: 18px !important;
   line-height: 1.5 !important;
   color:$whiteColor;
-  padding-top: 50px !important;
-  padding-bottom: 50px !important;
+  padding-top: 35px !important;
+  padding-bottom: 35px !important;
   text-align: center !important;
 }
 .bcmk {
@@ -819,7 +820,7 @@ canvas {
     padding: 20px 0 !important;
   }
   .fbls > img{
-    max-height: 5rem;
+    max-height: 3.5rem;
   }
   .bcmk > div{
     height: 200px;
@@ -1029,20 +1030,11 @@ a button {
 .htyt { grid-area: htyt; }
 .yt_id_1 { grid-area: yt_id_1; }
 .yt_id_1 { grid-area: yt_id_2; }
-.tnmc {
-  display: grid;
-  grid-template-areas:
-  'tnmhl tnmhl'
-  'tpcf tbt'
-  'htyt htyt'
-  'yt_id_1 yt_id_2';
-  grid-gap: 10px;
-  padding: 10px;
-}
 .tnmc > div {
   text-align: center;
 }
 .tnmc{
+  display: grid;
   grid-template-areas: 'tpcf' 'tnmhl' 'tbt' 'htyt' 'yt_id_1' 'yt_id_2';
   border: solid 1px #2225281c;
   -webkit-box-shadow: 6px 7px 17px -2px #22252829;
@@ -1075,6 +1067,10 @@ a button {
   overflow: hidden;
   height: 22rem;
   width: 18rem;
+}
+.info-text{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 .info-text > p{
   padding:0;
@@ -1115,13 +1111,18 @@ a button {
   padding-left: 0;
   padding-right: 0;
   padding-top: 0;
-  height: 38rem;
+  height: 42rem;
   max-width: 18rem;
   margin-bottom: 2rem;
 }
 .heading-teaching{
   color:$primaryColor;
   text-align: left;
+}
+@media only screen and (max-width: 800px) {
+.heading-teaching{
+  text-align: center;
+}
 }
 .tpcfptr img {
   max-width: 100%;
@@ -1131,15 +1132,6 @@ a button {
   word-break: break-word;
 }
 @media only screen and (max-width: 1200px) {
-.tnmc{
-  grid-template-areas:
-  'tpcf'
-  'tnmhl'
-  'tbt'
-  'htyt'
-  'yt_id_1'
-  'yt_id_2';
-}
 .grtnmc {
   margin-left: -22px;
   grid-template-columns: repeat(3, 1fr);
@@ -1188,7 +1180,6 @@ a button {
   .tnmc {
     grid-gap: 0;
     padding: 0;
-    display:unset;
     margin-left: auto;
     margin-right: auto;
   }
