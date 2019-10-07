@@ -1115,7 +1115,7 @@ a button {
   padding-left: 0;
   padding-right: 0;
   padding-top: 0;
-  height: 40rem;
+  height: 38rem;
   max-width: 18rem;
   margin-bottom: 2rem;
 }
@@ -1133,15 +1133,36 @@ a button {
 @media only screen and (max-width: 1200px) {
 .tnmc{
   grid-template-areas:
-  'tnmhl'
   'tpcf'
+  'tnmhl'
   'tbt'
   'htyt'
   'yt_id_1'
   'yt_id_2';
 }
+.grtnmc {
+  margin-left: -22px;
+  grid-template-columns: repeat(3, 1fr);
 }
-
+}
+@media only screen and (max-width: 900px) {
+  .grtnmc {
+    grid-template-columns: repeat(2, 1fr);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .tnmc{
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media only screen and (max-width: 585px) {
+  .grtnmc {
+    grid-template-columns: repeat(1, 1fr);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 /* teaching material */
 .tmcb {
   display: grid;
@@ -1168,6 +1189,8 @@ a button {
     grid-gap: 0;
     padding: 0;
     display:unset;
+    margin-left: auto;
+    margin-right: auto;
   }
   .tpcflsc img {
    width: 83%;
