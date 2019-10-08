@@ -480,6 +480,7 @@ canvas {
   text-align: left;
   padding-left: 3em !important;
 }
+
 .st0{fill:#009FE4;}
 .st1{fill:#FFE500;}
 .st2{fill:#00A1E4;}
@@ -494,8 +495,9 @@ canvas {
 .st11{fill:#222528;}
 
 #mks-logo-svg{
-  width: 25rem;
-  padding-top: 6px;
+  height: 3rem;
+  padding-top: 10px;
+  padding-left: 10px;
 }
 .bnbs > .bls{
   text-align: left;
@@ -533,6 +535,12 @@ canvas {
     font-size: 20px;
     color: $paragraphFontColor;
     font-family: $linkFontFamily;
+  }
+  #mks-logo-svg{
+    padding-top: 4px;
+  }
+  #hamurger-mobile{
+    padding-top: 6px;
   }
   .bnbs{
     display:none;
@@ -855,6 +863,7 @@ a {
 @media only screen and (max-width: 500px) {
 #small-mobile-logo{
   display:block;
+  padding-top: 4px;
 }
 #medium-mobile-logo{
   display:none;

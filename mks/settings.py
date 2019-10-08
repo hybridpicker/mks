@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'school.apps.SchoolConfig',
     'instruments.apps.InstrumentsConfig',
+    'events.apps.EventsConfig',
 ]
 
 MIDDLEWARE = [
