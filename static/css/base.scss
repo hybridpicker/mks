@@ -480,8 +480,28 @@ canvas {
   text-align: left;
   padding-left: 3em !important;
 }
+.st0{fill:#009FE4;}
+.st1{fill:#FFE500;}
+.st2{fill:#00A1E4;}
+.st3{fill:#00A0E4;}
+.st4{fill:#00A3E6;}
+.st5{fill:#00A3E5;}
+.st6{fill:#00A2E5;}
+.st7{fill:#FFFFFF;}
+.st8{fill:#D73538;}
+.st9{fill:#222527;}
+.st10{fill:#D73538;}
+.st11{fill:#222528;}
 
-@media only screen and (max-width: 1040px), only screen and (max-height: 375px) {
+#mks-logo-svg{
+  width: 25rem;
+  padding-top: 6px;
+}
+.bnbs > .bls{
+  text-align: left;
+}
+
+@media only screen and (max-width: 1350px), only screen and (max-height: 375px) {
   #mks-nav-mobile-menu {
     display: block;
     height: 100%;
