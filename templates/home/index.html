@@ -47,6 +47,22 @@
     <h1>{{ name }}</h1>
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. <a href="#">Stet clita</a> kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
   </div>
+
+  <div class="counter-grid-container">
+    <div class="counter-left">
+      <section>
+        <h2>< 2000</h2>
+        <p>Schüler_innen</p>
+      </section>
+    </div>
+    <div class="counter-right">
+      <section>
+        <h2>{{ teacher_counter }}</h2>
+        <p>Lehrer_innen</p>
+      </section>
+    </div>
+  </div>
+
   <div class="container">
     <h1>Veranstaltungen</h1>
   </div>
@@ -70,20 +86,14 @@
 
   </div>
 
-  <div class="counter-grid-container">
-    <div class="counter-left">
-      <section>
-        <h2>< 2000</h2>
-        <p>Schüler_innen</p>
-      </section>
-    </div>
-    <div class="counter-right">
-      <section>
-        <h2>{{ teacher_counter }}</h2>
-        <p>Lehrer_innen</p>
-      </section>
-    </div>
-  </div>
+<div class="maps-google">
+  <iframe
+  width="100%"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkYm2GG7TLXTN9QpznK6tjT35PMh3PNas
+    &q=Musikschule+St.Pölten+3100" allowfullscreen>
+</iframe>
+</div>
 
   {% endblock %}
   {% block footer %}
