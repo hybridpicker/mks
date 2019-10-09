@@ -1528,3 +1528,98 @@ td {
   font-size: 20px;
   height: 2.5rem;
 }
+/*Events */
+.event-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "mks-event-date mks-event-title mks-event-title mks-event-title" "mks-event-time mks-event-venue mks-event-venue mks-event-venue";
+  margin-left: 25%;
+  background-color: $whiteColor;
+}
+.banner{
+  grid-area: banner;
+}
+.mks-event-date {
+  grid-area: mks-event-date;
+  text-align:right;
+  margin-left: 25%;
+}
+.mks-event-date, .mks-event-title{
+  border-bottom: 4px #E9E9EA solid;
+}
+.mks-event-date > h3 {
+  text-align: right;
+  margin-bottom: 0;
+  color: $primaryColor;
+}
+.mks-event-title {
+  grid-area: mks-event-title;
+}
+.mks-event-title > h3 {
+  text-align: left;
+  margin-bottom: 0;
+}
+.mks-event-time {
+  grid-area: mks-event-time;
+  text-align:right;
+}
+.mks-event-time > p{
+  margin-top:0;
+  text-align: right;
+  padding: 0;
+}
+.mks-event-date, .mks-event-time{
+  padding-right: 2%;
+}
+.mks-event-venue {
+  grid-area: mks-event-venue;
+}
+.mks-event-venue > p {
+  margin-top:0;
+  text-align: left;
+  padding: 0;
+}
+.mks-event-title, .mks-event-venue{
+  padding-left: 1%;
+}
+
+/* Counter */
+.counter-grid-container {
+  background-color: $secondaryColor;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "counter-left counter-left counter-right counter-right" "counter-left counter-left counter-right counter-right" "counter-left counter-left counter-right counter-right";
+  height: 25rem;
+}
+@media only screen and (max-width: 850px) {
+  .counter-grid-container{
+  grid-template-columns: none;
+  grid-template-rows: none;
+  grid-template-areas: "counter-left" "counter-right";
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+.event-container {
+margin-left: unset;
+}
+}
+.counter-left {
+  grid-area: counter-left;
+}
+.counter-left h2, .counter-right h2{
+  color: $primaryColor;
+}
+.counter-left p, .counter-right p{
+  color: $whiteColor;
+  text-align: center;
+}
+.counter-left > section, .counter-right section{
+  margin-top:auto;
+  margin-bottom:auto;
+}
+.counter-left, .counter-right{
+  display: grid;
+}
+.counter-right { grid-area: counter-right; }

@@ -15,6 +15,7 @@
 <meta name="twitter:description" content="Erfolgreicher Gitarrenunterricht und Klavierunterricht für St. Pölten. Unsere Musiklehrer für E-Gitarre, Akustikgitarre und Klavier sowie Erwachsene und Kinder.">
 <meta name="twitter:image" content="static/media/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
+
 {% endblock %}
 
 {% block navbar %}
@@ -28,30 +29,63 @@
 {% block body %}
 <div class="bcmk">
   <div class="left">
-		<section>
-			<a href="#">Anmeldung Musikschule</a>
-		</section>
-	</div>
+    <section>
+      <a href="#">Anmeldung Musikschule</a>
+    </section>
+  </div>
   <div class="middle">
-		<img src="/static/media/banner/home_banner_two.jpg" alt="">
-	</div>
+    <img src="/static/media/banner/home_banner_two.jpg" alt="">
+  </div>
   <div class="right">
-		<section>
-			<a href="#">Anmeldung Kunstschule</a>
-		</section>
-	</div>
-</div>
-<div class="mbs">
-	<div class="container">
-		<h1>{{ name }}</h1>
-		<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. <a href="#">Stet clita</a> kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-
-    {% for event in events %}
-    {{ event }}
-    {% endfor %}
+    <section>
+      <a href="#">Anmeldung Kunstschule</a>
+    </section>
   </div>
 </div>
-{% endblock %}
-{% block footer %}
+<div class="mbs">
+  <div class="container">
+    <h1>{{ name }}</h1>
+    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. <a href="#">Stet clita</a> kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+  </div>
+  <div class="container">
+    <h1>Veranstaltungen</h1>
+  </div>
+  <div class="all-events-container">
+    {% for event in events %}
+    <div class="event-container">
+      <div class="mks-event-date">
+        <h3>{{ event.get_date_presentation }}</h3>
+      </div>
+      <div class="mks-event-title">
+        <h3>{{ event.name }}</h3>
+      </div>
+      <div class="mks-event-time">
+        <p>{{ event.get_time_presentation }}</p>
+      </div>
+      <div class="mks-event-venue">
+        <p>{{ event.venue }}</p>
+      </div>
+    </div>
+    {% endfor %}
 
-{% endblock %}
+  </div>
+
+  <div class="counter-grid-container">
+    <div class="counter-left">
+      <section>
+        <h2>< 2000</h2>
+        <p>Schüler_innen</p>
+      </section>
+    </div>
+    <div class="counter-right">
+      <section>
+        <h2>{{ teacher_counter }}</h2>
+        <p>Lehrer_innen</p>
+      </section>
+    </div>
+  </div>
+
+  {% endblock %}
+  {% block footer %}
+
+  {% endblock %}

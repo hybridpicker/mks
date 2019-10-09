@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from school.models import MusicSchool
 from events.models import Event
+from teaching.models import Teacher
 
 # Create your views here.
 
@@ -11,10 +12,13 @@ def home (request):
     name = school_data.school_name
     logo = school_data.school_logo
     events = Event.objects.all()
+    teachers = Teacher.objects.all()
+    teacher_counter = len(teachers)
     context = {
-        'events': events,   
+        'events': events,
         'name': name,
         'logo': logo,
+        'teacher_counter': teacher_counter,
         }
     return render(request, 'home/index.html', context)
 
