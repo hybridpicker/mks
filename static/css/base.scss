@@ -1533,7 +1533,6 @@ td {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas: "mks-event-date mks-event-title mks-event-title mks-event-title" "mks-event-time mks-event-venue mks-event-venue mks-event-venue";
-  margin-left: 25%;
   background-color: $whiteColor;
 }
 .banner{
@@ -1668,4 +1667,34 @@ margin-left: unset;
   .logo-footer-container{
   grid-template-columns: auto auto;
   }
+}
+
+section.events-container-grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr 1fr;
+grid-template-rows: 1fr 1fr 1fr;
+grid-template-areas: "all-events-banner all-events-container all-events-container all-events-container" "all-events-banner all-events-container all-events-container all-events-container" "all-events-banner all-events-container all-events-container all-events-container";
+}
+
+.all-events-banner {
+grid-area: all-events-banner;
+background-color: $primaryColor;
+}
+
+.all-events-container {
+grid-area: all-events-container;
+}
+section.events-container-grid h1{
+  margin-left: calc((100% / 4) * -1);
+}
+@media screen and (max-width: 800px) {
+section.events-container-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "all-events-container";
+}
+section.events-container-grid h1{
+  margin-left: 0;
+}
 }
