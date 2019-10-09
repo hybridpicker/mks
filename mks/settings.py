@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'school.apps.SchoolConfig',
     'instruments.apps.InstrumentsConfig',
     'events.apps.EventsConfig',
+    'gallery.apps.GalleryConfig',
 ]
 
 MIDDLEWARE = [

@@ -34,7 +34,9 @@ urlpatterns = [
     path('', home.views.home, name='home_view'),
     path('users/', include('users.urls')),
     path('', include('contact.urls')),
+    path('', include('gallery.urls')),
     path('', include('teaching.urls')),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 #if settings.DEBUG:
