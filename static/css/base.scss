@@ -899,10 +899,9 @@ canvas {
 #contact_form_post textarea {
   width: 47%;
   padding: 1.5%;
-  border-radius: 18px;
   resize: none;
-  font-family: Alegreya Sans;
-  font-size: 18px;
+  font-family: $paragraphFontFamily;
+  font-size: $paragraphFontSize;
   line-height: 1.5;
 }
 #contact_form_post .row .col-4 {
@@ -929,11 +928,10 @@ form input {
   padding-left: 1.5%;
 }
 input {
-  font-family: 'Dosis', sans-serif;
+  font-family: $paragraphFontFamily;
   font-size: 18px;
   width: 40%;
   height: 40px;
-  border-radius: 10px;
   background: #fff;
   border-width: 0.5px;
 }
@@ -953,9 +951,9 @@ input {
 /* The container must be positioned relative: */
 .sfbsfcon {
   position: relative;
-  font-family: 'Dosis', sans-serif;
+  font-family: $paragraphFontFamily;
   font-size: 18px;
-  font-color: #0F262B;
+  color: $blackColor;
   display: inline-block;
   width: 11%;
   margin-left: 0.5em;
@@ -972,7 +970,6 @@ input {
   left: 0;
   right: 0;
   z-index: 99;
-  border-radius: 0px 0px 18px 18px;
   overflow-y: scroll;
 }
 #catsfbsf > .slitcon {
@@ -980,7 +977,7 @@ input {
   height: auto;
 }
 .slitcon div {
-  padding: 6px 10px;
+  padding: 10px 10px;
   border-right: 1px solid;
   border-left: 1px solid;
   border-right-color: currentcolor;
@@ -992,16 +989,15 @@ input {
   border-bottom: 1px solid;
   border-bottom-color: currentcolor;
   border-color: #0F262B4D;
-  border-radius: 0px 0px 18px 18px;
 }
 #catsfbsf > .slitcon div:last-of-type {
   border-bottom: 1px solid;
   border-bottom-color: currentcolor;
   border-color: #0F262B4D;
-  border-radius: 0 0 18px 18px;
 }
 .slitcon div:hover, .swasd {
-  background-color: #C7B22E20;
+  background-color:#D7383B17;
+
 }
 .sfbsfcon {
   width: 50%;
@@ -1022,16 +1018,15 @@ input {
   }
 }
 form button, a button {
-  font-family: 'Dosis', sans-serif;
+  font-family: $firstHeadingFamily;
   font-size: 18px;
-  box-shadow: 0 4px #7E1444;
+  box-shadow: 0 4px #BD2123;
   width: 20%;
   height: 50px;
-  border-radius: 10px;
-  background: #BA1A63;
+  background: $primaryColor;
   border-width: 0.5px;
-  color: #fff;
-  border-color: #81124557;
+  color: $whiteColor;
+  border-color: #BD2123;
   margin: 1rem;
 }
 form button:hover, a button:hover {
@@ -1062,9 +1057,13 @@ a button {
     width: auto;
   }
 }
-#contact_form_post p {
+#contact_form_post p, {
   line-height: 5px;
-  font-size: 18px;
+  font-size: $paragraphFontSize;
+  padding: 0;
+}
+.sese{
+  font-size: $paragraphFontSize;
 }
 #contact_form_post {
   padding-right: 1.5%;
@@ -1367,8 +1366,7 @@ a button {
 }
 
 .sese {
-  background-color: #fff;
-  border-radius: 18px 0 18px 18px;
+  background-color: $whiteColor;
   box-shadow: 0px 2px 2px 1px #00000005;
 }
 
@@ -1441,13 +1439,13 @@ a button {
   border-left: 1px solid;
   border-right-color: currentcolor;
   border-left-color: currentcolor;
-  border-color: #0F262B4D;
+  border-color: $blackColor;
   cursor: pointer;
 }
 #catsfbsf > .slit div:last-of-type {
   border-bottom: 1px solid;
   border-bottom-color: currentcolor;
-  border-color: #0F262B4D;
+  border-color: $blackColor;
   border-radius: 0 0 18px 18px;
 }
 .slit div:hover, .swasd {
