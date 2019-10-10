@@ -18,8 +18,8 @@ class PhotoCategory(models.Model):
 class Photo(models.Model):
     title = models.CharField(_(u'Title of the Photo'), max_length=50)
     images = models.ImageField(
-        upload_to='portfolio/images/',
-        default='portfolio_imageDefault', blank=True)
+        upload_to='gallery/images/',
+        default='gallery_imageDefault', blank=True)
     description = models.TextField(null=True, blank=True)
     ordering = models.IntegerField(null=True, blank=True)
     category = models.ForeignKey(

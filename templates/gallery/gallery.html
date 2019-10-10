@@ -15,6 +15,8 @@
 <meta name="twitter:description" content="Erfolgreicher Gitarrenunterricht und Klavierunterricht für St. Pölten. Unsere Musiklehrer für E-Gitarre, Akustikgitarre und Klavier sowie Erwachsene und Kinder.">
 <meta name="twitter:image" content="static/media/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
+
+
 {% endblock %}
 
 {% block navbar %}
@@ -25,21 +27,54 @@
 {% block body %}
 
 <div class="mbs">
-  <div class="container">
+  <div class="container gallery">
     <h1>Galerie</h1>
-    <section class="grid-linh item4 portfolio-linh">
+    <nav class="gallery-nav-bar">
+      {% for category in category %}
+      {% if category.id == category_id %}
+      <h2>
+      <a class="active" href="?category={{category.id}}">{{category}}</a>
+      </h2>
+      {% else %}
+      <h2>
+      <a href="?category={{category.id}}">{{category}}</a>
+      </h2>
+      {% endif %}
+      {% endfor %}
+    </nav>
+    <section class="gallery-show">
       {% for photo in photos %}
       {% if photo.images.height <= photo.images.width %}
       <img onclick="showImg({{photo.id}})" id="{{photo.id}}" class="landscape" style=""src="{{ photo.images.url }}" alt="">
+      {% elif photo.images.height <= photo.images.width %}
+      <img onclick="showImg({{photo.id}})" id="{{photo.id}}" class="square" style=""src="{{ photo.images.url }}" alt="">
       {% else %}
       <img onclick="showImg({{photo.id}})" id="{{photo.id}}" class="portrait" style=""src="{{ photo.images.url }}" alt="">
       {% endif %}
       {% endfor %}
     </section>
-  </div>
+    <section onclick="blockImg()" id="overlay-image-section" class="overlay image">
+      <img id="overlay-show-img" src="" alt="">
+      <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="blockImg()">
+        {% include "templates/svg/nav_bar_crossburger.html" %}
+    </a>
+  </section>
+</div>
 
 
-  {% endblock %}
-  {% block footer %}
-
-  {% endblock %}
+{% endblock %}
+{% block footer %}
+<script type="text/javascript">
+  function showImg(id){
+    src = document.getElementById(id).src
+    document.getElementById("overlay-show-img").src = src
+    document.getElementById("overlay-image-section").style.display = "block";
+    document.querySelector("header").style.zIndex = "0"
+    console.log(src)
+  }
+  function blockImg(){
+    document.getElementById("overlay-image-section").style.display = "none";
+    document.querySelector("header").style.zIndex = "99"
+  }
+</script>
+{% endblock %}

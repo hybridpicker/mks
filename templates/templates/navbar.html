@@ -19,7 +19,10 @@
             </div>
           </div>
           <div class="dropdown-b arrow">
-            <button class="dropbtn-b">Galerie</button>
+            <button class="dropbtn-b">
+              <a href="{% url 'gallery_view'%}">
+              Galerie</a>
+            </button>
             <div class="dropdown-content">
             </div>
             <div class="dropdown-hover-section-b">
@@ -68,10 +71,11 @@
 <div id="mks-nav-mobile-menu" class="overlay">
   <div class="overlay-content">
     <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
-      <img id="closemobleHamburger" src="{% static "media/nav/mobile/hamburger_mobile_active.png" %}" alt="mobile Hamburger icon"></a>
+      {% include "templates/svg/nav_bar_crossburger.html" %}
+    </a>
       <a class="mainHeadingMobile" href="#">Bildungsangebot</a>
       <a href="{% url 'all_teachers'%}">Über Uns</a>
-      <a class="mainHeadingMobile" href="#">Galerie</a>
+      <a class="mainHeadingMobile" href="{% url 'gallery_view'%}">Galerie</a>
       <a class="mainHeadingMobile" href=""{% url 'blog_summary' %}">Blog</a>
       <a class="mainHeadingMobile" href="#">Über Uns</a>
       <a class="mainHeadingMobile" href="{% url 'contact_email' %}">Kontakt</a>
