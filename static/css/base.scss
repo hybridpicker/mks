@@ -952,7 +952,7 @@ input {
 .sfbsfcon {
   position: relative;
   font-family: $paragraphFontFamily;
-  font-size: 18px;
+  font-size: $paragraphFontSize;
   color: $blackColor;
   display: inline-block;
   width: 11%;
@@ -971,6 +971,7 @@ input {
   right: 0;
   z-index: 99;
   overflow-y: scroll;
+  max-height: 20rem;
 }
 #catsfbsf > .slitcon {
   overflow-y: unset;
@@ -1026,12 +1027,12 @@ form button, a button {
   background: $primaryColor;
   border-width: 0.5px;
   color: $whiteColor;
-  border-color: #BD2123;
+  border-color: #FF1B1E;
   margin: 1rem;
 }
 form button:hover, a button:hover {
   transform: translate(0, 1.5px);
-  box-shadow: 0 2.5px #7E1444;
+  box-shadow: 0 2.5px #BD2123;
   cursor: pointer;
 }
 .form-actions {
@@ -1060,7 +1061,7 @@ a button {
 #contact_form_post p, {
   line-height: 5px;
   font-size: $paragraphFontSize;
-  padding: 0;
+  padding: 10px 0;
 }
 .sese{
   font-size: $paragraphFontSize;
@@ -1372,12 +1373,14 @@ a button {
 
 /* Style the arrow inside the select element: */
 .sese:after {
-  position: absolute;
-  content: url(/static/media/select_field/arrow/arrow_after.png);
-  top: 10px;
-  right: 25px;
-  width: 0;
-  height: 0;
+  content: "";
+  background-image: url(/static/media/select_field/arrow/arrow_after.svg);
+  background-size: 100% 100%;
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 3px;
 }
 .sese.slar-active{
   border-radius: 18px 0 0 0;
@@ -1385,12 +1388,19 @@ a button {
 }
 /* Point the arrow upwards when the select box is open (active): */
 .sese.slar-active:before {
-  content: url(/static/media/select_field/arrow/arrow_before.png);
-  margin-left: -18px;
-  margin-right: 8px;
+  content: "";
+  background-image: unset;
+  background-size: 100% 100%;
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 3px;
+  right: 1%;
 }
 .sese.slar-active:after {
   content: '';
+  background-image: unset;
 }
 
 /* style the items (options), including the selected item: */
@@ -1404,9 +1414,11 @@ a button {
   border-left-color: currentcolor;
   border-color: #BABABAAD;
   cursor: pointer;
-
 }
-
+.sese.active:after{
+  content: '';
+  background-image: unset;
+}
 /* Style items (options): */
 .slit {
   position: absolute;
@@ -1425,9 +1437,15 @@ a button {
   display: none;
 }
 .swasd:before {
-  content: url(/static/media/select_field/arrow/arrow_before.png);
-  margin-left: -18px;
-  margin-right: 8px;
+  content: "";
+  background-image: url(/static/media/select_field/arrow/arrow_before.svg);
+  background-size: 100% 100%;
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 3px;
+  right: 1%;
 }
 #catsfbsf > .slit {
   overflow-y: unset;

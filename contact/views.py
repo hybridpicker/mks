@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from contact.forms import ContactForm
 from contact.email import contact_mail_student, contact_mail_blessond
 from teaching.subject import Subject
-from location.models import Location
 from students.models import Student
 from students.gender import Gender
 import datetime
@@ -49,22 +48,18 @@ def emailView(request):
         from_email = form.cleaned_data['from_email']
         message = form.cleaned_data['message']
         subject = form.cleaned_data['subject']
-        location = form.cleaned_data['location']
         subject_id = request.POST['subject']
         subject_object = Subject.objects.get(pk=subject_id)
         gender_id = request.POST['gender']
         gender_object = Gender.objects.get(pk=gender_id)
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
-        location_id = request.POST['location']
         from_email = request.POST['from_email']
-        location_object = Location.objects.get(pk=location_id)
         lesson_counter = 0
         new_student = Student(gender=gender_object,
                               first_name=first_name,
                               last_name=last_name,
                               subject=subject_object,
-                              location=location_object,
                               lesson_count=lesson_counter)
         new_student.save()
         subject = str(Subject.objects.get(pk=subject_id))
@@ -73,7 +68,6 @@ def emailView(request):
         student_context = {
             'first_name': first_name,
             'last_name': last_name,
-            'location': location_object,
             'today': today,
             'subject': subject_object,
             'from_email': from_email,

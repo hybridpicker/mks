@@ -35,7 +35,7 @@
 {% block body %}
 <div class="mbs">
   <div class="container">
-    <h1>Schreibe uns eine Anfrage</h1>
+    <h1>Schreiben Sie uns eine Anfrage</h1>
     <form id="contact_form_post" method="post">
       {% csrf_token %}
       <div class="row">
@@ -81,14 +81,6 @@
         <div class="sfbsfcon">
           <div class="col-8">
             {{ form.subject }}
-          </div>
-        </div>
-        <div class="col-4">
-          <p>Unterrichtsort:</p>
-        </div>
-        <div class="sfbsfcon">
-          <div class="col-8">
-            {{ form.location }}
           </div>
         </div>
         <div class="col-8">
@@ -146,11 +138,13 @@
               for (k = 0; k < y.length; k++) {
                 y[k].removeAttribute("class");
               }
-              this.setAttribute("class", "swasd");
+              this.setAttribute("class", "swasd",);
               break;
             }
           }
           h.click();
+          h.classList.add("active")
+          console.log(h)
         });
         b.appendChild(c);
       }
