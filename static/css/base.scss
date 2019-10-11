@@ -1379,8 +1379,9 @@ a button {
   display: inline-block;
   height: 20px;
   width: 20px;
-  position: relative;
-  top: 3px;
+  position: absolute;
+  top: 12px;
+  right: 10px;
 }
 .sese.slar-active{
   border-radius: 18px 0 0 0;
@@ -1388,7 +1389,7 @@ a button {
 }
 /* Point the arrow upwards when the select box is open (active): */
 .sese.slar-active:before {
-  content: "";
+  content: none;
   background-image: unset;
   background-size: 100% 100%;
   display: inline-block;
