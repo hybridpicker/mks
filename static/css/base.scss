@@ -704,6 +704,11 @@ canvas {
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-hover-section {
   display: block;
+  opacity: 1;
+  -webkit-animation-name: fadein; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+  animation-name: fadein;
+  animation-duration: 1s;
 }
 .dropdown:hover .dropdown-content {
   display: block;
@@ -711,18 +716,38 @@ canvas {
 /* Show the dropdown menu on hover */
 .dropdown-b:hover .dropdown-hover-section-b {
   display: block;
+  opacity: 1;
+  -webkit-animation-name: fadein; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+  animation-name: fadein;
+  animation-duration: 1s;
 }
 .dropdown-c:hover .dropdown-content-c {
   display: block;
 }
 .dropdown-c:hover .dropdown-hover-section-c{
   display: block;
+  opacity: 1;
+  -webkit-animation-name: fadein; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+  animation-name: fadein;
+  animation-duration: 1s;
 }
 .dropdown-d:hover .dropdown-hover-section-d {
   display: block;
+  opacity: 1;
+  -webkit-animation-name: fadein; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+  animation-name: fadein;
+  animation-duration: 1s;
 }
 .dropdown-e:hover .dropdown-hover-section-e {
   display: block;
+  opacity: 1;
+  -webkit-animation-name: fadein; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+  animation-name: fadein;
+  animation-duration: 1s;
 }
 .drops {
   position: absolute;
@@ -1871,4 +1896,27 @@ align-items: end;
 .closebtn{
   width: 2rem;
 }
+}
+.dropdown:hover .dropdown-hover-section {
+opacity: 1;
+-webkit-animation-name: fadein; /* Safari 4.0 - 8.0 */
+-webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+animation-name: fadein;
+animation-duration: 1s;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes fadein {
+  0%   {opacity: 0;}
+  25%  {opacity: 0.5;}
+  50%  {opacity: 0.8;}
+  100% {opacity: 1;}
+}
+
+/* Standard syntax */
+@keyframes fadein {
+   0%  {opacity: 0.25;}
+  25%  {opacity: 0.75;}
+  50%  {opacity: 0.95;}
+  100% {opacity: 1;}
 }
