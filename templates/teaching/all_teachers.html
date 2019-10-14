@@ -170,6 +170,33 @@
       {% endfor %}
     </section>
 
+    <h2 class="heading-teaching">Tanz</h2>
+    <section class="grtnmc">
+      {% for teacher in teacher_dance %}
+      <div class="tnmc">
+        <div class="tnmhl">
+          <section class="teaching-name">
+            <h3>{{teacher.first_name}}</h3>
+            <h3>{{teacher.last_name}}</h3>
+          </section>
+        </div>
+        <div class="tpfcf">
+          <div class="tpcfptr">
+            <div class="icc-tpcfptr">
+              <img class="teacher_img" src="{{ teacher.image.url }}" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="tbt">
+          <div class="info-text">
+            <p>{{ teacher.subject }}</p>
+            <a href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+
     <h2 class="heading-teaching">Tasteninstrumente</h2>
     <section class="grtnmc">
       {% for teacher in teacher_keys %}
