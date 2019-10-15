@@ -45,7 +45,7 @@ $mobileFirstHeadingFontSize:30px;
 $mobileSecondHeadingFontSize:30px;
 $mobileParagraphFontSize:24px;
 $mobileLinkFontSize: 22px;
-$mobileMenuFontSize: 24px;
+$mobileMenuFontSize: 4vw;
 
 /* Use the variables */
 body {
@@ -172,8 +172,8 @@ a:hover {
   color: #fffc;
   font-size: $mobileMenuFontSize;
   font-family: $mobileMenuFontFamily;
+  overflow-x: scroll;
 }
-
 
 .overlay a {
   padding: 0.74rem;
@@ -185,27 +185,52 @@ a:hover {
   transition: 0.3s;
   padding-left: 1em;
 }
-@media only screen and (min-width: 300px) {
-  .overlay-content a{
-    font-size: $mobileMenuFontSize;
-    font-family: $mobileMenuFontFamily;
-  }
-}
-@media only screen and (min-width: 600px) {
-  .overlay-content{
-    padding-top: 8%;
-  }
-  .overlay-content a{
-    font-size: $secondHeadingFontSize;
-    font-family: $secondHeadingFamily;
-  }
-}
 
+.overlay-content{
+  padding-top: 8%;
+}
+.overlay-content a{
+  font-size: $mobileMenuFontSize;
+  font-family: $secondHeadingFamily;
+}
 .overlay .closebtn {
   position: absolute;
   top: 2%;
   right: 0;
   font-size: 60px;
+}
+#cross-burger-gallery{
+  width: 4rem;
+  margin-top: 2rem;
+}
+/* Mobile Overlay */
+@media only screen and (max-width: 1200px) {
+  .overlay-content{
+  font-size: 4vw;
+  padding-top: 4rem;
+  }
+  .overlay-content a {
+    font-size: 4vw;
+  }
+  #cross-burger-gallery {
+    width: 3rem;
+    margin-top: 0;
+    padding-right: 1rem;
+}
+}
+
+@media only screen and (max-width: 800px) {
+  .overlay-content{
+  font-size: 8vw;
+  padding-top: 5rem;
+  }
+  .overlay-content a {
+    font-size: 8vw;
+  }
+  #cross-burger-gallery {
+    width: 4rem;
+    margin-top: 2rem;
+}
 }
 
 /* Font */
@@ -1797,10 +1822,6 @@ section.events-container-grid h1{
   max-height: calc(100% - 4rem);
   max-width: 100%;
 }
-#cross-burger-gallery{
-  width: 2.7rem;
-  margin-top: 2rem;
-}
 #closebtn-gallery{
   top: 0;
   right: 0;
@@ -1881,9 +1902,6 @@ align-items: end;
 .overlay .closebtn{
   top: -20px;
   right: 10px;
-}
-.overlay-content{
-  padding-top: 15%;
 }
 }
 @media screen and (max-width: 600px) {
