@@ -33,6 +33,6 @@ class Photo(models.Model):
         '''
         Meta class for Photo
         '''
-        ordering = ['category','-ordering']
+        ordering = ['category','ordering']
         verbose_name = u'Photo'
         verbose_name_plural = u'Photos'

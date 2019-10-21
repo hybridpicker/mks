@@ -1,0 +1,1 @@
+[{"model": "gallery.photocategory", "pk": 1, "fields": {"title": "Ensembles"}}, {"model": "gallery.photocategory", "pk": 2, "fields": {"title": "Standort"}}, {"model": "gallery.photocategory", "pk": 3, "fields": {"title": "Wettbewerbe"}}]
