@@ -21,7 +21,13 @@ class Event(models.Model):
         default=datetime.date.today, blank=True)
     time = models.TimeField(_("Event Time "), db_index=True,
                             null=True, blank=True)
-
+    link = models.URLField(
+        _("Link"),
+        max_length=128,
+        db_index=True,
+        unique=True,
+        blank=True
+    )
     def __str__(self):
         return '%s: %s' % (self.name, self.date)
 

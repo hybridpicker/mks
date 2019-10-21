@@ -1,1 +1,1 @@
-[{"model": "location.country", "pk": 2, "fields": {"country_name": "Austria"}}, {"model": "location.location", "pk": 1, "fields": {"location_name": "Wien", "country": 2}}, {"model": "location.location", "pk": 2, "fields": {"location_name": "St. P\u00f6lten", "country": 2}}, {"model": "location.location", "pk": 3, "fields": {"location_name": "Unterwaltersdorf", "country": 2}}]
+[{"model": "location.country", "pk": 1, "fields": {"country_name": "\u00d6sterreich"}}, {"model": "location.location", "pk": 1, "fields": {"location_name": "St. P\u00f6lten", "country": 1}}]

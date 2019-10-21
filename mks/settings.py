@@ -47,11 +47,10 @@ INSTALLED_APPS = [
     # mks_apps
     'phone_field',
     'sass_processor',
-    'contact',
-    'home',
     'location.apps.LocationConfig',
     'students.apps.StudentsConfig',
     'teaching.apps.TeachingConfig',
+    'home',
     'ckeditor',
     'ckeditor_uploader',
     'blog.apps.BlogConfig',
@@ -59,6 +58,7 @@ INSTALLED_APPS = [
     'instruments.apps.InstrumentsConfig',
     'events.apps.EventsConfig',
     'gallery.apps.GalleryConfig',
+    'contact.apps.ContactConfig',
 ]
 
 MIDDLEWARE = [

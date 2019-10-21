@@ -40,14 +40,14 @@ class Teacher(models.Model):
     house_number = models.CharField(_(u'Hausnummer'), max_length=80, blank=True)
     postal_code = models.CharField(_(u'Postleitzahl'), max_length=4, blank=True)
     city = models.CharField(_(u'Wohnort'), max_length=30, blank=True)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True,)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True,blank=True,)
     bio = models.TextField(null=True, blank=True)
     youtube_id_one = models.CharField(_(u'Youtube Video ID 1'), max_length=24, blank=True)
     youtube_id_two = models.CharField(_(u'Youtube Video ID 2'), max_length=24, blank=True)
 
     def homepage_adress(self):
-        hp = self.homepage.replace('https://', '').replace('http://', '').replace('/', '') 
+        hp = self.homepage.replace('https://', '').replace('http://', '').replace('/', '')
         return hp
 
     def __str__(self):

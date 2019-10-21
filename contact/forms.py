@@ -31,5 +31,5 @@ class ContactForm(forms.Form):
     from_email = forms.EmailField(label="E-Mailadresse", max_length=100, required=True)
     message = forms.CharField(label="Nachricht",widget=forms.Textarea, required=False)
     subject = forms.ChoiceField(required=False,
-                                choices=get_subject_choices(),
+                                choices=get_subject_choices,
                                 widget=forms.Select)
