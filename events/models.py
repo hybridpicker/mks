@@ -25,7 +25,6 @@ class Event(models.Model):
         _("Link"),
         max_length=128,
         db_index=True,
-        unique=True,
         blank=True
     )
     def __str__(self):
