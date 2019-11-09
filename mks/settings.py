@@ -192,6 +192,12 @@ FIXTURE_DIRS = [
     os.path.join(BASE_DIR, 'fixtures'),
 ]
 
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+RECAPTCHA_SITE_KEY = "6LfAm6kUAAAAAFy7phFkAoYO-hgwFC9tg2sYf4nk"
+RECAPTCHA_SECRET_KEY = "6LfAm6kUAAAAAM-HvtHxCOEqOUWoPgwwkfAXOP11"
 
 if os.path.isfile(os.path.join(BASE_DIR, 'local_settings.py')):
     from local_settings import *

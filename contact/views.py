@@ -56,12 +56,12 @@ def emailView(request):
         last_name = request.POST['last_name']
         from_email = request.POST['from_email']
         lesson_counter = 0
-        new_student = Student(gender=gender_object,
-                              first_name=first_name,
-                              last_name=last_name,
-                              subject=subject_object,
-                              lesson_count=lesson_counter)
-        new_student.save()
+        #new_student = Student(gender=gender_object,
+        #                      first_name=first_name,
+        #                      last_name=last_name,
+        #                      subject=subject_object,
+        #                      lesson_count=lesson_counter)
+        #new_student.save()
         subject = str(Subject.objects.get(pk=subject_id))
         now = datetime.datetime.now()
         today = now.date()
