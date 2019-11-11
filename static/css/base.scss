@@ -789,6 +789,7 @@ text-decoration: underline 12px $primaryColor;
 
 /* Footer Section */
 .fbls { grid-area: fbls; }
+.fbrs { grid-area: fbrs; }
 .bcls { grid-area: bcls; }
 .bcrs { grid-area: bcrs; }
 .cbsf { grid-area: cbsf; }
@@ -797,15 +798,19 @@ text-decoration: underline 12px $primaryColor;
   display: grid;
   grid-template-areas:
   'bcls cbsf cbsf bcrs'
-  'fbls fbls fbls fbls';
-  grid-gap: 10px;
+  'fbls fbls fbrs fbrs';
+  grid-gap: 0px;
   margin-bottom: 0;
 }
 .fbls {
+  background-color: $whiteColor;
+  height: 50px;
+}
+.fbrs {
   background-color: #FED700;
   height: 50px;
 }
-.fbls > img {
+.fbls > img, .fbrs > img {
   max-height: 100%;
   padding-right: 2em;
 }
@@ -813,7 +818,7 @@ text-decoration: underline 12px $primaryColor;
   background-color: $blackColor;
 }
 .bfsc > div {
-  text-align: right;
+  text-align: center;
   padding: 10px 0;
   font-size: 18px;
   font-family: $linkFontFamily;
@@ -907,6 +912,7 @@ text-decoration: underline 12px $primaryColor;
     display: grid;
     grid-template-areas:
     'fbls'
+    'fbrs'
     'cbsf';
     grid-gap: 0px;
     padding: 0;
@@ -918,7 +924,7 @@ text-decoration: underline 12px $primaryColor;
     color: $whiteColor;
     padding: 20px 0 !important;
   }
-  .fbls > img{
+  .fbls > img, .fbrs > img{
     max-height: 3.5rem;
   }
   .bcmk > div{

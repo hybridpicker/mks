@@ -5,6 +5,11 @@ from teaching.subject import Subject
 from students.gender import Gender
 from teaching.models import Teacher
 
+not_contact_dict = ["Gitarrenensemble", "Musikkunde",
+                    "Musikalische Früherziehung", "Band", " Band",
+                    "Ensembles", "Ensemble", "Korrepetition", "Orchester",
+                    "Gitarrenorchester"]
+
 def get_subject_choices():
     all_teachers = Teacher.objects.all()
     subject_dir = []
@@ -13,7 +18,10 @@ def get_subject_choices():
             print(',')
             duplicate_teacher = str(teacher.subject).split(", ")
             for teacher in duplicate_teacher:
-                subject_dir.append(str(teacher))
+                if teacher in not_contact_dict:
+                    pass
+                else:
+                    subject_dir.append(str(teacher))
         else:
             subject_dir.append(str(teacher.subject))
     subject_dir = list(dict.fromkeys(subject_dir))
