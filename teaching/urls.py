@@ -10,5 +10,8 @@ from teaching.show_teacher_view import show_teacher_view
 urlpatterns = [
     path('allstudents', teaching.get_students.get_all_students, name='get_all_students'),
     path('singlestudent', teaching.get_students.get_student, name='get_student'),
-    path('all_teachers', teaching.show_teacher_view.show_teacher_view, name="all_teachers")
+    path('all_teachers', teaching.show_teacher_view.show_teacher_view, name="all_teachers"),
+    path('bildungsangebot', teaching.views.teaching_music_view, name="teaching-music"),
+    path('kunstangebot', teaching.views.teaching_art_view, name="teaching-art"),
+    path('beitraege-ermaessigungen', teaching.views.teaching_prices_view, name="teaching-prices"),
 ]

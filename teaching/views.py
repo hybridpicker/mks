@@ -49,3 +49,12 @@ def get_title(student, new_count):
     counter = str(new_count)
     title = student + ' ' + '(' + counter + ')'
     return title
+
+def teaching_music_view (request):
+    return render (request, 'teaching/teaching_music.html')
+
+def teaching_art_view (request):
+    return render (request, 'teaching/teaching_art.html')
+
+def teaching_prices_view (request):
+    return render (request, 'teaching/prices.html')
