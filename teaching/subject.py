@@ -11,3 +11,11 @@ class Subject(models.Model):
 
     def __str__(self):
         return "%s" % (self.subject)
+
+    class Meta: # pylint: disable=too-few-public-methods
+        '''
+        Meta class for Teacher
+        '''
+        ordering = ('subject',)
+        verbose_name = u'Subject'
+        verbose_name_plural = u'Subjects'
