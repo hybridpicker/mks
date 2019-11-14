@@ -711,14 +711,14 @@ canvas {
 }
 
 /* Links inside the dropdown */
-.dropdown-content a {
+.dropdown-content a, .dropdown-content-e a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
   line-height: 34px;
 }
-.dropdown-content a:hover{
+.dropdown-content a:hover, .dropdown-content-e a:hover{
   text-decoration-skip-ink: none;
   text-decoration: underline 14px $primaryColor;
 }
@@ -745,6 +745,10 @@ canvas {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  line-height: 34px;
+}
+.dropdown-content-e{
+  margin-top: 2rem;
 }
 .dropdown-hover-section, .dropdown-hover-section-b,
 .dropdown-hover-section-c, .dropdown-hover-section-d,
