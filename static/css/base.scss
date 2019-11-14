@@ -803,6 +803,9 @@ canvas {
   animation-name: fadein;
   animation-duration: 1s;
 }
+.dropdown-e:hover .dropdown-content-e {
+  display: block;
+}
 .drops {
   position: absolute;
   padding-right: 2em;
