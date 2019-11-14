@@ -8,7 +8,7 @@ from teaching.models import Teacher
 not_contact_dict = ["Gitarrenensemble", "Musikkunde",
                     "Musikalische Früherziehung", "Band", " Band",
                     "Ensembles", "Ensemble", "Korrepetition", "Orchester",
-                    "Gitarrenorchester"]
+                    "Gitarrenorchester", "Akademie"]
 
 def get_subject_choices():
     all_teachers = Teacher.objects.all()

@@ -206,8 +206,8 @@ a:hover {
 /* Mobile Overlay */
 @media only screen and (max-width: 1200px) {
   .overlay-content{
-  font-size: 4vw;
-  padding-top: 4rem;
+    font-size: 4vw;
+    padding-top: 4rem;
   }
   .overlay-content a {
     font-size: 4vw;
@@ -216,13 +216,13 @@ a:hover {
     width: 3rem;
     margin-top: 0;
     padding-right: 1rem;
-}
+  }
 }
 
 @media only screen and (max-width: 800px) {
   .overlay-content{
-  font-size: 8vw;
-  padding-top: 5rem;
+    font-size: 8vw;
+    padding-top: 5rem;
   }
   .overlay-content a {
     font-size: 8vw;
@@ -230,7 +230,7 @@ a:hover {
   #cross-burger-gallery {
     width: 4rem;
     margin-top: 2rem;
-}
+  }
 }
 
 /* Font */
@@ -694,7 +694,8 @@ canvas {
   display: block;
 }
 .dropdown-content a:hover{
-text-decoration: underline 12px $primaryColor;
+  text-decoration-skip-ink: none;
+  text-decoration: underline 12px $primaryColor;
 }
 .dropdown-content-b a {
   color: black;
@@ -810,7 +811,7 @@ text-decoration: underline 12px $primaryColor;
   background-color: #FED700;
   height: 50px;
 }
-.fbls > img, .fbrs > img {
+.fbls > a > img, .fbrs > a > img {
   max-height: 100%;
   padding-right: 2em;
 }
@@ -1232,6 +1233,10 @@ a button {
 }
 .tpcfptr img {
   max-width: 100%;
+}
+.tpcfptr img.square {
+  max-height: 100%;
+  max-width: unset;
 }
 .tbt > .info-text{
   height:8rem;
@@ -1738,7 +1743,7 @@ td {
   grid-row-gap: 100px;
   padding: 2rem;
 }
-.logo-footer-container > div > img{
+.logo-footer-container > div > a > img{
   width:100%;
 }
 @media screen and (max-width: 1200px) {
@@ -1837,9 +1842,9 @@ section.events-container-grid h1{
 }
 .gallery-show{
   display: grid;
-grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-grid-gap: 20px;
-align-items: end;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 20px;
+  align-items: end;
 }
 .gallery-show > div{
   background-color: red;
@@ -1884,52 +1889,52 @@ align-items: end;
 }
 
 @media screen and (max-width: 1000px) {
-.gallery-nav-bar{
-  grid-template-rows: 1fr;
-  grid-template-columns: unset;
-  grid-auto-flow: unset;
-}
-.gallery-nav-bar h2 a{
-  font-size: $mobileSecondHeadingFontSize;
-  margin-bottom: 0;
-  margin-top: 0;
-}
-.gallery-nav-bar h2{
-  margin-bottom: 1rem;
-  margin-top: 1rem;
-}
+  .gallery-nav-bar{
+    grid-template-rows: 1fr;
+    grid-template-columns: unset;
+    grid-auto-flow: unset;
+  }
+  .gallery-nav-bar h2 a{
+    font-size: $mobileSecondHeadingFontSize;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  .gallery-nav-bar h2{
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
 }
 @media screen and (max-width: 800px) {
-.gallery-show{
-  width: calc(100% + 4em);
-  margin-left: -2em;
-  grid-template-columns: unset;
-}
-.mbs .container {
+  .gallery-show{
+    width: calc(100% + 4em);
+    margin-left: -2em;
+    grid-template-columns: unset;
+  }
+  .mbs .container {
     margin-top: 5rem;
-}
-.overlay .closebtn{
-  top: -20px;
-  right: 10px;
-}
+  }
+  .overlay .closebtn{
+    top: -20px;
+    right: 10px;
+  }
 }
 @media screen and (max-width: 600px) {
-#overlay-show-img{
-  padding-top: 25%;
-}
-.overlay a{
-  padding-right: 2rem;
-}
-.closebtn{
-  width: 2rem;
-}
+  #overlay-show-img{
+    padding-top: 25%;
+  }
+  .overlay a{
+    padding-right: 2rem;
+  }
+  .closebtn{
+    width: 2rem;
+  }
 }
 .dropdown:hover .dropdown-hover-section {
-opacity: 1;
--webkit-animation-name: fadein; /* Safari 4.0 - 8.0 */
--webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
-animation-name: fadein;
-animation-duration: 1s;
+  opacity: 1;
+  -webkit-animation-name: fadein; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+  animation-name: fadein;
+  animation-duration: 1s;
 }
 
 /* Safari 4.0 - 8.0 */
@@ -1942,7 +1947,7 @@ animation-duration: 1s;
 
 /* Standard syntax */
 @keyframes fadein {
-   0%  {opacity: 0.25;}
+  0%  {opacity: 0.25;}
   25%  {opacity: 0.75;}
   50%  {opacity: 0.95;}
   100% {opacity: 1;}
