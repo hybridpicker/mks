@@ -16,6 +16,11 @@ $thirdHeadingFontSize:30px;
 $thirdHeadingFontColor:#222528;
 $thirdHeadingFontLineHeight:61px;
 
+$fourthHeadingFamily:'Montserrat', sans-serif;
+$fourthHeadingFontSize:26px;
+$fourthHeadingFontColor:#222528;
+$fourthHeadingFontLineHeight:30px;
+
 $paragraphFontFamily:'Lato', sans-serif;
 $paragraphFontSize:24px;
 $paragraphFontColor:#222528;
@@ -58,6 +63,7 @@ html, body {
   overflow-x: hidden;
   padding: env(safe-area-inset); // Overflow IPhoneXS
   margin: 0;
+  scroll-behavior: smooth;
 }
 footer{
   clear: both;
@@ -92,7 +98,6 @@ footer{
     visibility: hidden;
   }
 }
-
 a {
   color: $linkColor;
   text-decoration: none;
@@ -256,6 +261,13 @@ h3{
   text-align: center;
   padding-bottom: 0.1em;
 }
+h4{
+  font-family: $fourthHeadingFamily;
+  font-size: $fourthHeadingFontSize;
+  color: $fourthHeadingFontColor;
+  text-align: center;
+  padding-bottom: 0.1em;
+}
 p {
   font-family: $paragraphFontFamily;
   text-align: inherit;
@@ -265,7 +277,19 @@ p {
   padding-left: 10%;
   padding-right: 10%;
 }
-
+li {
+  font-family: $paragraphFontFamily;
+  text-align: inherit;
+  font-size: $paragraphFontSize;
+  line-height: $paragraphFontLineHeight;
+  color: $paragraphFontColor;
+  padding-left: 10%;
+  padding-right: 0;
+  padding-bottom: 2rem;
+}
+span {
+  text-decoration: underline;
+}
 @media screen and (max-height: 450px) {
   .overlay .closebtn {
     font-size: 40px;
@@ -613,7 +637,7 @@ canvas {
   h2{
     word-break: break-word;
   }
-  h3{
+  h3, h4{
     word-break: break-word;
   }
   p {
@@ -1607,9 +1631,10 @@ a button {
   max-width: 100%;
 }
 table thead tr {
-  background-color: #ba1a63;
-  color: #fff;
-  font-size: 22px;
+  background-color: $primaryColor;
+  color: $whiteColor;
+  font-size: $fourthHeadingFontSize;
+  font-family: $firstHeadingFamily;
 }
 
 table thead tr th {
@@ -1622,8 +1647,9 @@ table tbody tr {
   overflow-x: scroll;
 }
 td {
-  font-size: 20px;
-  height: 2.5rem;
+  font-family: $paragraphFontFamily;
+  font-size: $paragraphFontSize;
+  height: 4rem;
 }
 /*Events */
 .event-container {
@@ -1882,6 +1908,26 @@ section.events-container-grid h1{
 .gallery-nav-bar a:hover{
   text-decoration:none;
 }
+.prices-nav-bar{
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: auto;
+  grid-auto-flow: column;
+}
+.prices-nav-bar .active{
+  color: $primaryColor;
+}
+.prices-nav-bar a:hover{
+  color: $primaryColor;
+}
+.prices-nav-bar a{
+  color: $blackColor;
+  font-family: $secondHeadingFamily;
+  font-size: 36px;
+}
+.prices-nav-bar a:hover{
+  text-decoration:none;
+}
 .cross_st0{
   fill:none;
   stroke:$primaryColor;
@@ -1900,6 +1946,20 @@ section.events-container-grid h1{
     margin-top: 0;
   }
   .gallery-nav-bar h2{
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+  .prices-nav-bar{
+    grid-template-rows: 1fr;
+    grid-template-columns: unset;
+    grid-auto-flow: unset;
+  }
+  .prices-nav-bar h2 a{
+    font-size: $mobileSecondHeadingFontSize;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  .prices-nav-bar h2{
     margin-bottom: 1rem;
     margin-top: 1rem;
   }
