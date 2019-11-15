@@ -80,14 +80,13 @@
           <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
             {% include "templates/svg/nav_bar_crossburger.html" %}
           </a>
-          <a class="mainHeadingMobile" href="#">Bildungsangebot</a>
+          <a class="mainHeadingMobile" href="{% url 'teaching-music'%}">Bildungsangebot</a>
           <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching-music'%}">Musikschule</a>
           <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching-art'%}">Kunstschule</a>
           <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching-prices'%}">Beiträge & Ermäßigungen</a>
           <a class="mainHeadingMobile" href="{% url 'all_teachers'%}">Über Uns</a>
           <a class="mainHeadingMobile" href="{% url 'gallery_view'%}">Galerie</a>
-          <a class="mainHeadingMobile" href=""{% url 'blog_summary' %}">Blog</a>
-          <a class="mainHeadingMobile" href="#">Über Uns</a>
+          <a class="mainHeadingMobile" href="{% url 'all_teachers'%}">Über Uns</a>
           <a class="mainHeadingMobile" href="{% url 'contact_email' %}">Kontakt</a>
           <a class="categoryHeadingMobileNoCursor" href="{% url 'impressum'%}">Impressum</a>
         </div>
