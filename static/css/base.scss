@@ -173,7 +173,7 @@ a:hover {
   top: 25%;
   width: 100%;
   padding-top: 20%;
-  text-align: right;
+  text-align: left;
   color: #fffc;
   font-size: $mobileMenuFontSize;
   font-family: $mobileMenuFontFamily;
@@ -183,7 +183,7 @@ a:hover {
 .overlay a {
   padding: 0.74rem;
   padding-right: 4rem;
-  text-align: right;
+  text-align: left;
   text-decoration: none;
   display: block;
   color: $menuColor;
@@ -217,6 +217,11 @@ a:hover {
   .overlay-content a {
     font-size: 4vw;
   }
+  .overlay-content a.categoryHeadingMobileNoCursor{
+    font-size: 3.5vw;
+    color: $primaryColor;
+    margin-left: 3rem;
+  }
   #cross-burger-gallery {
     width: 3rem;
     margin-top: 0;
@@ -232,9 +237,16 @@ a:hover {
   .overlay-content a {
     font-size: 8vw;
   }
+  .overlay-content a.categoryHeadingMobileNoCursor{
+    font-size: 6vw;
+  }
   #cross-burger-gallery {
     width: 4rem;
     margin-top: 2rem;
+    padding-right: unset;
+  }
+  #closeMobileMenu{
+    padding-right: 4%;
   }
 }
 
@@ -330,10 +342,10 @@ header {
 .nvb{
   height: $menuHeight;
   z-index: 1;
-  transition: height 0.26s ease;
+  transition: height 0.3s ease;
 }
 .bs {
-  margin-top: $menuHeight;
+  margin-top: 120px;
   margin-bottom: 0;
   text-align: center;
   display: grid;
@@ -571,13 +583,13 @@ canvas {
   height: 3.9rem;
   padding-top: 34px;
   padding-left: 60px;
-  transition: height 0.26s ease;
+  transition: height 0.3s ease;
 }
 .bnbs > .bls{
   text-align: left;
 }
 
-@media only screen and (max-width: 1350px), only screen and (max-height: 375px) {
+@media only screen and (max-width: 1200px), only screen and (max-height: 375px) {
   #mks-nav-mobile-menu {
     display: block;
     height: 100%;
@@ -637,6 +649,9 @@ canvas {
   }
   .bs {
   margin-top: 75px
+  }
+  #mks-logo-svg{
+    padding-left: unset;
   }
 }
 @media only screen and (max-width: 900px), only screen and (max-height: 375px) {
@@ -824,7 +839,7 @@ canvas {
 }
 .drops {
   position: absolute;
-  padding-right: 2em;
+  padding-right: 3em;
   bottom: 10px;
   right: 0;
 }
@@ -991,7 +1006,7 @@ canvas {
   }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 545px) {
   #small-mobile-logo{
     display:block;
     padding-top: 4px;
