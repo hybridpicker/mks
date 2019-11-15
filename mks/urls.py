@@ -32,6 +32,7 @@ urlpatterns = [
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     re_path(r'^instruments/', include('instruments.urls')),
     path('', home.views.home, name='home_view'),
+    path('impressum/', home.views.impressum, name='impressum'),
     path('users/', include('users.urls')),
     path('', include('contact.urls')),
     path('', include('gallery.urls')),

@@ -12,8 +12,13 @@
       <div class="bns">
         <div class="drops">
           <div class="dropdown arrow">
-            <button class="dropbtn">Bildungsangebot</button>
+            <button class="dropbtn">
+              <a href="{% url 'teaching-music'%}">Bildungsangebot</a>
+            </button>
             <div class="dropdown-content">
+              <a href="{% url 'teaching-music'%}">Musikschule</a>
+              <a href="{% url 'teaching-art'%}">Kunstschule</a>
+              <a href="{% url 'teaching-prices'%}">Beiträge & Ermäßigungen</a>
             </div>
             <div class="dropdown-hover-section">
             </div>
@@ -21,66 +26,71 @@
           <div class="dropdown-b arrow">
             <button class="dropbtn-b">
               <a href="{% url 'gallery_view'%}">
-              Galerie</a>
-            </button>
-            <div class="dropdown-content">
+                Galerie</a>
+              </button>
+              <div class="dropdown-content">
+              </div>
+              <div class="dropdown-hover-section-b">
+              </div>
             </div>
-            <div class="dropdown-hover-section-b">
+            <div class="dropdown-d arrow">
+              <button class="dropbtn-d">
+                <a href="{% url 'all_teachers'%}">Über Uns</a>
+              </button>
+              <div class="dropdown-content-d">
+              </div>
+              <div class="dropdown-hover-section-d">
+              </div>
             </div>
-          </div>
-          <div class="dropdown-d arrow">
-            <button class="dropbtn-d">
-              <a href="{% url 'all_teachers'%}">Über Uns</a>
-            </button>
-            <div class="dropdown-content-d">
-              <a href="{% url 'contact_email' %}">Kontakt</a>
-            </div>
-            <div class="dropdown-hover-section-d">
-            </div>
-          </div>
-          <div class="dropdown-e arrow">
-            <button class="dropbtn-e">
-              <a href="{% url 'contact_email' %}">Kontakt</a>
-            </button>
-            <div class="dropdown-hover-section-e">
+            <div class="dropdown-e arrow">
+              <button class="dropbtn-e">
+                <a href="{% url 'contact_email' %}">Kontakt</a>
+              </button>
+              <div class="dropdown-hover-section-e">
+              </div>
+              <div class="dropdown-content-e">
+                <a href="{% url 'impressum'%}">Impressum</a>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
+      <!-- Mobile Nav -->
 
+      <div id="blessondNavMobile" class="menu">
+        <div>
+          <span id="menuIcon" onclick="openNav()">
+            {% include "templates/svg/nav_bar_hamburger_mobile.html" %}
+          </span>
+        </div>
+        <div class="">
+        </div>
+        <div id="mobileLogo">
+          <a id="small-mobile-logo" href="{% url 'home_view' %}">
+            {% include "templates/svg/nav_bar_mobile_logo.html" %}
+          </a>
+          <a id="medium-mobile-logo" href="{% url 'home_view' %}">
+            {% include "templates/svg/nav_bar_icon.html" %}
+          </a>
+        </div>
+      </div>
+      <div id="mks-nav-mobile-menu" class="overlay">
+        <div class="overlay-content">
+          <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+            {% include "templates/svg/nav_bar_crossburger.html" %}
+          </a>
+          <a class="mainHeadingMobile" href="{% url 'teaching-music'%}">Bildungsangebot</a>
+          <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching-music'%}">Musikschule</a>
+          <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching-art'%}">Kunstschule</a>
+          <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching-prices'%}">Beiträge & Ermäßigungen</a>
+          <a class="mainHeadingMobile" href="{% url 'all_teachers'%}">Über Uns</a>
+          <a class="mainHeadingMobile" href="{% url 'gallery_view'%}">Galerie</a>
+          <a class="mainHeadingMobile" href="{% url 'all_teachers'%}">Über Uns</a>
+          <a class="mainHeadingMobile" href="{% url 'contact_email' %}">Kontakt</a>
+          <a class="categoryHeadingMobileNoCursor" href="{% url 'impressum'%}">Impressum</a>
+        </div>
+      </div>
     </div>
-    <!-- Mobile Nav -->
 
-    <div id="blessondNavMobile" class="menu">
-      <div>
-        <span id="menuIcon" onclick="openNav()">
-          {% include "templates/svg/nav_bar_hamburger_mobile.html" %}
-      </span>
-    </div>
-    <div class="">
-    </div>
-    <div id="mobileLogo">
-      <a id="small-mobile-logo" href="{% url 'home_view' %}">
-        {% include "templates/svg/nav_bar_mobile_logo.html" %}
-      </a>
-    <a id="medium-mobile-logo" href="{% url 'home_view' %}">
-        {% include "templates/svg/nav_bar_icon.html" %}
-    </a>
-  </div>
-</div>
-<div id="mks-nav-mobile-menu" class="overlay">
-  <div class="overlay-content">
-    <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
-      {% include "templates/svg/nav_bar_crossburger.html" %}
-    </a>
-      <a class="mainHeadingMobile" href="#">Bildungsangebot</a>
-      <a href="{% url 'all_teachers'%}">Über Uns</a>
-      <a class="mainHeadingMobile" href="{% url 'gallery_view'%}">Galerie</a>
-      <a class="mainHeadingMobile" href=""{% url 'blog_summary' %}">Blog</a>
-      <a class="mainHeadingMobile" href="#">Über Uns</a>
-      <a class="mainHeadingMobile" href="{% url 'contact_email' %}">Kontakt</a>
-    </div>
-  </div>
-</div>
-
-</header>
+  </header>

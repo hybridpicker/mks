@@ -3,25 +3,19 @@
 
 <div class="logo-footer-container">
   <div>
+    <a target="_blank" href="https://www.europaballett.at/">
     <img src="{% static "logo/footer/Europaballett_logo-1.png" %}" alt="">
+    </a>
   </div>
   <div>
-    <img src="{% static "logo/footer/festwochen_2018.png" %}" alt="">
+    <a target="_blank" href="https://www.mkmnoe.at/">
+        <img src="{% static "logo/footer/MKM_Logo_RGB.png" %}" alt="">
+    </a>
   </div>
   <div>
-    <img src="{% static "logo/footer/Logo_Kreativakademie-1024x1024.png" %}" alt="">
-  </div>
-  <div>
-    <img src="{% static "logo/footer/MKM_Logo_RGB.png" %}" alt="">
-  </div>
-  <div>
-    <img src="{% static "logo/footer/MKM_Logo_RGB.png" %}" alt="">
-  </div>
-  <div>
-    <img src="{% static "logo/footer/NOE_Kreativ-GmbH-1024x326.png" %}" alt="">
-  </div>
-  <div>
-    <img src="{% static "logo/footer/Europaballett_logo-1.png" %}" alt="">
+    <a target="_blank" href="https://www.mkmnoe.at/angebote-fuer-kinder-jugendliche/kreativakademie">
+      <img src="{% static "logo/footer/ka_noe_logo.png" %}" alt="">
+    </a>
   </div>
 </div>
 
@@ -35,7 +29,57 @@
   <div class="cbsf">
     © {% now "Y" %} Musikschule & Kuntschule St. Pölten
   </div>
+
   <div class="fbls">
+    <a href="https://www.st-poelten.at/" target="_blank">
+      <img src="{% static "logo/stadtlogo.png" %}" alt="Footer Logo MKS">
+    </a>
+  </div>
+  <div class="fbrs">
+    <a href="https://www.kulturregionnoe.at/" target="_blank">
     <img src="{% static "logo/abteilungslogo.png" %}" alt="Footer Logo MKS">
+    </a>
   </div>
 </div>
+<script type="text/javascript">
+
+
+// The debounce function receives our function as a parameter
+const debounce = (fn) => {
+
+  // This holds the requestAnimationFrame reference, so we can cancel it if we wish
+  let frame;
+
+  // The debounce function returns a new function that can receive a variable number of arguments
+  return (...params) => {
+
+    // If the frame variable has been defined, clear it now, and queue for next frame
+    if (frame) {
+      cancelAnimationFrame(frame);
+    }
+
+    // Queue our function call for the next frame
+    frame = requestAnimationFrame(() => {
+
+      // Call our function and pass any params we received
+      fn(...params);
+    });
+
+  }
+};
+
+
+// Reads out the scroll position and stores it in the data attribute
+// so we can use it in our stylesheets
+const storeScroll = () => {
+  document.documentElement.dataset.scroll = window.scrollY;
+}
+
+// Listen for new scroll events, here we debounce our `storeScroll` function
+document.addEventListener('scroll', debounce(storeScroll), { passive: true });
+
+// Update scroll position for first time
+storeScroll();
+
+
+</script>
