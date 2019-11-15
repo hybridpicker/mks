@@ -49,7 +49,7 @@ $linkFontFamily: 'Montserrat', sans-serif;
 $mobileFirstHeadingFontSize:30px;
 $mobileSecondHeadingFontSize:30px;
 $mobileParagraphFontSize:3vw;
-$mobileLinkFontSize: 3vw;
+$mobileLinkFontSize: 20px;
 $mobileMenuFontSize: 20px;
 
 /* Use the variables */
@@ -532,7 +532,7 @@ canvas {
 #mobileLogo{
   display:flex;
   justify-content: right;
-  padding-right: 1rem;
+  padding-right: 10px;
 }
 #small-mobile-logo img{
   width: 2.9rem;
@@ -1888,6 +1888,7 @@ section.events-container-grid h1{
 }
 .gallery-show > img{
   transition: transform .2s ease;
+  transition-delay: 0.1s;
   border: 1px solid $whiteColor;
   max-width: 100%;
   box-shadow: inset inset 0px 0px 10px 0px #22252836;

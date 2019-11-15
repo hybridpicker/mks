@@ -1,4 +1,4 @@
-{% extends "templates/teaching_base.html" %}
+{% extends "templates/base.html" %}
 
 {% load static %}
 
@@ -12,15 +12,15 @@
 {% endblock %}
 
 {% block banner %}
-<img src="/static/media/images/banner/home-slide01.jpg" alt="">
+<img src="/static/media/banner/home_banner.jpg" alt="">
 {% endblock %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}Registrierung{% endblock %}
 
 {% block body %}
 <div class="mbs">
   <div class="container">
-    <h2>Sign up</h2>
+    <h2>Registrierung</h2>
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
