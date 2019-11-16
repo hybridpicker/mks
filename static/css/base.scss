@@ -728,6 +728,7 @@ canvas {
   color: $menuColor;
   font-size: $menuFontSize;
   font-family: $menudFontFamily;
+  padding: 20px;
 }
 .dropdown:hover, .dropdown-b:hover, .dropdown-c:hover, .dropdown-d:hover, .dropdown-e:hover{
   cursor: pointer;
@@ -785,6 +786,7 @@ canvas {
 }
 .dropdown-content-e{
   margin-top: 2rem;
+  left: 20px;
 }
 .dropdown-hover-section, .dropdown-hover-section-b,
 .dropdown-hover-section-c, .dropdown-hover-section-d,
@@ -803,6 +805,8 @@ canvas {
   -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
   animation-name: fadein;
   animation-duration: 1s;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .dropdown:hover .dropdown-content {
   display: block;
@@ -815,6 +819,8 @@ canvas {
   -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
   animation-name: fadein;
   animation-duration: 1s;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .dropdown-c:hover .dropdown-content-c {
   display: block;
@@ -826,6 +832,8 @@ canvas {
   -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
   animation-name: fadein;
   animation-duration: 1s;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .dropdown-d:hover .dropdown-hover-section-d {
   display: block;
@@ -834,6 +842,8 @@ canvas {
   -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
   animation-name: fadein;
   animation-duration: 1s;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .dropdown-e:hover .dropdown-hover-section-e {
   display: block;
@@ -842,6 +852,8 @@ canvas {
   -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
   animation-name: fadein;
   animation-duration: 1s;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .dropdown-e:hover .dropdown-content-e {
   display: block;
