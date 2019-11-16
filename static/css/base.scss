@@ -225,7 +225,11 @@ a:hover {
   #cross-burger-gallery {
     width: 3rem;
     margin-top: 0;
-    padding-right: 1rem;
+    padding-right: 0rem;
+    opacity: 0.9;
+  }
+  .overlay a {
+    padding-right: 0;
   }
 }
 
@@ -681,6 +685,9 @@ canvas {
   }
   .bcmk > .middle{
     display: none !important;
+  }
+  header, .nvb{
+    position: absolute;
   }
 }
 .container {
@@ -1704,6 +1711,12 @@ td {
   font-size: $paragraphFontSize;
   height: 4rem;
 }
+@media only screen and (max-width: 600px) {
+  td {
+  font-size: 22px;
+  height: 6rem;
+  }
+}
 /*Events */
 .event-container {
   display: grid;
@@ -2023,7 +2036,7 @@ section.events-container-grid h1{
     margin-top: 1rem;
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .gallery-show{
     width: calc(100% + 4em);
     margin-left: -2em;
@@ -2071,7 +2084,7 @@ section.events-container-grid h1{
   50%  {opacity: 0.95;}
   100% {opacity: 1;}
 }
-@media only screen and (min-width: 1000px){
+@media only screen and (min-width: 1200px){
 html:not([data-scroll='0']) {
   .nvb {
     height: 70px;
