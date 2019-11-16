@@ -2102,7 +2102,11 @@ section.events-container-grid h1{
   animation-name: fadein;
   animation-duration: 1s;
 }
-
+@media screen and (max-width: 771px){
+.logo-footer-container{
+  display: none;
+}
+}
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes fadein {
   0%   {opacity: 0;}
