@@ -537,6 +537,7 @@ canvas {
   display:flex;
   justify-content: right;
   padding-right: 10px;
+  padding-top: 4px;
 }
 #small-mobile-logo img{
   width: 2.9rem;
@@ -623,6 +624,7 @@ canvas {
   #blessondNavMobile > div {
     width: 33%;
     font-size: 20px;
+    display: inline-grid;
     color: $paragraphFontColor;
     font-family: $linkFontFamily;
   }
@@ -1790,7 +1792,9 @@ td {
     padding-top: 1rem;
   }
   .event-container {
-    margin-left: unset;
+    max-height: 60vw;
+    margin-left: 2%;
+    margin-right: 2%;
   }
 }
 .counter-left {
