@@ -2132,3 +2132,29 @@ html:not([data-scroll='0']) {
   }
 }
 }
+/* Huge Screens */
+@media only screen and (min-width: 2000px){
+.grtnmc{
+grid-template-columns: repeat(5, 1fr);
+}
+.container {
+    width: 2000px
+}
+}
+
+@media only screen and (min-width: 3000px){
+.grtnmc{
+  grid-template-columns: repeat(6, 1fr);
+  }
+.container, .bs, .bcmk, .counter-grid-container, .events-container-grid,
+.maps-google, .bf {
+      width: 3000px;
+      margin-left: auto;
+      margin-right: auto;
+}
+.nvb{
+  width: 3000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+}
