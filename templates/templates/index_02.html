@@ -1,0 +1,212 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% block extra_head %}
+<meta name="description" content="Personal Portfolio Page of Lukas Schönsgibl. Passionate problemsolver in software, music and culturalcontext.">
+<meta name="title" content="Lukas Schönsgibl | Cultural Manager, Software Developer, Guitarist">
+
+<!-- Social Media Meta --->
+<meta property="og:title" content="Lukas Schönsgibl | Cultural Manager, Software Developer, Guitarist">
+<meta property="og:description" content="Personal Portfolio Page of Lukas Schönsgibl. Passionate problemsolver in software, music and culturalcontext.">
+<meta property="og:image" content="static/media/thumbnail/facebook/home.jpg">
+<meta property="og:url" content="https://schoensgibl.com/">
+
+<meta name="twitter:title" content="Lukas Schönsgibl | Cultural Manager, Software Developer, Guitarist">
+<meta name="twitter:description" content="Personal Portfolio Page of Lukas Schönsgibl. Passionate Problemsolver in software, music and culturalcontext.">
+<meta name="twitter:image" content="static/media/thumbnail/twitter/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="text/javascript">
+  function scroll_tablet() {
+    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    var frontend_height = document.getElementById("frontend_content").clientHeight;
+    var scrolled = (winScroll / frontend_height) * 150;
+    if (scrolled >= 100 ){
+      var scrolled = 100;
+    }
+    document.getElementById("frontend-bottom-bar").style.width = scrolled + "%";
+    var header_height = document.getElementById("gcs").clientHeight;
+    var opensource_header = document.getElementById("opensource_headline").clientHeight + header_height + frontend_height;
+    if (winScroll > opensource_header){
+      var frontend_bottom_bar = document.getElementById("frontend-bottom-bar-opensource")
+      fadeClass(#frontend_description_1)
+    }
+  }
+</script>
+
+<style media="screen">
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 10vw;
+    color: #ffffff;
+    padding-left: 7vw;
+    margin-bottom: 0;
+  }
+
+  h3 {
+    margin-top: 0;
+    padding-left: 7vw;
+    color: #ffffff;
+  }
+
+  section {
+    display: flex;
+    height: 101vh;
+  }
+
+  @media only screen and (max-width: 600px)
+  {
+    section {
+      align-items: center !important;
+    }
+
+    h1 {
+      padding-top: 0 !important;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+<section>
+  <div class="gcs" id="gcs">
+    <div class="header" id="ls_header">
+      <h1>Lukas Schönsgibl</h1>
+      <div class="subheader">
+        <h2 id="h-cm">Cultural Manager</h2>
+        <h2 id="h-sd">Software Developer</h2>
+        <h2 id="h-g">Guitarist</h2>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="portfolio">
+  <div class="portfolio-container">
+    <div class="header_portfolio"><h1 id="header_portfolio">Portfolio</h1></div>
+    <div class="left_portfolio"></div>
+    <div class="content_portfolio">
+      <div class="frontend_headline">
+        <h2 id="header_frontend">Frontend</h2>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar" id="frontend-bottom-bar"></div>
+      </div>
+      <div class="frontend_content" id="frontend_content">
+        {% for proj in frontend %}
+        <section>
+          {% if forloop.counter|divisibleby:2 %}
+          <div class="frontend_content_container_2">
+            <div class="image_content_container">
+              <img style=""src="{{ proj.images.url }}" alt="">
+            </div>
+            <div class="frontend_content_box">
+              <div id="frontend_description_2" class="frontend_description">
+                <h3>{{ proj.title }}</h3>
+                <p>{{ proj.description|linebreaks }}</p>
+                <h4>Framework:</h4>
+                <p><b>{{ proj.framework }}</b></p>
+                <h4>Used Languages:</h4>
+                <p><b>{{proj.languages}}</b></p>
+                <p><b><a target="_blank" href="{{proj.link}}">{{proj.link}}</a></b></p>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <div class="frontend_content_container_1">
+            <div class="image_content_container">
+              <img style=""src="{{ proj.images.url }}" alt="">
+            </div>
+            <div class="frontend_content_box">
+              <div id="frontend_description_1" class="frontend_description">
+                <h3>{{ proj.title }}</h3>
+                <p>{{ proj.description|linebreaks }}</p>
+                <h4>Framework:</h4>
+                <p><b>{{ proj.framework }}</b></p>
+                <h4>Used Languages:</h4>
+                <p><b>{{proj.languages}}</b></p>
+                <p><b><a target="_blank" href="{{proj.link}}">{{proj.link}}</a></b></p>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </section>
+        {% endfor %}
+      </div>
+      <div class="opensource_headline" id="opensource_headline">
+        <h2>Open Source</h2>
+      </div>
+      <div class="progress-container-opensource">
+        <div class="progress-bar-opensource" id="frontend-bottom-bar-opensource"></div>
+      </div>
+      <div class="opensource_content">
+        {% for proj in opensource %}
+        <div class="project_opensource_container_{{ proj.ordering }}">
+          <div class="opensource_description">
+            <h3>{{ proj.title }}</h3>
+            <p>{{ proj.description }}</p>
+            <h4>Made with:</h4>
+            <p><b>{{proj.languages}}</b></p>
+            <h4>Source Code:</h4>
+            <p><a target="_blank" rel="noopener noreferrer" href="{{ proj.source_code_link }}">{{ proj.source_code_link }}</a></p>
+          </div>
+          <div class="opensource_image">
+            <a target="_blank" rel="noopener noreferrer" href="{{ proj.source_code_link }}"><img src="{{ proj.images.url }}" alt=""></a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="right_portfolio"></div>
+  </div>
+</section>
+<section id="musical-output">
+  <div class="musical_output" id="music">
+    <h1 id="musical-output-h1">Musical Output</h1>
+    <div class="yt-container" id ="yt-container">
+      <div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/CQBBN-I-BSI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/VUHKNbUxyIs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/DAECTFSuoLE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/tM1CCk26xdc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="contact">
+  <div class="contact">
+    <div class="contact_container">
+      <h1>Contact</h1>
+      <div class="social-media-icons">
+        <a target="_blank" href="mailto:lukas@schoensgibl.com"><img src="{% static '/media/symbol/mail-icon.png' %}" alt="Mailto lukas@schoensgibl.com Icon"></a>
+        <a target="_blank" href="https://github.com/hybridpicker"><img src="{% static '/media/symbol/github-logo.png' %}" alt="Github Hybridpicker Icon"></a>
+        <a target="_blank" href="https://www.linkedin.com/in/lukas-sch%C3%B6nsgibl-1a4050186/"><img src="{% static '/media/symbol/linkedin-logo.png' %}" alt="LinkedIn Schoensgibl Icon"></a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block footer %}
+
+<script>
+  // When the user scrolls the page, execute myFunction
+  if (window.innerWidth > 1000) {
+    window.onscroll = function() {scrollAction()};
+  }
+  if (window.innerWidth > 1000 && window.innerWidth < 1200) {
+    window.onscroll = function() {scroll_tablet()};
+  }
+</script>
+{% endblock %}
