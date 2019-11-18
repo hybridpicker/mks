@@ -8,7 +8,21 @@ from teaching.models import Teacher
 not_contact_dict = ["Gitarrenensemble", "Musikkunde",
                     "Musikalische Früherziehung", "Band", " Band",
                     "Ensembles", "Ensemble", "Korrepetition", "Orchester",
-                    "Gitarrenorchester", "Akademie"]
+                    "Gitarrenorchester", "Akademie",
+                    "Ballett: Choreographisches Zentrum",
+                    "Ballett: Kindertanz",
+                    "Ballett: Klassisches Ballett Berufsbildung",
+                    "Ballett: Klassisches Ballett Vorbereitungsklasse und Leistungsklasse",
+                    "Ballett: Klassisches Ballett, Modern Akademie",
+                    "Ballett: Leitung",
+                    "Ballett: Vorbereitungsklasse und Leistungsklasse",
+                    "Ballett: Leitung; Klassisches Ballett Berufsbildung",
+                    "Ballett: Vorbereitungsklasse",
+                    "Klassisches Ballett Berufsausbildung",
+                    "Leistungsklasse",
+                    "Leitung der Nachwuchsblasorchester Midi- und Mini Woods/Wi",
+                    "Vorbereitungsklasse",
+                    "Orchester,"]
 
 def get_subject_choices():
     all_teachers = Teacher.objects.all()
@@ -23,7 +37,10 @@ def get_subject_choices():
                 else:
                     subject_dir.append(str(teacher))
         else:
-            subject_dir.append(str(teacher.subject))
+            if teacher.subject is None:
+                pass
+            else:
+                subject_dir.append(str(teacher.subject))
     subject_dir = list(dict.fromkeys(subject_dir))
     subject_dir.sort()
     index = 1
