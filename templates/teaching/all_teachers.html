@@ -32,6 +32,69 @@
 {% block body %}
 <div class="mbs">
   <div class="container">
+    <h1>Direktion</h1>
+
+    <section class="grtnmc">
+      {% for teacher in director %}
+      <div class="tnmc">
+        <div class="tnmhl">
+          <section class="teaching-name">
+            <h3>{{teacher.first_name}}</h3>
+            <h3>{{teacher.last_name}}</h3>
+          </section>
+        </div>
+        <div class="tpfcf">
+          <div class="tpcfptr">
+            <div class="icc-tpcfptr">
+              {% if teacher.image.height <= teacher.image.width %}
+              <img style="max-width: 110%;" class="teacher_img square" src="{{ teacher.image.url }}"
+              alt="{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
+              {% else %}
+              <img style="max-width: 110%;" class="teacher_img" src="{{ teacher.image.url }}"
+              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="tbt">
+          <div class="info-text">
+            <p>{{ teacher.subject }}</p>
+            <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% for teacher in secretary %}
+      <div class="tnmc">
+        <div class="tnmhl">
+          <section class="teaching-name">
+            <h3>{{teacher.first_name}}</h3>
+            <h3>{{teacher.last_name}}</h3>
+          </section>
+        </div>
+        <div class="tpfcf">
+          <div class="tpcfptr">
+            <div class="icc-tpcfptr">
+              {% if teacher.image.height <= teacher.image.width %}
+              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
+              {% else %}
+              <img class="teacher_img" src="{{ teacher.image.url }}"
+              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="tbt">
+          <div class="info-text">
+            <p>{{ teacher.subject }}</p>
+            <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+
     <h1>Unsere Pädagog_innen</h1>
     <p>Hier finden Sie eine kleine Vorstellung unserer Lehrer_innen.</p>
 
