@@ -42,6 +42,15 @@
               <div class="dropdown-hover-section-d">
               </div>
             </div>
+            {% if user.is_authenticated %}
+            <div class="dropdown-e arrow">
+              <button class="dropbtn-e">
+                <a href="{% url 'logout' %}">Log Out</a>
+              </button>
+              <div class="dropdown-hover-section-e">
+              </div>
+            </div>
+            {% else %}
             <div class="dropdown-e arrow">
               <button class="dropbtn-e">
                 <a href="{% url 'contact_email' %}">Kontakt</a>
@@ -52,6 +61,7 @@
                 <a href="{% url 'impressum'%}">Impressum</a>
               </div>
             </div>
+            {% endif %}
           </div>
         </div>
 

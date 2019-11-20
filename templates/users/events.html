@@ -1,0 +1,70 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+<img src="/static/media/banner/home_banner.jpg" alt="">
+{% endblock %}
+
+{% block body %}
+
+<div class="mbs">
+  <div class="container">
+  {% if user.is_authenticated %}
+  <h1>Veranstaltungen</h1>
+  {% for event in events %}
+  <div class="event-container">
+    <div class="">
+      <p><a href="?id={{ event.id }}">X</a></p>
+    </div>
+    <div class="mks-event-date">
+      <h3>{{ event.get_date_presentation }}</h3>
+    </div>
+    <div class="mks-event-title">
+      <h3>{{ event.name }}</h3>
+    </div>
+    <div class="mks-event-time">
+      <p>{{ event.get_time_presentation }}</p>
+    </div>
+    <div class="mks-event-venue">
+      <p>{{ event.venue }}</p>
+    </div>
+  </div>
+  {% endfor %}
+  <h2>Veranstaltung erstellen</h2>
+  <form id="event_form_post" method="post">
+    {% csrf_token %}
+    <p>Eventname</p>
+    <p>{{ form.name }}</p>
+    <p>Ort</p>
+    <p>{{ form.venue }}</p>
+    <p>Datum</p>
+    <p>{{ form.date }}</p>
+    <p>Uhrzeit:</p>
+    <p>{{ form.time }}</p>
+    </div>
+    <div class="form-actions">
+      <button type="submit">Senden</button>
+    </div>
+  </form>
+  {% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'account_login' %}">Log In</a> |
+  <a href="{% url 'account_signup' %}">Sign Up</a>
+  {% endif %}
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+{% endblock %}
