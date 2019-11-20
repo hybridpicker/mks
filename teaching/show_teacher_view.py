@@ -27,9 +27,12 @@ def show_teacher_view(request):
     teacher_wood = get_teachers_from_category("Holzblasinstrumente")
     teacher_dance = get_teachers_from_category("Tanz")
     teacher_art = get_teachers_from_category("Kunstschule")
-
+    director = get_teachers_from_category("Direktion")
+    secretary = get_teachers_from_category("Sekretariat")
     context = {
         'categories': categories,
+        'director': director,
+        'secretary': secretary,
         'teacher_picked': teacher_picked,
         'teacher_keys': teacher_keys,
         'teacher_strings': teacher_strings,
