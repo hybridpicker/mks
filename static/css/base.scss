@@ -520,7 +520,7 @@ ul#art li{
   display: flex;
 }
 @media only screen and (min-width: 1000px){
-li:before{
+ul#art li:before{
   display: block;
   content: "";
   width: 22px;
