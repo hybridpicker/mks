@@ -29,9 +29,12 @@
       <button type="submit">Sign up</button>
     </form>
     {% else %}
-    <p>You are not logged in</p>
-    <a href="{% url 'account_login' %}">Log In</a> |
-    <a href="{% url 'account_signup' %}">Sign Up</a>
+    <h2>Sie sind nicht angemeldet</h2>
+    <a href="/team/login">
+      <button type="button" name="button">
+        Log In
+      </button>
+    </a>
     {% endif %}
   </div>
 </div>
