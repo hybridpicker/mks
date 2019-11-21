@@ -9,6 +9,7 @@ from events.models import Event
 from events.forms import EventForm
 from .forms import CustomUserCreationForm
 from django.utils.datastructures import MultiValueDictKeyError
+from django.contrib.auth.decorators import login_required
 
 
 class SignUp(generic.CreateView):
@@ -21,6 +22,7 @@ class HomePageView(TemplateView):
 
 # Create your views here.
 
+@login_required(login_url='/team/login/')
 def eventView(request):
     events = Event.objects.all()
     try:

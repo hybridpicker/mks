@@ -5,6 +5,21 @@
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
+<style media="screen">
+  .event-crossurger#user-event-cross-burger{
+    grid-area: mks-event-crossburger;
+  }
+  .event-container#user-event-container{
+    grid-template-areas:
+    "mks-event-crossburger mks-event-date mks-event-title mks-event-title mks-event-title"
+    "mks-event-crossburger mks-event-time mks-event-venue mks-event-venue mks-event-venue";
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  #event_form_post input{
+    width:80%;
+  }
+</style>
 {% endblock %}
 
 
@@ -22,9 +37,11 @@
   {% if user.is_authenticated %}
   <h1>Veranstaltungen</h1>
   {% for event in events %}
-  <div class="event-container">
-    <div class="">
-      <p><a href="?id={{ event.id }}">X</a></p>
+  <div id="user-event-container" class="event-container">
+    <div id="user-event-cross-burger" class=event-cross-burger"">
+      <a href="?id={{ event.id }}">
+        {% include "templates/svg/nav_bar_crossburger.html" %}
+      </a>
     </div>
     <div class="mks-event-date">
       <h3>{{ event.get_date_presentation }}</h3>
@@ -43,19 +60,21 @@
   <h2>Veranstaltung erstellen</h2>
   <form id="event_form_post" method="post">
     {% csrf_token %}
-    <p>Eventname</p>
+    <p>Eventname:</p>
     <p>{{ form.name }}</p>
-    <p>Ort</p>
+    <p>Ort:</p>
     <p>{{ form.venue }}</p>
-    <p>Datum</p>
+    <p>Datum:</p>
     <p>{{ form.date }}</p>
-    <p>JJJJ-MM-DD</p>
+    <p style="font-size: 18px">(Format: JJJJ-MM-DD)</p>
     <p>Uhrzeit:</p>
     <p>{{ form.time }}</p>
-    <p>HH:MM</p>
+    <p style="font-size: 18px">(Format: HH:MM)</p>
     </div>
     <div class="form-actions">
-      <button type="submit">Senden</button>
+      <a href="#">
+      <button type="submit">Speichern</button>
+      </a>
     </div>
   </form>
   {% else %}
