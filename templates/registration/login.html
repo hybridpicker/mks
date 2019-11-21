@@ -5,6 +5,9 @@
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+    async defer>
+</script>
 {% endblock %}
 
 
@@ -24,6 +27,7 @@
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
+      <div id="recaptcha-team-login" class="g-recaptcha" data-sitekey="6LcS2sMUAAAAANJLGjMxPViSNjpLcH_esztwxQ2I"></div>
       <button id="button-login" type="submit">Login</button>
     </form>
   </div>
@@ -32,4 +36,5 @@
 
 
 {% block footer %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}
