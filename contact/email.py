@@ -48,6 +48,7 @@ def contact_mail_student(from_email, subject, message, student_context, send_mai
                                          'instrument': instrument, 'customer_email': customer_email,
                                          'message': message, 'answer': answer})
         plain_message = strip_tags(html_message)
-        to = from_email
+        # Sending to User
+        to = 'service@blessond.com'
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
     return html_message
