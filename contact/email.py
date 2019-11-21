@@ -20,7 +20,7 @@ def check_message(message):
 
 def contact_mail_student(from_email, subject, message, student_context, send_mail=True):
     #from_email = settings.EMAIL_HOST_USER
-    subject = 'Ihre Anfrage ist bei uns eingegangen - Blessond.com'
+    subject = 'Ihre Anfrage ist bei uns eingegangen - Musik- und Kunstschule St. Pölten'
     message = message
     answer = check_message(message)
     name = student_context.get('first_name') + ' ' + student_context.get('last_name')
@@ -39,7 +39,7 @@ def contact_mail_student(from_email, subject, message, student_context, send_mai
         # Sending Message to User
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
         # Creating Mail to EMAIL_HOST_USER
-        from_email = from_email = settings.EMAIL_HOST_USER
+        from_email = settings.EMAIL_HOST_USER
         subject = 'Neue Anfrage'
         customer_email = student_context.get('from_email')
         html_message = render_to_string('templates/mail/mail_template.html',
@@ -51,16 +51,3 @@ def contact_mail_student(from_email, subject, message, student_context, send_mai
         to = from_email
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
     return html_message
-
-'''
-Contact Us
-'''
-def contact_mail_blessond(from_email, subject, message, send_mail=True):
-    subject = 'Anfrage: ' + subject
-    html_message = render_to_string('templates/mail/answer_mail_template.html',
-                                    {'context': 'values', 'message': message})
-    plain_message = strip_tags(html_message)
-    to = 'service@blessond.com'
-
-    if send_mail:
-        mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
