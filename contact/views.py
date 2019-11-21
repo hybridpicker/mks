@@ -2,7 +2,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from contact.forms import ContactForm
-from contact.email import contact_mail_student, contact_mail_mks
+from contact.email import contact_mail_student
 from teaching.subject import Subject
 from students.models import Student
 from students.gender import Gender
