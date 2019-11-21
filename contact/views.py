@@ -2,7 +2,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from contact.forms import ContactForm
-from contact.email import contact_mail_student, contact_mail_blessond
+from contact.email import contact_mail_student, contact_mail_mks
 from teaching.subject import Subject
 from students.models import Student
 from students.gender import Gender
@@ -47,8 +47,7 @@ def emailView(request):
         from_email = form.cleaned_data['from_email']
         message = form.cleaned_data['message']
         subject = form.cleaned_data['subject']
-        subject_id = request.POST['subject']
-        subject_object = Subject.objects.get(pk=subject_id)
+        subject = dict(form.fields['subject'].choices)[int(subject)]
         gender_id = request.POST['gender']
         gender_object = Gender.objects.get(pk=gender_id)
         first_name = request.POST['first_name']
@@ -61,19 +60,18 @@ def emailView(request):
         #                      subject=subject_object,
         #                      lesson_count=lesson_counter)
         #new_student.save()
-        subject = str(Subject.objects.get(pk=subject_id))
+        subject = str(subject)
         now = datetime.datetime.now()
         today = now.date()
         student_context = {
             'first_name': first_name,
             'last_name': last_name,
             'today': today,
-            'subject': subject_object,
+            'subject': subject,
             'from_email': from_email,
         }
         try:
             contact_mail_student(from_email, subject, message, student_context)
-#               contact_mail_blessond(from_email, subject, message)
         except BadHeaderError:
             return HttpResponse('Invalid header found.')
         context = {
