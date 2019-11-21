@@ -1222,6 +1222,11 @@ a button {
   margin-left: auto;
   margin-right: auto;
 }
+#button-login{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
 @media only screen and (max-width: 700px) {
   a button {
     width: 40%;
@@ -1806,7 +1811,23 @@ td {
 .mks-event-title, .mks-event-venue{
   padding-left: 1%;
 }
-
+/* Managing Events */
+.event-crossurger#user-event-cross-burger{
+  grid-area: mks-event-crossburger;
+}
+.event-container#user-event-container{
+  grid-template-areas:
+  "mks-event-crossburger mks-event-date mks-event-title mks-event-title mks-event-title"
+  "mks-event-crossburger mks-event-time mks-event-venue mks-event-venue mks-event-venue";
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+#event_form_post input{
+  width:80%;
+}
+#user-event-container a:hover .cross_st0{
+  stroke: black;
+}
 /* Counter */
 .counter-grid-container {
   background-color: $secondaryColor;
@@ -2174,4 +2195,8 @@ grid-template-columns: repeat(5, 1fr);
   margin-left: auto;
   margin-right: auto;
 }
+}
+#recaptcha-team-login{
+  padding-left: 5%;
+  padding-right: 5%;
 }

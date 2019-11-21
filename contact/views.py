@@ -26,7 +26,6 @@ def emailView(request):
         'response': request.POST.get('g-recaptcha-response'),
         'secret': secret_key
         }
-        print(data)
         url = 'https://www.google.com/recaptcha/api/siteverify'
         data = urllib.parse.urlencode(data).encode()
         req = urllib.request.Request(url, data=data)

@@ -1,8 +1,16 @@
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.views import generic
-
+from django.shortcuts import render, redirect
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from school.models import MusicSchool
+from events.models import Event
+from events.forms import EventForm
 from .forms import CustomUserCreationForm
+from django.utils.datastructures import MultiValueDictKeyError
+from django.contrib.auth.decorators import login_required
+
 
 class SignUp(generic.CreateView):
     form_class = CustomUserCreationForm
@@ -11,3 +19,30 @@ class SignUp(generic.CreateView):
 
 class HomePageView(TemplateView):
     template_name = 'users/home.html'
+
+# Create your views here.
+
+@login_required(login_url='/team/login/')
+def eventView(request):
+    events = Event.objects.all()
+    try:
+        event_id = request.GET['id']
+        Event.objects.filter(id=event_id).delete()
+    except MultiValueDictKeyError:
+        pass
+    form = EventForm(request.POST)
+    if form.is_valid():
+        name = request.POST['name']
+        venue = request.POST['venue']
+        date = request.POST['date']
+        time = request.POST['time']
+        new_event = Event(name=name,
+                          venue=venue,
+                          date=date,
+                          time=time)
+        new_event.save()
+    context = {
+        'events': events,
+        'form': form,
+        }
+    return render(request, 'users/events.html', context)

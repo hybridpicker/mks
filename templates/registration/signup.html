@@ -20,12 +20,19 @@
 {% block body %}
 <div class="mbs">
   <div class="container">
+    {% if user.is_authenticated %}
+    <p>Willkommen, {{ user }}!</p>
     <h2>Registrierung</h2>
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
       <button type="submit">Sign up</button>
     </form>
+    {% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'account_login' %}">Log In</a> |
+    <a href="{% url 'account_signup' %}">Sign Up</a>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
