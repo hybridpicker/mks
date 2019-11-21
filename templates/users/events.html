@@ -6,18 +6,8 @@
 
 {% block extra_head %}
 <style media="screen">
-  .event-crossurger#user-event-cross-burger{
-    grid-area: mks-event-crossburger;
-  }
-  .event-container#user-event-container{
-    grid-template-areas:
-    "mks-event-crossburger mks-event-date mks-event-title mks-event-title mks-event-title"
-    "mks-event-crossburger mks-event-time mks-event-venue mks-event-venue mks-event-venue";
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-  }
-  #event_form_post input{
-    width:80%;
+  #user-event-container a:hover .cross_st0{
+    stroke: black;
   }
 </style>
 {% endblock %}
