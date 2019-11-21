@@ -22,7 +22,7 @@
 
 <!-- Recaptcha -->
 
-<script src='https://www.google.com/recaptcha/api.js?render=6Lc52sMUAAAAAL4VrpfUGygurTw1hUC2OpFH9ep6'></script>
+<script src='https://www.google.com/recaptcha/api.js?render={{public_key}}'></script>
 
 {% endblock %}
 
@@ -112,7 +112,7 @@
   {% block footer %}
   <script>
     grecaptcha.ready(function() {
-    grecaptcha.execute('6Lc52sMUAAAAAL4VrpfUGygurTw1hUC2OpFH9ep6', {action: 'submit'})
+    grecaptcha.execute('{{public_key}}', {action: 'submit'})
     .then(function(token) {
         document.getElementById('g-recaptcha-response').value=token
         });
