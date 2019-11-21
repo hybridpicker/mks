@@ -8,7 +8,7 @@ from students.models import Student
 from students.gender import Gender
 import datetime
 from django.conf import settings
-import urllib
+import urllib.request
 import json
 from django.contrib import messages
 
