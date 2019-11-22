@@ -20,6 +20,9 @@ def check_message(message):
 
 def contact_mail_student(from_email, subject, message, student_context, send_mail=True):
     #from_email = settings.EMAIL_HOST_USER
+    '''
+    Preparing Mail to USER
+    '''
     subject = 'Ihre Anfrage ist bei uns eingegangen - Musik- und Kunstschule St. Pölten'
     message = message
     answer = check_message(message)
@@ -33,12 +36,14 @@ def contact_mail_student(from_email, subject, message, student_context, send_mai
                                     {'context': 'values',
                                      'message': message, 'answer': answer})
     plain_message = strip_tags(html_message)
-    to = from_email
+    to = settings.EMAIL_HOST_USER
 
     if send_mail:
-        # Sending Message to User
+        # Sending Message to Student
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
-        # Creating Mail to EMAIL_HOST_USER
+        '''
+        Preparing Mail to Us
+        '''
         from_email = settings.EMAIL_HOST_USER
         subject = 'Neue Anfrage'
         customer_email = student_context.get('from_email')
@@ -48,6 +53,9 @@ def contact_mail_student(from_email, subject, message, student_context, send_mai
                                          'instrument': instrument, 'customer_email': customer_email,
                                          'message': message, 'answer': answer})
         plain_message = strip_tags(html_message)
-        to = from_email
+        # Sending to User
+        #TODO: settings.EMAIL_HOST_USER
+        to = 'service@blessond.com'
+        print(mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message))
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
     return html_message
