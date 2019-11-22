@@ -32,7 +32,10 @@
 {% block body %}
 <div class="mbs">
   <div class="container">
-    <h1>Direktion</h1>
+
+    <h1>Über Uns</h1>
+    <p>Hier finden Sie eine kleine Vorstellung unserer Lehrer_innen.</p>
+    <h2 class="heading-teaching">Direktion</h2>
 
     <section class="grtnmc">
       {% for teacher in director %}
@@ -64,40 +67,7 @@
         </div>
       </div>
       {% endfor %}
-      {% for teacher in secretary %}
-      <div class="tnmc">
-        <div class="tnmhl">
-          <section class="teaching-name">
-            <h3>{{teacher.first_name}}</h3>
-            <h3>{{teacher.last_name}}</h3>
-          </section>
-        </div>
-        <div class="tpfcf">
-          <div class="tpcfptr">
-            <div class="icc-tpcfptr">
-              {% if teacher.image.height <= teacher.image.width %}
-              <img class="teacher_img square" src="{{ teacher.image.url }}"
-              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
-              {% else %}
-              <img class="teacher_img" src="{{ teacher.image.url }}"
-              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
-              {% endif %}
-            </div>
-          </div>
-        </div>
-        <div class="tbt">
-          <div class="info-text">
-            <p>{{ teacher.subject }}</p>
-            <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
     </section>
-
-    <h1>Unsere Pädagog_innen</h1>
-    <p>Hier finden Sie eine kleine Vorstellung unserer Lehrer_innen.</p>
-
     <h2 class="heading-teaching">Blechblasinstrumente</h2>
     <section class="grtnmc">
       {% for teacher in teacher_brass %}
@@ -360,6 +330,38 @@
     <h2 class="heading-teaching">Zupfinstrumente</h2>
     <section class="grtnmc">
       {% for teacher in teacher_picked %}
+      <div class="tnmc">
+        <div class="tnmhl">
+          <section class="teaching-name">
+            <h3>{{teacher.first_name}}</h3>
+            <h3>{{teacher.last_name}}</h3>
+          </section>
+        </div>
+        <div class="tpfcf">
+          <div class="tpcfptr">
+            <div class="icc-tpcfptr">
+              {% if teacher.image.height <= teacher.image.width %}
+              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
+              {% else %}
+              <img class="teacher_img" src="{{ teacher.image.url }}"
+              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="tbt">
+          <div class="info-text">
+            <p>{{ teacher.subject }}</p>
+            <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+    <h2 class="heading-teaching">Sekretariat</h2>
+    <section class="grtnmc">
+      {% for teacher in secretary %}
       <div class="tnmc">
         <div class="tnmhl">
           <section class="teaching-name">
