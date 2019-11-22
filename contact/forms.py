@@ -22,7 +22,9 @@ not_contact_dict = ["Gitarrenensemble", "Musikkunde",
                     "Leistungsklasse",
                     "Leitung der Nachwuchsblasorchester Midi- und Mini Woods/Wi",
                     "Vorbereitungsklasse",
-                    "Orchester,"]
+                    "Orchester,",
+                    "Direktor",
+                    "Sekretariat"]
 
 def get_subject_choices():
     all_teachers = Teacher.objects.all()
