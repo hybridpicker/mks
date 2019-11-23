@@ -2003,7 +2003,7 @@ section.events-container-grid h1{
 }
 .gallery-show{
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
   grid-gap: 20px;
   align-items: end;
 }
@@ -2093,6 +2093,8 @@ section.events-container-grid h1{
     margin-bottom: 1rem;
     margin-top: 1rem;
   }
+}
+@media screen and (max-width: 1200px) {
   .prices-nav-bar{
     grid-template-rows: 1fr;
     grid-template-columns: unset;
@@ -2108,11 +2110,30 @@ section.events-container-grid h1{
     margin-top: 1rem;
   }
 }
+@media screen and (max-width: 2999px) {
+  .gallery-show{
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  }
+}
+@media screen and (max-width: 1999px) {
+  .gallery-show{
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+}
+@media screen and (max-width: 1800px) {
+  .gallery-show{
+grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  }
+}
 @media screen and (max-width: 1024px) {
   .gallery-show{
     width: calc(100% + 4em);
     margin-left: -2em;
     grid-template-columns: unset;
+    display: inherit;
+  }
+  .gallery-show > img{
+    width: 100%;
   }
   .mbs .container {
     margin-top: 5rem;
