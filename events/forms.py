@@ -10,7 +10,7 @@ class EventForm(forms.Form):
     INPUT_FORMATS = ['%Y-%m-%d %H:%M']
     INPUT_FORMATS_DAY = ['%Y-%m-%d']
     INPUT_FORMATS_TIME = ['%H:%M']
-    name = forms.CharField(max_length=50, required=True)
-    venue = forms.CharField(max_length=30, required=False)
+    name = forms.CharField(max_length=100, required=True)
+    venue = forms.CharField(max_length=80, required=False)
     date = forms.DateField(widget=forms.TextInput(attrs={'class':'datepicker'}))
     time = forms.TimeField(input_formats=INPUT_FORMATS_TIME, widget=forms.DateTimeInput())

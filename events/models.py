@@ -11,11 +11,11 @@ class Event(models.Model):
     '''
     Model holding events data
     '''
-    name = models.CharField(_(u'Name of Event'), max_length=50)
+    name = models.CharField(_(u'Name of Event'), max_length=100)
     image = models.ImageField(
         upload_to='events/images/',
         default='event_default.jpg', blank=True)
-    venue = models.CharField(_(u'Venue'), max_length=50, blank=True)
+    venue = models.CharField(_(u'Venue'), max_length=80, blank=True)
     date = models.DateField(
         _("date for event"),
         default=datetime.date.today, blank=True)
