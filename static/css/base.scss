@@ -1964,7 +1964,6 @@ section.events-container-grid h1{
 }
 .gallery-show > img{
   transition: transform .2s ease;
-  transition-delay: 0.1s;
   border: 1px solid $whiteColor;
   max-width: 100%;
   box-shadow: inset inset 0px 0px 10px 0px #22252836;
@@ -1974,7 +1973,7 @@ section.events-container-grid h1{
 }
 .gallery-show > img:hover {
   cursor: pointer;
-  transform: scale(1.02);
+  transform: scale(1.02) !important;
 }
 #overlay-image-section{
   display: none;

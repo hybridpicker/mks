@@ -20,7 +20,7 @@
 <meta name="twitter:image" content="static/media/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 {% endblock %}
 
 {% block navbar %}
@@ -35,11 +35,13 @@
 
     <h1>Über Uns</h1>
     <p>Hier finden Sie eine kleine Vorstellung unserer Lehrer_innen gegliedert in Instrumentgruppen.</p>
-    <h2 class="heading-teaching">Direktion</h2>
+    <h2 class="heading-teaching"
+        data-aos="fade-right"
+        data-aos-duration="1000">Direktion</h2>
 
     <section class="grtnmc">
       {% for teacher in director %}
-      <div class="tnmc">
+      <div class="tnmc" data-aos="fade-left" data-aos-duration="1000">
         <div class="tnmhl">
           <section class="teaching-name">
             <h3>{{teacher.first_name}}</h3>
@@ -68,10 +70,12 @@
       </div>
       {% endfor %}
     </section>
-    <h2 class="heading-teaching">Blechblasinstrumente</h2>
+    <h2 class="heading-teaching"
+        data-aos="fade-right"
+        data-aos-duration="1000">Blechblasinstrumente</h2>
     <section class="grtnmc">
       {% for teacher in teacher_brass %}
-      <div class="tnmc">
+      <div class="tnmc" data-aos="fade-left" data-aos-duration="1000">
         <div class="tnmhl">
           <section class="teaching-name">
             <h3>{{teacher.first_name}}</h3>
@@ -101,10 +105,12 @@
       {% endfor %}
     </section>
 
-    <h2 class="heading-teaching">Gesang</h2>
+    <h2 class="heading-teaching"
+        data-aos="fade-right"
+        data-aos-duration="1000">Gesang</h2>
     <section class="grtnmc">
       {% for teacher in teacher_vocal %}
-      <div class="tnmc">
+      <div class="tnmc" data-aos="fade-left" data-aos-duration="1000">
         <div class="tnmhl">
           <section class="teaching-name">
             <h3>{{teacher.first_name}}</h3>
@@ -134,10 +140,12 @@
       {% endfor %}
     </section>
 
-    <h2 class="heading-teaching">Holzblasinstrumente</h2>
+    <h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Holzblasinstrumente</h2>
     <section class="grtnmc">
       {% for teacher in teacher_wood %}
-      <div class="tnmc">
+      <div class="tnmc" data-aos="fade-left" data-aos-duration="1000">
         <div class="tnmhl">
           <section class="teaching-name">
             <h3>{{teacher.first_name}}</h3>
@@ -160,10 +168,12 @@
       </div>
       {% endfor %}
     </section>
-    <h2 class="heading-teaching">Kunstschule</h2>
+    <h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Kunstschule</h2>
     <section class="grtnmc">
       {% for teacher in teacher_art %}
-      <div class="tnmc">
+      <div class="tnmc" data-aos="fade-left" data-aos-duration="1000">
         <div class="tnmhl">
           <section class="teaching-name">
             <h3>{{teacher.first_name}}</h3>
@@ -194,10 +204,12 @@
     </section>
 
 
-    <h2 class="heading-teaching">Schlagwerk</h2>
+    <h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Schlagwerk</h2>
     <section class="grtnmc">
       {% for teacher in teacher_drums %}
-      <div class="tnmc">
+      <div class="tnmc" data-aos="fade-left" data-aos-duration="1000">
         <div class="tnmhl">
           <section class="teaching-name">
             <h3>{{teacher.first_name}}</h3>
@@ -227,10 +239,12 @@
       {% endfor %}
     </section>
 
-    <h2 class="heading-teaching">Streichinstrumente</h2>
+    <h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Streichinstrumente</h2>
     <section class="grtnmc">
       {% for teacher in teacher_strings %}
-      <div class="tnmc">
+      <div class="tnmc" data-aos="fade-left" data-aos-duration="1000">
         <div class="tnmhl">
           <section class="teaching-name">
             <h3>{{teacher.first_name}}</h3>
@@ -260,10 +274,12 @@
       {% endfor %}
     </section>
 
-    <h2 class="heading-teaching">Tanz</h2>
+    <h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Tanz</h2>
     <section class="grtnmc">
       {% for teacher in teacher_dance %}
-      <div class="tnmc">
+      <div class="tnmc" data-aos="fade-left" data-aos-duration="1000">
         <div class="tnmhl">
           <section class="teaching-name">
             <h3>{{teacher.first_name}}</h3>
@@ -293,10 +309,12 @@
       {% endfor %}
     </section>
 
-    <h2 class="heading-teaching">Tasteninstrumente</h2>
+    <h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Tasteninstrumente</h2>
     <section class="grtnmc">
       {% for teacher in teacher_keys %}
-      <div class="tnmc">
+      <div class="tnmc" data-aos="fade-left" data-aos-duration="1000">
         <div class="tnmhl">
           <section class="teaching-name">
             <h3>{{teacher.first_name}}</h3>
@@ -327,10 +345,12 @@
     </section>
 
 
-    <h2 class="heading-teaching">Zupfinstrumente</h2>
+    <h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Zupfinstrumente</h2>
     <section class="grtnmc">
       {% for teacher in teacher_picked %}
-      <div class="tnmc">
+      <div class="tnmc" data-aos="fade-left" data-aos-duration="1000">
         <div class="tnmhl">
           <section class="teaching-name">
             <h3>{{teacher.first_name}}</h3>
@@ -359,10 +379,12 @@
       </div>
       {% endfor %}
     </section>
-    <h2 class="heading-teaching">Sekretariat</h2>
+    <h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Sekretariat</h2>
     <section class="grtnmc">
       {% for teacher in secretary %}
-      <div class="tnmc">
+      <div class="tnmc" data-aos="fade-left" data-aos-duration="1000">
         <div class="tnmhl">
           <section class="teaching-name">
             <h3>{{teacher.first_name}}</h3>
@@ -402,4 +424,10 @@
 {% endblock %}
 
 {% block footer %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  window.addEventListener('load', function () {
+  AOS.init();
+  })
+</script>
 {% endblock %}
