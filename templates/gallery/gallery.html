@@ -90,18 +90,20 @@
     document.getElementById("overlay-show-img").src = src
     document.getElementById("overlay-image-section").style.display = "block";
     document.querySelector("header").style.zIndex = "0"
-    console.log(src)
   }
   function blockImg(){
     document.getElementById("overlay-image-section").style.display = "none";
     document.querySelector("header").style.zIndex = "99"
   }
-
+  document.onkeydown = function(evt) {
+      evt = evt || window.event;
+      if (evt.keyCode == 27) {
+          blockImg()
+      }
+  };
 </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  window.addEventListener('load', function () {
   AOS.init();
-  })
 </script>
 {% endblock %}
