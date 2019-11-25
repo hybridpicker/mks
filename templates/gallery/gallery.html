@@ -11,7 +11,7 @@
 <meta property="og:image" content="static/media/thumbnail/facebook/home.jpg">
 <meta property="og:url" content="https://musik-kunst-schule.at/gallery">
 
-<meta name="twitter:title" content="Blessond.com | Gitarrenunterricht & Klavierunterricht in St. Pölten">
+<meta name="twitter:title" content="Galerie der Musik- und Kunstschule St. Pölten"">
 <meta name="twitter:description" content="Bilder und Impressionen der Musik- und Kunstschule St. Pölten in der Voithvilla am Südpark sowie unserer Schülerinnen, Schüler, Lehrer und Lehrerinnen.">
 <meta name="twitter:image" content="static/media/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -90,18 +90,20 @@
     document.getElementById("overlay-show-img").src = src
     document.getElementById("overlay-image-section").style.display = "block";
     document.querySelector("header").style.zIndex = "0"
-    console.log(src)
   }
   function blockImg(){
     document.getElementById("overlay-image-section").style.display = "none";
     document.querySelector("header").style.zIndex = "99"
   }
-
+  document.onkeydown = function(evt) {
+      evt = evt || window.event;
+      if (evt.keyCode == 27) {
+          blockImg()
+      }
+  };
 </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  window.addEventListener('load', function () {
   AOS.init();
-  })
 </script>
 {% endblock %}
