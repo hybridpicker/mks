@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.urls import include, path, re_path
+from django.conf.urls import handler404, handler500
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -39,6 +40,9 @@ urlpatterns = [
     path('', include('teaching.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'home.views.view_404'
+handler500 = 'home.views.view_404'
 
 #if settings.DEBUG:
 #    import debug_toolbar
