@@ -758,7 +758,12 @@ canvas {
   padding: 20px;
 }
 @media only screen and (max-width: 1340px) {
-  .dropdown a, .nodown a, .dropdown-b a, .dropdown-c a, .dropdown-d a, .dropdown-e a{
+  .dropdown > button > a,
+  .nodown > button > a,
+  .dropdown-b > button > a,
+  .dropdown-c > button > a,
+  .dropdown-d > button > a,
+  .dropdown-e > button > a{
     padding: 0,
   }
 }
