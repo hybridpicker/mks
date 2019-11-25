@@ -755,17 +755,7 @@ canvas {
   color: $menuColor;
   font-size: $menuFontSize;
   font-family: $menudFontFamily;
-  padding: 20px;
-}
-@media only screen and (max-width: 1340px) {
-  .dropdown > button > a,
-  .nodown > button > a,
-  .dropdown-b > button > a,
-  .dropdown-c > button > a,
-  .dropdown-d > button > a,
-  .dropdown-e > button > a{
-    padding: 0,
-  }
+  padding: 1rem;
 }
 .dropdown:hover, .dropdown-b:hover, .dropdown-c:hover, .dropdown-d:hover, .dropdown-e:hover{
   cursor: pointer;
@@ -823,7 +813,27 @@ canvas {
 }
 .dropdown-content-e{
   margin-top: 2rem;
-  left: 20px;
+  left: 1rem;
+}
+@media only screen and (max-width: 1340px) {
+  .dropdown > button > a,
+  .nodown > button > a,
+  .dropdown-b > button > a,
+  .dropdown-c > button > a,
+  .dropdown-d > button > a,
+  .dropdown-e > button > a{
+    padding: 1rem,
+  }
+  .dropdown, .nodown, .dropdown-b, .dropdown-c, .dropdown-d, .dropdown-e {
+      padding: 0.75rem 0.2rem;
+  }
+  .bns{
+    width: 45rem;
+    margin-left: auto;
+  }
+  .dropdown-content-e {
+    left: 0;
+  }
 }
 .dropdown-hover-section, .dropdown-hover-section-b,
 .dropdown-hover-section-c, .dropdown-hover-section-d,
@@ -1046,6 +1056,7 @@ canvas {
     background-color: $blackColor;
     color: $whiteColor;
     padding: 20px 0 !important;
+    width: 100vw;
   }
   .fbls > img, .fbrs > img{
     max-height: 3.5rem;
