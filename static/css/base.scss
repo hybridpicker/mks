@@ -755,7 +755,7 @@ canvas {
   color: $menuColor;
   font-size: $menuFontSize;
   font-family: $menudFontFamily;
-  padding: 20px;
+  padding: 1rem;
 }
 .dropdown:hover, .dropdown-b:hover, .dropdown-c:hover, .dropdown-d:hover, .dropdown-e:hover{
   cursor: pointer;
@@ -813,7 +813,7 @@ canvas {
 }
 .dropdown-content-e{
   margin-top: 2rem;
-  left: 20px;
+  left: 1rem;
 }
 @media only screen and (max-width: 1340px) {
   .dropdown > button > a,
@@ -1056,6 +1056,7 @@ canvas {
     background-color: $blackColor;
     color: $whiteColor;
     padding: 20px 0 !important;
+    width: 100vw;
   }
   .fbls > img, .fbrs > img{
     max-height: 3.5rem;
