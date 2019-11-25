@@ -24,7 +24,8 @@ not_contact_dict = ["Gitarrenensemble", "Musikkunde",
                     "Vorbereitungsklasse",
                     "Orchester,",
                     "Direktor",
-                    "Sekretariat"]
+                    "Sekretariat",
+                    "Bandcoaching"]
 
 def get_subject_choices():
     all_teachers = Teacher.objects.all()
