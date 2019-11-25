@@ -7,7 +7,7 @@ from .models import Instrument
 # Create your views here.
 
 def instruments_summary(request):
-    all_blogs = Instrument.objects.all()
+    all_instruments = Instrument.objects.all()
     context = {
         'all_instruments': all_instruments
         }
