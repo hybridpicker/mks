@@ -257,7 +257,11 @@ a:hover {
     padding-right: 4%;
   }
 }
-
+@media only screen and (max-width: 380px) {
+  .overlay-content{
+    margin-top: -8vh;
+  }
+}
 /* Font */
 h1{
   font-family: $firstHeadingFamily;
@@ -775,14 +779,14 @@ canvas {
 }
 
 /* Links inside the dropdown */
-.dropdown-content a, .dropdown-content-e a {
+.dropdown-content a, .dropdown-content-d a, .dropdown-content-e a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
   line-height: 34px;
 }
-.dropdown-content a:hover, .dropdown-content-e a:hover{
+.dropdown-content a:hover,.dropdown-content-d a:hover, .dropdown-content-e a:hover{
   text-decoration-skip-ink: none;
   text-decoration: underline 14px $primaryColor;
 }
@@ -891,6 +895,9 @@ canvas {
   animation-duration: 1s;
   margin-left: 20px;
   margin-right: 20px;
+}
+.dropdown-d:hover .dropdown-content-d {
+  display: block;
 }
 .dropdown-e:hover .dropdown-hover-section-e {
   display: block;

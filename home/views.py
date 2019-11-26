@@ -25,8 +25,8 @@ def home (request):
 def impressum (request):
     return render (request, 'home/impressum.html')
 
-def sitemap (request):
-    return render (request, 'sitemap.xml')
+def history (request):
+    return render (request, 'home/history.html')
 
 def view_404(request, *args, **kwargs):
     return redirect('home_view')

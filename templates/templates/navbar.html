@@ -13,12 +13,12 @@
         <div class="drops">
           <div class="dropdown arrow">
             <button class="dropbtn">
-              <a href="{% url 'teaching-music'%}">Bildungsangebot</a>
+              <a href="{% url 'teaching_music'%}">Bildungsangebot</a>
             </button>
             <div class="dropdown-content">
-              <a href="{% url 'teaching-music'%}">Musikschule</a>
-              <a href="{% url 'teaching-art'%}">Kunstschule</a>
-              <a href="{% url 'teaching-prices'%}">Beiträge & Ermäßigungen</a>
+              <a href="{% url 'teaching_music'%}">Musikschule</a>
+              <a href="{% url 'teaching_art'%}">Kunstschule</a>
+              <a href="{% url 'teaching_prices'%}">Beiträge & Ermäßigungen</a>
             </div>
             <div class="dropdown-hover-section">
             </div>
@@ -38,6 +38,7 @@
                 <a href="{% url 'all_teachers'%}">Über Uns</a>
               </button>
               <div class="dropdown-content-d">
+                  <a href="{% url 'history'%}">Geschichte</a>
               </div>
               <div class="dropdown-hover-section-d">
               </div>
@@ -90,12 +91,13 @@
           <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
             {% include "templates/svg/nav_bar_crossburger.html" %}
           </a>
-          <a class="mainHeadingMobile" href="{% url 'teaching-music'%}">Bildungsangebot</a>
-          <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching-music'%}">Musikschule</a>
-          <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching-art'%}">Kunstschule</a>
-          <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching-prices'%}">Beiträge & Ermäßigungen</a>
+          <a class="mainHeadingMobile" href="{% url 'teaching_music'%}">Bildungsangebot</a>
+          <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_music'%}">Musikschule</a>
+          <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_art'%}">Kunstschule</a>
+          <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_prices'%}">Beiträge & Ermäßigungen</a>
           <a class="mainHeadingMobile" href="{% url 'gallery_view'%}">Galerie</a>
           <a class="mainHeadingMobile" href="{% url 'all_teachers'%}">Über Uns</a>
+          <a class="categoryHeadingMobileNoCursor" href="{% url 'history'%}">Geschichte</a>
           <a class="mainHeadingMobile" href="{% url 'contact_email' %}">Kontakt</a>
           <a class="categoryHeadingMobileNoCursor" href="{% url 'impressum'%}">Impressum</a>
         </div>

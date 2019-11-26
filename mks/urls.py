@@ -26,6 +26,17 @@ import teaching.views
 
 admin.autodiscover()
 
+from django.conf.urls import include, url
+from django.contrib import admin
+
+from django.contrib.sitemaps.views import sitemap
+
+from home.sitemaps import Static_Sitemap
+
+sitemaps = {
+    'static': Static_Sitemap(),
+}
+
 
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
@@ -34,10 +45,12 @@ urlpatterns = [
 #    re_path(r'^instruments/', include('instruments.urls')),
     path('', home.views.home, name='home_view'),
     path('impressum/', home.views.impressum, name='impressum'),
+    path('geschichte/', home.views.history, name='history'),
     path('team/', include('users.urls')),
     path('', include('contact.urls')),
     path('', include('gallery.urls')),
     path('', include('teaching.urls')),
+    re_path(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

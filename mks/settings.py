@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'gallery.apps.GalleryConfig',
     'contact.apps.ContactConfig',
+    #sitemaps
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [
