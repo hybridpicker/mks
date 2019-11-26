@@ -25,6 +25,9 @@ def home (request):
 def impressum (request):
     return render (request, 'home/impressum.html')
 
+def history (request):
+    return render (request, 'home/history.html')
+
 def sitemap (request):
     return render (request, 'sitemap.xml')
 

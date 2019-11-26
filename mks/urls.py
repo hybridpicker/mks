@@ -34,6 +34,7 @@ urlpatterns = [
 #    re_path(r'^instruments/', include('instruments.urls')),
     path('', home.views.home, name='home_view'),
     path('impressum/', home.views.impressum, name='impressum'),
+    path('geschichte/', home.views.history, name='history'),
     path('team/', include('users.urls')),
     path('', include('contact.urls')),
     path('', include('gallery.urls')),
