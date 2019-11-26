@@ -777,7 +777,9 @@ canvas {
   margin-top: 1.25rem;
   left:0;
 }
-
+.dropdown-content-d,{
+  left: 1.25rem;
+}
 /* Links inside the dropdown */
 .dropdown-content a, .dropdown-content-d a, .dropdown-content-e a {
   color: black;
