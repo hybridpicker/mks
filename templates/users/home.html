@@ -5,6 +5,7 @@
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
+<meta name="robots" content="noindex">
 {% endblock %}
 
 
@@ -12,25 +13,25 @@
 {% endblock %}
 
 {% block banner %}
-<img src="/static/media/banner/home_banner.jpg" alt="">
+<img src="/static/media/banner/team_banner.jpg" alt="">
+<img id="mbimg" src="/static/media/banner/mobile/team_banner.jpg" alt="">
+
 {% endblock %}
 
 {% block body %}
 
 <div class="mbs">
   <div class="container">
-  {% if user.is_authenticated %}
-  <p>Willkommen, {{ user }}!</p>
-  {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'account_login' %}">Log In</a> |
-  <a href="{% url 'account_signup' %}">Sign Up</a>
-  {% endif %}
-  <nav class="prices-nav-bar">
-    <h2>
-    <a href="{% url 'event_managing_view'%}">Veranstaltungen</a>
-    </h2>
-  </nav>
+    {% if user.is_authenticated %}
+    <p>Willkommen, {{ user }}!</p>
+    {% else %}
+    <h2>Sie sind nicht angemeldet</h2>
+    <a href="/team/login">
+      <button type="button" name="button">
+        Log In
+      </button>
+    </a>
+    {% endif %}
   </div>
 </div>
 

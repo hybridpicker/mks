@@ -1857,6 +1857,29 @@ td {
 #user-event-container a:hover .cross_st0{
   stroke: black;
 }
+/* Tooltip */
+.tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color:$blackColor;
+  color:$whiteColor;
+  text-align: center;
+  border-radius: 5px;
+  padding: 0.75rem;
+  position: absolute;
+  z-index: 1;
+  text-decoration: none;
+  font-family: $paragraphFontFamily;
+  font-size: $paragraphFontSize;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.event-cross-burger:hover .tooltiptext {
+  visibility: visible;
+}
+
 /* Counter */
 .counter-grid-container {
   background-color: $secondaryColor;

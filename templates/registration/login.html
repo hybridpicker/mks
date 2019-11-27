@@ -8,6 +8,8 @@
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
     async defer>
 </script>
+<meta name="robots" content="noindex">
+
 {% endblock %}
 
 
@@ -15,7 +17,9 @@
 {% endblock %}
 
 {% block banner %}
-<img src="/static/media/banner/home_banner.jpg" alt="">
+<img src="/static/media/banner/team_banner.jpg" alt="">
+<img id="mbimg" src="/static/media/banner/mobile/team_banner.jpg" alt="">
+
 {% endblock %}
 
 {% block title %}Login{% endblock %}
