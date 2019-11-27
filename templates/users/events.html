@@ -5,6 +5,8 @@
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
+<meta name="robots" content="noindex">
+
 <style media="screen">
   #user-event-container a:hover .cross_st0{
     stroke: black;
@@ -17,7 +19,9 @@
 {% endblock %}
 
 {% block banner %}
-<img src="/static/media/banner/home_banner.jpg" alt="">
+<img src="/static/media/banner/events_banner.jpg" alt="">
+<img id="mbimg" src="/static/media/banner/mobile/events_banner.jpg" alt="">
+
 {% endblock %}
 
 {% block body %}
@@ -28,10 +32,11 @@
   <h1>Veranstaltungen</h1>
   {% for event in events %}
   <div id="user-event-container" class="event-container">
-    <div id="user-event-cross-burger" class=event-cross-burger"">
+    <div id="user-event-cross-burger" class="event-cross-burger">
       <a href="?id={{ event.id }}">
         {% include "templates/svg/nav_bar_crossburger.html" %}
       </a>
+      <span class="tooltiptext">Veranstaltung löschen</span>
     </div>
     <div class="mks-event-date">
       <h3>{{ event.get_date_presentation }}</h3>

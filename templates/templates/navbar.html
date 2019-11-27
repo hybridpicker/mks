@@ -11,6 +11,43 @@
       </div>
       <div class="bns">
         <div class="drops">
+          {% if user.is_authenticated %}
+          <div class="dropdown arrow">
+            <button class="dropbtn">
+            </button>
+            <div class="dropdown-content">
+            </div>
+            <div class="dropdown-hover-section">
+            </div>
+          </div>
+          <div class="dropdown-b arrow">
+            <button class="dropbtn-b">
+            </button>
+            <div class="dropdown-content">
+              <a href="#"></a>
+            </div>
+            <div class="dropdown-hover-section-b">
+            </div>
+          </div>
+          <div class="dropdown-d arrow">
+            <button class="dropbtn-d">
+              <a href="{% url 'event_managing_view' %}"> Veranstaltungen</a>
+            </button>
+            <div class="dropdown-content-d">
+            </div>
+            <div class="dropdown-hover-section-d">
+            </div>
+          </div>
+          <div class="dropdown-e arrow">
+            <button class="dropbtn-e">
+              <a href="{% url 'logout' %}">Abmelden</a>
+            </button>
+            <div class="dropdown-hover-section-e">
+            </div>
+            <div class="dropdown-content-e">
+            </div>
+          </div>
+          {% else %}
           <div class="dropdown arrow">
             <button class="dropbtn">
               <a href="{% url 'teaching_music'%}">Bildungsangebot</a>
@@ -38,20 +75,11 @@
                 <a href="{% url 'all_teachers'%}">Über Uns</a>
               </button>
               <div class="dropdown-content-d">
-                  <a href="{% url 'history'%}">Geschichte</a>
+                <a href="{% url 'history'%}">Geschichte</a>
               </div>
               <div class="dropdown-hover-section-d">
               </div>
             </div>
-            {% if user.is_authenticated %}
-            <div class="dropdown-e arrow">
-              <button class="dropbtn-e">
-                <a href="{% url 'logout' %}">Log Out</a>
-              </button>
-              <div class="dropdown-hover-section-e">
-              </div>
-            </div>
-            {% else %}
             <div class="dropdown-e arrow">
               <button class="dropbtn-e">
                 <a href="{% url 'contact_email' %}">Kontakt</a>
