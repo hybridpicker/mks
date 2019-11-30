@@ -50,6 +50,7 @@ urlpatterns = [
     path('', include('contact.urls')),
     path('', include('gallery.urls')),
     path('', include('teaching.urls')),
+    path('', include('students.urls')),
     re_path(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

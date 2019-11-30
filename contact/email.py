@@ -18,7 +18,7 @@ def check_message(message):
             answer = answer_keyword.answer
             return answer
 
-def contact_mail_student(from_email, subject, message, student_context, send_mail=True):
+def contact_mail_student(from_email, message, student_context, send_mail=True):
     #from_email = settings.EMAIL_HOST_USER
     '''
     Preparing Mail to USER
@@ -29,7 +29,6 @@ def contact_mail_student(from_email, subject, message, student_context, send_mai
     name = student_context.get('first_name') + ' ' + student_context.get('last_name')
     location = student_context.get('location')
     today = student_context.get('today')
-    instrument = student_context.get('subject')
     if answer == None:
         answer = ''
     html_message = render_to_string('templates/mail/answer_mail_template.html',
@@ -56,6 +55,5 @@ def contact_mail_student(from_email, subject, message, student_context, send_mai
         # Sending to User
         #TODO: settings.EMAIL_HOST_USER
         to = 'service@blessond.com'
-        print(mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message))
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
     return html_message

@@ -14,7 +14,7 @@ def get_teachers_from_category(subject_name):
         else:
             y = z
         i += 1
-    return y
+    return y.distinct()
 
 def show_teacher_view(request):
     categories = SubjectCategory.objects.all()
