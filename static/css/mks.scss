@@ -612,6 +612,7 @@ canvas {
 .st9{fill:#222527;}
 .st10{fill:#D73538;}
 .st11{fill:#222528;}
+.st11{fill:$blackColor;}
 
 #mks-logo-svg{
   position: absolute;
@@ -746,6 +747,9 @@ canvas {
 .dropbtn:hover, .dropbtn-b:hover, .dropbtn-c:hover,
 .dropbtn-d:hover, .dropbtn-e:hover {
   cursor:pointer;
+}
+.dropbtn-e:hover .st11{
+  fill: $primaryColor;
 }
 /* The container <div> - needed to position the dropdown content */
 .dropdown, .nodown, .dropdown-b, .dropdown-c, .dropdown-d, .dropdown-e {
@@ -1340,6 +1344,7 @@ a button {
   padding-left: 1.5%;
 }
 #signin_form_post .slitcon{
+  overflow-x: hidden;
   width:50%;
   border-color:$blackColor;
   padding-right: 3%;
@@ -1350,6 +1355,15 @@ a button {
 }
 #signin_form_post .slitcon > div{
   margin-right: -6%;
+}
+@media only screen and (max-width: 1024px) {
+  #signin_form_post input,
+  #signin_form_post textarea, {
+    width:95%
+  }
+  #signin_form_post .sese, #signin_form_post .slitcon {
+    width: 95%;
+  }
 }
 /* Teacher Promo CSS */
 .tnmhl { grid-area: tnmhl; }
