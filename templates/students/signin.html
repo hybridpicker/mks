@@ -6,24 +6,14 @@
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
-<meta name="title" content="Kontaktmöglichkeit | Musik- und Kunstschule St. Pölten">
-<meta name="description" content="Hier haben Sie die Möglichkeit mit uns einfach in Kontakt zu treten.">
-
-<!-- Social Media Meta --->
-<meta property="og:title" content="Kontaktmöglichkeit | Musik- und Kunstschule St. Pölten">
-<meta property="og:description" content="Hier haben Sie die Möglichkeit mit uns einfach in Kontakt zu treten.">
-<meta property="og:image" content="static/media/thumbnail/facebook/home.jpg">
-<meta property="og:url" content="https://blessond.com/gesangsunterricht">
-
-<meta name="twitter:title" content="Kontakt | Musik- und Kunstschule St. Pölten">
-<meta name="twitter:description" content="Hier haben Sie die Möglichkeit mit uns einfach in Kontakt zu treten.">
-<meta name="twitter:image" content="static/media/thumbnail/twitter/home.jpg">
-<meta name="twitter:card" content="summary_large_image">
 
 <!-- Recaptcha -->
 
 <script src='https://www.google.com/recaptcha/api.js?render={{public_key}}'></script>
 
+<style media="screen">
+
+</style>
 {% endblock %}
 
 {% block navbar %}
@@ -35,22 +25,10 @@
 {% block body %}
 <div class="mbs">
   <div class="container">
-    <h1>Schreiben Sie uns eine Anfrage</h1>
-    <form id="contact_form_post" method="post">
+    <h1>Anmeldung</h1>
+    <form id="signin_form_post" method="post">
       {% csrf_token %}
       <div class="row">
-        <div class="col-4">
-          <p>Anrede:</p>
-        </div>
-        <div class="sfbsfcon">
-          <div class="col-8">
-            <select name="gender" required>
-              <option value="1">-------</option>
-              <option value="1">{% trans 'Herr' %}</option>
-              <option value="2">{% trans 'Frau' %}</option>
-            </select>
-          </div>
-        </div>
         <div class="col-4">
           <p>Vorname:</p>
         </div>
@@ -70,31 +48,45 @@
           {{ form.from_email }}
         </div>
         <div class="col-4">
-          <p>Nachricht optional:</p>
+          <p>Instrument:</p>
+        </div>
+        <div class="sfbsfcon">
+          <div class="col-8">
+            {{ form.subject }}
+          </div>
+        </div>
+        <div class="col-4">
+          <p>Straße:</p>
         </div>
         <div class="col-8">
-          {{ form.message }}
+          {{ form.adress_line }}
+        </div>
+        <div class="col-4">
+          <p>Hausnummer:</p>
+        </div>
+        <div class="col-8">
+          {{ form.house_number }}
+        </div>
+        <div class="col-4">
+          <p>Postleitzahl:</p>
+        </div>
+        <div class="col-4">
+          {{ form.postal_code }}
+        </div>
+        <div class="col-4">
+          <p>Stadt:</p>
+        </div>
+        <div class="col-4">
+          {{ form.city }}
         </div>
         <div class="col-8">
           <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" value="">
         </div>
       </div>
       <div class="form-actions">
-        <button type="submit">Senden</button>
+        <button type="submit">Anmelden</button>
       </div>
     </form>
-    <p></p>
-     <p><strong>Kontakt</strong></p>
-     <p>Musikschule St. Pölten
-       <br /> Maria-Theresia-Straße 23<br />
-       3100 St. Pölten
-       <br /> Tel.: +43 2742 333-2681<br />
-       Fax: +43 2742 333-2689<br />
-       E-Mail: <a href="mailto:musikschule@st-poelten.gv.at">musikschule@st-poelten.gv.at</a></p>
-       <p><strong>Sekretariat </strong></p> <p>Viktoria Weber, Astrid Engelhardt</p>
-       <p>Öffnungszeiten:<br /> Montag bis Freitag von 9:30 bis 11:30 und 14 bis 16 Uhr</p>
-       <p><strong>Direktion </strong></p>
-      <p>Mag. Alfred Kellner, PhD</p>
   </div>
 
 
@@ -103,10 +95,10 @@
   {% block footer %}
   <script>
     grecaptcha.ready(function() {
-    grecaptcha.execute('{{public_key}}', {action: 'submit'})
-    .then(function(token) {
+      grecaptcha.execute('{{public_key}}', {action: 'submit'})
+      .then(function(token) {
         document.getElementById('g-recaptcha-response').value=token
-        });
+      });
     });
   </script>
   <script type="text/javascript">

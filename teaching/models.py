@@ -6,6 +6,7 @@ from django.utils.translation import gettext as _
 from phone_field import PhoneField
 from location.models import Location, Country
 from users.models import CustomUser
+from teaching.subject import Subject
 
 class Teacher(models.Model):
     '''
@@ -17,9 +18,9 @@ class Teacher(models.Model):
         on_delete=models.CASCADE, blank=True, null=True)
     first_name = models.CharField(_(u'Vorname'), max_length=30)
     last_name = models.CharField(_(u'Nachname'), max_length=30)
-    subject = models.ForeignKey(
-        'teaching.subject',
-        on_delete=models.CASCADE, blank=True, null=True)
+    subject = models.ManyToManyField(
+              Subject,
+              blank=True)
     user = models.OneToOneField(
         CustomUser,
         on_delete=models.CASCADE,

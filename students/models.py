@@ -17,7 +17,9 @@ class Student(models.Model):
     '''
     Model holding student data
     '''
-    gender = models.ForeignKey(Gender, on_delete=models.CASCADE)
+    gender = models.ForeignKey(Gender, on_delete=models.CASCADE,
+                               blank=True,
+                               null=True)
     academic_title = models.ForeignKey(
         AcademicTitle,
         on_delete=models.CASCADE,
