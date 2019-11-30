@@ -42,27 +42,30 @@ def signInView(request):
         last_name = form.cleaned_data['last_name']
         from_email = form.cleaned_data['from_email']
         subject = form.cleaned_data['subject']
-        subject = dict(form.fields['subject'].choices)[int(subject)]
         adress_line = form.cleaned_data['adress_line']
         house_number = form.cleaned_data['house_number']
         postal_code = form.cleaned_data['postal_code']
         city = form.cleaned_data['city']
+        email = form.cleaned_data['from_email']
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         from_email = request.POST['from_email']
         adress_line = request.POST['adress_line']
+        subject = form.cleaned_data['subject'].id
         house_number = request.POST['house_number']
         postal_code = request.POST['postal_code']
         city = request.POST['city']
+        email = request.POST['from_email']
         new_student = Student(first_name=first_name,
                               last_name=last_name,
-                        #      subject=subject,
+                              subject_id=subject,
                               adress_line=adress_line,
                               house_number=house_number,
                               postal_code=postal_code,
-                              city=city)
+                              city=city,
+                              email=email,)
         new_student.save()
-        return redirect('successfully_saved')
+        return redirect('student_successfully_saved')
     return render(request, "students/signin.html", {'form':form, 'public_key': public_key})
 
 def successView(request):
