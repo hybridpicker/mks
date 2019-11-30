@@ -1,0 +1,41 @@
+{% extends "templates/base.html" %}
+{% load i18n static %}
+
+{% load static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+
+<!-- Recaptcha -->
+
+<script src='https://www.google.com/recaptcha/api.js?render={{public_key}}'></script>
+
+<style media="screen">
+
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+<img src="/static/media/banner/kontakt_banner.jpg" alt="">
+<img id="mbimg" src="/static/media/banner/mobile/kontakt_banner.jpg" alt="">
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container">
+  <img class="studentProfileImg" src="{{ image }}" width=150>
+  <h1>{{ first_name }} {{ last_name }}</h1>
+  <br>
+  <p>Instrument: {{ subject }}</p>
+  <p>Eintritt: {{ start_date }}</p>
+  <p>Straße: {{ adressline }} {{ house_number }}</p>
+  <p>Ort: {{ postal_code }} {{ city }}</p>
+  <p>Email:<a href="mailto:{{email}}">{{ email }}</a></p>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

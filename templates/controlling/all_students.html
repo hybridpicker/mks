@@ -1,0 +1,53 @@
+{% extends "templates/base.html" %}
+{% load i18n static %}
+
+{% load static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+
+<!-- Recaptcha -->
+
+<script src='https://www.google.com/recaptcha/api.js?render={{public_key}}'></script>
+
+<style media="screen">
+
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+<img src="/static/media/banner/kontakt_banner.jpg" alt="">
+<img id="mbimg" src="/static/media/banner/mobile/kontakt_banner.jpg" alt="">
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h2>Angemeldete Schüler_innen</h2>
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <thead>
+        <tr>
+          <th style="text-align:center" align="left">Name</th>
+          <th style="text-align:center" align="left">Instrument</th>
+          <th style="text-align:center" align="left">Anmeldedatum</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students.all %}
+
+          <tr>
+            <td align="left"><a traget="_blank" href="single_student?id={{student.id}}">{{ student.first_name }} {{ student.last_name }}</a></td>
+            <td>{{student.subject }}</td>
+            <td style="text-align:center;" align="left"><strong>{{student.start_date}}</strong></td>
+          </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+{% block footer %}
+{% endblock %}

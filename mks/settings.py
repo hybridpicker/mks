@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'gallery.apps.GalleryConfig',
     'contact.apps.ContactConfig',
+    'controlling.apps.ControllingConfig',
     #sitemaps
     'django.contrib.sitemaps',
 ]

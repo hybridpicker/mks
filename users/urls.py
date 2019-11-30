@@ -8,5 +8,5 @@ urlpatterns = [
     path('', HomePageView.as_view(), name='user_home'),
     path('events', views.eventView, name='event_managing_view'),
     path('password/', views.change_password, name='change_password'),
-
+    path('controlling/', include('controlling.urls')),
 ]

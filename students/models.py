@@ -45,7 +45,7 @@ class Student(models.Model):
     regular_lesson_day = DayOfTheWeekField(_("regular lesson day"),
                                            help_text='if lessonform is monthly',
                                            null=True, blank=True)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
     lesson_count = models.IntegerField(_(u'lesson counter',), default=0)
     start_date = models.DateField(
         _("start date"),
