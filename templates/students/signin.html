@@ -25,11 +25,11 @@
 {% block body %}
 <div class="mbs">
   <div class="container">
-    <h1>Anmeldung</h1>
+    <h1 id="signin_heading">Anmeldung</h1>
     <form id="signin_form_post" method="post">
       {% csrf_token %}
       <div class="row">
-        <h3>Schüler_in</h3>
+        <h2>Schüler_in</h2>
         <div class="col-4">
           <p>Vorname*</p>
         </div>
@@ -53,7 +53,7 @@
           </div>
         </div>
         {{ form.subject.errors }}
-        <h3>Eltern</h3>
+        <h2>Eltern</h2>
         <div class="col-4">
           <p>Vorname*</p>
         </div>
