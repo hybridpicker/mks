@@ -16,7 +16,7 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Lato:300|Montserrat:500,600&display=swap" rel="stylesheet">
 
-  <!-- Blessond Nav Script -->
+  <!-- MKS Nav Script -->
   <script type="text/javascript" src="{% static "js/mks.js" %}"></script>
 
   {% include "templates/favicon.html" %}
@@ -26,14 +26,20 @@
 </head>
 
 <body>
-
+  {% if user.is_authenticated %}
+  {% include "templates/user_navbar.html" %}
+  {% else %}
   {% include "templates/navbar.html" %}
+  {% endif %}
 
 
   {% block navbar %}
   {% endblock %}
-
+  {% if user.is_authenticated %}
+  <div class="bs" style="margin-top: 70px;">
+  {% else %}
   <div class="bs">
+  {% endif %}
     {% block banner %}
     {% endblock%}
   </div>

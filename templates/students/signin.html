@@ -29,55 +29,79 @@
     <form id="signin_form_post" method="post">
       {% csrf_token %}
       <div class="row">
+        <h3>Schüler_in</h3>
         <div class="col-4">
-          <p>Vorname:</p>
+          <p>Vorname*</p>
         </div>
         <div class="col-8">
           {{ form.first_name }}
+          {{ form.first_name.errors }}
         </div>
         <div class="col-4">
-          <p>Familienname:</p>
+          <p>Familienname*</p>
         </div>
         <div class="col-8">
           {{ form.last_name }}
+          {{ form.last_name.errors }}
         </div>
         <div class="col-4">
-          <p>Email:</p>
-        </div>
-        <div class="col-8">
-          {{ form.from_email }}
-        </div>
-        <div class="col-4">
-          <p>Instrument:</p>
+          <p>Instrument*</p>
         </div>
         <div class="sfbsfcon">
           <div class="col-8">
             {{ form.subject }}
           </div>
         </div>
+        {{ form.subject.errors }}
+        <h3>Eltern</h3>
         <div class="col-4">
-          <p>Straße:</p>
+          <p>Vorname*</p>
+        </div>
+        <div class="col-8">
+          {{ form.parent_first_name }}
+          {{ form.parent_first_name.errors }}
+        </div>
+        <div class="col-4">
+          <p>Familienname*</p>
+        </div>
+        <div class="col-8">
+          {{ form.parent_last_name }}
+          {{ form.parent_last_name.errors }}
+        </div>
+        <div class="col-4">
+          <p>Email*</p>
+        </div>
+        <div class="col-8">
+          {{ form.from_email }}
+          {{ form.from_email.errors }}
+        </div>
+        <div class="col-4">
+          <p>Straße*</p>
         </div>
         <div class="col-8">
           {{ form.adress_line }}
+          {{ form.adress_line.errors }}
         </div>
         <div class="col-4">
-          <p>Hausnummer:</p>
+          <p>Hausnummer*</p>
         </div>
         <div class="col-8">
           {{ form.house_number }}
+          {{ form.house_number.errors }}
         </div>
         <div class="col-4">
-          <p>Postleitzahl:</p>
+          <p>Postleitzahl*</p>
         </div>
         <div class="col-4">
           {{ form.postal_code }}
+          {{ form.postal_code.errors }}
         </div>
         <div class="col-4">
-          <p>Stadt:</p>
+          <p>Stadt*</p>
         </div>
         <div class="col-4">
           {{ form.city }}
+          {{ form.city.errors }}
         </div>
         <div class="col-8">
           <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" value="">

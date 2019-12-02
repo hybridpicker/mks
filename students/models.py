@@ -12,6 +12,39 @@ from .academic_title import AcademicTitle
 from .gender import Gender
 from .day_of_weeks import DayOfTheWeekField
 
+class Parent(models.Model):
+    '''
+    Model holding parent data
+    '''
+    gender = models.ForeignKey(Gender, on_delete=models.CASCADE,
+                               blank=True,
+                               null=True)
+    academic_title = models.ForeignKey(
+            AcademicTitle,
+            on_delete=models.CASCADE,
+            blank=True,
+            null=True)
+    first_name = models.CharField(_(u'first name'), max_length=30)
+    last_name = models.CharField(_(u'last name'), max_length=30)
+    phone = PhoneField(_(u'telephone number'),
+                       blank=True, default='+43 ', help_text='Telefonnummer')
+    email = models.EmailField(_(u'e-mail'), max_length=70, blank=True)
+    adress_line = models.CharField(_(u'street'), max_length=80, blank=True)
+    house_number = models.CharField(_(u'house number'), max_length=80, blank=True)
+    postal_code = models.CharField(_(u'postal code'), max_length=30, blank=True)
+    city = models.CharField(_(u'city'), max_length=30, blank=True)
+
+    def __str__(self):
+        return '%s %s' % (self.first_name, self.last_name)
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        '''
+        Meta class for Parent
+        '''
+        ordering = ('last_name',)
+        verbose_name = u'Parent'
+        verbose_name_plural = u'Parents'
+
 
 class Student(models.Model):
     '''
@@ -60,6 +93,7 @@ class Student(models.Model):
     postal_code = models.CharField(_(u'postal code'), max_length=30, blank=True)
     city = models.CharField(_(u'city'), max_length=30, blank=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True)
+    parent = models.ForeignKey(Parent, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)
