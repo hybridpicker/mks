@@ -314,7 +314,7 @@ li {
 span {
   text-decoration: underline;
 }
-strong {
+strong, b {
   font-family: $firstHeadingFamily;
   font-size: 24px;
 }
@@ -1344,6 +1344,14 @@ a button {
   font-weight: bolder;
   font-family: "Montserrat", sans-serif;
 }
+#signin_heading{
+  border: none;
+  color: $blackColor;
+}
+#signin_form_post h2{
+  text-align: left;
+  color: $primaryColor;
+}
 #signin_form_post .sfbsfcon{
   margin-left:0;
 }
@@ -1372,6 +1380,10 @@ a button {
 #signin_form_post .slitcon > div{
   margin-right: -6%;
 }
+#signin_form_post button{
+  margin-left: 0;
+}
+
 @media only screen and (max-width: 1024px) {
   #signin_form_post input,
   #signin_form_post textarea, {
@@ -1379,6 +1391,9 @@ a button {
   }
   #signin_form_post .sese, #signin_form_post .slitcon {
     width: 95%;
+  }
+  #signin_form_post .form-actions{
+    text-align: center;
   }
 }
 /* Teacher Promo CSS */
