@@ -49,7 +49,7 @@ def contact_mail_student(from_email, message, student_context, send_mail=True):
         html_message = render_to_string('templates/mail/mail_template.html',
                                         {'context': 'values', 'name': name,
                                          'location': location, 'today': today,
-                                         'instrument': instrument, 'customer_email': customer_email,
+                                         'customer_email': customer_email,
                                          'message': message, 'answer': answer})
         plain_message = strip_tags(html_message)
         # Sending to User

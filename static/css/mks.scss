@@ -24,7 +24,7 @@ $fourthHeadingFontLineHeight:30px;
 $paragraphFontFamily:'Lato', sans-serif;
 $paragraphFontSize:24px;
 $paragraphFontColor:#222528;
-$paragraphFontLineHeight:35px;
+$paragraphFontLineHeight:45px;
 
 $primaryColor:#D73538;
 $secondaryColor:#222528;
@@ -314,6 +314,10 @@ li {
 span {
   text-decoration: underline;
 }
+strong {
+  font-family: $firstHeadingFamily;
+  font-size: 24px;
+}
 @media screen and (max-height: 450px) {
   .overlay .closebtn {
     font-size: 40px;
@@ -355,6 +359,9 @@ header {
   height: $menuHeight;
   z-index: 1;
   transition: height 0.3s ease;
+}
+.nvb#user_nav{
+  height: 70px;
 }
 .bs {
   margin-top: 120px;
@@ -442,14 +449,11 @@ header {
     display: unset;
   }
 }
-
 /* Home CSS */
-
 #container {
   /* This will come into play later */
   perspective: 40px;
 }
-
 #logo {
   height: 18em;
   transition: transform 0.5s;
@@ -599,7 +603,6 @@ canvas {
   text-align: left;
   padding-left: 3em !important;
 }
-
 .st0{fill:#009FE4;}
 .st1{fill:#FFE500;}
 .st2{fill:#00A1E4;}
@@ -621,6 +624,9 @@ canvas {
   padding-top: 34px;
   padding-left: 60px;
   transition: height 0.3s ease;
+}
+#user_nav #mks-logo-svg {
+    height: 3rem;
 }
 .bnbs > .bls{
   text-align: left;
@@ -892,6 +898,9 @@ canvas {
   margin-left: 20px;
   margin-right: 20px;
 }
+#user_nav .dropdown-b:hover a{
+  color: $primaryColor;
+}
 .dropdown-d:hover .dropdown-hover-section-d {
   display: block;
   opacity: 1;
@@ -904,6 +913,9 @@ canvas {
 }
 .dropdown-d:hover .dropdown-content-d {
   display: block;
+}
+#user_nav .dropdown-d:hover a{
+  color: $primaryColor;
 }
 .dropdown-e:hover .dropdown-hover-section-e {
   display: block;
@@ -1099,16 +1111,16 @@ canvas {
 }
 /* Contact Form */
 
-#contact_form_post {
+#contact_form_post, #event_form_post {
   text-align: left;
 }
-#contact_form_post select {
+#contact_form_post select, #event_form_post select {
   width: 47%;
 }
-#contact_form_post input {
+#contact_form_post input, #event_form_post input {
   width: 47%;
 }
-#contact_form_post textarea {
+#contact_form_post textarea, #event_form_post textarea {
   width: 47%;
   padding: 1.5%;
   resize: none;
@@ -1119,30 +1131,30 @@ canvas {
   border-radius: 5px;
   border-color: $blackColor;
 }
-#contact_form_post .sfbsfcon{
+#contact_form_post .sfbsfcon, #event_form_post .sfbsfcon{
   margin-left:0;
 }
 @media only screen and (min-width: 771px){
-#contact_form_post .form-actions{
+#contact_form_post .form-actions, #event_form_post .form-actions{
   text-align: center;
   width:50%;
 }
-#contact_form_post button{
+#contact_form_post button, #event_form_post button{
   width:50%;
   max-width: 15rem;
 }
 }
 @media only screen and (max-width: 771px) {
-  #contact_form_post select {
+  #contact_form_post select, #event_form_post select {
     width: 90%;
   }
-  #contact_form_post input {
+  #contact_form_post input, #event_form_post input {
     width: 90%;
   }
-  #contact_form_post textarea {
+  #contact_form_post textarea, #event_form_post textarea {
     width: 90%;
   }
-  #contact_form_post .row .col-4 {
+  #contact_form_post .row .col-4, #event_form_post .row .col-4 {
     text-align: left;
     margin-left: 5%;
   }
@@ -1231,10 +1243,11 @@ input {
   width: 50%;
 }
 @media only screen and (max-width: 1024px){
-  #contact_form_post textarea, #contact_form_post input {
+  #contact_form_post textarea, #event_form_post textarea,
+  #contact_form_post input, #event_form_post input {
     width: 92%;
   }
-  #contact_form_post .sfbsfcon{
+  #contact_form_post .sfbsfcon, #event_form_post .sfbsfcon{
     width: 95%;
   }
 }
@@ -1245,11 +1258,11 @@ input {
   form button {
     width: 11rem !important;
   }
-  #contact_form_post {
+  #contact_form_post, #event_form_post {
     padding-right: 10px;
     padding-left: 10px;
   }
-  #contact_form_post textarea {
+  #contact_form_post textarea, #event_form_post textarea {
     padding: 10px;
   }
 }
@@ -1298,24 +1311,27 @@ a button {
     width: auto;
   }
 }
-#contact_form_post p, {
+#contact_form_post p, #event_form_post p, {
   line-height: 5px;
   font-size: $paragraphFontSize;
   padding: 10px 0;
 }
+#event_form_post p{
+  margin-top:0;
+}
 .sese{
   font-size: $paragraphFontSize;
 }
-#contact_form_post {
+#contact_form_post, #event_form_post {
   padding-left: 5%;
 }
-#contact_form_post .slitcon{
+#contact_form_post .slitcon, #event_form_post .slitcon{
   border-color:$blackColor;
   border: 1px solid;
   border-top: none;
   border-radius: 0 0 18px;
 }
-#contact_form_post p {
+#contact_form_post p, #event_form_post p {
   padding-left: 0;
   margin-bottom: 4px;
   font-weight: bolder;
@@ -1936,9 +1952,6 @@ td {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 }
-#event_form_post input{
-  width:80%;
-}
 #user-event-container a:hover .cross_st0{
   stroke: black;
 }
@@ -2356,4 +2369,19 @@ grid-template-columns: repeat(5, 1fr);
 #recaptcha-team-login{
   padding-left: 5%;
   padding-right: 5%;
+}
+.errorlist li{
+  padding-left: 0;
+  padding-bottom: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+}
+.container.student-view h2{
+  text-align: left;
+  color:$primaryColor;
+  padding-left: 5%;
+}
+.container.student-view  p {
+  margin-bottom: 15px;
+  margin-top: 0;
 }

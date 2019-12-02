@@ -13,7 +13,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/team/login/')
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -48,17 +50,20 @@ def eventView(request):
         Event.objects.filter(id=event_id).delete()
     except MultiValueDictKeyError:
         pass
-    form = EventForm(request.POST)
-    if form.is_valid():
-        name = request.POST['name']
-        venue = request.POST['venue']
-        date = request.POST['date']
-        time = request.POST['time']
-        new_event = Event(name=name,
-                          venue=venue,
-                          date=date,
-                          time=time)
-        new_event.save()
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            name = request.POST['name']
+            venue = request.POST['venue']
+            date = request.POST['date']
+            time = request.POST['time']
+            new_event = Event(name=name,
+                              venue=venue,
+                              date=date,
+                              time=time)
+            new_event.save()
+    else:
+        form = EventForm()
     context = {
         'events': events,
         'form': form,

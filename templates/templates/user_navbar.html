@@ -1,0 +1,98 @@
+{% load static %}
+
+<!-- NAV -->
+<header>
+  <div class="nvb" id="user_nav">
+    <div class="bnbs">
+      <div class="bls">
+        <a href="{% url 'home_view' %}">
+          {% include "templates/svg/nav_bar_icon.html" %}
+        </a>
+      </div>
+      <div class="bns">
+        <div class="drops">
+          <div class="dropdown arrow">
+            <button class="dropbtn">
+            </button>
+            <div class="dropdown-content">
+            </div>
+          </div>
+          <div class="dropdown-b arrow">
+            <button class="dropbtn-b">
+              <a href="{% url 'get_controlling_student' %}">Anmeldungen</a>
+            </button>
+            <div class="dropdown-content">
+              <a href="#"></a>
+            </div>
+          </div>
+          <div class="dropdown-d arrow">
+            <button class="dropbtn-d">
+              <a href="{% url 'event_managing_view' %}"> Veranstaltungen</a>
+            </button>
+            <div class="dropdown-content-d">
+            </div>
+          </div>
+          <div class="dropdown-e arrow">
+            <button class="dropbtn-e">
+              <a href="{% url 'logout' %}">
+                <svg version="1.1" id="logout" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                viewBox="0 0 500 500" style="enable-background:new 0 0 500 500; height:4.2rem; margin-bottom: -1.7rem;" xml:space="preserve">
+                <g>
+                  <path class="st11" d="M257.8,361.2c0,8.1-6.6,14.8-14.8,14.8l-93.4-33.2c-8.1,0-14.8-6.6-14.8-14.8V151c0-8.1,6.6-14.8,14.8-14.8
+                  l93.4,33.2c8.6,3.8,14.8,6.6,14.8,14.8V361.2z"/>
+                  <path class="st11" d="M388.2,210.9c-0.2-0.3-0.4-0.6-0.7-0.8l-43.1-43.1c-2.9-2.9-8.5-2.2-12.3,1.7c-3.9,3.9-4.6,9.4-1.7,12.3
+                  l27.4,27.4c-0.4,0-0.8-0.1-1.2-0.1h-80.1c-5.5,0-9.9,4.4-9.9,9.9c0,5.5,4.4,9.9,9.9,9.9h79.5L330.2,254c-3.1,3.1-2.4,8.7,1.4,12.6
+                  c3.9,3.9,9.5,4.5,12.6,1.4l45-45C392.2,220,391.7,214.7,388.2,210.9z M366.5,217l0.3,0.3l-0.3,0.3
+                  C366.6,217.4,366.5,217.2,366.5,217z"/>
+                  <g>
+                    <path class="st11" d="M300.8,323.1c0,4.1-3.3,7.4-7.4,7.4H157c-4.1,0-7.4-3.3-7.4-7.4v-177c0-4.1,3.3-7.4,7.4-7.4h136.4
+                    c4.1,0,7.4,3.3,7.4,7.4v44.6h14.8v-44.6c0-12.2-9.9-22.1-22.1-22.1H157c-12.2,0-22.1,9.9-22.1,22.1v177c0,12.2,9.9,22.1,22.1,22.1
+                    h136.4c12.2,0,22.1-9.9,22.1-22.1v-76.8h-14.8V323.1z"/>
+                  </g>
+                </g>
+              </svg>
+            </a>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Mobile Nav -->
+
+  <div id="blessondNavMobile" class="menu">
+    <div>
+      <span id="menuIcon" onclick="openNav()">
+        {% include "templates/svg/nav_bar_hamburger_mobile.html" %}
+      </span>
+    </div>
+    <div class="">
+    </div>
+    <div id="mobileLogo">
+      <a id="small-mobile-logo" href="{% url 'home_view' %}">
+        {% include "templates/svg/nav_bar_mobile_logo.html" %}
+      </a>
+      <a id="medium-mobile-logo" href="{% url 'home_view' %}">
+        {% include "templates/svg/nav_bar_icon.html" %}
+      </a>
+    </div>
+  </div>
+  <div id="mks-nav-mobile-menu" class="overlay">
+    <div class="overlay-content">
+      <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+        {% include "templates/svg/nav_bar_crossburger.html" %}
+      </a>
+      <a class="mainHeadingMobile" href="{% url 'teaching_music'%}">Bildungsangebot</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_music'%}">Musikschule</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_art'%}">Kunstschule</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_prices'%}">Beiträge & Ermäßigungen</a>
+      <a class="mainHeadingMobile" href="{% url 'gallery_view'%}">Galerie</a>
+      <a class="mainHeadingMobile" href="{% url 'all_teachers'%}">Über Uns</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'history'%}">Geschichte</a>
+      <a class="mainHeadingMobile" href="{% url 'contact_email' %}">Kontakt</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'impressum'%}">Impressum</a>
+    </div>
+  </div>
+</div>
+
+</header>

@@ -53,18 +53,23 @@
   </div>
   {% endfor %}
   <h2>Veranstaltung erstellen</h2>
+
   <form id="event_form_post" method="post">
     {% csrf_token %}
-    <p>Eventname:</p>
+    <p>Eventname*</p>
     <p>{{ form.name }}</p>
-    <p>Ort:</p>
+    {{ form.name.errors }}
+    <p>Ort</p>
     <p>{{ form.venue }}</p>
-    <p>Datum:</p>
+    {{ form.venue.errors }}
+    <p>Datum*</p>
     <p>{{ form.date }}</p>
-    <p style="font-size: 18px">(Format: JJJJ-MM-TT)</p>
-    <p>Beginnzeit:</p>
+    {{ form.date.errors }}
+    <p style="font-size: 18px;margin-bottom: 24px;">(Format: JJJJ-MM-TT)</p>
+    <p>Beginnzeit*</p>
     <p>{{ form.time }}</p>
-    <p style="font-size: 18px">(Format: HH:MM)</p>
+    {{ form.time.errors }}
+    <p style="font-size: 18px;margin-bottom: 24px;">(Format: HH:MM)</p>
     </div>
     <div class="form-actions">
       <a href="#">
@@ -72,6 +77,7 @@
       </a>
     </div>
   </form>
+
   {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'account_login' %}">Log In</a> |
