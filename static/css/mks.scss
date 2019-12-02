@@ -26,7 +26,10 @@ $paragraphFontSize:24px;
 $paragraphFontColor:#222528;
 $paragraphFontLineHeight:45px;
 
-$primaryColor:#D73538;
+$primaryColor:#D11317;
+/*
+#D73538
+*/
 $secondaryColor:#222528;
 
 $whiteColor: #FDFDFD;
@@ -268,7 +271,7 @@ h1{
   font-size: $firstHeadingFontSize;
   color: $firstHeadingFontColor;
   text-align: center;
-  border-bottom: 0.4rem solid #D73538;
+  border-bottom: 0.4rem solid $primaryColor;
   padding-bottom: 1rem;
 }
 h2{
@@ -611,9 +614,9 @@ canvas {
 .st5{fill:#00A3E5;}
 .st6{fill:#00A2E5;}
 .st7{fill:$whiteColor;}
-.st8{fill:#D73538;}
+.st8{fill:$primaryColor;}
 .st9{fill:#222527;}
-.st10{fill:#D73538;}
+.st10{fill:$primaryColor;}
 .st11{fill:#222528;}
 .st11{fill:$blackColor;}
 
@@ -703,7 +706,7 @@ canvas {
     font-size: $mobileFirstHeadingFontSize;
     padding-bottom: 1rem;
     word-break: break-word;
-    border-bottom: 0.4rem solid #D73538;
+    border-bottom: 0.4rem solid $primaryColor;
   }
   h2{
     word-break: break-word;
@@ -963,7 +966,7 @@ canvas {
   background-color: #FED700;
   height: 50px;
 }
-.fbls > a > img, .fbrs > a > img {
+.fbls > a > svg, .fbrs > a > img {
   max-height: 100%;
   padding-right: 2em;
 }
@@ -1083,7 +1086,7 @@ canvas {
     padding: 20px 0 !important;
     width: 100vw;
   }
-  .fbls > img, .fbrs > img{
+  .fbls > svg, .fbrs > img{
     max-height: 3.5rem;
   }
   .bcmk > div{
