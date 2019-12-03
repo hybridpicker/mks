@@ -64,10 +64,6 @@ def emailView(request):
                     contact_mail_student(from_email, message, student_context)
                 except BadHeaderError:
                     return HttpResponse('Invalid header found.')
-                context = {
-                    'form': form,
-                    'site_key': settings.RECAPTCHA_SITE_KEY,
-                }
                 return redirect('success_contact')
     else:
         form = ContactForm()

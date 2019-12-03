@@ -1,32 +1,5 @@
 /* Standard Variables */
-$textcolor: #222528;
-
-$firstHeadingFamily:'Montserrat', sans-serif;
-$firstHeadingFontSize:45px;
-$firstHeadingFontColor:#222528;
-$firstHeadingFontLineHeight:61px;
-
-$secondHeadingFamily:'Montserrat', sans-serif;
-$secondHeadingFontSize:40px;
-$secondHeadingFontColor:#222528;
-$secondHeadingFontLineHeight:61px;
-
-$thirdHeadingFamily:'Montserrat', sans-serif;
-$thirdHeadingFontSize:30px;
-$thirdHeadingFontColor:#222528;
-$thirdHeadingFontLineHeight:61px;
-
-$fourthHeadingFamily:'Montserrat', sans-serif;
-$fourthHeadingFontSize:26px;
-$fourthHeadingFontColor:#222528;
-$fourthHeadingFontLineHeight:30px;
-
-$paragraphFontFamily:'Lato', sans-serif;
-$paragraphFontSize:24px;
-$paragraphFontColor:#222528;
-$paragraphFontLineHeight:45px;
-
-$primaryColor:#D11317;
+$primaryColor:#D73538;
 /*
 #D73538
 */
@@ -35,6 +8,33 @@ $secondaryColor:#222528;
 $whiteColor: #FDFDFD;
 $bgcolor: $whiteColor;
 $blackColor: $secondaryColor;
+
+$textcolor: $secondaryColor;
+
+$firstHeadingFamily:'Montserrat', sans-serif;
+$firstHeadingFontSize:45px;
+$firstHeadingFontColor:$secondaryColor;
+$firstHeadingFontLineHeight:61px;
+
+$secondHeadingFamily:'Montserrat', sans-serif;
+$secondHeadingFontSize:40px;
+$secondHeadingFontColor:$secondaryColor;
+$secondHeadingFontLineHeight:61px;
+
+$thirdHeadingFamily:'Montserrat', sans-serif;
+$thirdHeadingFontSize:30px;
+$thirdHeadingFontColor:$secondaryColor;
+$thirdHeadingFontLineHeight:61px;
+
+$fourthHeadingFamily:'Montserrat', sans-serif;
+$fourthHeadingFontSize:26px;
+$fourthHeadingFontColor:$secondaryColor;
+$fourthHeadingFontLineHeight:30px;
+
+$paragraphFontFamily:'Lato', sans-serif;
+$paragraphFontSize:24px;
+$paragraphFontColor:$secondaryColor;
+$paragraphFontLineHeight:45px;
 
 $menuHeight: 100px;
 $menuColor: $secondaryColor;
@@ -617,7 +617,7 @@ canvas {
 .st8{fill:$primaryColor;}
 .st9{fill:#222527;}
 .st10{fill:$primaryColor;}
-.st11{fill:#222528;}
+.st11{fill:$secondaryColor;}
 .st11{fill:$blackColor;}
 
 #mks-logo-svg{
