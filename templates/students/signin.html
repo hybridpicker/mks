@@ -25,7 +25,7 @@
 {% block body %}
 <div class="mbs">
   <div class="container">
-    <h1 id="signin_heading">Anmeldung</h1>
+    <h1 id="signin_heading">Voranmeldung</h1>
     <form id="signin_form_post" method="post">
       {% csrf_token %}
       <div class="row">
@@ -111,6 +111,7 @@
         <button type="submit">Anmelden</button>
       </div>
     </form>
+    <p>* Informationspflicht gem. Art. 13 DSGVO: Mit der Anmeldung stimmen die Teilnehmenden selbst bzw. bei Minderjährigkeit ihre gesetzlichen VertreterInnen zu, dass die Musik- und Kunstschule Maria-Theresia-Straße 23, 3100 St. Pölten, personenbezogene Daten über das Anmeldeformular zu folgenden Zwecken erhebt und zu folgenden Zwecken verarbeitet: Organisation und Administration des Musikunterrichts, Informationsaustausch, statistische Erhebungen, Teilnahmeverwaltung, sicherheitstechnische und feuerpolizeiliche sowie allgemeine notfallsbezogene Datenweitergabe. Die Speicherdauer der Daten beträgt maximal 5 Jahre ab erstmaliger Verarbeitung der Daten und verlängert sich bei jeder Inanspruchnahme der Services und Dienstleistungen um diesen Zeitraum. Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung der personenbezogenen Daten. Bitte wenden Sie sich diesbezüglich an die Direktion der Musik- und Kunstschule St. Pölten Mag. Alfred Kellner, PhD Maria-Theresia-Straße 23, 3100 St. Pölten, musikschule@st.poelten.gv.at. Weiters haben Sie das Recht auf Beschwerde bei der Aufsichtsbehörde (Österreichische Datenschutzbehörde, Wickenburggasse 8, 1080 Wien, dsb@dsb.gv.at). Nähere Informationen finden Sie in unserem <a target="_blank" href="{% url 'impressum' %}">Impressum</a>.</p>
   </div>
 
 
