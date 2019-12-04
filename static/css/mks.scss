@@ -703,21 +703,24 @@ canvas {
 }
 @media only screen and (max-width: 900px), only screen and (max-height: 375px) {
   h1{
-    font-size: $mobileFirstHeadingFontSize;
+    font-size: 7vw;
     padding-bottom: 1rem;
     word-break: break-word;
     border-bottom: 0.4rem solid $primaryColor;
   }
   h2{
     word-break: break-word;
+    font-size: 6.5vw;
   }
   h3, h4{
     word-break: break-word;
+    font-size: 6vw;
   }
   p {
-    font-size: $mobileMenuFontSize;
+    font-size: 5vw;
     padding-left: 0;
     padding-right: 0;
+    line-height: 11vw;
   }
   a {
     font-size: $mobileLinkFontSize
@@ -1003,6 +1006,11 @@ canvas {
   padding-top: 35px !important;
   padding-bottom: 35px !important;
   text-align: center !important;
+}
+@media only screen and (max-width: 771px) {
+  .cbsf{
+    font-size: 5vw !important;
+  }
 }
 .bcmk {
   display: grid;
@@ -2014,7 +2022,7 @@ td {
     padding-top: 1rem;
   }
   .event-container {
-    height: 60vw;
+    max-height: 48vw;
     margin-left: 2%;
     margin-right: 2%;
   }
@@ -2022,6 +2030,9 @@ td {
 @media only screen and (max-width: 380px) {
   .event-container {
     height: 90vw;
+  }
+  .counter-grid-container{
+    height: 46vh;
   }
 }
 .counter-left {
