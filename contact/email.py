@@ -53,7 +53,6 @@ def contact_mail_student(from_email, message, student_context, send_mail=True):
                                          'message': message, 'answer': answer})
         plain_message = strip_tags(html_message)
         # Sending to User
-        #TODO: settings.EMAIL_HOST_USER
-        to = 'service@blessond.com'
+        to = settings.EMAIL_USER_RECEIVER
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
     return html_message
