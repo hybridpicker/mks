@@ -119,6 +119,7 @@ def signInView(request):
                 'today': today,
                 'from_email': from_email,
             }
+            from_email = settings.EMAIL_HOST_USER
             try:
                 mail_new_student(from_email, student_context, send_mail=True)
             except BadHeaderError:
