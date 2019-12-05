@@ -19,7 +19,7 @@ def check_message(message):
             return answer
 
 def contact_mail_student(from_email, message, student_context, send_mail=True):
-    #from_email = settings.EMAIL_HOST_USER
+    from_email = settings.EMAIL_HOST_USER
     '''
     Preparing Mail to USER
     '''
@@ -35,7 +35,7 @@ def contact_mail_student(from_email, message, student_context, send_mail=True):
                                     {'context': 'values',
                                      'message': message, 'answer': answer})
     plain_message = strip_tags(html_message)
-    to = settings.EMAIL_HOST_USER
+    to = from_email
 
     if send_mail:
         # Sending Message to Student
