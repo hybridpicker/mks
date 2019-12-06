@@ -52,10 +52,10 @@
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
               {% if teacher.image.height <= teacher.image.width %}
-              <img style="max-width: 110%;" class="teacher_img square" src="{{ teacher.image.url }}"
+              <img class="teacher_img square" src="{{ teacher.image.url }}"
               alt="{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% else %}
-              <img style="max-width: 110%;" class="teacher_img" src="{{ teacher.image.url }}"
+              <img class="teacher_img" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% endif %}
             </div>
@@ -63,7 +63,7 @@
         </div>
         <div class="tbt">
           <div class="info-text">
-            <p>{% for subject in teacher.subject.all %}{{ subject }} {% endfor %}</p>
+            <p>{% for subject in teacher.subject.all %}{{ subject }}, {% endfor %}</p>
             <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
           </div>
         </div>
@@ -97,7 +97,7 @@
         </div>
         <div class="tbt">
           <div class="info-text">
-            <p>{% for subject in teacher.subject.all %}{{ subject }} {% endfor %}</p>
+            <p>{% for subject in teacher.subject.all %}{{ subject }},  {% endfor %}</p>
             <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
           </div>
         </div>
@@ -132,7 +132,7 @@
         </div>
         <div class="tbt">
           <div class="info-text">
-            <p>{% for subject in teacher.subject.all %}{{ subject }} {% endfor %}</p>
+            <p>{% for subject in teacher.subject.all %}{{ subject }},  {% endfor %}</p>
             <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
           </div>
         </div>
@@ -161,7 +161,7 @@
         </div>
         <div class="tbt">
           <div class="info-text">
-            <p>{% for subject in teacher.subject.all %}{{ subject }} {% endfor %}</p>
+            <p>{% for subject in teacher.subject.all %}{{ subject }},  {% endfor %}</p>
             <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
           </div>
         </div>
@@ -195,7 +195,7 @@
         </div>
         <div class="tbt">
           <div class="info-text">
-            <p>{% for subject in teacher.subject.all %}{{ subject }} {% endfor %}</p>
+            <p>{% for subject in teacher.subject.all %}{{ subject }},  {% endfor %}</p>
             <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
           </div>
         </div>
@@ -231,7 +231,7 @@
         </div>
         <div class="tbt">
           <div class="info-text">
-            <p>{% for subject in teacher.subject.all %}{{ subject }} {% endfor %}</p>
+            <p>{% for subject in teacher.subject.all %}{{ subject }},  {% endfor %}</p>
             <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
           </div>
         </div>
@@ -266,7 +266,7 @@
         </div>
         <div class="tbt">
           <div class="info-text">
-            <p>{% for subject in teacher.subject.all %}{{ subject }} {% endfor %}</p>
+            <p>{% for subject in teacher.subject.all %}{{ subject }},  {% endfor %}</p>
             <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
           </div>
         </div>
@@ -301,7 +301,7 @@
         </div>
         <div class="tbt">
           <div class="info-text">
-            <p>{% for subject in teacher.subject.all %}{{ subject }} {% endfor %}</p>
+            <p>{% for subject in teacher.subject.all %}{{ subject }},  {% endfor %}</p>
             <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
           </div>
         </div>
@@ -336,7 +336,7 @@
         </div>
         <div class="tbt">
           <div class="info-text">
-            <p>{% for subject in teacher.subject.all %}{{ subject }} {% endfor %}</p>
+            <p>{% for subject in teacher.subject.all %}{{ subject }},  {% endfor %}</p>
             <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
           </div>
         </div>
@@ -372,7 +372,7 @@
         </div>
         <div class="tbt">
           <div class="info-text">
-            <p>{% for subject in teacher.subject.all %}{{ subject }} {% endfor %}</p>
+            <p>{% for subject in teacher.subject.all %}{{ subject }},  {% endfor %}</p>
             <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
           </div>
         </div>
@@ -406,7 +406,7 @@
         </div>
         <div class="tbt">
           <div class="info-text">
-            <p>{% for subject in teacher.subject.all %}{{ subject }} {% endfor %}</p>
+            <p>{% for subject in teacher.subject.all %}{{ subject }},  {% endfor %}</p>
             <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
           </div>
         </div>

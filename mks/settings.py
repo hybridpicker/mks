@@ -197,7 +197,7 @@ FIXTURE_DIRS = [
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+EMAIL_USER_RECEIVER = 'lukas@schoensgibl.com'
 
 if os.path.isfile(os.path.join(BASE_DIR, 'local_settings.py')):
     from local_settings import *

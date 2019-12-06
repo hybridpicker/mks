@@ -7,7 +7,7 @@ class SubjectCategory(models.Model):
 
     class Meta: # pylint: disable=too-few-public-methods
         '''
-        Meta class for Teacher
+        Meta class for Subject Category
         '''
         ordering = ('name',)
 
@@ -20,7 +20,7 @@ class Subject(models.Model):
 
     class Meta: # pylint: disable=too-few-public-methods
         '''
-        Meta class for Teacher
+        Meta class for Subject
         '''
         ordering = ('subject',)
         verbose_name = u'Subject'
