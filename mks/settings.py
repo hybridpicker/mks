@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'gallery.apps.GalleryConfig',
     'contact.apps.ContactConfig',
     'controlling.apps.ControllingConfig',
+    'downloadsection.apps.DownloadsectionConfig',
     #sitemaps
     'django.contrib.sitemaps',
 ]

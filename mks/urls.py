@@ -48,6 +48,7 @@ urlpatterns = [
     path('geschichte/', home.views.history, name='history'),
     path('team/', include('users.urls')),
     path('', include('contact.urls')),
+    path('', include('downloadsection.urls')),
     path('', include('gallery.urls')),
     path('', include('teaching.urls')),
     path('', include('students.urls')),
