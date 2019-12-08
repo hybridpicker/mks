@@ -45,7 +45,6 @@ jobs:
       # https://pytest.org
       # https://nose.readthedocs.io
       - run:
-          SECRET_KEY = 'jb#172ifl0xe55c9ed(=9i4erh*oj3nj)in%$9s3*1o9hr#$v^'
           name: run tests
           command: |
             . venv/bin/activate
