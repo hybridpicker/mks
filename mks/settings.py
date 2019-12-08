@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # Secret Key stored in local_settings
-#SECRET_KEY = 'jb#172ifl0xe55c9ed(=9i4erh*oj3nj)in%$9s3*1o9hr#$v^'
+SECRET_KEY = 'jb#172ifl0xe55c9ed(=9i4erh*oj3nj)in%$9s3*1o9hr#$v^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -162,7 +162,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
