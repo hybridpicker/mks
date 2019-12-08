@@ -1603,8 +1603,8 @@ a button {
 .tmcb {
   display: grid;
   grid-template-areas:
-  'mti mti mti';
-  grid-column-gap: 5%;
+  'mti mti';
+  grid-column-gap: 8vw;
   grid-row-gap: 68px;
   padding: 10px;
   justify-content: center;
@@ -1637,7 +1637,9 @@ a button {
 .tmcb > div {
   text-align: center;
   padding: 20px 0;
-  font-size: 30px;
+}
+.tmcb > div > p{
+  text-align: left;
 }
 .tmcbg {
   background: url(/static/media/boxes/box_teaching_material_green_01.png);
@@ -1668,22 +1670,25 @@ a button {
     height: 300px;
   }
 }
+.mti{
+  margin-left: auto;
+  margin-right: auto;
+}
 .mti img {
-  width: 75%;
+  max-height: 40rem;
+  max-width: 100%;
 }
-.mti h2 {
-  background: url(/static/media/boxes/underline_doted_white.png) no-repeat;
-  background-position-x: center;
-  background-position-y: bottom;
-  color: $whiteColor;
+#pdf-icon-download{
+  max-width: 8rem;
 }
-.tctm {
-  margin-left: 1.5em;
-  margin-right: 1.5em;
+#pdf-icon-download .st0{
+  fill: $blackColor;
 }
-
-.tctm p {
-  color: $whiteColor;
+#pdf-icon-download .st1 {
+  fill: $whiteColor;
+}
+#pdf-icon-download .st2 {
+  fill: $primaryColor;
 }
 .tmcon {
   width: 98%;
@@ -1879,9 +1884,6 @@ a button {
   background-repeat: no-repeat;
   background-size: cover;
 }
-.tmcbpb .mti h2 {
-  color: #0F262B;
-}
 .tmcbpb .mti {
   padding-right: 20px;
   padding-left: 20px;
@@ -1890,13 +1892,8 @@ a button {
   margin-left: 20px;
   margin-right: 10px;
 }
-.tmcbpb .mti .tctm p {
-  color: #0F262B;
-}
-.tmcbpb .mti h2 {
-  background: url(/static/media/heading/underline_h1_blog.png) no-repeat;
-  background-position-x: center;
-  background-position-y: bottom;
+.tctm p {
+  text-align: left;
 }
 @media only screen and (max-width: 772px) {
   .tmcbpb {
