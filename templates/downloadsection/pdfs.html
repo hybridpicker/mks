@@ -26,12 +26,12 @@
       {% for material in material_data %}
       <div class="mti">
         <h2>{{ material.name }}</h2>
-        <a href="{{ material.file.url }}" download>
+        <p>{{ material.description|linebreaks  }}</p>
+        <a target="_blank" href="{{ material.file.url }}" download>
           <img src="{{ material.thumbnail.url }}" alt="">
         </a>
         <div class="tctm">
-          <p>{{ material.description|linebreaks  }}</p>
-          <a href="{{ material.file.url }}" download>
+          <a target="_blank" href="{{ material.file.url }}" download>
             <svg version="1.1" id="pdf-icon-download" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
             y="0px" viewBox="0 0 425.3 418.3" style="enable-background:new 0 0 425.3 418.3;" xml:space="preserve">
             <g>

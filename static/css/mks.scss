@@ -1637,7 +1637,9 @@ a button {
 .tmcb > div {
   text-align: center;
   padding: 20px 0;
-  font-size: 30px;
+}
+.tmcb > div > p{
+  text-align: left;
 }
 .tmcbg {
   background: url(/static/media/boxes/box_teaching_material_green_01.png);
@@ -1674,10 +1676,7 @@ a button {
 }
 .mti img {
   max-height: 40rem;
-}
-.tctm {
-  margin-left: 1.5em;
-  margin-right: 1.5em;
+  max-width: 100%;
 }
 #pdf-icon-download{
   max-width: 8rem;
@@ -1690,9 +1689,6 @@ a button {
 }
 #pdf-icon-download .st2 {
   fill: $primaryColor;
-}
-.tctm p {
-  color: $whiteColor;
 }
 .tmcon {
   width: 98%;
@@ -1896,8 +1892,8 @@ a button {
   margin-left: 20px;
   margin-right: 10px;
 }
-.tmcbpb .mti .tctm p {
-  color: #0F262B;
+.tctm p {
+  text-align: left;
 }
 @media only screen and (max-width: 772px) {
   .tmcbpb {
