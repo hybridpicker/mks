@@ -614,8 +614,9 @@ canvas {
 .st8{fill:$primaryColor;}
 .st9{fill:#222527;}
 .st10{fill:$primaryColor;}
-.st11{fill:$secondaryColor;}
 .st11{fill:$blackColor;}
+.st12 {fill: $whiteColor;}
+.st13 {fill: $primaryColor;}
 
 #mks-logo-svg{
   position: absolute;
@@ -1683,12 +1684,6 @@ a button {
 }
 #pdf-icon-download .st0{
   fill: $blackColor;
-}
-#pdf-icon-download .st1 {
-  fill: $whiteColor;
-}
-#pdf-icon-download .st2 {
-  fill: $primaryColor;
 }
 .tmcon {
   width: 98%;
