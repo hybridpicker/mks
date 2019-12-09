@@ -713,8 +713,8 @@ canvas {
     padding-right: 0;
   }
   strong, b {
-    font-size: 3vw;
-}
+    font-size: 2.5vw;
+  }
   li{
   font-size: 2.5vw;
   line-height: 4vw;
@@ -737,6 +737,12 @@ canvas {
   p{
     font-size: 3vw;
     line-height: 5vw;
+  }
+  table td{
+  font-size: 3vw;
+  }
+  table td strong, table thead tr{
+    font-size: 3vw;
   }
 }
 @media only screen and (max-width: 700px), only screen and (max-height: 375px) {
@@ -767,7 +773,7 @@ canvas {
   font-size: 5vw;
   line-height: 8vw;
   }
-  strong, b {
+  strong, b, {
     font-size: 6vw;
   }
   .bcmk{
@@ -779,6 +785,9 @@ canvas {
   }
   header, .nvb{
     position: absolute;
+  }
+  table th, table td{
+    font-size: 5vw;
   }
 }
 .container {
@@ -1956,7 +1965,25 @@ td {
 @media only screen and (max-width: 600px) {
   td {
   font-size: 22px;
-  height: 6rem;
+  }
+}
+@media only screen and (max-width: 1120px) {
+  table thead th{
+    font-size: 2.5vw;
+  }
+  td{
+    font-size: 2.5vw;
+  }
+}
+@media only screen and (max-width: 700px), only screen and (max-height: 375px){
+  table thead th{
+    font-size: 5vw;
+  }
+  td{
+    font-size: 5vw;
+  }
+  table td strong{
+    font-size: 5.5vw;
   }
 }
 /*Events */
@@ -2322,6 +2349,9 @@ section.events-container-grid h1{
 }
 .prices-nav-bar a:hover{
   text-decoration:none;
+}
+#ermaessigungen li{
+  padding-left: 0;
 }
 .cross_st0{
   fill:none;
