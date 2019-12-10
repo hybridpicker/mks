@@ -1096,7 +1096,7 @@ canvas {
   justify-content: center;
 }
 .bcmk > .middle > img{
-  height:110%;
+  object-fit: cover;
 }
 .bcmk section{
   margin-top: 12rem;
@@ -2492,7 +2492,7 @@ grid-template-columns: repeat(5, 1fr);
 }
 @media only screen and (min-width: 2700px){
 .bcmk, .bf, .counter-grid-container, .container, .events-container-grid,{
-  width:2700px;
+  width:90%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -2510,6 +2510,9 @@ grid-template-columns: repeat(5, 1fr);
       width: 3000px;
       margin-left: auto;
       margin-right: auto;
+}
+.bcmk{
+  width:2700px;
 }
 }
 #recaptcha-team-login{
