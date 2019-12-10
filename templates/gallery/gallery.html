@@ -19,9 +19,6 @@
 <!-- AOS Plugin -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-<!-- Lazy Load -->
-<script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
-
 {% endblock %}
 
 {% block navbar %}
@@ -109,8 +106,8 @@
 </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
 </script>
+
 <script>
-  lazyload();
-  AOS.init({disable: 'mobile'});
+AOS.init({disable: 'mobile',});
 </script>
 {% endblock %}

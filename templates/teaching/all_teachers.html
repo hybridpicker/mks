@@ -427,11 +427,7 @@
 {% block footer %}
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-<!-- Lazy Load -->
-<script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
-
 <script>
-  AOS.init({disable: 'mobile', startEvent: 'load',});
-  lazyload();
+  AOS.init({disable: 'mobile',});
 </script>
 {% endblock %}
