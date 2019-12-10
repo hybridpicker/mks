@@ -16,7 +16,12 @@
 <meta name="twitter:image" content="static/media/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
+<!-- AOS Plugin -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<!-- Lazy Load -->
+<script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+
 {% endblock %}
 
 {% block navbar %}
@@ -48,7 +53,7 @@
       <img data-aos="zoom-in"
            data-aos-duration="2000"
            onclick="showImg({{photo.id}})" id="{{photo.id}}"
-           class="landscape"
+           class="landscape lazyload"
            style=""
            src="{{ photo.images.url }}"
            alt="">
@@ -57,7 +62,7 @@
            data-aos-duration="2000"
            onclick="showImg({{photo.id}})"
            id="{{photo.id}}"
-           class="square"
+           class="square lazyload"
            style=""
            src="{{ photo.images.url }}"
            alt="">
@@ -66,7 +71,7 @@
            data-aos-duration="2000"
            onclick="showImg({{photo.id}})"
            id="{{photo.id}}"
-           class="portrait"
+           class="portrait lazyload"
            style=""
            src="{{ photo.images.url }}"
            alt="">
@@ -102,8 +107,10 @@
       }
   };
 </script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
+</script>
 <script>
-  AOS.init({disable: 'mobile', startEvent: 'load',});
+  lazyload();
+  AOS.init({disable: 'mobile'});
 </script>
 {% endblock %}
