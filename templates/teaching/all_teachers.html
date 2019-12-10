@@ -20,6 +20,7 @@
 <meta name="twitter:image" content="static/media/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
+<!-- AOS Plugin -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 {% endblock %}
 
@@ -52,10 +53,10 @@
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
               {% if teacher.image.height <= teacher.image.width %}
-              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              <img class="teacher_img square lazyload" src="{{ teacher.image.url }}"
               alt="{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% else %}
-              <img class="teacher_img" src="{{ teacher.image.url }}"
+              <img class="teacher_img lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% endif %}
             </div>
@@ -86,10 +87,10 @@
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
               {% if teacher.image.height <= teacher.image.width %}
-              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              <img class="teacher_img square lazyload" src="{{ teacher.image.url }}"
               alt="{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% else %}
-              <img class="teacher_img" src="{{ teacher.image.url }}"
+              <img class="teacher_img lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% endif %}
             </div>
@@ -121,10 +122,10 @@
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
               {% if teacher.image.height <= teacher.image.width %}
-              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              <img class="teacher_img square lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% else %}
-              <img class="teacher_img" src="{{ teacher.image.url }}"
+              <img class="teacher_img lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% endif %}
             </div>
@@ -155,7 +156,7 @@
         <div class="tpfcf">
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
-              <img class="teacher_img" src="{{ teacher.image.url }}" alt="">
+              <img class="teacher_img lazyload" src="{{ teacher.image.url }}" alt="">
             </div>
           </div>
         </div>
@@ -184,10 +185,10 @@
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
               {% if teacher.image.height <= teacher.image.width %}
-              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              <img class="teacher_img square lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% else %}
-              <img class="teacher_img" src="{{ teacher.image.url }}"
+              <img class="teacher_img lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% endif %}
             </div>
@@ -220,10 +221,10 @@
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
               {% if teacher.image.height <= teacher.image.width %}
-              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              <img class="teacher_img square lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% else %}
-              <img class="teacher_img" src="{{ teacher.image.url }}"
+              <img class="teacher_img lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% endif %}
             </div>
@@ -255,10 +256,10 @@
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
               {% if teacher.image.height <= teacher.image.width %}
-              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              <img class="teacher_img square lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% else %}
-              <img class="teacher_img" src="{{ teacher.image.url }}"
+              <img class="teacher_img lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% endif %}
             </div>
@@ -290,10 +291,10 @@
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
               {% if teacher.image.height <= teacher.image.width %}
-              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              <img class="teacher_img square lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% else %}
-              <img class="teacher_img" src="{{ teacher.image.url }}"
+              <img class="teacher_img lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% endif %}
             </div>
@@ -325,10 +326,10 @@
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
               {% if teacher.image.height <= teacher.image.width %}
-              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              <img class="teacher_img square lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% else %}
-              <img class="teacher_img" src="{{ teacher.image.url }}"
+              <img class="teacher_img lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% endif %}
             </div>
@@ -361,10 +362,10 @@
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
               {% if teacher.image.height <= teacher.image.width %}
-              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              <img class="teacher_img square lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% else %}
-              <img class="teacher_img" src="{{ teacher.image.url }}"
+              <img class="teacher_img lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% endif %}
             </div>
@@ -395,10 +396,10 @@
           <div class="tpcfptr">
             <div class="icc-tpcfptr">
               {% if teacher.image.height <= teacher.image.width %}
-              <img class="teacher_img square" src="{{ teacher.image.url }}"
+              <img class="teacher_img square lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% else %}
-              <img class="teacher_img" src="{{ teacher.image.url }}"
+              <img class="teacher_img lazyload" src="{{ teacher.image.url }}"
               alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer_innen St. pölten">
               {% endif %}
             </div>
@@ -425,7 +426,8 @@
 
 {% block footer %}
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
 <script>
-  AOS.init({disable: 'mobile', startEvent: 'load',});
+  AOS.init({disable: 'mobile',});
 </script>
 {% endblock %}
