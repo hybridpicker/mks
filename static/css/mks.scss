@@ -2495,14 +2495,20 @@ grid-template-columns: repeat(5, 1fr);
 .grtnmc{
   grid-template-columns: repeat(6, 1fr);
   }
-.container, .bs, .bcmk, .counter-grid-container, .events-container-grid,
+.container, .bs, .counter-grid-container, .events-container-grid,
 .maps-google, .bf {
       width: 3000px;
       margin-left: auto;
       margin-right: auto;
 }
+.container{
+ width: 2700px;
+}
+.bcmk{
+  width:2700px
+}
 .nvb{
-  width: 3000px;
+  width: 2700px;
   margin-left: auto;
   margin-right: auto;
 }
