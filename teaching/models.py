@@ -29,6 +29,9 @@ class Teacher(models.Model):
     image = models.ImageField(
         upload_to='teachers/images/',
         default='teachers/teacher_image_default.svg', blank=True,)
+    lazy_image = models.ImageField(
+        upload_to='teachers/images/lazy/',
+        default='teachers/teacher_image_default.svg', blank=True,)
     email = models.EmailField(blank=True)
     homepage = models.URLField(_(u'Deine Website'), blank=True, max_length=80)
     phone = PhoneField(_(u'Telefonnummer'), blank=True, default='+43 ', help_text='Telefonnummer')
