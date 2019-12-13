@@ -318,13 +318,21 @@
                     </div>
                     <div class="tbt">
                       <div class="info-text">
-                        <p>{% for subject in teacher.subject.all %}
+                        <p>  {% if teacher.last_name == "Kagerer" %}
+                          Kontrabass, E-Bass, E-Gitarre, Gitarre
+                          {% elif teacher.last_name == "Rappitsch" %}
+                          Violine, Bratsche, Orchester
+                          {% elif teacher.last_name == "Nill" %}
+                          Violine, Musikalische Früherziehung,
+                          {% else %}
+                          {% for subject in teacher.subject.all %}
                           {% if forloop.last %}
                           {{ subject }}
                           {% else %}
                           {{ subject }},
                           {% endif %}
-                          {% endfor %}</p>
+                          {% endfor %}
+                          {% endif %}</p>
                           <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
                         </div>
                       </div>
@@ -448,13 +456,18 @@
                           </div>
                           <div class="tbt">
                             <div class="info-text">
-                              <p>{% for subject in teacher.subject.all %}
+                              <p>
+                                {% if teacher.last_name == "Kagerer" %}
+                                Kontrabass, E-Bass, E-Gitarre, Gitarre
+                                {% else %}
+                                {% for subject in teacher.subject.all %}
                                 {% if forloop.last %}
                                 {{ subject }}
                                 {% else %}
                                 {{ subject }},
                                 {% endif %}
-                                {% endfor %}</p>
+                                {% endfor %}
+                                {% endif %}</p>
                                 <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
                               </div>
                             </div>
