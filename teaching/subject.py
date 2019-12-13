@@ -14,6 +14,7 @@ class SubjectCategory(models.Model):
 class Subject(models.Model):
     subject = models.CharField(max_length=80)
     category = models.ForeignKey(SubjectCategory, on_delete=models.CASCADE)
+    ordering = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return "%s" % (self.subject)
@@ -22,6 +23,6 @@ class Subject(models.Model):
         '''
         Meta class for Subject
         '''
-        ordering = ('subject',)
+        ordering = ('ordering',)
         verbose_name = u'Subject'
         verbose_name_plural = u'Subjects'
