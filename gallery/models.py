@@ -20,6 +20,12 @@ class Photo(models.Model):
     images = models.ImageField(
         upload_to='gallery/images/',
         default='gallery_imageDefault', blank=True)
+    image_thumbnail = models.ImageField(
+        upload_to='gallery/images/thumbnail',
+        default='gallery_thumbnail_imageDefault', blank=True)
+    image_lazy = models.ImageField(
+        upload_to='gallery/images/lazy/',
+        default='gallery_lazy_imageDefault', blank=True)
     description = models.TextField(null=True, blank=True)
     ordering = models.IntegerField(null=True, blank=True)
     category = models.ForeignKey(
