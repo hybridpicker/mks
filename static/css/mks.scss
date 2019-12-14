@@ -1098,7 +1098,7 @@ canvas {
 .bcmk > .middle > img{
   object-fit: cover;
 }
-@media only screen and (max-width: 1200px){
+@media only screen and (max-width: 1500px){
   .bcmk > .middle > img{
     object-fit: contain;
   }
@@ -2285,6 +2285,13 @@ section.events-container-grid h1{
 }
 #overlay-image-section .closebtn:hover{
   filter: none;
+}
+#overlay-image-section p{
+  color: $whiteColor;
+  margin-top:0;
+}
+#gallery-text{
+  display: none;
 }
 #overlay-show-img{
   padding: initial;

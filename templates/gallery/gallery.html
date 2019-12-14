@@ -19,6 +19,10 @@
 <!-- AOS Plugin -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+<script type="text/javascript">
+var photo_data = {{ gallery_json_data|safe }}
+</script>
+
 {% endblock %}
 
 {% block navbar %}
@@ -46,22 +50,22 @@
     </nav>
     <section class="gallery-show">
       {% for photo in photos %}
-      {% if photo.images.height <= photo.images.width %}
+      {% if photo.image.height <= photo.image.width %}
       <img data-aos="zoom-in"
            data-aos-duration="2000"
            onclick="showImg({{photo.id}})" id="{{photo.id}}"
            class="landscape lazyload"
            style=""
-           src="{{ photo.images.url }}"
+           src="{{ photo.image.url }}"
            alt="">
-      {% elif photo.images.height <= photo.images.width %}
+      {% elif photo.image.height <= photo.image.width %}
       <img data-aos="zoom-in"
            data-aos-duration="2000"
            onclick="showImg({{photo.id}})"
            id="{{photo.id}}"
            class="square lazyload"
            style=""
-           src="{{ photo.images.url }}"
+           src="{{ photo.image.url }}"
            alt="">
       {% else %}
       <img data-aos="zoom-in"
@@ -70,7 +74,7 @@
            id="{{photo.id}}"
            class="portrait lazyload"
            style=""
-           src="{{ photo.images.url }}"
+           src="{{ photo.image.url }}"
            alt="">
       {% endif %}
       {% endfor %}
@@ -80,6 +84,7 @@
       <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="blockImg()">
         {% include "templates/svg/nav_bar_crossburger.html" %}
     </a>
+    <p id="gallery-text-overlay"></p>
   </section>
 </div>
 
@@ -92,6 +97,9 @@
     document.getElementById("overlay-show-img").src = src
     document.getElementById("overlay-image-section").style.display = "block";
     document.querySelector("header").style.zIndex = "0"
+    var descr = photo_data[id]["description"]
+    var overlayImage = document.querySelector("#overlay-image-section > p")
+    overlayImage.innerHTML = descr;
   }
   function blockImg(){
     document.getElementById("overlay-image-section").style.display = "none";
