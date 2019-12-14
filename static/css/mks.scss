@@ -2391,14 +2391,13 @@ section.events-container-grid h1{
     margin-top: 1rem;
   }
 }
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1400px) {
   .prices-nav-bar{
     grid-template-rows: 1fr;
     grid-template-columns: unset;
     grid-auto-flow: unset;
   }
   .prices-nav-bar h2 a{
-    font-size: $mobileSecondHeadingFontSize;
     margin-bottom: 0;
     margin-top: 0;
   }
@@ -2411,6 +2410,11 @@ section.events-container-grid h1{
   .gallery-show{
     grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
   }
+}
+@media screen and (max-width: 1200px) {
+  .prices-nav-bar h2 a{
+    font-size: $mobileSecondHeadingFontSize;
+}
 }
 @media screen and (max-width: 1999px) {
   .gallery-show{
