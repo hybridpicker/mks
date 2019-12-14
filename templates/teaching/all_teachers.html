@@ -536,8 +536,8 @@ function showSection(id) {
   setTimeout(function(){ document.getElementById(id).style.opacity = "1"; }, 100);
 }
 function closeSection(id) {
-  setTimeout(function(){ document.getElementById(id).style.opacity = "0"; }, 100);
-  setTimeout(function(){ document.getElementById(id).style.display = "none"; }, 400);
+  document.getElementById(id).style.opacity = "0";
+  document.getElementById(id).style.display = "none";
   document.getElementById("show_" + id).setAttribute("onclick","showSection('" + id + "')");
   document.getElementById("show_" + id).removeAttribute("class", "active");
 }
