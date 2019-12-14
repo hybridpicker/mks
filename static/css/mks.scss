@@ -1502,11 +1502,13 @@ a button {
 }
 .grtnmc {
   display: none;
+  opacity: 0;
   grid-template-columns: auto auto auto auto;
   grid-gap: 0.5rem;
   grid-template-columns: repeat(4, 1fr);
   margin-left: auto;
   margin-right: auto;
+  transition: opacity .5s ease;
 }
 .grtnmc > div{
   grid-gap: 1rem;
@@ -2551,6 +2553,10 @@ grid-template-columns: repeat(5, 1fr);
 }
 h2.heading-teaching{
   color: $blackColor;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 a.active > h2{
   color: $primaryColor;

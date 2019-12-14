@@ -533,11 +533,14 @@ function showSection(id) {
   document.getElementById(id).style.display = "grid";
   document.getElementById("show_" + id).setAttribute("onclick","closeSection('" + id + "')");
   document.getElementById("show_" + id).setAttribute("class", "active");
+  setTimeout(function(){ document.getElementById(id).style.opacity = "1"; }, 100);
 }
+
 function closeSection(id) {
   document.getElementById(id).style.display = "none";
   document.getElementById("show_" + id).setAttribute("onclick","showSection('" + id + "')");
   document.getElementById("show_" + id).removeAttribute("class", "active");
+  document.getElementById(id).style.opacity = "0";
 }
 </script>
 {% endblock %}
