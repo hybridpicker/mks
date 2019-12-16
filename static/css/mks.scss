@@ -1096,12 +1096,7 @@ canvas {
   justify-content: center;
 }
 .bcmk > .middle > img{
-  object-fit: cover;
-}
-@media only screen and (max-width: 1500px){
-  .bcmk > .middle > img{
-    object-fit: contain;
-  }
+  object-fit: contain;
 }
 .bcmk section{
   margin-top: 12rem;
@@ -2595,6 +2590,11 @@ a.active > h2{
 h2.heading-teaching:hover{
   color: $primaryColor;
   cursor: pointer;
+}
+@media only screen and (max-width: 1024px) {
+  h2.heading-teaching:hover{
+    color: $blackColor;
+  }
 }
 a#show_director:hover, a#show_brass:hover,
 a#show_keys:hover, a#show_vocal:hover,
