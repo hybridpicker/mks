@@ -2502,15 +2502,35 @@ html:not([data-scroll='0']) {
 /* Huge Screens */
 @media only screen and (min-width: 2000px){
 .grtnmc{
-grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
 .container {
-    width: 2000px
+  width: 2000px
+}
+#home-container{
+  width: 1650px;
+}
+h1{
+  width: 1650px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+.all-events-container > h1{
+  width: unset;
+}
+#forms-text{
+  text-align: center;
+}
+.bcmk > div > section{
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 }
 @media only screen and (min-width: 2700px){
 .bcmk, .bf, .counter-grid-container, .container, .events-container-grid,{
-  width:90%;
+  width:2700px;
   margin-left: auto;
   margin-right: auto;
 }
