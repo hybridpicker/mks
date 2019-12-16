@@ -17,7 +17,7 @@ class PhotoCategory(models.Model):
 
 class Photo(models.Model):
     title = models.CharField(_(u'Title of the Photo'), max_length=50)
-    images = models.ImageField(
+    image = models.ImageField(
         upload_to='gallery/images/',
         default='gallery_imageDefault', blank=True)
     image_thumbnail = models.ImageField(
@@ -26,7 +26,7 @@ class Photo(models.Model):
     image_lazy = models.ImageField(
         upload_to='gallery/images/lazy/',
         default='gallery_lazy_imageDefault', blank=True)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True, max_length=120)
     ordering = models.IntegerField(null=True, blank=True)
     category = models.ForeignKey(
         PhotoCategory,

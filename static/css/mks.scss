@@ -1096,12 +1096,7 @@ canvas {
   justify-content: center;
 }
 .bcmk > .middle > img{
-  object-fit: cover;
-}
-@media only screen and (max-width: 1200px){
-  .bcmk > .middle > img{
-    object-fit: contain;
-  }
+  object-fit: contain;
 }
 .bcmk section{
   margin-top: 12rem;
@@ -1501,12 +1496,14 @@ a button {
   margin-top: 0;
 }
 .grtnmc {
-  display: grid;
+  display: none;
+  opacity: 0;
   grid-template-columns: auto auto auto auto;
   grid-gap: 0.5rem;
   grid-template-columns: repeat(4, 1fr);
   margin-left: auto;
   margin-right: auto;
+  transition: opacity .5s ease;
 }
 .grtnmc > div{
   grid-gap: 1rem;
@@ -2284,6 +2281,13 @@ section.events-container-grid h1{
 #overlay-image-section .closebtn:hover{
   filter: none;
 }
+#overlay-image-section p{
+  color: $whiteColor;
+  margin-top:0;
+}
+#gallery-text{
+  display: none;
+}
 #overlay-show-img{
   padding: initial;
   max-height: calc(100% - 4rem);
@@ -2334,6 +2338,16 @@ section.events-container-grid h1{
 }
 .gallery-nav-bar a:hover{
   text-decoration:none;
+}
+@media only screen and (max-width: 1120px) {
+  #gallery-text-overlay {
+    font-size: 1.7vw;
+  }
+}
+@media only screen and (max-width: 700px), only screen and (max-height: 375px) {
+  #gallery-text-overlay {
+    font-size: 5vw;
+  }
 }
 .prices-nav-bar{
   display: grid;
@@ -2389,14 +2403,13 @@ section.events-container-grid h1{
     margin-top: 1rem;
   }
 }
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1400px) {
   .prices-nav-bar{
     grid-template-rows: 1fr;
     grid-template-columns: unset;
     grid-auto-flow: unset;
   }
   .prices-nav-bar h2 a{
-    font-size: $mobileSecondHeadingFontSize;
     margin-bottom: 0;
     margin-top: 0;
   }
@@ -2409,6 +2422,11 @@ section.events-container-grid h1{
   .gallery-show{
     grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
   }
+}
+@media screen and (max-width: 1200px) {
+  .prices-nav-bar h2 a{
+    font-size: $mobileSecondHeadingFontSize;
+}
 }
 @media screen and (max-width: 1999px) {
   .gallery-show{
@@ -2448,6 +2466,32 @@ grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
   .closebtn{
     width: 2rem;
   }
+}
+@media only screen and (max-width: 400px) {
+#overlay-show-img {
+    padding-top: 10%;
+}
+#closebtn-gallery {
+    top: -35px;
+    right: -40px;
+}
+#gallery-text-overlay {
+    font-size: 3.7vw;
+    line-height: 5vw;
+}
+}
+@media only screen and (max-height: 400px) {
+#overlay-show-img {
+    padding-top: 2%;
+}
+#closebtn-gallery {
+    top: 0;
+    right: 0;
+}
+#gallery-text-overlay {
+    font-size: 3.7vh;
+    line-height: 5vh;
+}
 }
 .dropdown:hover .dropdown-hover-section {
   opacity: 1;
@@ -2489,15 +2533,35 @@ html:not([data-scroll='0']) {
 /* Huge Screens */
 @media only screen and (min-width: 2000px){
 .grtnmc{
-grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
 .container {
-    width: 2000px
+  width: 2000px
+}
+#home-container{
+  width: 1650px;
+}
+h1{
+  width: 1650px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+.all-events-container > h1{
+  width: unset;
+}
+#forms-text{
+  text-align: center;
+}
+.bcmk > div > section{
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 }
 @media only screen and (min-width: 2700px){
 .bcmk, .bf, .counter-grid-container, .container, .events-container-grid,{
-  width:90%;
+  width:2700px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -2548,4 +2612,31 @@ grid-template-columns: repeat(5, 1fr);
     font-size: 6vw;
     line-height: 10vw;
   }
+}
+h2.heading-teaching{
+  color: $blackColor;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+a.active > h2{
+  color: $primaryColor;
+}
+h2.heading-teaching:hover{
+  color: $primaryColor;
+  cursor: pointer;
+}
+@media only screen and (max-width: 1024px) {
+  h2.heading-teaching:hover{
+    color: $blackColor;
+  }
+}
+a#show_director:hover, a#show_brass:hover,
+a#show_keys:hover, a#show_vocal:hover,
+a#show_strings:hover, a#show_woodwinds:hover,
+a#show_dance:hover, a#show_drums:hover,
+a#show_secretary:hover, a#show_picked:hover,
+a#show_art:hover{
+  text-decoration: none;
 }
