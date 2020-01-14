@@ -2552,6 +2552,8 @@ html:not([data-scroll='0']) {
 }
 .container {
   width: 1800px
+  padding-left:unset;
+  padding-right:unset;
 }
 #home-container{
   width: 1650px;
