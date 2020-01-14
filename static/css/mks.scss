@@ -2548,10 +2548,10 @@ html:not([data-scroll='0']) {
 }
 @media only screen and (min-width: 2000px){
 .grtnmc{
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, 0.18fr);
 }
 .container {
-  width: 2000px
+  width: 1800px
 }
 #home-container{
   width: 1650px;
@@ -2572,6 +2572,10 @@ h1{
   width: 420px;
   margin-left: auto;
   margin-right: auto;
+}
+p{
+  padding-left:unset;
+  padding-right:unset;
 }
 }
 @media only screen and (min-width: 2700px){
