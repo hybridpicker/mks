@@ -208,6 +208,10 @@ a:hover {
   width: 3rem;
   margin-top: 2rem;
 }
+#cross-burger-students{
+  width: 2rem;
+  margin-top: 1rem;
+}
 /* Mobile Overlay */
 @media only screen and (max-width: 1200px) {
   .overlay-content{
@@ -2531,6 +2535,17 @@ html:not([data-scroll='0']) {
 }
 }
 /* Huge Screens */
+@media only screen and (min-width: 1800px) {
+  html,body {
+    max-width: 1800px;
+    margin: auto;
+  }
+  header{
+    max-width: 1800px;
+    margin:auto;
+    left:unset;
+  }
+}
 @media only screen and (min-width: 2000px){
 .grtnmc{
   grid-template-columns: repeat(5, 1fr);
@@ -2554,7 +2569,7 @@ h1{
   text-align: center;
 }
 .bcmk > div > section{
-  width: 500px;
+  width: 420px;
   margin-left: auto;
   margin-right: auto;
 }

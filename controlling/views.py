@@ -2,11 +2,17 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from students.models import Student
+from django.utils.datastructures import MultiValueDictKeyError
 
 # Create your views here.
 @login_required(login_url='/team/login/')
 def get_all_students(request):
     students = Student.objects.all().order_by('-start_date')
+    try:
+        student_id = request.GET['id']
+        Student.objects.filter(id=student_id).delete()
+    except MultiValueDictKeyError:
+        pass
 
     # Model data
     context = {
