@@ -6,7 +6,7 @@ from students.models import Student
 # Create your views here.
 @login_required(login_url='/team/login/')
 def get_all_students(request):
-    students = Student.objects.all()
+    students = Student.objects.all().order_by('-start_date')
 
     # Model data
     context = {
