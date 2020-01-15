@@ -31,7 +31,7 @@ $fourthHeadingFontLineHeight:30px;
 $paragraphFontFamily:'Lato', sans-serif;
 $paragraphFontSize:24px;
 $paragraphFontColor:$secondaryColor;
-$paragraphFontLineHeight:45px;
+$paragraphFontLineHeight:40px;
 
 $menuHeight: 100px;
 $menuColor: $secondaryColor;
@@ -208,6 +208,10 @@ a:hover {
   width: 3rem;
   margin-top: 2rem;
 }
+#cross-burger-students{
+  width: 2rem;
+  margin-top: 1rem;
+}
 /* Mobile Overlay */
 @media only screen and (max-width: 1200px) {
   .overlay-content{
@@ -294,7 +298,7 @@ h4{
 }
 p {
   font-family: $paragraphFontFamily;
-  text-align: inherit;
+  text-align: justify;
   font-size: $paragraphFontSize;
   line-height: $paragraphFontLineHeight;
   color: $paragraphFontColor;
@@ -2078,7 +2082,13 @@ td {
 .event-cross-burger:hover .tooltiptext {
   visibility: visible;
 }
-
+.student-cross-burger:hover .tooltiptext {
+  visibility: visible;
+}
+.student-cross-burger .tooltiptext{
+  right: 2rem;
+  margin-top: 4rem;
+}
 /* Counter */
 .counter-grid-container {
   background-color: $secondaryColor;
@@ -2531,12 +2541,25 @@ html:not([data-scroll='0']) {
 }
 }
 /* Huge Screens */
+@media only screen and (min-width: 1800px) {
+  html,body {
+    max-width: 1800px;
+    margin: auto;
+  }
+  header{
+    max-width: 1800px;
+    margin:auto;
+    left:unset;
+  }
+}
 @media only screen and (min-width: 2000px){
 .grtnmc{
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, 0.18fr);
 }
 .container {
-  width: 2000px
+  width: 1800px;
+  padding-left: unset;
+  padding-right: unset;
 }
 #home-container{
   width: 1650px;
@@ -2554,64 +2577,14 @@ h1{
   text-align: center;
 }
 .bcmk > div > section{
-  width: 500px;
+  width: 420px;
   margin-left: auto;
   margin-right: auto;
 }
+p{
+  padding-left:unset;
+  padding-right:unset;
 }
-@media only screen and (min-width: 2700px){
-.bcmk, .bf, .counter-grid-container, .container, .events-container-grid,{
-  width:2700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.nvb{
-  width: 2700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-}
-@media only screen and (min-width: 3000px){
-.grtnmc{
-  grid-template-columns: repeat(6, 1fr);
-  }
- .bs{
-      width: 3000px;
-      margin-left: auto;
-      margin-right: auto;
-}
-.bcmk{
-  width:2700px;
-}
-}
-#recaptcha-team-login{
-  padding-left: 5%;
-  padding-right: 5%;
-}
-.errorlist li{
-  padding-left: 0;
-  padding-bottom: 0;
-  font-family: "Montserrat", sans-serif;
-  font-size: 18px;
-}
-.container.student-view h2{
-  text-align: left;
-  color:$primaryColor;
-  padding-left: 5%;
-}
-.container.student-view  p {
-  margin-bottom: 15px;
-  margin-top: 0;
-}
-#dsgvo-text, #dsgvo-text a{
-  font-size: 20px;
-  line-height: 35px;
-}
-@media only screen and (max-width: 400px){
-  #dsgvo-text, #dsgvo-text a{
-    font-size: 6vw;
-    line-height: 10vw;
-  }
 }
 h2.heading-teaching{
   color: $blackColor;

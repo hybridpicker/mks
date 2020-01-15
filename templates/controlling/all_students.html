@@ -6,6 +6,11 @@
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
+<style media="screen">
+  #cross-burger-students:hover .cross_st0{
+    stroke: black;
+  }
+</style>
 {% endblock %}
 
 {% block navbar %}
@@ -24,15 +29,23 @@
           <th style="text-align:center" align="left">Name</th>
           <th style="text-align:center" align="left">Instrument</th>
           <th style="text-align:center" align="left">Anmeldedatum</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         {% for student in students.all %}
-
           <tr>
             <td align="left"><a traget="_blank" href="single_student?id={{student.id}}">{{ student.first_name }} {{ student.last_name }}</a></td>
             <td>{{student.subject }}</td>
             <td style="text-align:center;" align="left"><strong>{{student.start_date}}</strong></td>
+            <td>
+              <div class="student-cross-burger">
+                <a href="?id={{ student.id }}">
+                  {% include "templates/svg/student_nav_bar_crossburger.html" %}
+                </a>
+                <span class="tooltiptext">Eintrag löschen</span>  
+              </div>
+            </td>
           </tr>
         {% endfor %}
 
