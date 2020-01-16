@@ -2555,6 +2555,12 @@ html:not([data-scroll='0']) {
     margin:auto;
     left:unset;
   }
+  .gallery-show{
+    grid-gap: 14px;
+  }
+  .gallery-show img{
+    max-width: 98%;
+  }
 }
 @media only screen and (min-width: 2000px){
 .grtnmc{
