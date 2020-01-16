@@ -33,7 +33,7 @@ def mail_new_student(from_email, student_context, send_mail=True):
     to = settings.EMAIL_USER_RECEIVER
 
     if send_mail:
-        
+
         """
         #TODO: get attachment to automate message
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
