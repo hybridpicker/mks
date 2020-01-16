@@ -2555,21 +2555,27 @@ html:not([data-scroll='0']) {
     margin:auto;
     left:unset;
   }
+  .gallery-show{
+    grid-gap: 14px;
+  }
+  .gallery-show img{
+    max-width: 98%;
+  }
 }
 @media only screen and (min-width: 2000px){
 .grtnmc{
   grid-template-columns: repeat(5, 0.18fr);
 }
 .container {
-  width: 1800px;
+  width: 90%;
   padding-left: unset;
   padding-right: unset;
 }
-#home-container{
-  width: 1650px;
+.container.gallery {
+  width: 100%;
 }
 h1{
-  width: 1650px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;
@@ -2588,6 +2594,9 @@ h1{
 p{
   padding-left:unset;
   padding-right:unset;
+}
+#mks-logo-svg{
+  padding-left: 78px;
 }
 }
 h2.heading-teaching{
