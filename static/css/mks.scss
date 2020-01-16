@@ -2571,6 +2571,9 @@ html:not([data-scroll='0']) {
   padding-left: unset;
   padding-right: unset;
 }
+.container.gallery {
+  width: 100%;
+}
 h1{
   width: 100%;
   margin-left: auto;
