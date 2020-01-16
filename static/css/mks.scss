@@ -2567,15 +2567,12 @@ html:not([data-scroll='0']) {
   grid-template-columns: repeat(5, 0.18fr);
 }
 .container {
-  width: 1800px;
+  width: 90%;
   padding-left: unset;
   padding-right: unset;
 }
-#home-container{
-  width: 1650px;
-}
 h1{
-  width: 1650px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;
