@@ -10,10 +10,6 @@
 <!-- Recaptcha -->
 
 <script src='https://www.google.com/recaptcha/api.js?render={{public_key}}'></script>
-
-<style media="screen">
-
-</style>
 {% endblock %}
 
 {% block navbar %}
@@ -111,7 +107,14 @@
         <button type="submit">Anmelden</button>
       </div>
     </form>
-    <p id="dsgvo-text">* Informationspflicht gem. Art. 13 DSGVO: Mit der Anmeldung stimmen die Teilnehmenden selbst bzw. bei Minderjährigkeit ihre gesetzlichen VertreterInnen zu, dass die Musik- und Kunstschule Maria-Theresia-Straße 23, 3100 St. Pölten, personenbezogene Daten über das Anmeldeformular zu folgenden Zwecken erhebt und zu folgenden Zwecken verarbeitet: Organisation und Administration des Musikunterrichts, Informationsaustausch, statistische Erhebungen, Teilnahmeverwaltung, sicherheitstechnische und feuerpolizeiliche sowie allgemeine notfallsbezogene Datenweitergabe. Die Speicherdauer der Daten beträgt maximal 5 Jahre ab erstmaliger Verarbeitung der Daten und verlängert sich bei jeder Inanspruchnahme der Services und Dienstleistungen um diesen Zeitraum. Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung der personenbezogenen Daten. Bitte wenden Sie sich diesbezüglich an die Direktion der Musik- und Kunstschule St. Pölten Mag. Alfred Kellner, PhD Maria-Theresia-Straße 23, 3100 St. Pölten, musikschule@st.poelten.gv.at. Weiters haben Sie das Recht auf Beschwerde bei der Aufsichtsbehörde (Österreichische Datenschutzbehörde, Wickenburggasse 8, 1080 Wien, dsb@dsb.gv.at). Nähere Informationen finden Sie in unserem <a target="_blank" href="{% url 'impressum' %}">Impressum</a>.</p>
+    <div id="dsgvo-text">
+    <p>* Mit Betätigung des Buttons (der Schaltfläche) “Anmelden” stimme ich der Verwendung und Verarbeitung meiner personenbezogenen Daten (Namensangaben, Adress-, Kontaktdaten (e-mail), Geschlecht, Fachgruppe) durch die Musik- und Kunstschule St. Pölten gemäß den Bestimmungen des geltenden Datenschutzrechtes, insbesondere des Datenschutzgesetzes, und der Datenschutz-Grundverordnung-DSGVO, Verordnung (EU) 2016/679, in der jeweils geltenden Fassung, ausdrücklich zu. Meine personenbezogenen Daten werden zum Zweck der Anmeldung verarbeitet. Ich stimme zu, dass ich auf meine angegebene E-Mailadresse Informationen zugeschickt bekomme. Mir ist bekannt, dass ich diese Einwilligung jederzeit ohne Angabe von Gründen schriftlich widerrufen kann (Artikel 7 Absatz 3 DSGVO). Die Verarbeitung der Daten bleibt bis zum Zugang eines etwaigen Widerrufs rechtmäßig</p>
+    <p>Informationspflicht gem. Art. 13 DSGVO: </p>
+    <p>Die im Rahmen des Anmeldevorganges erhobenen personenbezogenen Daten der Schülerin/des Schülers bzw. der Erziehungsberechtigten/des Erziehungsberechtigten werden zum Zwecke des Betriebs der Musikschule sowie der Erfüllung des damit verbundenen kulturellen und bildungspolitischen Auftrages, der gesetzlichen Bildungsdokumentation, sowie der Förderung des Musikschulwesens durch das Land NÖ und der Förderstelle des Landes NÖ für das NÖ Musikschulwesen verarbeitet.</p>
+    <p>Die Verarbeitung der Daten erfolgt gemäß den Bestimmungen des Privatschulgesetzes 1962, des Bundesgesetzes über die Dokumentation im Bildungswesen (Bildungsdokumentationsgesetz), des NÖ Musikschulgesetzes 2000, der Musikschulförderungsverordnung 2017, dem NÖ Musikschulplan, jeweils in der gültigen Fassung, sowie auf Grundlage des Organisationsstatuts für Niederösterreichische Musikschulen des Bundesministeriums für Bildung, des Musikschulstatuts, des abgeschlossenen Unterrichtsvertrages sowie der Einwilligungserklärung der Schülerin/des Schülers bzw. der gesetzlichen Vertreterin/des gesetzlichen Vertreters.</p>
+    <p>Weitere Informationen finden Sie in unserem <a target="_blank" href="{% url 'impressum' %}">Impressum</a>.
+    </p>
+  </div>
   </div>
 
 
