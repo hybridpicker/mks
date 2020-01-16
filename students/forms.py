@@ -9,7 +9,7 @@ class SignInForm(forms.Form):
     parent_first_name = forms.CharField(max_length=30, required=True)
     parent_last_name = forms.CharField(max_length=30, required=True)
     from_email = forms.EmailField(label="E-Mailadresse", max_length=100, required=True)
-    subject = forms.ModelChoiceField(queryset=Subject.objects.all().exclude(
+    subject = forms.ModelChoiceField(queryset=Subject.objects.all().order_by('subject').exclude(
                                      subject='Direktor').exclude(
                                      subject="Sekretariat"))
     adress_line = forms.CharField(label="street", max_length=80, required=True)
