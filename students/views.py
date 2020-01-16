@@ -6,6 +6,7 @@ import datetime
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core import mail
+from django.core.mail.message import BadHeaderError
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -32,7 +33,29 @@ def mail_new_student(from_email, student_context, send_mail=True):
     to = settings.EMAIL_USER_RECEIVER
 
     if send_mail:
-        # Sending Message to Student
+        
+        """
+        #TODO: get attachment to automate message
+        mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+        '''
+        Preparing Mail to Student
+        '''
+        subject = 'Musik- und Kunstschule St. Pölten Anmeldung'
+        to = student_context.get('from_email')
+        if student_context.get('instrument') == "Musikalische Früherziehung":
+            html_message = render_to_string('templates/mail/answer_mail_template_eme.html',
+                                            {'context': 'values',})
+        else:
+            html_message = render_to_string('templates/mail/answer_mail_template_music.html',
+                                            {'context': 'values',})
+        plain_message = strip_tags(html_message)
+        # Sending to User
+        to = settings.EMAIL_USER_RECEIVER
+        """
+
+        '''
+        Sending Message to music_school
+        '''
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
 
     return html_message
