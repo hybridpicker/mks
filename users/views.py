@@ -2,7 +2,7 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import render, redirect
-from django.shortcuts import render_to_response
+
 from django.template import RequestContext
 from school.models import MusicSchool
 from events.models import Event
