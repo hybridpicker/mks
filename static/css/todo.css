@@ -1,0 +1,51 @@
+/* ToDo-List */
+.tag-container{
+  display: flex;
+}
+li.taskItem{
+  padding: unset;
+  width: 98%;
+  font-size: 22px;
+  line-height: 20px;
+  margin-bottom: 14px;
+}
+.taskItem > input{
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  margin-bottom: auto;
+  margin-top: auto;
+  margin-left: 14px;
+  margin-right: 14px;
+}
+.taskItem span{
+  text-decoration: unset;
+}
+.taskItem{
+  display: flex;
+  border: solid;
+  width:98%;
+  border-width: 1px;
+  border-color:#222528a8;
+  border-radius: 5px;
+  padding-right: 5px;
+}
+.todo-content{
+  display: grid;
+  font-size: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.todo-content strong{
+  font-size: 18px;
+  color:#d73538;
+}
+.tag-container h3{
+  padding-right: 12px;
+}
+.taskItem h4{
+  margin: 0;
+  text-align: left;
+  font-size: 22px;
+  line-height: 20px;
+}

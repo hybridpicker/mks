@@ -6,7 +6,7 @@
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
-
+<link href="{% static 'css/todo.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block navbar %}
@@ -19,11 +19,15 @@
 <div class="container">
            <div class="content">
            <h1>Todo-Liste</h1>
+           <div class="tag-container">
+           {% for category in categories %}
+           <h3 class="tags">#{{ category.name }} </h3>
+           {% endfor %}
+           </div>
            <form action="" method="post">
            {% csrf_token %}
                <div class="inputContainer">
                    <input type="text" id="description" class="taskName" placeholder="What do you need to do?" name="description" required>
-                   <label for="description">Description</label>
                </div>
                <div class="inputContainer half last">
                    <i class="fa fa-caret-down selectArrow"></i>
@@ -33,11 +37,9 @@
                        <option class="" value="{{ category.name }}" name="{{ category.name }}">{{ category.name }}</option>
                    {% endfor %}
                    </select>
-                   <label for="category">Category</label>
                </div>
                <div class="inputContainer half last right">
                    <input type="date" id="dueDate" class="taskDate" name="date">
-                   <label for="dueDate">Due Date</label>
                </div>
                <div class="row">
                    <button class="taskAdd" name="taskAdd" type="submit"><i class="fa fa-plus icon"></i>Add task</button>
@@ -47,9 +49,10 @@
            {% for todo in todos %}
                <li class="taskItem">
                    <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}">
-                   <label for="{{ todo.id }}"><span class="complete-">{{ todo.title }}</span></label>
-                   <span class="category-{{ todo.category }}">{{ todo.category }}</span>
-                   <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created }} - {{ todo.due_date }}</strong>
+                   <div class="todo-content">
+                   <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
+                   <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
+                   </div>
                </li>
            {% endfor %}
            </ul>
