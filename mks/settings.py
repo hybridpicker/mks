@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'contact.apps.ContactConfig',
     'controlling.apps.ControllingConfig',
     'downloadsection.apps.DownloadsectionConfig',
+    'todo',
     #sitemaps
     'django.contrib.sitemaps',
 ]
