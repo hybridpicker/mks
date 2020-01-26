@@ -49,3 +49,16 @@ li.taskItem{
   font-size: 22px;
   line-height: 20px;
 }
+.checkedList .taskItem h4{
+  text-decoration: line-through;
+  color: #222528c4;
+}
+
+.checkedList .todo-content strong {
+    font-size: 18px;
+    color: #22252891;
+}
+.checkedList .taskItem{
+  background-color: #2225282e;
+  border-color: #22252838;
+}

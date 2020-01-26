@@ -39,15 +39,39 @@ class TodoList(models.Model):
 '''
 Class for saving finished Tasks
 '''
-class FinishedItems(TodoList):
-    date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    user = models.OneToOneField(
+class FinishedItems(models.Model):
+    done_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    done_user = models.OneToOneField(
         CustomUser,
         on_delete=models.CASCADE,
         null=True,
         blank=True,)
+    title = models.CharField(max_length=250)
+    content = models.TextField(blank=True)
+    created = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    due_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,)
+    created_by = models.CharField(max_length=250)
+
+    def save(self, *args, **kwargs):
+        finished_content = self.content
+        finished_due = self.due_date
+        try:
+            todo = TodoList.objects.get(content=finished_content, due_date=finished_due)
+            print(todo)
+            todo.delete()
+        except TodoList.DoesNotExist:
+            pass
+        super(FinishedItems, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ["-created"]
         verbose_name = ("Finished Task Item")
         verbose_name_plural = ("Finished Task Items")
+
+    def __str__(self):
+        return self.title
