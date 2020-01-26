@@ -66,21 +66,21 @@
     <p style="font-size: 18px;margin-bottom: 24px;">(max. 80 Zeichen)</p>
     <p>Datum*</p>
     <p>
-    <input id="id_date" type="date" name="date" required="" class="datepicker"></input>
+      <input id="id_date" type="date" name="date" required="" class="datepicker"></input>
     </p>
     {{ form.date.errors }}
-    <p style="font-size: 18px;margin-bottom: 24px;">(Format: JJJJ-MM-TT)</p>
     <p>Beginnzeit*</p>
-    <p>{{ form.time }}</p>
+    <p>
+      <input id="id_time" type="time" name="time" required="" class="timepicker"></input>
+    </p>
     {{ form.time.errors }}
-    <p style="font-size: 18px;margin-bottom: 24px;">(Format: HH:MM)</p>
-    </div>
-    <div class="form-actions">
-      <a href="#">
+  </div>
+  <div class="form-actions">
+    <a href="#">
       <button type="submit">Speichern</button>
-      </a>
-    </div>
-  </form>
+    </a>
+  </div>
+</form>
 
   {% else %}
   <p>You are not logged in</p>
