@@ -18,6 +18,9 @@ li.taskItem{
   margin-left: 14px;
   margin-right: 14px;
 }
+.taskItem > input:hover{
+  cursor: pointer;
+}
 .taskItem span{
   text-decoration: unset;
 }
@@ -26,9 +29,12 @@ li.taskItem{
   border: solid;
   width:98%;
   border-width: 1px;
-  border-color:#222528a8;
+  border-color:#22252833;
   border-radius: 5px;
   padding-right: 5px;
+  -webkit-box-shadow: 6px 6px 5px -8px rgba(34,37,40,1);
+  -moz-box-shadow: 6px 6px 5px -8px rgba(34,37,40,1);
+  box-shadow: 6px 6px 5px -8px rgba(34,37,40,1);
 }
 .todo-content{
   display: grid;
@@ -55,10 +61,10 @@ li.taskItem{
 }
 
 .checkedList .todo-content strong {
-    font-size: 18px;
-    color: #22252891;
+  font-size: 18px;
+  color: #22252891;
 }
 .checkedList .taskItem{
   background-color: #2225282e;
-  border-color: #22252838;
+  border-color: #22252833;
 }

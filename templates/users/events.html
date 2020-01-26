@@ -65,7 +65,9 @@
     {{ form.venue.errors }}
     <p style="font-size: 18px;margin-bottom: 24px;">(max. 80 Zeichen)</p>
     <p>Datum*</p>
-    <p>{{ form.date }}</p>
+    <p>
+    <input id="id_date" type="date" name="date" required="" class="datepicker"></input>
+    </p>
     {{ form.date.errors }}
     <p style="font-size: 18px;margin-bottom: 24px;">(Format: JJJJ-MM-TT)</p>
     <p>Beginnzeit*</p>
