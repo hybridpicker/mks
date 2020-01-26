@@ -35,3 +35,19 @@ class TodoList(models.Model):
 
     def __str__(self):
         return self.title
+
+'''
+Class for saving finished Tasks
+'''
+class FinishedItems(TodoList):
+    date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,)
+
+    class Meta:
+        ordering = ["-created"]
+        verbose_name = ("Finished Task Item")
+        verbose_name_plural = ("Finished Task Items")

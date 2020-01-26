@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from todo.models import TodoList, Category
+from todo.models import TodoList, Category, FinishedItems
 from django.utils.datastructures import MultiValueDictKeyError
 
 # Create your views here.
@@ -20,7 +20,12 @@ def todo_view(request):
                 checkedlist = request.POST["checkedbox"]
                 for todo_id in checkedlist:
                     todo = TodoList.objects.get(id=int(todo_id))
-                    todo.delete()
+                    #Save it into Finished Items before deleting#
+                    done = FinishedItems(title=todo.title,
+                            content=todo.content,
+                            due_date=todo.due_date,
+                            category_id=todo.category.id)
+                    done.save()
             except MultiValueDictKeyError:
                 pass
     return render(request, "todo/todo_list.html", {"todos": todos, "categories":categories})
