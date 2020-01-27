@@ -1,0 +1,199 @@
+/* Standard Variables */
+$primaryColor:#D73538;
+$secondaryColor:#222528;
+
+$whiteColor: #FDFDFD;
+$bgcolor: $whiteColor;
+$blackColor: $secondaryColor;
+
+$textcolor: $secondaryColor;
+
+$firstHeadingFamily:'Montserrat', sans-serif;
+$firstHeadingFontSize:45px;
+$firstHeadingFontColor:$secondaryColor;
+$firstHeadingFontLineHeight:61px;
+
+$secondHeadingFamily:'Montserrat', sans-serif;
+$secondHeadingFontSize:40px;
+$secondHeadingFontColor:$secondaryColor;
+$secondHeadingFontLineHeight:61px;
+
+$thirdHeadingFamily:'Montserrat', sans-serif;
+$thirdHeadingFontSize:30px;
+$thirdHeadingFontColor:$secondaryColor;
+$thirdHeadingFontLineHeight:61px;
+
+$fourthHeadingFamily:'Montserrat', sans-serif;
+$fourthHeadingFontSize:26px;
+$fourthHeadingFontColor:$secondaryColor;
+$fourthHeadingFontLineHeight:30px;
+
+$paragraphFontFamily:'Lato', sans-serif;
+$paragraphFontSize:24px;
+$paragraphFontColor:$secondaryColor;
+$paragraphFontLineHeight:40px;
+
+$menuHeight: 100px;
+$menuColor: $secondaryColor;
+$menuFontSize: 20px;
+$menudFontFamily: 'Montserrat', sans-serif;
+
+$mobileMenuFontSize: 24px;
+$mobileMenuFontFamily: 'Montserrat', sans-serif;
+
+$linkFontSize: 22px;
+$linkColor: $primaryColor;
+$linkFontFamily: 'Montserrat', sans-serif;
+
+/* mobile Variables */
+$mobileFirstHeadingFontSize:30px;
+$mobileSecondHeadingFontSize:30px;
+$mobileParagraphFontSize:3vw;
+$mobileLinkFontSize: 20px;
+$mobileMenuFontSize: 20px;
+/* ToDo-List */
+.tag-container{
+  display: flex;
+}
+li.taskItem{
+  padding: unset;
+  width: 98%;
+  font-size: 22px;
+  line-height: 20px;
+  margin-bottom: 14px;
+}
+.taskItem > input{
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  margin-bottom: auto;
+  margin-top: auto;
+  margin-left: 14px;
+  margin-right: 14px;
+}
+.taskItem > input:hover{
+  cursor: pointer;
+}
+.taskItem span{
+  text-decoration: unset;
+}
+.taskItem{
+  display: flex;
+  border: solid;
+  width:98%;
+  border-width: 1px;
+  border-color:#22252833;
+  border-radius: 5px;
+  padding-right: 5px;
+  -webkit-box-shadow: 6px 6px 5px -8px rgba(34,37,40,1);
+  -moz-box-shadow: 6px 6px 5px -8px rgba(34,37,40,1);
+  box-shadow: 6px 6px 5px -8px rgba(34,37,40,1);
+}
+.todo-content{
+  display: grid;
+  font-size: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.todo-content strong{
+  font-size: 18px;
+  color:#d73538;
+}
+.tag-container h3{
+  padding-right: 12px;
+}
+.taskItem h4{
+  margin: 0;
+  text-align: left;
+  font-size: 22px;
+  line-height: 20px;
+}
+.checkedList .taskItem h4{
+  text-decoration: line-through;
+  color: #222528c4;
+}
+.checkedList > .taskItem > input{
+  filter: grayscale(100%);
+}
+.checkedList .todo-content strong {
+  font-size: 18px;
+  color: #22252891;
+}
+.checkedList .taskItem{
+  background-color: #2225282e;
+  border-color: #22252833;
+}
+.todo-row {
+ white-space: nowrap;
+}
+.todo-row div {
+ display: inline;
+}
+.todo-row input#description{
+  width: 50%;
+}
+.todo-row input#dueDate{
+  width: 12%;
+  padding-right: 0;
+  padding-left: 12px;
+  margin-left: 1%;
+  color: #8a8a8a;
+}
+#description, #dueDate{
+  border-color: #22252854;
+  height: 44px;
+}
+button.taskAdd{
+  margin-left: 1%;
+  margin-right: 0;
+  display: inline-block;
+  width: 170px;
+  border-radius: 5px;
+  height: 48px;
+}
+button.todoButton {
+  font-family: $firstHeadingFamily;
+  font-size: 18px;
+  box-shadow: 0 4px #BD2123;
+  width: 20%;
+  height: 50px;
+  background: $primaryColor;
+  border-width: 0.5px;
+  color: $whiteColor;
+  border-color: #FF1B1E;
+  margin: 1rem;
+}
+button.todoButton:hover{
+  transform: translate(0, 1.5px);
+  box-shadow: 0 2.5px #BD2123;
+  cursor: pointer;
+}
+@media only screen and (max-width: 771px){
+  button.todoButton {
+    width: 11rem !important;
+  }
+}
+.sese{
+  height: 30px;
+  border-color: #22252854;
+  font-family: "Montserrat", sans-serif;
+  font-size: 22px;
+  line-height: 28px;
+  color: $blackColor;
+  text-align: center;
+}
+.sfbsfcon{
+  width:53%;
+  height: 44px;
+  margin-left:0;
+}
+.slitcon{
+  text-align: center;
+  color: #8a8a8a;
+}
+.swasd::before{
+  content:none;
+}
+.slit div:hover, .swasd {
+    background-color: #D7353814;
+}
