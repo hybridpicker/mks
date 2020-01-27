@@ -102,6 +102,12 @@ li.taskItem{
 .tag-container h3{
   padding-right: 12px;
 }
+.tag-container h3:hover{
+  cursor: pointer;
+}
+.tag-container h3.active{
+  color: $primaryColor;
+}
 .taskItem h4{
   margin: 0;
   text-align: left;

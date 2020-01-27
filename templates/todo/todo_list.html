@@ -23,7 +23,7 @@
            <div class="tag-container">
            <h3 class="tags">#Alle </h3>
            {% for category in categories %}
-           <h3 class="tags">#{{ category.name }} </h3>
+           <h3 id="h3_cat_{{category.id}}" onclick="ActiveCategory({{category.id}})" class="tags">#{{ category.name }} </h3>
            {% endfor %}
            </div>
            <form id="todoForm" action="" method="post">
@@ -48,7 +48,7 @@
               </div>
           <ul class="taskList">
           {% for todo in todos %}
-              <li class="taskItem">
+              <li class="taskItem cat_{{ todo.category.id }}">
                   <input onclick="checkedTodo()" type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}">
                   <div class="todo-content">
                   <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
@@ -79,6 +79,26 @@
 <script type="text/javascript">
   function checkedTodo(){
     document.getElementById("buttonTodoDelete").click();
+  }
+  function ActiveCategory(id){
+    var objects = document.querySelectorAll('.cat_' + id);
+    element = document.getElementById('h3_cat_' + id);
+    if (element.classList.contains("active")){
+      element.classList.remove("active");
+    }
+    else {
+      element.classList.add("active");
+    }
+    var i = 0;
+    for (i; i < objects.length; i++) {
+      var firstElement = document.querySelectorAll('.cat_' + id)[0].style.visibility;
+      if (firstElement != 'hidden') {
+        document.querySelectorAll(".cat_" + id)[i].style.visibility = 'hidden';
+      }
+      else {
+        document.querySelectorAll(".cat_" + id)[i].style.visibility = 'visible';
+      }
+    }
   }
 </script>
 
