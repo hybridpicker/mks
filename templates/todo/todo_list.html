@@ -21,7 +21,7 @@
            <div class="content">
            <h1>Todo-Liste</h1>
            <div class="tag-container">
-           <h3 class="tags">#Alle </h3>
+           <h3 id="h3_cat_all" class="tags active" onclick="ShowAllTasks()">#Alle </h3>
            {% for category in categories %}
            <h3 id="h3_cat_{{category.id}}" onclick="ActiveCategory({{category.id}})" class="tags">#{{ category.name }} </h3>
            {% endfor %}
@@ -62,7 +62,7 @@
            <h2>Erledigte Einträge</h2>
            <ul class="checkedList">
            {% for todo in checked %}
-               <li class="taskItem">
+               <li class="taskItem cat_{{ todo.category.id }}">
                    <input checked=checked onclick="window.location.href = '?id={{ todo.id }}';" type="checkbox" class="taskCheckbox" name="done-checked-box" id="{{ todo.id }}" value="{{ todo.id }}">
                    <div class="todo-content">
                    <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
@@ -80,24 +80,47 @@
   function checkedTodo(){
     document.getElementById("buttonTodoDelete").click();
   }
+  function ResetTasks(){
+    // Reset Headings
+    var headings = document.querySelectorAll('h3.tags')
+    for (i = 0; i < headings.length; i++) {
+        element = document.querySelectorAll('h3.tags')[i]
+        if (element.classList.contains('active')){
+            element.classList.remove('active');
+        }
+    }
+    // Reset Tasks
+    var tasks = document.querySelectorAll('li.taskItem')
+    for (i = 0; i < tasks.length; i++) {
+        document.querySelectorAll("li.taskItem")[i].style.display = 'none';
+    }
+  }
   function ActiveCategory(id){
+    ResetTasks();
+    // get every object with Category ID
     var objects = document.querySelectorAll('.cat_' + id);
     element = document.getElementById('h3_cat_' + id);
-    if (element.classList.contains("active")){
-      element.classList.remove("active");
-    }
-    else {
-      element.classList.add("active");
-    }
+    element.classList.add("active");
     var i = 0;
+    var firstElement = document.querySelectorAll('.cat_' + id)[0].style.display;
     for (i; i < objects.length; i++) {
-      var firstElement = document.querySelectorAll('.cat_' + id)[0].style.visibility;
-      if (firstElement != 'hidden') {
-        document.querySelectorAll(".cat_" + id)[i].style.visibility = 'hidden';
-      }
-      else {
-        document.querySelectorAll(".cat_" + id)[i].style.visibility = 'visible';
-      }
+        document.querySelectorAll(".cat_" + id)[i].style.display = 'flex';
+    }
+    var tasks = document.querySelectorAll('li.taskItem')
+    for (i = 0; i < tasks.length; i++) {
+        element = document.querySelectorAll("li.taskItem")[i].style.display
+        if (element != 'flex'){
+        document.querySelectorAll("li.taskItem")[i].style.display = 'none';
+        }
+    }
+  }
+  function ShowAllTasks(){
+    ResetTasks();
+    element = document.getElementById('h3_cat_all');
+    element.classList.add("active");
+    var tasks = document.querySelectorAll('li.taskItem')
+    for (i = 0; i < tasks.length; i++) {
+        document.querySelectorAll("li.taskItem")[i].style.display = 'flex';
     }
   }
 </script>
