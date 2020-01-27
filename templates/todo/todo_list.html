@@ -43,8 +43,8 @@
                   <input type="date" id="dueDate" class="taskDate" name="date">
               </div>
               <div class="row">
-                  <button class="taskAdd" name="taskAdd" type="submit"><i class="fa fa-plus icon"></i>Add task</button>
-                  <button id="buttonTodoDelete" class="taskDelete" name="taskDelete" formnovalidate="" type="submit"><i class="fa fa-trash-o icon"></i>Delete Tasks</button>
+                  <button class="taskAdd" name="taskAdd" type="submit">Add task</button>
+                  <button id="buttonTodoDelete" class="taskDelete" name="taskDelete" formnovalidate="" type="submit" style="display: none;">Delete Tasks</button>
               </div>
           <ul class="taskList">
           {% for todo in todos %}
@@ -63,7 +63,7 @@
            <ul class="checkedList">
            {% for todo in checked %}
                <li class="taskItem">
-                   <input onclick="alert('dblclick')" type="checkbox" class="taskCheckbox" name="done-checked-box" id="{{ todo.id }}" value="{{ todo.id }}">
+                   <input checked=checked onclick="window.location.href = '?id={{ todo.id }}';" type="checkbox" class="taskCheckbox" name="done-checked-box" id="{{ todo.id }}" value="{{ todo.id }}">
                    <div class="todo-content">
                    <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
                    <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>

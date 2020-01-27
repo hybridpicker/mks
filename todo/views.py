@@ -33,6 +33,18 @@ def todo_view(request):
                     pass
             except MultiValueDictKeyError:
                 pass
+    if request.method == "GET":
+        try:
+            task_id = request.GET['id']
+            task = FinishedItems.objects.get(id=int(task_id))
+            todo = TodoList(title=task.title,
+                        content=task.content,
+                        due_date=task.due_date,
+                        category=task.category)
+            todo.save()
+            task.delete()
+        except MultiValueDictKeyError:
+            pass
     return render(request,
         "todo/todo_list.html",
         {"todos": todos,
