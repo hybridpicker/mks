@@ -239,3 +239,23 @@ button.todoButton:hover{
   color:#d73538;
   text-align: left;
 }
+.checker{
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 4%;
+}
+#priorityChecker {
+  display: none;
+}
+.checker {
+  background-image: url(http://css-workshop.com/wp-content/uploads/2017/02/checkboxes1.png);
+  background-position: left center;
+  background-size: auto 100%;
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+}
+#priorityChecker:checked + .checker {
+  background-position: right center;
+}

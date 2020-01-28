@@ -35,7 +35,7 @@ def todo_view(request):
                 pass
     if request.method == "GET":
         try:
-            task_id = request.GET['id']
+            task_id = request.GET['priority_id']
             try:
                 task = FinishedItems.objects.get(id=int(task_id))
                 todo = TodoList(title=task.title,
@@ -45,6 +45,19 @@ def todo_view(request):
                 todo.save()
                 task.delete()
             except FinishedItems.DoesNotExist:
+                pass
+        except MultiValueDictKeyError:
+            pass
+        try:
+            priority_id = request.GET['priority_id']
+            try:
+                task = TodoList.objects.get(id=int(priority_id))
+                if task.priority:
+                    task.priority = False
+                else:
+                    task.priority = True
+                task.save()
+            except TodoList.DoesNotExist:
                 pass
         except MultiValueDictKeyError:
             pass

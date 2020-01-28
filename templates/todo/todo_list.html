@@ -58,6 +58,13 @@
                   <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
                   <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
                   </div>
+                  {% if todo.priority %}
+                  <input class="priorityCheck" checked="checked" type="checkbox" id="priorityChecker">
+                  <label for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}';"></label>
+                  {% else %}
+                  <input class="priorityCheck" type="checkbox" id="priorityChecker">
+                  <label for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}';"></label>
+                  {% endif %}
               </li>
           {% endfor %}
           </ul>
@@ -128,6 +135,9 @@
     for (i = 0; i < tasks.length; i++) {
         document.querySelectorAll("li.taskItem")[i].style.display = 'flex';
     }
+  }
+  function priorityTodo(id){
+    console.log(id)
   }
 </script>
 
