@@ -54,6 +54,8 @@ $mobileMenuFontSize: 20px;
 /* ToDo-List */
 .tag-container{
   display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
 }
 li.taskItem{
   padding: unset;
@@ -101,6 +103,8 @@ li.taskItem{
 }
 .tag-container h3{
   padding-right: 12px;
+  margin-bottom: 0;
+  margin-top: 10px;
 }
 .tag-container h3:hover{
   cursor: pointer;
@@ -227,4 +231,10 @@ button.todoButton:hover{
 }
 #newTaskHeading{
   margin:0;
+}
+#tagHeadline{
+  margin-bottom: 3.2px;
+  padding-bottom: 0.1em;
+  color:#d73538;
+  text-align: left;
 }
