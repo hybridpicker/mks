@@ -14,6 +14,7 @@ class Category(models.Model):
 
 class TodoList(models.Model):
     title = models.CharField(max_length=250)
+    priority = models.BooleanField(default=False)
     content = models.TextField(blank=True)
     created = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
     due_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
@@ -29,7 +30,7 @@ class TodoList(models.Model):
         blank=True,)
 
     class Meta:
-        ordering = ["-created"]
+        ordering = ["-priority", "due_date","created"]
         verbose_name = ("Todo List Item")
         verbose_name_plural = ("Todo List Items")
 
