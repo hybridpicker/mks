@@ -28,13 +28,16 @@
            </div>
            <form id="todoForm" action="" method="post">
           {% csrf_token %}
-            <div class="sfbsfcon">
+           <div class="row">
+             <p>Neuer Eintrag:</p>
+             <div class="sfbsfcon" id="clickCategory">
                 <select id="category" class="taskCategory" name="category_select" required>
                 <option class="disabled" value="">----</option>
                 {% for category in categories %}
                     <option class="" value="{{ category.id }}" name="{{ category.name }}">{{ category.name }}</option>
                 {% endfor %}
                 </select>
+              </div>
             </div>
             <div class="todo-row">
               <div class="inputContainer">
@@ -113,6 +116,9 @@
         document.querySelectorAll("li.taskItem")[i].style.display = 'none';
         }
     }
+    // click on modelchoice
+    document.querySelectorAll(".slitcon > div")[id - 1].click();
+
   }
   function ShowAllTasks(){
     ResetTasks();
@@ -159,6 +165,7 @@
               y[k].removeAttribute("class");
             }
             this.setAttribute("class", "swasd",);
+            this.setAttribute("id", "1")
             break;
           }
         }
