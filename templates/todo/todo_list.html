@@ -106,7 +106,6 @@
     element = document.getElementById('h3_cat_' + id);
     element.classList.add("active");
     var i = 0;
-    var firstElement = document.querySelectorAll('.cat_' + id)[0].style.display;
     for (i; i < objects.length; i++) {
         document.querySelectorAll(".cat_" + id)[i].style.display = 'flex';
     }
@@ -118,8 +117,8 @@
         }
     }
     // click on modelchoice
+    console.log(id - 1)
     document.querySelectorAll(".slitcon > div")[id - 1].click();
-
   }
   function ShowAllTasks(){
     ResetTasks();
