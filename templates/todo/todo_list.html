@@ -29,8 +29,8 @@
            <form id="todoForm" action="" method="post">
           {% csrf_token %}
            <div class="row">
-             <p>Neuer Eintrag:</p>
              <div class="sfbsfcon" id="clickCategory">
+               <h3 id="newTaskHeading">Neuer Eintrag: </h3>
                 <select id="category" class="taskCategory" name="category_select" required>
                 <option class="disabled" value="">----</option>
                 {% for category in categories %}

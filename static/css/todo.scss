@@ -108,6 +108,10 @@ li.taskItem{
 .tag-container h3.active{
   color: $primaryColor;
 }
+h3#newEntry{
+  text-align: left;
+  margin-bottom: 6px;
+}
 .taskItem h4{
   margin: 0;
   text-align: left;
@@ -187,19 +191,40 @@ button.todoButton:hover{
   line-height: 28px;
   color: $blackColor;
   text-align: center;
+  width: 72%;
+  margin-left: auto;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 .sfbsfcon{
-  width:53%;
+  width: 76%;
   height: 44px;
   margin-left:0;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 .slitcon{
   text-align: center;
   color: #8a8a8a;
+  width: calc(72% + 2px);
+  margin-left: auto;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.slitcon div{
+  padding-left: 0px;
+  padding-right: 0px;
 }
 .swasd::before{
   content:none;
 }
 .slit div:hover, .swasd {
     background-color: #D7353814;
+}
+#clickCategory{
+  display: inline-flex;
+  width: 68%;
+}
+#newTaskHeading{
+  margin:0;
 }
