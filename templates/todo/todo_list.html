@@ -60,10 +60,10 @@
                   </div>
                   {% if todo.priority %}
                   <input class="priorityCheck" checked="checked" type="checkbox" id="priorityChecker">
-                  <label for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}';"></label>
+                  <label for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
                   {% else %}
                   <input class="priorityCheck" type="checkbox" id="priorityChecker">
-                  <label for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}';"></label>
+                  <label for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
                   {% endif %}
               </li>
           {% endfor %}
@@ -141,6 +141,12 @@
   }
 </script>
 
+<script type="text/javascript">
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const categoryId = urlParams.get('cat');
+  ActiveCategory(categoryId);
+</script>
 <script type="text/javascript">
   var x, i, j, selElmnt, a, b, c;
   /* Look for any elements with the class "sfbsf": */
