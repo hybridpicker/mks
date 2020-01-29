@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from todo.models import TodoList, Category, FinishedItems
 from django.utils.datastructures import MultiValueDictKeyError
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url='/team/login/')
 def todo_view(request):
     todos = TodoList.objects.all()
     checked = FinishedItems.objects.all()
