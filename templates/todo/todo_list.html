@@ -145,7 +145,10 @@
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const categoryId = urlParams.get('cat');
-  ActiveCategory(categoryId);
+  if ( categoryId ){
+    console.log('yyy')
+    ActiveCategory(categoryId);
+  }
 </script>
 <script type="text/javascript">
   var x, i, j, selElmnt, a, b, c;
