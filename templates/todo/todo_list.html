@@ -74,7 +74,7 @@
            <ul class="checkedList">
            {% for todo in checked %}
                <li class="taskItem cat_{{ todo.category.id }}">
-                   <input checked=checked onclick="window.location.href = '?id={{ todo.id }}';" type="checkbox" class="taskCheckbox" name="done-checked-box" id="{{ todo.id }}" value="{{ todo.id }}">
+                   <input checked=checked onclick="window.location.href = '?undelete_id={{ todo.id }}&cat={{todo.category.id}}';" type="checkbox" class="taskCheckbox" name="done-checked-box" id="{{ todo.id }}" value="{{ todo.id }}">
                    <div class="todo-content">
                    <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
                    <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
