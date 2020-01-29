@@ -63,6 +63,21 @@ def todo_view(request):
                 pass
         except MultiValueDictKeyError:
             pass
+        try:
+            id = request.GET['undelete_id']
+            try:
+                #Save it into Finished Items before deleting#
+                task = FinishedItems.objects.get(id=int(id))
+                todo = TodoList(title=task.title,
+                            content=task.content,
+                            due_date=task.due_date,
+                            category=task.category)
+                todo.save()
+                task.delete()
+            except FinishedItems.DoesNotExist:
+                pass
+        except MultiValueDictKeyError:
+            pass
     return render(request,
         "todo/todo_list.html",
         {"todos": todos,
