@@ -249,13 +249,67 @@ button.todoButton:hover{
   display: none;
 }
 .checker {
-  background-image: url(http://css-workshop.com/wp-content/uploads/2017/02/checkboxes1.png);
-  background-position: left center;
+  background-image: url(/static/todo/unstar.svg);
   background-size: auto 100%;
   width: 40px;
   height: 40px;
   background-repeat: no-repeat;
 }
 #priorityChecker:checked + .checker {
-  background-position: right center;
+  background-image: url(/static/todo/star.svg);
+}
+/* media settings*/
+@media only screen and (max-width: 1340px) {
+  #clickCategory {
+    width: 100%;
+  }
+  .todo-row input#description {
+    width: 67%;
+  }
+  button.taskAdd {
+    width: 14%;
+  }
+  .todo-row input#dueDate {
+    width: 12%;
+    padding-right: 0;
+    padding-left: 1%;
+    margin-left: 1%;
+  }
+}
+@media only screen and (max-width: 1066px) {
+  .todo-row {
+    white-space: nowrap;
+    display: grid;
+  }
+  .todo-row input#description {
+    width: 95%;
+  }
+  .todo-row input#dueDate {
+    width: 97%;
+    padding-right: 0;
+    padding-left: 1%;
+    margin-left: 0;
+  }
+  .sese{
+    margin-right: 2%;
+  }
+  button.taskAdd {
+    width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .todo-row >div{
+    margin-top: 1rem;
+  }
+  input{
+    text-align: center;
+  }
+}
+@media only screen and (max-width: 966px) {
+  #newTaskHeading{
+    display:none;
+  }
+  .sese{
+    width:98%;
+  }
 }
