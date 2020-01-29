@@ -15,12 +15,14 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     execute_from_command_line(sys.argv)
+    
+    if len(sys.argv) == 2 and sys.argv[1] == 'migrate':
+        execute_from_command_line(['manage.py', 'import_data'])
 
 """
 Combine migrate with fixture Loading
 """
-#    if len(sys.argv) == 2 and sys.argv[1] == 'migrate':
-#        execute_from_command_line(['manage.py', 'import_data'])
+
 
 if __name__ == '__main__':
     main()
