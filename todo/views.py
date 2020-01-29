@@ -9,13 +9,19 @@ def todo_view(request):
     todos = TodoList.objects.all()
     checked = FinishedItems.objects.all()
     categories = Category.objects.all()
+    current_user = request.user
     if request.method == "POST":
         if "taskAdd" in request.POST:
             title = request.POST["description"]
             date = str(request.POST["date"])
             category = request.POST["category_select"]
             content = title + " -- " + date + " " + category
-            Todo = TodoList(title=title, content=content, due_date=date, category=Category.objects.get(id=category))
+            print(current_user)
+            Todo = TodoList(title=title,
+                            content=content,
+                            due_date=date,
+                            category=Category.objects.get(id=category),
+                            created_by_id=current_user.id,)
             Todo.save()
             return redirect('todo_view')
         if "taskDelete" in request.POST:
@@ -29,7 +35,9 @@ def todo_view(request):
                         done = FinishedItems(title=todo_task.title,
                                 content=todo_task.content,
                                 due_date=todo_task.due_date,
-                                category=category)
+                                category=category,
+                                created_by=str(todo_task.created_by),
+                                done_user=current_user,)
                         done.save()
                 except MultiValueDictKeyError:
                     pass
@@ -43,7 +51,8 @@ def todo_view(request):
                 todo = TodoList(title=task.title,
                             content=task.content,
                             due_date=task.due_date,
-                            category=task.category)
+                            category=task.category,
+                            created_by=task.created_by,)
                 todo.save()
                 task.delete()
             except FinishedItems.DoesNotExist:
@@ -71,7 +80,8 @@ def todo_view(request):
                 todo = TodoList(title=task.title,
                             content=task.content,
                             due_date=task.due_date,
-                            category=task.category)
+                            category=task.category,
+                            created_by=task.created_by,)
                 todo.save()
                 task.delete()
             except FinishedItems.DoesNotExist:

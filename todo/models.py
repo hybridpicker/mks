@@ -23,7 +23,7 @@ class TodoList(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,)
-    created_by = models.OneToOneField(
+    created_by = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
         null=True,
@@ -42,7 +42,7 @@ Class for saving finished Tasks
 '''
 class FinishedItems(models.Model):
     done_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    done_user = models.OneToOneField(
+    done_user = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
         null=True,

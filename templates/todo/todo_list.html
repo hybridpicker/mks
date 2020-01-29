@@ -47,7 +47,7 @@
               <div class="inputContainer">
                   <input type="date" id="dueDate" class="taskDate" name="date"required>
               </div>
-                  <button class="taskAdd" name="taskAdd" type="submit">+ Hinzufügen</button>
+                  <button class="taskAdd" name="taskAdd" type="submit" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';">+ Hinzufügen</button>
                   <button id="buttonTodoDelete" class="taskDelete" name="taskDelete" formnovalidate="" type="submit" style="display: none;">Delete Tasks</button>
               </div>
           <ul class="taskList">
