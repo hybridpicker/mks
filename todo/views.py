@@ -36,6 +36,17 @@ def todo_view(request):
             Todo.save()
             return redirect('todo_view')
     if request.method == "GET":
+        if "changeTask" in request.GET:
+            task_id = request.GET['task_id']
+            print('task Change found')
+            task = TodoList.objects.get(id=int(task_id))
+            if request.GET['content']:
+                content = request.GET['content']
+                task.content = content
+            if request.GET['date']:
+                date = request.GET['date']
+                task.due_date = date
+            task.save()
         try:
             task_id = request.GET['delete_task']
             try:
@@ -81,7 +92,7 @@ def todo_view(request):
                                 content=task.content,
                                 due_date=task.due_date,
                                 category=task.category,
-                                created_by_id=created_by,)
+                                created_by_id=created_by.id,)
                 else:
                     todo = TodoList(title=task.title,
                                 content=task.content,

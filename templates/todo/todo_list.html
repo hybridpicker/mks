@@ -68,10 +68,11 @@
                 </div>
                 <div class="item2">
                   <h4>New Deadline:</h2>
-                  <input type="date" id="dueDate" class="taskDate" name="date" value="2017-06-01">
+                  <input type="date" id="dueDate" class="taskDate" name="date" value="{{ todo.due_date|date:"Y-m-d" }}">
                 </div>
                 <div class="item3">
-                  <button class="taskAdd" name="changeTask" type="submit">Ändern</button>
+                  <input name="task_id" value="{{todo.id}}" style="display: none;">
+                  <button class="taskChange" name="changeTask" type="submit">Ändern</button>
                 </div>
               </form>
               </div>

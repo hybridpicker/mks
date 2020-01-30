@@ -285,6 +285,13 @@ input#content{
 li input#dueDate{
   width: 170px;
 }
+li button{
+  width: 50%;
+  margin-left: 0;
+}
+li h4 {
+  margin-bottom: 16px;
+}
 /* media settings*/
 @media only screen and (max-width: 1340px) {
   #clickCategory {
