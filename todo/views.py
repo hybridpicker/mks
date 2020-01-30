@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from todo.models import TodoList, Category, FinishedItems
+from users.models import CustomUser
+
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 
@@ -16,7 +18,6 @@ def todo_view(request):
             date = str(request.POST["date"])
             category = request.POST["category_select"]
             content = title + " -- " + date + " " + category
-            print(current_user)
             Todo = TodoList(title=title,
                             content=content,
                             due_date=date,
@@ -24,36 +25,23 @@ def todo_view(request):
                             created_by_id=current_user.id,)
             Todo.save()
             return redirect('todo_view')
-        if "taskDelete" in request.POST:
-            try:
-                checkedlist = request.POST.getlist("checkedbox")
-                try:
-                    for todo_id in checkedlist:
-                        todo_task = TodoList.objects.get(id=int(todo_id))
-                        category = todo_task.category
-                        #Save it into Finished Items before deleting#
-                        done = FinishedItems(title=todo_task.title,
-                                content=todo_task.content,
-                                due_date=todo_task.due_date,
-                                category=category,
-                                created_by=str(todo_task.created_by),
-                                done_user=current_user,)
-                        done.save()
-                except MultiValueDictKeyError:
-                    pass
-            except MultiValueDictKeyError:
-                pass
     if request.method == "GET":
         try:
-            task_id = request.GET['priority_id']
+            task_id = request.GET['delete_task']
             try:
-                task = FinishedItems.objects.get(id=int(task_id))
-                todo = TodoList(title=task.title,
-                            content=task.content,
-                            due_date=task.due_date,
-                            category=task.category,
-                            created_by=task.created_by,)
-                todo.save()
+                task = TodoList.objects.get(id=int(task_id))
+                if task.created_by:
+                    done = FinishedItems(title=task.title,
+                                content=task.content,
+                                due_date=task.due_date,
+                                category=task.category,
+                                created_by=int(task.created_by.id),)
+                else:
+                    done = FinishedItems(title=task.title,
+                                content=task.content,
+                                due_date=task.due_date,
+                                category=task.category,)
+                done.save()
                 task.delete()
             except FinishedItems.DoesNotExist:
                 pass
@@ -77,11 +65,18 @@ def todo_view(request):
             try:
                 #Save it into Finished Items before deleting#
                 task = FinishedItems.objects.get(id=int(id))
-                todo = TodoList(title=task.title,
-                            content=task.content,
-                            due_date=task.due_date,
-                            category=task.category,
-                            created_by=task.created_by,)
+                if task.created_by_id:
+                    created_by = CustomUser.objects.get(id=task.created_by_id)
+                    todo = TodoList(title=task.title,
+                                content=task.content,
+                                due_date=task.due_date,
+                                category=task.category,
+                                created_by_id=created_by,)
+                else:
+                    todo = TodoList(title=task.title,
+                                content=task.content,
+                                due_date=task.due_date,
+                                category=task.category)
                 todo.save()
                 task.delete()
             except FinishedItems.DoesNotExist:

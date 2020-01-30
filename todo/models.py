@@ -56,7 +56,7 @@ class FinishedItems(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,)
-    created_by = models.CharField(max_length=250)
+    created_by_id = models.IntegerField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         finished_content = self.content

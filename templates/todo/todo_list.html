@@ -48,12 +48,11 @@
                   <input type="date" id="dueDate" class="taskDate" name="date"required>
               </div>
                   <button class="taskAdd" name="taskAdd" type="submit" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';">+ Hinzufügen</button>
-                  <button id="buttonTodoDelete" class="taskDelete" name="taskDelete" formnovalidate="" type="submit" style="display: none;">Delete Tasks</button>
               </div>
           <ul class="taskList">
           {% for todo in todos %}
               <li class="taskItem cat_{{ todo.category.id }}">
-                  <input onclick="checkedTodo()" type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}">
+                  <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="window.location.href = '?delete_task={{ todo.id }}&cat={{todo.category.id}}';">
                   <div class="todo-content">
                   <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
                   <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
