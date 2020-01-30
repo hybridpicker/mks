@@ -35,7 +35,7 @@ def todo_view(request):
                                 content=task.content,
                                 due_date=task.due_date,
                                 category=task.category,
-                                created_by=int(task.created_by.id),)
+                                created_by_id=int(task.created_by.id),)
                 else:
                     done = FinishedItems(title=task.title,
                                 content=task.content,
