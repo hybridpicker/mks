@@ -17,12 +17,22 @@ def todo_view(request):
             title = request.POST["description"]
             date = str(request.POST["date"])
             category = request.POST["category_select"]
-            content = title + " -- " + date + " " + category
-            Todo = TodoList(title=title,
-                            content=content,
-                            due_date=date,
-                            category=Category.objects.get(id=category),
-                            created_by_id=current_user.id,)
+            try:
+                content = request.POST["content"]
+            except MultiValueDictKeyError:
+                pass
+            if content:
+                Todo = TodoList(title=title,
+                                content=content,
+                                due_date=date,
+                                category=Category.objects.get(id=category),
+                                created_by_id=current_user.id,)
+            else:
+                Todo = TodoList(title=title,
+                                content="",
+                                due_date=date,
+                                category=Category.objects.get(id=category),
+                                created_by_id=current_user.id,)
             Todo.save()
             return redirect('todo_view')
     if request.method == "GET":

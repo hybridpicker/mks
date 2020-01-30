@@ -51,9 +51,9 @@
               </div>
           <ul class="taskList">
           {% for todo in todos %}
-              <li class="taskItem cat_{{ todo.category.id }}">
+              <li id="li_{{todo.id}}" class="taskItem cat_{{ todo.category.id }}" ondblclick="showNotes({{todo.id}})">
                   <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="window.location.href = '?delete_task={{ todo.id }}&cat={{todo.category.id}}';">
-                  <div class="todo-content">
+                  <div class="todo-content" id="contentTodo{{ todo.id }}">
                   <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
                   <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
                   </div>
@@ -62,7 +62,7 @@
                   <label for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
                   {% else %}
                   <input class="priorityCheck" type="checkbox" id="priorityChecker">
-                  <label for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
+                  <label id="star{{todo.id}}"for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
                   {% endif %}
               </li>
           {% endfor %}
@@ -135,8 +135,20 @@
         document.querySelectorAll("li.taskItem")[i].style.display = 'flex';
     }
   }
-  function priorityTodo(id){
-    console.log(id)
+  function showNotes(id){
+    // Check Actual Height and save it into element
+    var title = document.getElementById("contentTodo" + id);
+    // get height minus actual Padding in CSS
+    var height = title.offsetHeight - 16;
+    title.style.height = height + "px";
+    // Make Task bigger
+    var task = document.getElementById("li_" + id)
+    task.style.height = "200px"
+    // Save Input Icon Layout
+    var input = document.getElementById(id);
+    input.style.marginTop = "14px";
+    var star = document.getElementById("star" + id)
+    star.style.marginTop = "8px";
   }
 </script>
 
