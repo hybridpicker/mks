@@ -242,9 +242,9 @@ button.todoButton:hover{
 }
 .checker{
   margin-left: auto;
-  margin-top: auto;
   margin-bottom: auto;
   margin-right: 4%;
+  margin-top: -44px;
 }
 #priorityChecker {
   display: none;
@@ -258,6 +258,27 @@ button.todoButton:hover{
 }
 #priorityChecker:checked + .checker {
   background-image: url(/static/todo/star.svg);
+}
+.extra-todo-container{
+  display: inline-flex;
+}
+li .item1 { grid-area: menu; }
+li .item2 { grid-area: main; }
+li .item3 { grid-area: footer; }
+
+li .extra-todo-container {
+  display: none;
+  grid-template-areas:
+    'menu menu menu main main'
+    'menu menu menu footer footer';
+  grid-gap: 10px;
+}
+li .extra-todo-container > div {
+  padding: 20px 0;
+}
+input#content{
+  height: 100%;
+  width: 80%;
 }
 /* media settings*/
 @media only screen and (max-width: 1340px) {

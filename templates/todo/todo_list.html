@@ -51,20 +51,36 @@
               </div>
           <ul class="taskList">
           {% for todo in todos %}
-              <li id="li_{{todo.id}}" class="taskItem cat_{{ todo.category.id }}" ondblclick="showNotes({{todo.id}})">
-                  <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="window.location.href = '?delete_task={{ todo.id }}&cat={{todo.category.id}}';">
-                  <div class="todo-content" id="contentTodo{{ todo.id }}">
-                  <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
-                  <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
-                  </div>
-                  {% if todo.priority %}
-                  <input class="priorityCheck" checked="checked" type="checkbox" id="priorityChecker">
-                  <label for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
+          <li id="li_{{todo.id}}" class="taskItem cat_{{ todo.category.id }}">
+            <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="window.location.href = '?delete_task={{ todo.id }}&cat={{todo.category.id}}';">
+            <div class="todo-content" id="contentTodo{{ todo.id }}" onclick="showNotes({{todo.id}})">
+              <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
+              <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
+              <div id="extra-todo-container-{{todo.id}}" class="extra-todo-container">
+                <div class="item1">
+                  {% if todo.content %}
+                  <input type="text" id="content" class="taskName" placeholder="{{todo.content}}" name="content">
                   {% else %}
-                  <input class="priorityCheck" type="checkbox" id="priorityChecker">
-                  <label id="star{{todo.id}}"for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
+                  <input type="text" id="content" class="taskName" placeholder="Notizfeld" name="content">
                   {% endif %}
-              </li>
+                </div>
+                <div class="item2">
+                  <input type="date" id="dueDate" class="taskDate" name="date"required>
+                </div>
+                <div class="item3">
+                  <button class="taskAdd" name="taskAdd" type="submit" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';">+ Hinzufügen</button>
+                </div>
+              </div>
+              {% if todo.priority %}
+              <input class="priorityCheck" checked="checked" type="checkbox" id="priorityChecker">
+              <label for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
+              {% else %}
+              <input class="priorityCheck" type="checkbox" id="priorityChecker">
+              <label id="star{{todo.id}}"for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
+              {% endif %}
+
+            </div>
+          </li>
           {% endfor %}
           </ul>
           </form>
@@ -142,13 +158,14 @@
     var height = title.offsetHeight - 16;
     title.style.height = height + "px";
     // Make Task bigger
-    var task = document.getElementById("li_" + id)
-    task.style.height = "200px"
+    var task = document.getElementById("li_" + id);
+    task.style.height = "320px";
     // Save Input Icon Layout
     var input = document.getElementById(id);
     input.style.marginTop = "14px";
-    var star = document.getElementById("star" + id)
-    star.style.marginTop = "8px";
+    var star = document.getElementById("star" + id);
+    star.style.marginTop = "-150px";
+    document.getElementById("extra-todo-container-"+id).style.display = "grid"
   }
 </script>
 
@@ -157,7 +174,6 @@
   const urlParams = new URLSearchParams(queryString);
   const categoryId = urlParams.get('cat');
   if ( categoryId ){
-    console.log('yyy')
     ActiveCategory(categoryId);
   }
 </script>
