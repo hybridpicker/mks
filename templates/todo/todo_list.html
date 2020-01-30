@@ -49,6 +49,7 @@
               </div>
                   <button class="taskAdd" name="taskAdd" type="submit" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';">+ Hinzufügen</button>
               </div>
+          </form>
           <ul class="taskList">
           {% for todo in todos %}
           <li id="li_{{todo.id}}" class="taskItem cat_{{ todo.category.id }}">
@@ -56,6 +57,7 @@
             <div class="todo-content" id="contentTodo{{ todo.id }}" onclick="showNotes({{todo.id}})">
               <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
               <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
+              <form id="changeTaskForm" method="get">
               <div id="extra-todo-container-{{todo.id}}" class="extra-todo-container">
                 <div class="item1">
                   {% if todo.content %}
@@ -65,11 +67,13 @@
                   {% endif %}
                 </div>
                 <div class="item2">
+                  <h4>New Deadline:</h2>
                   <input type="date" id="dueDate" class="taskDate" name="date"required>
                 </div>
                 <div class="item3">
-                  <button class="taskAdd" name="taskAdd" type="submit" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';">+ Hinzufügen</button>
+                  <button class="taskAdd" name="changeTask" type="submit">Ändern</button>
                 </div>
+              </form>
               </div>
               {% if todo.priority %}
               <input class="priorityCheck" checked="checked" type="checkbox" id="priorityChecker">
@@ -83,7 +87,6 @@
           </li>
           {% endfor %}
           </ul>
-          </form>
 
            <h2>Erledigte Einträge</h2>
            <ul class="checkedList">
