@@ -78,10 +78,10 @@
               </div>
               {% if todo.priority %}
               <input class="priorityCheck" checked="checked" type="checkbox" id="priorityChecker">
-              <label for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
+              <label id="star{{todo.id}}" for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
               {% else %}
               <input class="priorityCheck" type="checkbox" id="priorityChecker">
-              <label id="star{{todo.id}}"for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
+              <label id="star{{todo.id}}" for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
               {% endif %}
 
             </div>
