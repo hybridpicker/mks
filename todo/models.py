@@ -17,7 +17,7 @@ class TodoList(models.Model):
     priority = models.BooleanField(default=False)
     content = models.TextField(blank=True)
     created = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    due_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    due_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"), null=True, blank=True)
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
@@ -50,7 +50,7 @@ class FinishedItems(models.Model):
     title = models.CharField(max_length=250)
     content = models.TextField(blank=True)
     created = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    due_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    due_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"), null=True, blank=True)
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,

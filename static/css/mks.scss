@@ -340,6 +340,12 @@ header {
   opacity: 0.98;
   z-index: 2;
 }
+textarea{
+  font-family: $paragraphFontFamily;
+  text-align: justify;
+  font-size: 18px;
+  resize: none;
+}
 .nvb { grid-area: nvb; }
 .bs { grid-area: bs; }
 .lbs { grid-area: lbs; }

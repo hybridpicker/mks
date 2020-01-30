@@ -61,14 +61,14 @@
               <div id="extra-todo-container-{{todo.id}}" class="extra-todo-container">
                 <div class="item1">
                   {% if todo.content %}
-                  <input type="text" id="content" class="taskName" placeholder="{{todo.content}}" name="content">
+                  <textarea id="content{{todo.id}}" class="taskName" placeholder="{{todo.content}}" name="content" rows="7" cols="60"></textarea>
                   {% else %}
-                  <input type="text" id="content" class="taskName" placeholder="Notizfeld" name="content">
+                  <textarea id="content{{todo.id}}" class="taskName" placeholder="Notizfeld" name="content" rows="7" cols="60"></textarea>
                   {% endif %}
                 </div>
                 <div class="item2">
                   <h4>New Deadline:</h2>
-                  <input type="date" id="dueDate" class="taskDate" name="date"required>
+                  <input type="date" id="dueDate" class="taskDate" name="date" value="2017-06-01">
                 </div>
                 <div class="item3">
                   <button class="taskAdd" name="changeTask" type="submit">Ändern</button>
@@ -162,7 +162,7 @@
     title.style.height = height + "px";
     // Make Task bigger
     var task = document.getElementById("li_" + id);
-    task.style.height = "320px";
+    task.style.height = "260px";
     // Save Input Icon Layout
     var input = document.getElementById(id);
     input.style.marginTop = "14px";

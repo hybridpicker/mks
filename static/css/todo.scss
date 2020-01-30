@@ -51,6 +51,8 @@ $mobileSecondHeadingFontSize:30px;
 $mobileParagraphFontSize:3vw;
 $mobileLinkFontSize: 20px;
 $mobileMenuFontSize: 20px;
+
+
 /* ToDo-List */
 .tag-container{
   display: flex;
@@ -267,18 +269,21 @@ li .item2 { grid-area: main; }
 li .item3 { grid-area: footer; }
 
 li .extra-todo-container {
+  padding-top: 20px;
   display: none;
   grid-template-areas:
-    'menu menu menu main main'
-    'menu menu menu footer footer';
-  grid-gap: 10px;
+     'menu main main'
+     'menu footer footer';
 }
 li .extra-todo-container > div {
-  padding: 20px 0;
+  padding: 0;
 }
 input#content{
   height: 100%;
   width: 80%;
+}
+li input#dueDate{
+  width: 170px;
 }
 /* media settings*/
 @media only screen and (max-width: 1340px) {
