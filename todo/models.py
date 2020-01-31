@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from users.models import CustomUser
+from .priority import PriorityChoicesField
+from django.utils.translation import gettext as _
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -14,7 +16,8 @@ class Category(models.Model):
 
 class TodoList(models.Model):
     title = models.CharField(max_length=250)
-    priority = models.BooleanField(default=False)
+    priority = PriorityChoicesField(_("Priority"),
+                                    null=True, blank=True)
     content = models.TextField(blank=True)
     created = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
     due_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"), null=True, blank=True)
@@ -57,6 +60,8 @@ class FinishedItems(models.Model):
         null=True,
         blank=True,)
     created_by_id = models.IntegerField(blank=True, null=True)
+    priority = PriorityChoicesField(_("Priority"),
+                                    null=True, blank=True)
 
     def save(self, *args, **kwargs):
         finished_content = self.content

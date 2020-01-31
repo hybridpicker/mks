@@ -16,7 +16,7 @@ def todo_view(request):
         if "taskAdd" in request.POST:
             title = request.POST["description"]
             if request.POST["date"] != "":
-                date = str(request.POST["date"])
+                date = value(request.POST["date"])
             else:
                 date = None
             category = request.POST["category_select"]
@@ -47,9 +47,9 @@ def todo_view(request):
                 task.due_date = date
             task.save()
         try:
-            task_id = request.GET['delete_task']
+            task_id = int(request.GET['delete_task'])
             try:
-                task = TodoList.objects.get(id=int(task_id))
+                task = TodoList.objects.get(id=task_id)
                 if task.created_by:
                     done = FinishedItems(title=task.title,
                                 content=task.content,
