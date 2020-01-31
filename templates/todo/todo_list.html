@@ -20,6 +20,9 @@
 <div class="container">
            <div class="content">
            <h1>Todo-Liste</h1>
+           {% for choice in priority_choices.choices %}
+           {{choice}}
+           {% endfor %}
            <h2 id="tagHeadline">Tags:</h2>
            <div class="tag-container">
            <h3 id="h3_cat_all" class="tags active" onclick="ShowAllTasks()">#Alle </h3>
@@ -53,7 +56,7 @@
           <ul class="taskList">
           {% for todo in todos %}
           <li id="li_{{todo.id}}" class="taskItem cat_{{ todo.category.id }}">
-            <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="window.location.href = '?delete_task={{ todo.id }}&cat={{todo.category.id}}';">
+            <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="window.location.href = '?delete_task={{ todo.id }}&cat={{todo.category.id}}';"></input>
             <div class="todo-content" id="contentTodo{{ todo.id }}" onclick="showNotes({{todo.id}})">
               <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
               {% if todo.due_date %}
@@ -73,19 +76,28 @@
                   <input type="date" id="dueDate{{todo.id}}" class="taskDate" name="date" value="{{ todo.due_date|date:"Y-m-d" }}">
                 </div>
                 <div class="item3">
+                  <h4>Priorität</h2>
+                      <select id="priority" class="taskPriority" name="priority_select" required>
+                        <option class="disabled" selected="true">{{todo.priority}}</option>
+                        {% for priority in todo.priority.choices %}
+                        <option class="" value="{{ category.id }}" name="{{ category.name }}">{{ category.name }}</option>
+                        {% endfor %}
+                      </select>
+                </div>
+                <div class="item4">
                   <input name="task_id" value="{{todo.id}}" style="display: none;">
                   <button class="taskChange" name="changeTask" type="submit">Ändern</button>
                 </div>
               </form>
               </div>
-              {% if todo.priority %}
-              <input class="priorityCheck" checked="checked" type="checkbox" id="priorityChecker">
-              <label id="star{{todo.id}}" for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
-              {% else %}
-              <input class="priorityCheck" type="checkbox" id="priorityChecker">
-              <label id="star{{todo.id}}" for="priority" class="checker" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';"></label>
+              <div class="priorityHeading">
+              {% if todo.priority == 0 %}
+              <h4>Sehr Wichtig</h4>
               {% endif %}
-
+              {% if todo.priority == 1 %}
+              <h4>Wichtig</h4>
+              {% endif %}
+              </div>
             </div>
           </li>
           {% endfor %}
@@ -135,7 +147,7 @@
     element.classList.add("active");
     var i = 0;
     for (i; i < objects.length; i++) {
-        document.querySelectorAll(".cat_" + id)[i].style.display = 'flex';
+        document.querySelectorAll(".cat_" + id)[i].style.display = 'grid';
     }
     var tasks = document.querySelectorAll('li.taskItem')
     for (i = 0; i < tasks.length; i++) {
@@ -154,7 +166,7 @@
     element.classList.add("active");
     var tasks = document.querySelectorAll('li.taskItem')
     for (i = 0; i < tasks.length; i++) {
-        document.querySelectorAll("li.taskItem")[i].style.display = 'flex';
+        document.querySelectorAll("li.taskItem")[i].style.display = 'grid';
     }
   }
   function showNotes(id){
@@ -168,7 +180,7 @@
     task.style.height = "260px";
     // Save Input Icon Layout
     var input = document.getElementById(id);
-    input.style.marginTop = "14px";
+    input.style.marginTop = "18px";
     document.getElementById("extra-todo-container-"+id).style.display = "grid"
   }
 </script>

@@ -66,15 +66,20 @@ li.taskItem{
   line-height: 20px;
   margin-bottom: 14px;
   min-height: 62px;
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "taskCheckbox todo-content todo-content todo-content";
 }
 .taskItem > input{
+  grid-area: taskCheckbox;
   padding: 0;
   width: 30px;
   height: 30px;
   margin-bottom: auto;
   margin-top: auto;
-  margin-left: 14px;
-  margin-right: 14px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .taskItem > input:hover{
   cursor: pointer;
@@ -95,6 +100,9 @@ li.taskItem{
   box-shadow: 6px 6px 5px -8px rgba(34,37,40,1);
 }
 .todo-content{
+  grid-area: todo-content;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
   display: grid;
   font-size: 20px;
   padding-top: 8px;
@@ -107,7 +115,7 @@ li.taskItem{
 }
 .todo-content > label { grid-area: header; }
 .taskDate { grid-area: main; }
-.todo-content >  label.checker {
+.todo-content >  .priorityHeading {
   grid-area: right;
   margin-left: auto;
 }
@@ -283,28 +291,36 @@ button.todoButton:hover{
 #priorityChecker:checked + .checker {
   background-image: url(/static/todo/star.svg);
 }
-li .item1 { grid-area: menu; }
+li .item1 {
+  grid-area: menu;
+  width: 650px;
+}
 li .item2 {
   grid-area: main;
-  width: 180px;
 }
-li .item3 { grid-area: footer; }
+li .item3 {
+  grid-area: priority;
+}
+li .item2, li .item3{
+  width: 168px;
+}
+li .item4 { grid-area: footer; }
 
-.item2 > input{
-  width: 100%;
+.item2 > input, .item3 > input{
+  width: 75%;
 }
-.item3 > button {
+.item4 > button {
   width: 100%;
   margin-top: 10px;
 }
-.item2 > h4{
+.item2 > h4, .item3 > h4{
   margin-bottom: 0.5rem;
 }
 li .extra-todo-container {
   padding-top: 20px;
   display: none;
-  grid-template-areas: 'menu main' 'menu footer';
-  grid-gap: 0 6rem;
+  grid-template-areas: 'menu main priority' 'menu footer footer';
+  grid-gap: 0 2rem;
 }
 li .extra-todo-container > div {
   padding: 0;
