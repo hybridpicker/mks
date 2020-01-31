@@ -15,21 +15,21 @@ def todo_view(request):
     if request.method == "POST":
         if "taskAdd" in request.POST:
             title = request.POST["description"]
-            date = str(request.POST["date"])
+            if request.POST["date"] != "":
+                date = str(request.POST["date"])
+            else:
+                date = None
             category = request.POST["category_select"]
             try:
                 content = request.POST["content"]
+                if content:
+                    Todo = TodoList(title=title,
+                                    content=content,
+                                    due_date=date,
+                                    category=Category.objects.get(id=category),
+                                    created_by_id=current_user.id,)
             except MultiValueDictKeyError:
-                pass
-            if content:
                 Todo = TodoList(title=title,
-                                content=content,
-                                due_date=date,
-                                category=Category.objects.get(id=category),
-                                created_by_id=current_user.id,)
-            else:
-                Todo = TodoList(title=title,
-                                content="",
                                 due_date=date,
                                 category=Category.objects.get(id=category),
                                 created_by_id=current_user.id,)
@@ -38,7 +38,6 @@ def todo_view(request):
     if request.method == "GET":
         if "changeTask" in request.GET:
             task_id = request.GET['task_id']
-            print('task Change found')
             task = TodoList.objects.get(id=int(task_id))
             if request.GET['content']:
                 content = request.GET['content']

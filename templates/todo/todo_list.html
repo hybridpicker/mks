@@ -32,42 +32,44 @@
            <div class="row">
              <div class="sfbsfcon" id="clickCategory">
                <h3 id="newTaskHeading">Neuer Eintrag: </h3>
-                <select id="category" class="taskCategory" name="category_select" required>
-                <option class="disabled" value="">----</option>
-                {% for category in categories %}
-                    <option class="" value="{{ category.id }}" name="{{ category.name }}">{{ category.name }}</option>
-                {% endfor %}
-                </select>
+               <select id="category" class="taskCategory" name="category_select" required>
+                 <option class="disabled" selected="true" disabled="disabled">Kategorieauswahl*</option>
+                 {% for category in categories %}
+                 <option class="" value="{{ category.id }}" name="{{ category.name }}">{{ category.name }}</option>
+                 {% endfor %}
+               </select>
               </div>
             </div>
             <div class="todo-row">
               <div class="inputContainer">
-                  <input type="text" id="description" class="taskName" placeholder="Was möchten Sie erledigen?" name="description" required>
+                  <input type="text" id="description" class="taskName" placeholder="Was möchten Sie erledigen?*" name="description" required>
               </div>
               <div class="inputContainer">
-                  <input type="date" id="dueDate{{todo.id}}" class="taskDate" name="date"required>
+                  <input type="date" id="dueDate{{todo.id}}" class="taskDate" name="date">
               </div>
-                  <button class="taskAdd" name="taskAdd" type="submit" onclick="window.location.href = '?priority_id={{ todo.id }}&cat={{todo.category.id}}';">+ Hinzufügen</button>
+                  <button class="taskAdd" name="taskAdd" type="submit">+ Hinzufügen</button>
               </div>
-          </form>
+           </form>
           <ul class="taskList">
           {% for todo in todos %}
           <li id="li_{{todo.id}}" class="taskItem cat_{{ todo.category.id }}">
             <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="window.location.href = '?delete_task={{ todo.id }}&cat={{todo.category.id}}';">
             <div class="todo-content" id="contentTodo{{ todo.id }}" onclick="showNotes({{todo.id}})">
               <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
+              {% if todo.due_date %}
               <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
+              {% endif %}
               <form class="changeTaskForm" method="get">
               <div id="extra-todo-container-{{todo.id}}" class="extra-todo-container">
                 <div class="item1">
                   {% if todo.content %}
-                  <textarea id="content{{todo.id}}" class="taskName" placeholder="{{todo.content}}" name="content" rows="7" cols="60"></textarea>
+                  <textarea id="content{{todo.id}}" class="taskName" placeholder="{{todo.content}}" name="content" rows="6" cols="60"></textarea>
                   {% else %}
-                  <textarea id="content{{todo.id}}" class="taskName" placeholder="Notizfeld" name="content" rows="7" cols="60"></textarea>
+                  <textarea id="content{{todo.id}}" class="taskName" placeholder="Notizfeld" name="content" rows="6" cols="60"></textarea>
                   {% endif %}
                 </div>
                 <div class="item2">
-                  <h4>New Deadline:</h2>
+                  <h4>Deadline:</h2>
                   <input type="date" id="dueDate{{todo.id}}" class="taskDate" name="date" value="{{ todo.due_date|date:"Y-m-d" }}">
                 </div>
                 <div class="item3">
@@ -167,8 +169,6 @@
     // Save Input Icon Layout
     var input = document.getElementById(id);
     input.style.marginTop = "14px";
-    var star = document.getElementById("star" + id);
-    star.style.marginTop = "-150px";
     document.getElementById("extra-todo-container-"+id).style.display = "grid"
   }
 </script>
@@ -190,6 +190,7 @@
     /* For each element, create a new DIV that will act as the selected item: */
     a = document.createElement("DIV");
     a.setAttribute("class", "sese");
+    a.setAttribute("disabled", "disabled")
     a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
     x[i].appendChild(a);
     /* For each element, create a new DIV that will contain the option list: */
