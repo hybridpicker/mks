@@ -57,7 +57,7 @@
             <div class="todo-content" id="contentTodo{{ todo.id }}" onclick="showNotes({{todo.id}})">
               <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
               {% if todo.due_date %}
-              <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
+              <strong id="strongDueDate{{todo.id}}" class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
               {% endif %}
               <form class="changeTaskForm" method="get">
               <div id="extra-todo-container-{{todo.id}}" class="extra-todo-container">
@@ -74,6 +74,7 @@
                 </div>
                 <div class="item3">
                   <h4>Priorität</h2>
+                    <div class="sfbsfcon" id="clickPriority">
                       <select id="priority" class="taskPriority" name="priority_select" required>
                         {% for x,y in priority_choices.fields.priority.choices %}
                         {% if todo.priority == x %}
@@ -83,6 +84,7 @@
                         {% endif %}
                         {% endfor %}
                       </select>
+                    </div>
                 </div>
                 <div class="item4">
                   <input name="task_id" value="{{todo.id}}" style="display: none;">
@@ -171,15 +173,13 @@
     input.style.marginTop = "20px";
     document.getElementById("extra-todo-container-"+id).style.display = "grid"
     // Set Reverse Function
-    document.getElementById('contentTodo' + id).setAttribute('onclick','unShowNotes(' + id + ')')
+    document.getElementById('strongDueDate' + id).setAttribute('onclick','unShowNotes(' + id + ')');
   }
   function unShowNotes(id){
     // Save Input Icon Layout
     var input = document.getElementById(id);
     input.style.marginTop = "auto";
     document.getElementById("extra-todo-container-"+id).style.display = "none"
-    // Set Reverse Function
-    document.getElementById('contentTodo' + id).setAttribute('onclick','showNotes(' + id + ')')
     }
 
 </script>

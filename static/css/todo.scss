@@ -354,10 +354,44 @@ li h4 {
   color:$blackColor;
 }
 .item1 > textarea{
+  padding: 0.5%;
+  border: 1px solid #22252854;
+  box-shadow: 0px 2px 2px 1px #00000005;
+  border-radius: 8px;
+}
+.item2 > input{
+  box-shadow: 0px 2px 2px 1px  #00000005;
   border-color: #22252854;
-  padding-right: 1.5%;
-  padding-left: 1.5%;
-  border-radius: 5px;
+}
+.item2 > input, .item3 > #clickPriority > .sese{
+  color: $blackColor;
+  font-family: "Montserrat", sans-serif;
+  line-height: 28px;
+}
+#clickPriority > .sese{
+  width: 110%;
+}
+.item3 > .sfbsfcon{
+  margin-right: 0;
+}
+.item3 .slitcon{
+  margin-left: 0;
+  width: 110%;
+  height: 200%;
+  border-radius: 0 0 12px 12px;
+  border: 1px solid;
+  border-color:
+  #22252854;
+  border-top: none;
+}
+.item3 .slitcon > div{
+  border: none;
+}
+.item3 > .sfbsfcon, #clickPriority > .sese, .item3 > #clickPriority > .sese.slar-active{
+  font-size: 20px;
+}
+.item3 > #clickPriority > .sese.slar-active {
+  border-radius: unset;
 }
 /* media settings*/
 @media only screen and (max-width: 1340px) {
