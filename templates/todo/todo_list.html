@@ -20,9 +20,6 @@
 <div class="container">
            <div class="content">
            <h1>Todo-Liste</h1>
-           {% for choice in priority_choices.choices %}
-           {{choice}}
-           {% endfor %}
            <h2 id="tagHeadline">Tags:</h2>
            <div class="tag-container">
            <h3 id="h3_cat_all" class="tags active" onclick="ShowAllTasks()">#Alle </h3>
@@ -78,9 +75,12 @@
                 <div class="item3">
                   <h4>Priorität</h2>
                       <select id="priority" class="taskPriority" name="priority_select" required>
-                        <option class="disabled" selected="true">{{todo.priority}}</option>
-                        {% for priority in todo.priority.choices %}
-                        <option class="" value="{{ category.id }}" name="{{ category.name }}">{{ category.name }}</option>
+                        {% for x,y in priority_choices.fields.priority.choices %}
+                        {% if todo.priority == x %}
+                        <option value="{{ todo.priority }}" selected>{{ y }}</option>
+                        {% else %}
+                         <option value="{{ x }}">{{ y }}</option>
+                        {% endif %}
                         {% endfor %}
                       </select>
                 </div>

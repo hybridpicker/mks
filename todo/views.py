@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from todo.models import TodoList, Category, FinishedItems
 from users.models import CustomUser
 from .priority import PriorityChoicesField
+from .forms import PriorityForm
 
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
@@ -13,7 +14,7 @@ def todo_view(request):
     checked = FinishedItems.objects.all()
     categories = Category.objects.all()
     current_user = request.user
-    priority_choices = PriorityChoicesField
+    priority_choices = PriorityForm()
     if request.method == "POST":
         if "taskAdd" in request.POST:
             title = request.POST["description"]
