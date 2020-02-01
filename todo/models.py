@@ -3,6 +3,7 @@ from django.utils import timezone
 from users.models import CustomUser
 from .priority import PriorityChoicesField
 from django.utils.translation import gettext as _
+from django.core.exceptions import MultipleObjectsReturned
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -66,11 +67,16 @@ class FinishedItems(models.Model):
     def save(self, *args, **kwargs):
         finished_content = self.content
         finished_due = self.due_date
+        priority = self.priority
         try:
-            todo = TodoList.objects.get(content=finished_content, due_date=finished_due)
-            print(todo)
+            todo = TodoList.objects.get(content=finished_content,
+                                        due_date=finished_due,
+                                        priority=priority,
+                                        )
             todo.delete()
         except TodoList.DoesNotExist:
+            pass
+        except TodoList.MultipleObjectsReturned:
             pass
         super(FinishedItems, self).save(*args, **kwargs)
 

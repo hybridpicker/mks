@@ -120,7 +120,8 @@ li.taskItem{
 .taskDate { grid-area: main; }
 .todo-content >  .priorityHeading {
   grid-area: right;
-  margin-left: auto;
+  margin:auto;
+  display:block;
 }
 
 .todo-content {
@@ -285,11 +286,24 @@ button.todoButton:hover{
   display: none;
 }
 .checker {
+  display: block;
   background-image: url(/static/todo/unstar.svg);
   background-size: auto 100%;
   width: 40px;
   height: 40px;
   background-repeat: no-repeat;
+}
+.checker.priority0{
+  background-image: url(/static/todo/star.svg);
+}
+.checker.priority1{
+  background-image: url(/static/todo/star1.svg);
+}
+.checker.priority2{
+  background-image: url(/static/todo/star2.svg);
+}
+.checker.priority3{
+  background-image: url(/static/todo/star3.svg);
 }
 #priorityChecker:checked + .checker {
   background-image: url(/static/todo/star.svg);

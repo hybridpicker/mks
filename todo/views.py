@@ -57,17 +57,11 @@ def todo_view(request):
             task_id = int(request.GET['delete_task'])
             try:
                 task = TodoList.objects.get(id=task_id)
-                if task.created_by:
-                    done = FinishedItems(title=task.title,
-                                content=task.content,
-                                due_date=task.due_date,
-                                category=task.category,
-                                created_by_id=int(task.created_by.id),)
-                else:
-                    done = FinishedItems(title=task.title,
-                                content=task.content,
-                                due_date=task.due_date,
-                                category=task.category,)
+                done = FinishedItems(title=task.title,
+                            content=task.content,
+                            due_date=task.due_date,
+                            category=task.category,
+                            created_by_id=int(task.created_by.id),)
                 done.save()
                 task.delete()
             except FinishedItems.DoesNotExist:
