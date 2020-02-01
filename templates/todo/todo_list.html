@@ -121,9 +121,6 @@
 
 {% block footer %}
 <script type="text/javascript">
-  function checkedTodo(){
-    document.getElementById("buttonTodoDelete").click();
-  }
   function ResetTasks(){
     // Reset Headings
     var headings = document.querySelectorAll('h3.tags')
@@ -152,12 +149,11 @@
     var tasks = document.querySelectorAll('li.taskItem')
     for (i = 0; i < tasks.length; i++) {
         element = document.querySelectorAll("li.taskItem")[i].style.display
-        if (element != 'flex'){
+        if (element != 'grid'){
         document.querySelectorAll("li.taskItem")[i].style.display = 'none';
         }
     }
     // click on modelchoice
-    console.log(id - 1)
     document.querySelectorAll(".slitcon > div")[id - 1].click();
   }
   function ShowAllTasks(){
@@ -170,19 +166,22 @@
     }
   }
   function showNotes(id){
-    // Check Actual Height and save it into element
-    var title = document.getElementById("contentTodo" + id);
-    // get height minus actual Padding in CSS
-    var height = title.offsetHeight - 16;
-    title.style.height = height + "px";
-    // Make Task bigger
-    var task = document.getElementById("li_" + id);
-    task.style.height = "260px";
     // Save Input Icon Layout
     var input = document.getElementById(id);
-    input.style.marginTop = "18px";
+    input.style.marginTop = "20px";
     document.getElementById("extra-todo-container-"+id).style.display = "grid"
+    // Set Reverse Function
+    document.getElementById('contentTodo' + id).setAttribute('onclick','unShowNotes(' + id + ')')
   }
+  function unShowNotes(id){
+    // Save Input Icon Layout
+    var input = document.getElementById(id);
+    input.style.marginTop = "auto";
+    document.getElementById("extra-todo-container-"+id).style.display = "none"
+    // Set Reverse Function
+    document.getElementById('contentTodo' + id).setAttribute('onclick','showNotes(' + id + ')')
+    }
+
 </script>
 
 <script type="text/javascript">
@@ -234,7 +233,6 @@
         }
         h.click();
         h.classList.add("active")
-        console.log(h)
       });
       b.appendChild(c);
     }

@@ -18,7 +18,7 @@ def todo_view(request):
         if "taskAdd" in request.POST:
             title = request.POST["description"]
             if request.POST["date"] != "":
-                date = value(request.POST["date"])
+                date = str(request.POST["date"])
             else:
                 date = None
             category = request.POST["category_select"]

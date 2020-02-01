@@ -113,6 +113,9 @@ li.taskItem{
     'header header header header header right'
     'main main main main main right';
 }
+.todo-content:hover{
+  cursor: pointer;
+}
 .todo-content > label { grid-area: header; }
 .taskDate { grid-area: main; }
 .todo-content >  .priorityHeading {
