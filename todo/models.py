@@ -33,7 +33,7 @@ class TodoList(models.Model):
         blank=True,)
 
     class Meta:
-        ordering = ["-priority", "due_date","created"]
+        ordering = ["priority", "due_date", "created"]
         verbose_name = ("Todo List Item")
         verbose_name_plural = ("Todo List Items")
 
