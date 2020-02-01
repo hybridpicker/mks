@@ -116,6 +116,9 @@ li.taskItem{
 .todo-content:hover{
   cursor: pointer;
 }
+.todo-content.active:hover{
+  cursor: auto;
+}
 .todo-content > label { grid-area: header; }
 .taskDate { grid-area: main; }
 .todo-content >  .priorityHeading {
@@ -156,6 +159,7 @@ h3#newEntry{
   font-size: 22px;
   line-height: 22px;
   max-width: 90%;
+  grid-area: header;
 }
 .checkedList .taskItem h4{
   text-decoration: line-through;
@@ -192,6 +196,22 @@ h3#newEntry{
 #description, #dueDate{
   border-color: #22252854;
   height: 44px;
+  color: #8a8a8a;
+}
+#description{
+  color: $blackColor;
+}
+#todoForm{
+  display:none;
+}
+#todoForm > h3{
+  text-align: left;
+  color:$primaryColor;
+}
+#anchorButtonAdd{
+  text-align: right;
+  width: 98%;
+  display: block;
 }
 button.taskAdd{
   margin-left: 1%;
@@ -324,11 +344,18 @@ li .item2, li .item3{
 li .item4 { grid-area: footer; }
 
 .item2 > input, .item3 > input{
-  width: 75%;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 .item4 > button {
-  width: 100%;
+  width: 50%;
   margin-top: 10px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 .item2 > h4, .item3 > h4{
   margin-bottom: 0.5rem;
@@ -356,10 +383,13 @@ li button{
 li h4 {
   margin-bottom: 16px;
 }
-#clickCategory > .sese{
+#clickCategory > .sese, #clickPriorityHeading > .sese{
   color: #8a8a8a;
   font-family: $paragraphFontFamily;
   font-size: 18px;
+  padding-right: 1.5%;
+  padding-left: 1.5%;
+  text-align: left;
 }
 #clickCategory > .sese.active, #clickCategory > .slitcon > div{
   font-family: $firstHeadingFamily;
@@ -367,11 +397,22 @@ li h4 {
   line-height: 28px;
   color:$blackColor;
 }
+#clickCategory .slitcon{
+  width: 100%;
+}
+#clickCategory .slitcon > div, #clickPriorityHeading .slitcon > div{
+  color:#8a8a8a;
+  font-family: $paragraphFontFamily;
+  font-size: 18px;
+}
 .item1 > textarea, .task-form-notes > textarea{
-  padding: 0.5%;
+  padding: 1.5%;
   border: 1px solid #22252854;
   box-shadow: 0px 2px 2px 1px #00000005;
   border-radius: 8px;
+}
+textarea.taskName{
+  width: 97%;
 }
 .item2 > input{
   box-shadow: 0px 2px 2px 1px  #00000005;
@@ -509,8 +550,11 @@ li h4 {
   margin-right: auto;
   width: 100%;
 }
-.task-form-task > input, .task-form-date > .inputContainer > input{
+.task-form-task > input{
   width: 97%;
+}
+.task-form-date > .inputContainer > input{
+  width: 100%;
 }
 .task-form-priority > .sfbsfcon{
   width: 100%;

@@ -20,7 +20,6 @@
 <div class="container">
   <div class="content">
     <h1>Todo-Liste</h1>
-    <h2 id="tagHeadline">Tags:</h2>
     <div class="tag-container">
       <h3 id="h3_cat_all" class="tags active" onclick="ShowAllTasks()">#Alle </h3>
       {% for category in categories %}
@@ -28,10 +27,11 @@
       {% endfor %}
     </div>
     <form id="todoForm" action="" method="post">
+      <h3>Neuer Eintrag:</h3>
       {% csrf_token %}
       <div class="task-form-grid-container">
         <div class="task-form-save">
-          <button class="taskAdd" name="taskAdd" type="submit">+ Hinzufügen</button>
+          <button class="taskAdd" name="taskAdd" type="submit">Speichern</button>
         </div>
         <div class="task-form-date">
           <div class="inputContainer">
@@ -66,15 +66,18 @@
         </div>
       </div>
     </form>
+    <a id="anchorButtonAdd">
+    <button class="taskAdd" name="taskAdd" onclick="ShowTaskAddForm()">+ Hinzufügen</button>
+    </a>
     <ul class="taskList">
       {% for todo in todos %}
       <li id="li_{{todo.id}}" class="taskItem cat_{{ todo.category.id }}">
         <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="window.location.href = '?delete_task={{ todo.id }}&cat={{todo.category.id}}';"></input>
         <div class="todo-content" id="contentTodo{{ todo.id }}" onclick="showNotes({{todo.id}})">
-          <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
-          {% if todo.due_date %}
-          <strong id="strongDueDate{{todo.id}}" class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
-          {% endif %}
+            <h4>{{ todo.title }}</h4>
+            {% if todo.due_date %}
+            <strong id="strongDueDate{{todo.id}}" class="taskDate">{{ todo.due_date }}</strong>
+            {% endif %}
           <form class="changeTaskForm" method="get">
             <div id="extra-todo-container-{{todo.id}}" class="extra-todo-container">
               <div class="item1">
@@ -116,7 +119,6 @@
           </li>
           {% endfor %}
         </ul>
-
         <h2>Erledigte Einträge</h2>
         <ul class="checkedList">
           {% for todo in checked %}
@@ -168,7 +170,7 @@
             }
           }
           // click on modelchoice
-          document.querySelectorAll(".slitcon > div")[id - 1].click();
+          document.querySelectorAll(".task-form-category .slitcon > div")[id - 1].click();
         }
         function ShowAllTasks(){
           ResetTasks();
@@ -179,13 +181,17 @@
             document.querySelectorAll("li.taskItem")[i].style.display = 'grid';
           }
         }
+        function ShowTaskAddForm(){
+          document.getElementById("todoForm").style.display = "block";
+          document.getElementById("anchorButtonAdd").style.display = "none";
+        }
         function showNotes(id){
           // Save Input Icon Layout
           var input = document.getElementById(id);
           input.style.marginTop = "20px";
           document.getElementById("extra-todo-container-"+id).style.display = "grid"
           // Set Reverse Function
-          document.getElementById('strongDueDate' + id).setAttribute('onclick','unShowNotes(' + id + ')');
+          document.getElementById('contentTodo' + id).classList.add("active");
         }
         function unShowNotes(id){
           // Save Input Icon Layout
