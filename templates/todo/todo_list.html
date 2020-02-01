@@ -29,33 +29,41 @@
     </div>
     <form id="todoForm" action="" method="post">
       {% csrf_token %}
-      <div class="row">
-        <div class="sfbsfcon" id="clickCategory">
-          <h3 id="newTaskHeading">Neuer Eintrag: </h3>
-          <select id="category" class="taskCategory" name="category_select" required>
-            <option class="disabled" selected="true" disabled="disabled">Kategorieauswahl*</option>
-            {% for category in categories %}
-            <option class="" value="{{ category.id }}" name="{{ category.name }}">{{ category.name }}</option>
-            {% endfor %}
-          </select>
+      <div class="task-form-grid-container">
+        <div class="task-form-save">
+          <button class="taskAdd" name="taskAdd" type="submit">+ Hinzufügen</button>
         </div>
-        <div class="sfbsfcon" id="clickPriorityHeading">
-          <select id="priority" class="taskPriority" name="priority_select" required>
-            <option class="disabled" selected="true" disabled="disabled">Priorität*</option>
-            {% for x,y in priority_choices.fields.priority.choices %}
-            <option value="{{ x }}">{{ y }}</option>
-            {% endfor %}
-          </select>
+        <div class="task-form-date">
+          <div class="inputContainer">
+            <input type="date" id="dueDate" class="taskDate" name="date"required>
+          </div>
         </div>
-      </div>
-      <div class="todo-row">
-        <div class="inputContainer">
+        <div class="task-form-priority">
+          <div class="sfbsfcon" id="clickPriorityHeading">
+            <select id="priority" class="taskPriority" name="priority_select" required>
+              <option class="disabled" selected="true" disabled="disabled">Priorität*</option>
+              {% for x,y in priority_choices.fields.priority.choices %}
+              <option value="{{ x }}">{{ y }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="task-form-category">
+          <div class="sfbsfcon" id="clickCategory">
+            <select id="category" class="taskCategory" name="category_select" required>
+              <option class="disabled" selected="true" disabled="disabled">Kategorieauswahl*</option>
+              {% for category in categories %}
+              <option class="" value="{{ category.id }}" name="{{ category.name }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="task-form-task">
           <input type="text" id="description" class="taskName" placeholder="Was möchten Sie erledigen?*" name="description" required>
         </div>
-        <div class="inputContainer">
-          <input type="date" id="dueDate{{todo.id}}" class="taskDate" name="date">
+        <div class="task-form-notes">
+          <textarea class="taskName" placeholder="Optionales Notizfeld" name="content" rows="6" cols="60"></textarea>
         </div>
-        <button class="taskAdd" name="taskAdd" type="submit">+ Hinzufügen</button>
       </div>
     </form>
     <ul class="taskList">

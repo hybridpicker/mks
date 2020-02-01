@@ -367,7 +367,7 @@ li h4 {
   line-height: 28px;
   color:$blackColor;
 }
-.item1 > textarea{
+.item1 > textarea, .task-form-notes > textarea{
   padding: 0.5%;
   border: 1px solid #22252854;
   box-shadow: 0px 2px 2px 1px #00000005;
@@ -475,4 +475,55 @@ li h4 {
   .todo-content{
     width: 64%;
   }
+}
+
+.task-form-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0fr 0fr 1fr;
+  grid-template-areas:
+  "category category priority priority"
+  "task task date date" "notes notes save save";
+  grid-gap: 1rem;
+}
+
+.task-form-save { grid-area: save; }
+
+.task-form-date { grid-area: date; }
+
+.task-form-priority { grid-area: priority; }
+
+.task-form-category { grid-area: category; }
+
+.task-form-task { grid-area: task; }
+
+.task-form-notes { grid-area: notes; }
+
+.task-form-category > #clickCategory{
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.task-form-priority .sese, .task-form-category .sese{
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+.task-form-task > input, .task-form-date > .inputContainer > input{
+  width: 97%;
+}
+.task-form-priority > .sfbsfcon{
+  width: 100%;
+}
+.task-form-priority .slitcon{
+  margin-left: 0;
+  width: 100%;
+}
+.task-form-grid-container{
+  margin-bottom: 1rem;
+}
+.task-form-save{
+  text-align: left;
+  margin-top: -15px;
+  margin-left: -5px;
 }
