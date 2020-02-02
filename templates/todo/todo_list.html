@@ -35,7 +35,7 @@
         </div>
         <div class="task-form-date">
           <div class="inputContainer">
-            <input type="date" id="dueDate" class="taskDate" name="date"required>
+            <input type="date" id="dueDate" class="taskDate" name="date" placeholder="yyyy-mm-dd" required>
           </div>
         </div>
         <div class="task-form-priority">
@@ -76,7 +76,7 @@
         <div class="todo-content" id="contentTodo{{ todo.id }}" onclick="showNotes({{todo.id}})">
             <h4>{{ todo.title }}</h4>
             {% if todo.due_date %}
-            <strong id="strongDueDate{{todo.id}}" class="taskDate">{{ todo.due_date }}</strong>
+            <strong id="strongDueDate{{todo.id}}" class="taskDate" placeholder="yyyy-mm-dd">{{ todo.due_date }}</strong>
             {% endif %}
           <form class="changeTaskForm" method="get">
             <div id="extra-todo-container-{{todo.id}}" class="extra-todo-container">
