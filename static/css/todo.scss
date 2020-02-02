@@ -53,6 +53,11 @@ $mobileLinkFontSize: 20px;
 $mobileMenuFontSize: 20px;
 
 
+/*Priority Variables*/
+$priorityFirstColor: #BD2F32;
+$prioritySecondColor: #EB4B34;
+$priorityThirdColor: #eb8634;
+$priorityFourthColor: #e0de38;
 /* ToDo-List */
 .tag-container{
   display: flex;
@@ -306,7 +311,7 @@ button.todoButton:hover{
   display: none;
 }
 .checker {
-  display: block;
+  display: none;
   background-image: url(/static/todo/unstar.svg);
   background-size: auto 100%;
   width: 40px;
@@ -570,4 +575,20 @@ textarea.taskName{
   text-align: left;
   margin-top: -15px;
   margin-left: -5px;
+}
+li.li_prior_0{
+  border-bottom-color:$priorityFirstColor;
+  border-bottom-width: 4px;
+}
+li.li_prior_1{
+  border-bottom-color:$prioritySecondColor;
+  border-bottom-width: 4px;
+}
+li.li_prior_2{
+  border-bottom-color:$priorityThirdColor;
+  border-bottom-width: 4px;
+}
+li.li_prior_3{
+  border-bottom-color:$priorityFourthColor;
+  border-bottom-width: 4px;
 }

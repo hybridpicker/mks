@@ -71,7 +71,7 @@
     </a>
     <ul class="taskList">
       {% for todo in todos %}
-      <li id="li_{{todo.id}}" class="taskItem cat_{{ todo.category.id }}">
+      <li id="li_{{todo.id}}" class="taskItem cat_{{ todo.category.id }} li_prior_{{todo.priority}}">
         <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="window.location.href = '?delete_task={{ todo.id }}&cat={{todo.category.id}}';"></input>
         <div class="todo-content" id="contentTodo{{ todo.id }}" onclick="showNotes({{todo.id}})">
             <h4>{{ todo.title }}</h4>
@@ -107,6 +107,7 @@
                   </div>
                   <div class="item4">
                     <input name="task_id" value="{{todo.id}}" style="display: none;">
+                    <input name="cat" value="{{todo.category.id}}" style="display: none;">
                     <button class="taskChange" name="changeTask" type="submit">Ändern</button>
                   </div>
                 </form>
