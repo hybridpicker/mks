@@ -209,6 +209,17 @@ h3#newEntry{
 #todoForm{
   display:none;
 }
+#todoForm{
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background: #000000de;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 #todoForm > h3{
   text-align: left;
   color:$primaryColor;
@@ -542,12 +553,12 @@ textarea.taskName{
 
 .task-form-grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 0fr 0fr 1fr;
-  grid-template-areas:
-  "category category priority priority"
-  "task task date date" "notes notes save save";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: "category" "priority" "task" "date" "notes" "save";
   grid-gap: 1rem;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 
 .task-form-save { grid-area: save; }
@@ -589,9 +600,7 @@ textarea.taskName{
   margin-bottom: 1rem;
 }
 .task-form-save{
-  text-align: left;
-  margin-top: -15px;
-  margin-left: -5px;
+  text-align: center;
 }
 li.li_prior_0{
   border-bottom-color:$priorityFirstColor;
