@@ -269,22 +269,23 @@ button.todoButton:hover{
   padding-right: 0px;
 }
 .slitcon{
-  text-align: center;
+  text-align: left;
   color: #8a8a8a;
   width: calc(72% + 2px);
   margin-left: auto;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-right: 0;
+  padding-left: 0;
+  top: 97%;
 }
 .slitcon div{
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-right: 1.5%;
+  padding-left: 1.5%;
 }
 .swasd::before{
   content:none;
 }
 .slit div:hover, .swasd {
-    background-color: #D7353814;
+    background-color: unset;
 }
 #clickCategory{
   display: inline-flex;
@@ -396,9 +397,10 @@ li h4 {
   padding-left: 1.5%;
   text-align: left;
 }
-#clickCategory > .sese.active, #clickCategory > .slitcon > div{
+#clickCategory > .sese.active, #clickCategory > .slitcon > div,
+#clickPriorityHeading .sese.active, #clickPriorityHeading .slitcon > div,{
   font-family: $firstHeadingFamily;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 28px;
   color:$blackColor;
 }
@@ -430,6 +432,21 @@ textarea.taskName{
 }
 #clickPriority > .sese{
   width: 110%;
+}
+#clickPriority > .slitcon > div{
+  text-align: center;
+  font-size: 20px;
+}
+#clickPriority > .slitcon{
+  height: 250%;
+}
+#clickPriority .sese.slar-active::after {
+  content: '';
+  background-image: unset;
+}
+#clickPriority .sese::after {
+  content: '';
+  background-image: unset;
 }
 .item3 > .sfbsfcon{
   margin-right: 0;
@@ -553,13 +570,13 @@ textarea.taskName{
 .task-form-priority .sese, .task-form-category .sese{
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
+  width: 97%;
 }
 .task-form-task > input{
   width: 97%;
 }
 .task-form-date > .inputContainer > input{
-  width: 100%;
+  width: 97%;
 }
 .task-form-priority > .sfbsfcon{
   width: 100%;

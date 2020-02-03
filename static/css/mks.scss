@@ -1327,10 +1327,7 @@ input {
   border-bottom-color: currentcolor;
   border-color: #0F262B4D;
 }
-.slitcon div:hover, .swasd {
-  background-color:#D7383B17;
 
-}
 .sfbsfcon {
   width: 50%;
 }
@@ -1810,6 +1807,7 @@ a button {
 .sese.slar-active{
   border-radius: 18px 0 0 0;
   box-shadow: none;
+  border-bottom: none;
 }
 /* Point the arrow upwards when the select box is open (active): */
 .sese.slar-active:before {
@@ -1825,7 +1823,7 @@ a button {
 }
 .sese.slar-active:after {
   content: '';
-  background-image: unset;
+  background-image: url('/static/selectfield/arrow_up.svg');;
 }
 #signin_form_post .sese.slar-active{
   border-radius: 18px 0 0 0;
@@ -1843,10 +1841,11 @@ a button {
   border-color: $blackColor;
   border-radius: 5px;
 }
-.sese.active:after{
+.sese:after{
   content: '';
-  background-image: unset;
+  background-image: url('/static/selectfield/arrow_down.svg')
 }
+
 /* Style items (options): */
 .slit {
   position: absolute;
