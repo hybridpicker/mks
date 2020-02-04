@@ -33,6 +33,12 @@ def todo_view(request):
                                     priority=priority,
                                     category=Category.objects.get(id=category),
                                     created_by_id=current_user.id,)
+                else:
+                    Todo = TodoList(title=title,
+                                    due_date=date,
+                                    priority=priority,
+                                    category=Category.objects.get(id=category),
+                                    created_by_id=current_user.id,)
             except MultiValueDictKeyError:
                 Todo = TodoList(title=title,
                                 due_date=date,

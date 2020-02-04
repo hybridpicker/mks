@@ -212,7 +212,7 @@ h3#newEntry{
 }
 #todoForm{
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   left: 0;
   text-align: center;
@@ -232,17 +232,20 @@ h3#newEntry{
   }
 }
 #anchorButtonAdd{
-  text-align: right;
+  text-align: left;
   width: 98%;
   display: block;
 }
 button.taskAdd{
-  margin-left: 1%;
+  margin-left: 0;
   margin-right: 0;
   display: inline-block;
   width: 170px;
   border-radius: 5px;
   height: 48px;
+}
+button.taskAdd:hover{
+  cursor:pointer;
 }
 button.todoButton {
   font-family: $firstHeadingFamily;
@@ -648,5 +651,25 @@ li.li_prior_3{
     border-radius: 5px;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 1fr;
+  }
+}
+@media only screen and (min-width: 1200px){
+  #todoForm{
+    margin-top: 0px;
+  }
+  #closebtn-todo{
+    text-align: right;
+    display: block;
+    margin-right: 2rem;
+  }
+}
+@media only screen and (max-width: 400px) {
+  #closebtn-todo {
+    display: block;
+    margin-right: 1rem;
+    margin-left: auto;
+  }
+  #cross-burger-gallery {
+      width: 8vw;
   }
 }
