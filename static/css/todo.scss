@@ -208,6 +208,7 @@ h3#newEntry{
 }
 #todoForm{
   display:none;
+  margin-top: 70px;
 }
 #todoForm{
   position: fixed;
@@ -223,6 +224,12 @@ h3#newEntry{
 #todoForm > h3{
   text-align: left;
   color:$primaryColor;
+  display: none;
+}
+@media only screen and (max-width: 700px){
+  #todoForm{
+    margin-top: 0;
+  }
 }
 #anchorButtonAdd{
   text-align: right;
@@ -259,6 +266,7 @@ button.todoButton:hover{
     width: 11rem !important;
   }
 }
+
 .sese{
   height: 30px;
   border-color: #22252854;
@@ -416,7 +424,17 @@ li h4 {
   color:$blackColor;
 }
 #clickCategory .slitcon{
-  width: 100%;
+  width: calc(100% - 2px);
+  max-height: 210px;
+  border: 1px solid #22252854;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
+#clickPriorityHeading .slitcon{
+  max-height: 145px;
+  border: 1px solid #22252854;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
 }
 #clickCategory .slitcon > div, #clickPriorityHeading .slitcon > div{
   color:#8a8a8a;
@@ -597,7 +615,7 @@ textarea.taskName{
   width: 100%;
 }
 .task-form-grid-container{
-  margin-bottom: 1rem;
+  margin-top: 3rem;
 }
 .task-form-save{
   text-align: center;
@@ -617,4 +635,18 @@ li.li_prior_2{
 li.li_prior_3{
   border-bottom-color:$priorityFourthColor;
   border-bottom-width: 4px;
+}
+@media only screen and (min-width: 966px) {
+  .task-form-grid-container {
+    display: grid;
+    grid-template-areas: "category priority" "task task" "date date" "notes notes" "save save";
+    grid-gap: 1rem;
+    margin-left: 20%;
+    margin-right: 20%;
+    background: $whiteColor;
+    padding: 20px;
+    border-radius: 5px;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+  }
 }
