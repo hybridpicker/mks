@@ -29,7 +29,7 @@ $fourthHeadingFontColor:$secondaryColor;
 $fourthHeadingFontLineHeight:30px;
 
 $paragraphFontFamily:'Lato', sans-serif;
-$paragraphFontSize:24px;
+$paragraphFontSize:20px;
 $paragraphFontColor:$secondaryColor;
 $paragraphFontLineHeight:40px;
 
@@ -320,7 +320,7 @@ span {
 }
 strong, b {
   font-family: $firstHeadingFamily;
-  font-size: 24px;
+  font-size: $paragraphFontSize;
 }
 @media screen and (max-height: 450px) {
   .overlay .closebtn {
@@ -716,14 +716,11 @@ canvas {
   h2{
     font-size: 4vw;
   }
-  p, .slitcon, #dsgvo-text p, #dsgvo-text a, {
+  p, .slitcon, #dsgvo-text p, #dsgvo-text a, strong, b {
     font-size: 2.5vw;
     line-height: 4.3vw;
     padding-left: 0;
     padding-right: 0;
-  }
-  strong, b {
-    font-size: 2.5vw;
   }
   li{
   font-size: 2.5vw;
@@ -737,14 +734,11 @@ canvas {
   h2{
     font-size: 4vw;
   }
-  strong, b {
-    font-size: 3vw;
-  }
   li{
   font-size: 2.5vw;
   line-height: 4vw;
   }
-  p, .slitcon, #dsgvo-text p, #dsgvo-text a, {
+  p, .slitcon, #dsgvo-text p, #dsgvo-text a, strong, b{
     font-size: 3vw;
     line-height: 5vw;
   }
@@ -770,7 +764,7 @@ canvas {
     word-break: break-word;
     font-size: 6vw;
   }
-  p, .slitcon, #dsgvo-text p, #dsgvo-text a, {
+  p, .slitcon, #dsgvo-text p, #dsgvo-text a, strong, b{
     font-size: 5vw;
     padding-left: 0;
     padding-right: 0;
@@ -782,9 +776,6 @@ canvas {
   li{
   font-size: 5vw;
   line-height: 8vw;
-  }
-  strong, b, {
-    font-size: 6vw;
   }
   .bcmk{
     grid-template-areas: 'left''right';
