@@ -7,7 +7,7 @@ from django.core.exceptions import MultipleObjectsReturned
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    priority = models.IntegerField()
+    priority = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = ("Todo Category")

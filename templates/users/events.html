@@ -33,7 +33,7 @@
   {% for event in events %}
   <div id="user-event-container" class="event-container">
     <div id="user-event-cross-burger" class="event-cross-burger">
-      <a href="?id={{ event.id }}">
+      <a href="?id={{ event.id }}" onclick="return confirm('Wollen Sie wirklich dieses Event löschen?');">
         {% include "templates/svg/nav_bar_crossburger.html" %}
       </a>
       <span class="tooltiptext">Veranstaltung löschen</span>

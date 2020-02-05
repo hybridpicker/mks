@@ -116,3 +116,25 @@ def todo_view(request):
         "checked": checked,
         "priority_choices": priority_choices,
         "categories":categories})
+
+@login_required(login_url='/team/login/')
+def todo_categories_view(request):
+    categories = Category.objects.all()
+    if request.method == "POST":
+        if "categoryAdd" in request.POST:
+            category_name = request.POST["categoryName"]
+            category = Category(name=category_name)
+            category.save()
+    if request.method == "GET":
+        try:
+            category_id = request.GET['delete_category']
+            try:
+                category = Category.objects.get(id=int(category_id))
+                category.delete()
+            except Category.DoesNotExist:
+                pass
+        except MultiValueDictKeyError:
+            pass
+    return render(request,
+        "todo/todo_categories.html",
+        {"categories":categories})

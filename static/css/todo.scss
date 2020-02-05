@@ -89,6 +89,19 @@ li.taskItem{
 .taskItem > input:hover{
   cursor: pointer;
 }
+.taskItem > .deleteCategory{
+  grid-area: taskCheckbox;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  margin-bottom: auto;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+.taskItem > .deleteCategory:hover{
+  cursor: pointer;
+}
 .taskItem span{
   text-decoration: unset;
 }
@@ -206,11 +219,10 @@ h3#newEntry{
 #description{
   color: $blackColor;
 }
-#todoForm{
+#todoForm, #categoryAddForm,{
   display:none;
-  margin-top: 70px;
 }
-#todoForm{
+#todoForm, #categoryAddForm,{
   position: fixed;
   z-index: 2;
   top: 0;
@@ -221,13 +233,13 @@ h3#newEntry{
   height: 100%;
   overflow: hidden;
 }
-#todoForm > h3{
+#todoForm, #categoryAddForm, > h3{
   text-align: left;
   color:$primaryColor;
   display: none;
 }
 @media only screen and (max-width: 700px){
-  #todoForm{
+  #todoForm, #categoryAddForm,{
     margin-top: 0;
   }
 }
@@ -269,7 +281,6 @@ button.todoButton:hover{
     width: 11rem !important;
   }
 }
-
 .sese{
   height: 30px;
   border-color: #22252854;
@@ -581,7 +592,13 @@ textarea.taskName{
   margin-left: 2%;
   margin-right: 2%;
 }
-
+#categoryAddForm .task-form-grid-container{
+  grid-template-areas: "heading" "task" "save";
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+}
+.task-form-heading{ grid-area: heading; }
 .task-form-save { grid-area: save; }
 
 .task-form-date { grid-area: date; }
