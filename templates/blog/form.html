@@ -14,7 +14,28 @@
   <div class="container">
     <div class="blogpost">
       <h1>Eintrag erstellen</h1>
-      {{ form.as_p }}
+      <form method="post">
+      {% csrf_token %}
+      {{ form.media }}
+      <div class="form-title">
+        <p>Titel: {{ form.title }}</p>
+      </div>
+      <div class="form-lead">
+        <p>Lead: {{ form.lead_paragraph }}</p>
+      </div>
+      <div class="form-content">
+        {{ form.content }}
+      </div>
+      <div class="form-image">
+        <p>Beitragsbild*: {{ form.image }}</p>
+      </div>
+      <div class="form-slug">
+        <p>Pfad/Slug*: {{ form.slug }}</p>
+      </div>
+      <a href="#">
+      <button type="submite" name="form-save">Speichern</button>
+      </a>
+      </form>
     </div>
   </div>
 </div>
