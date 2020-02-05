@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.db.models import Max
 
 import random
+import json
 
 from school.models import MusicSchool
 from events.models import Event
@@ -18,6 +19,16 @@ def get_random_pic():
        if photo:
            return photo
 
+def get_photo_data():
+    photo_data = {}
+    photos = Photo.objects.filter(category_id=1)
+    i = 0
+    for photo in photos:
+        photo_data[i] = photo.image.url
+        i += 1
+    return photo_data
+
+
 def home (request):
     school_data = MusicSchool.objects.all().first()
     name = school_data.school_name
@@ -26,12 +37,14 @@ def home (request):
     teachers = Teacher.objects.all()
     teacher_counter = len(teachers)
     middle_pic = get_random_pic()
+    photos = get_photo_data()
     context = {
         'events': events,
         'name': name,
         'logo': logo,
         'teacher_counter': teacher_counter,
         'middle_pic': middle_pic,
+        'photos': photos,
         }
     return render(request, 'home/index.html', context)
 

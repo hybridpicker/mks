@@ -27,6 +27,7 @@ class Photo(models.Model):
         upload_to='gallery/images/lazy/',
         default='gallery_lazy_imageDefault', blank=True)
     description = models.TextField(null=True, blank=True, max_length=120)
+    copyright_by = models.CharField(_(u'Copyright Owner of Photo'), max_length=100, null=True, blank=True)
     ordering = models.IntegerField(null=True, blank=True)
     category = models.ForeignKey(
         PhotoCategory,

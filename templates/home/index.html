@@ -15,6 +15,21 @@
 <meta name="twitter:description" content="Erfolgreicher Musikunterricht für St. Pölten. Besuchen Sie uns und unsere Musiklehrer_innen für eine Vielzahl von Instrumenten und Stilrichtungen.">
 <meta name="twitter:image" content="static/media/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
+
+<script type="text/javascript">
+  var photo_data = {{ photos|safe }}
+  function randomPicShow(){
+     setInterval(function(){
+       var min=0;
+       var max=Object.keys(photo_data).length;
+       var random = Math.floor(Math.random() * (+max - +min)) + +min;
+       document.getElementById("middleImageIndex").src = photo_data[random];
+     }, 8000);
+   };
+   window.onload = function exampleFunction() {
+       randomPicShow();
+   }
+</script>
 {% endblock %}
 
 {% block navbar %}
@@ -26,6 +41,18 @@
 
 {% endblock %}
 {% block body %}
+
+<div class="mbs">
+  <div id="home-container" class="container">
+    <h1>{{ name }}</h1>
+    <p>Die Musikschule St. Pölten bietet ein breites Fächerangebot. Von Tasten-, Saiten-, und Streichinstrumenten, über Holz- und Blechblasinstrumente, elektronische Instrumente, Stimmbildung, Chor, dem Europaballett, alter Musik, Elementarer Musikerziehung und Musikalischer Grundausbildung, der Blasmusik, dem symphonischen Orchester, zahlreichen Ensembles und Bands, bis hin zu Kooperationen mit Kindergärten, allgemein bildenden Pflichtschulen und höheren Schulen wird an der Musikschule beinahe jedes „Wunschinstrument“ unterrichtet. Mit derzeit über <strong>2.000 Schüler_innen</strong> und mehr als <strong>90 Lehrkräften </strong> ist sie nicht nur die älteste, sondern zählt auch zu einer der größten Musikschulen Österreichs.</p>
+    <a href="{% url 'teaching_music'%}">
+      <button>Weiterlesen</button>
+    </a>
+    <br>
+  </div>
+</div>
+
 <div class="bcmk">
   <div class="left">
     <section>
@@ -33,7 +60,7 @@
     </section>
   </div>
   <div class="middle">
-    <img src="{{middle_pic.image.url}}" alt="{{middle_pic.title}}">
+    <img id="middleImageIndex" src="{{middle_pic.image.url}}" alt="{{middle_pic.title}}">
   </div>
   <div class="right">
     <section>
@@ -41,15 +68,8 @@
     </section>
   </div>
 </div>
+
 <div class="mbs">
-  <div id="home-container" class="container">
-    <h1>{{ name }}</h1>
-    <p>Die Musikschule St. Pölten bietet ein breites Fächerangebot. Von Tasten-, Saiten-, und Streichinstrumenten, über Holz- und Blechblasinstrumente, elektronische Instrumente, Stimmbildung, Chor, dem Europaballett, alter Musik, Elementarer Musikerziehung und Musikalischer Grundausbildung, der Blasmusik, dem symphonischen Orchester, zahlreichen Ensembles und Bands, bis hin zu Kooperationen mit Kindergärten, allgemein bildenden Pflichtschulen und höheren Schulen wird an der Musikschule beinahe jedes „Wunschinstrument“ unterrichtet.</p>
-    <a href="{% url 'teaching_music'%}">
-      <button>Weiterlesen</button>
-    </a>
-    <br>
-  </div>
 
   <div class="counter-grid-container">
     <div class="counter-left">
@@ -92,6 +112,16 @@
   </div>
 
   {% endblock %}
+  <script type="text/javascript">
+    document.onload = randomPicShow();
+    window.onload = function exampleFunction() {
+      console.log('PING');
+      // Function to be executed
+    }
+  </script>
+<script>
+
+</script>
   {% block footer %}
 
   {% endblock %}

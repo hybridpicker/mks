@@ -33,7 +33,7 @@
   {% for event in events %}
   <div id="user-event-container" class="event-container">
     <div id="user-event-cross-burger" class="event-cross-burger">
-      <a href="?id={{ event.id }}">
+      <a href="?id={{ event.id }}" onclick="return confirm('Wollen Sie wirklich dieses Event löschen?');">
         {% include "templates/svg/nav_bar_crossburger.html" %}
       </a>
       <span class="tooltiptext">Veranstaltung löschen</span>
@@ -66,12 +66,12 @@
     <p style="font-size: 18px;margin-bottom: 24px;">(max. 80 Zeichen)</p>
     <p>Datum*</p>
     <p>
-      <input id="id_date" type="date" name="date" required="" class="datepicker"></input>
+      <input id="id_date" type="date" name="date" required="" class="datepicker" placeholder="yyyy-mm-dd"></input>
     </p>
     {{ form.date.errors }}
     <p>Beginnzeit*</p>
     <p>
-      <input id="id_time" type="time" name="time" required="" class="timepicker"></input>
+      <input id="id_time" type="time" name="time" required="" class="timepicker" placeholder="hh:mm"></input>
     </p>
     {{ form.time.errors }}
   </div>
