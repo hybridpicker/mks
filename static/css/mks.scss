@@ -2615,3 +2615,31 @@ a#show_art:hover{
   font-size: 20px;
   line-height: 35px;
 }
+#login-mks-form{
+  display: grid;
+  grid-template-areas: "userText userInput userInput userInput" "passwordText passwordInput passwordInput passwordInput" "loginSave loginSave loginSave loginSave"
+
+}
+#login-mks-form > .user-text{
+  grid-area: userText;
+}
+#login-mks-form > .user-text > p{
+  margin-top: 0;
+  text-align: right;
+}
+#login-mks-form > .user-input{
+  grid-area: userInput;
+}
+#login-mks-form > .password-text {
+  grid-area: passwordText;
+}
+#login-mks-form > .password-text > p {
+  margin-top: 0;
+  text-align: right;
+}
+#login-mks-form > .password-input{
+  grid-area: passwordInput;
+}
+#login-mks-form > .user-login{
+  grid-area: loginSave;
+}
