@@ -690,3 +690,12 @@ li.li_prior_3{
       width: 8vw;
   }
 }
+.taskList > li > a > .tooltiptext{
+  margin-left: 40px;
+  margin-top: -8px;
+  font-family: $fourthHeadingFamily;
+  font-size: 22px;
+}
+.deleteCategory:hover .tooltiptext{
+  visibility: visible;
+}
