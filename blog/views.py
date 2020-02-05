@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 
 from blog.models import BlogPost
+from blog.forms import ArticleForm
 
 # Create your views here.
 
@@ -13,6 +14,12 @@ def blog_summary(request):
         }
     return render(request, "blog/summary.html", context)
 
+def create_blog(request):
+    form = ArticleForm(request.POST)
+    context = {
+        'form': form
+        }
+    return render(request, "blog/form.html", context)
 
 class BlogPostView(View):
     def get(self, request, *args, **kwargs):

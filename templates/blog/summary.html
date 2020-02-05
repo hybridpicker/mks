@@ -2,8 +2,8 @@
 
 {% load static %}
 {% block extra_head %}
-<meta name="title" content="Blog - Regelmäßige Artikel rund um unsere Gitarre">
-<meta name="description" content="Ab sofort werden hier in regelmäßigen Abständen Blog-Einträge rund um die Welt der Gitarre online gestellt. Wir freuen uns über Themenvorschläge.">
+<meta name="title" content="Blog - Regelmäßige Artikel rund um die Musik- und Kunstschule St. Pölten">
+<meta name="description" content="Ab sofort werden hier in regelmäßigen Abständen Blog-Einträge rund um die Musik- und Kunstschule online gestellt.">
 
 <style media="screen">
   .mti img {
@@ -38,20 +38,19 @@
 {% block navbar %}
 {% endblock %}
 {% block banner %}
-<img src="/static/media/banner/blog_summary_banner.jpg" alt="">
-<img id="mbimg" src="/static/media/banner/mobile/blog_summary_banner.jpg" alt="">
+
 {% endblock %}
 {% block body %}
 <div class="mbs">
   <div class="container">
-    <h1>Blog Posts</h1>
+    <h1>Blog Einträge</h1>
     <div class="tmcon">
       <div class="tmcb">
         {% for blog in all_blogs %}
         <div class="tmcbpb">
           <div class="mti">
             <a href="{{ blog.slug }}">
-              <h2>#{{ blog.number_of_posts }} {{ blog.title }}</h2>
+              <h2>{{ blog.title }}</h2>
               <img src="{{ blog.image.url }}" alt="">
             </a>
             <div class="tctm">

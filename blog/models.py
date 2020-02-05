@@ -24,16 +24,19 @@ class Author(models.Model):
         verbose_name_plural = u'Authors'
 
 class BlogPost(models.Model):
-    title = models.CharField(max_length=60)
-    number_of_posts = models.IntegerField()
+    title = models.CharField(max_length=120)
+    lead_paragraph = models.TextField(blank=True)
+    number_of_posts = models.IntegerField(null=True, blank=True)
     category = models.ForeignKey(
         Subject,
-        on_delete=models.CASCADE)
+        on_delete=models.CASCADE,
+        blank=True, null=True)
     content = RichTextField()
     image = models.ImageField(upload_to='blog/posts/images/')
     author = models.ForeignKey(
         Author,
-        on_delete=models.CASCADE)
+        on_delete=models.CASCADE,
+        blank=True, null=True)
     date = models.DateField(_(u"Blog Post Date"), blank=True)
     meta_title = models.CharField(max_length=60)
     meta_description = models.TextField()
@@ -44,7 +47,7 @@ class BlogPost(models.Model):
 
     class Meta:  # pylint: disable=too-few-public-methods
         '''
-        Meta class for Student
+        Meta class for BlogPosts
         '''
         ordering = ('category', 'number_of_posts')
         verbose_name = u'Blog Post'
