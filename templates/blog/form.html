@@ -1,0 +1,42 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% block extra_head %}
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <div class="blogpost">
+      <h1>Eintrag erstellen</h1>
+      <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.media }}
+      <div class="form-title">
+        <p>Titel: {{ form.title }}</p>
+      </div>
+      <div class="form-lead">
+        <p>Lead: {{ form.lead_paragraph }}</p>
+      </div>
+      <div class="form-content">
+        {{ form.content }}
+      </div>
+      <div class="form-image">
+        <p>Beitragsbild*: {{ form.image }}</p>
+      </div>
+      <a>
+      <button type="submit" name="form-save">Speichern</button>
+      </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block footer %}
+
+{% endblock %}

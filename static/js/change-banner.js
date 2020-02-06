@@ -15,6 +15,6 @@ month[10] = "November";
 month[11] = "December";
 var n = month[d.getMonth()];
 if (winter.includes(n)){
-    document.getElementById("homebanner").src="/static/media/banner/home_banner_winter.jpg";
-    document.getElementById("mbimg").src="/static/media/banner/mobile/home_banner_winter.jpg";
+    document.getElementById("homebanner").src="/static/banner/home_banner_winter.jpg";
+    document.getElementById("mbimg").src="/static/banner/mobile/home_banner_winter.jpg";
 }
