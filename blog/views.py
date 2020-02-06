@@ -17,6 +17,8 @@ def blog_summary(request):
         }
     return render(request, "blog/summary.html", context)
 
+def blog_thanks(request):
+    return render(request, "blog/form_thanks.html")
 
 def create_slug_text(title):
     # Remove space and make every character low #
