@@ -50,7 +50,7 @@ class BlogPost(models.Model):
     slug = models.SlugField(_("slug"), max_length=200, unique=True)
 
     def __str__(self):
-        return '%s: #%s %s' % (self.category, self.number_of_posts, self.title)
+        return '%s (%s)' % (self.title, self.published_year)
 
     class Meta:  # pylint: disable=too-few-public-methods
         '''

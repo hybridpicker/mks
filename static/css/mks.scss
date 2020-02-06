@@ -1689,6 +1689,9 @@ a button {
   max-height: 40rem;
   max-width: 100%;
 }
+.mti > a:hover{
+  text-decoration: underline 5px;
+}
 #pdf-icon-download{
   max-width: 8rem;
 }
