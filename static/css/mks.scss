@@ -845,7 +845,7 @@ canvas {
   min-width: 8.5rem;
   box-shadow: 3px 3px 2px #0F262B33;
   z-index: 1;
-  margin-top: 1.25rem;
+  margin-top: 1rem;
   left:0;
 }
 .dropdown-content-d,{
@@ -1102,7 +1102,7 @@ canvas {
   justify-content: center;
 }
 .bcmk > .middle > img{
-  object-fit: cover;
+  object-fit: contain;
 }
 .bcmk section{
   margin-top: 12rem;
@@ -2550,6 +2550,10 @@ html:not([data-scroll='0']) {
   .gallery-show img{
     max-width: 98%;
   }
+  .bcmk > .middle > img{
+    object-fit: cover;
+  }
+
 }
 @media only screen and (min-width: 2000px){
 .grtnmc{
