@@ -3,6 +3,8 @@ from ckeditor.fields import RichTextField
 from django.template.defaultfilters import slugify
 from teaching.subject import Subject
 from django.utils.translation import gettext as _
+from django.utils import timezone
+import datetime
 
 class Author(models.Model):
     first_name = models.CharField(max_length=60)
@@ -23,6 +25,10 @@ class Author(models.Model):
         verbose_name = u'Author'
         verbose_name_plural = u'Authors'
 
+#Function for generating year-slug-string in view
+def current_year():
+    return datetime.date.today().year
+
 class BlogPost(models.Model):
     title = models.CharField(max_length=120)
     lead_paragraph = models.TextField(blank=True)
@@ -37,7 +43,8 @@ class BlogPost(models.Model):
         Author,
         on_delete=models.CASCADE,
         blank=True, null=True)
-    date = models.DateField(_(u"Blog Post Date"), blank=True)
+    date = models.DateField(_(u"Blog Post Date"), default=timezone.now, blank=True)
+    published_year = models.IntegerField(_('Year of Article'), default=current_year)
     meta_title = models.CharField(max_length=60)
     meta_description = models.TextField()
     slug = models.SlugField(_("slug"), max_length=200, unique=True)
