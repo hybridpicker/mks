@@ -49,7 +49,7 @@
         {% for blog in all_blogs %}
         <div class="tmcbpb">
           <div class="mti">
-            <a href="{{ blog.slug }}">
+            <a href="{{blog.published_year}}/{{ blog.slug }}">
               <h2>{{ blog.title }}</h2>
               <img src="{{ blog.image.url }}" alt="">
             </a>

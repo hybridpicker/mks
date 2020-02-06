@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404
 from blog.models import BlogPost
 from blog.forms import ArticleForm
 
+from slugify import slugify
+
 # Create your views here.
 
 def blog_summary(request):
@@ -15,13 +17,16 @@ def blog_summary(request):
         }
     return render(request, "blog/summary.html", context)
 
+
 def create_slug_text(title):
     # Remove space and make every character low #
-    title =  title.lower().replace(" ","-").replace("#","").replace("'","").replace("?","").replace("!","").replace("*","")
+    title =  title.lower()
     # Checking for special characters and transform #
     chars = {'ö':'oe','ä':'ae','ü':'ue', 'ß':'ss',}
     for char in chars:
         title = title.replace(char,chars[char])
+    # Check for other special characters #
+    title = slugify(title)
     return title
 
 def create_blog(request):
