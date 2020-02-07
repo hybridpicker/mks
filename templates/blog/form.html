@@ -2,6 +2,20 @@
 
 {% load static %}
 {% block extra_head %}
+<style media="screen">
+  .django-ckeditor-widget, #cke_id_content{
+      width:100% !important;
+  }
+  p{
+    padding:0;
+  }
+  #id_title{
+    width: 97%;
+  }
+  #id_lead_paragraph{
+    width:100%;
+  }
+</style>
 {% endblock %}
 
 {% block navbar %}
@@ -18,19 +32,20 @@
       {% csrf_token %}
       {{ form.media }}
       <div class="form-title">
-        <p>Titel: {{ form.title }}</p>
+        <p>Titel*: {{ form.title }}</p>
       </div>
       <div class="form-lead">
-        <p>Lead: {{ form.lead_paragraph }}</p>
+        <p>Lead*: {{ form.lead_paragraph }}</p>
       </div>
       <div class="form-content">
+        <p>Text*:</p>
         {{ form.content }}
       </div>
       <div class="form-image">
         <p>Beitragsbild*: {{ form.image }}</p>
       </div>
       <a>
-      <button type="submit" name="form-save">Speichern</button>
+      <button type="submit" name="form-save" onclick="return confirm('Wollen Sie wirklich diesen Eintrag veröffentlichen?');">Veröffentlichen</button>
       </a>
       </form>
     </div>

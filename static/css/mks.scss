@@ -890,11 +890,15 @@ canvas {
 }
 #UserNav .dropdown-content{
   left: -2.5rem;
-  top: 1.5rem;
+  top: 1.75rem;
+}
+#UserNav .dropdown-content-b{
+  left: 1.6rem;
+  top: 1.75rem;
 }
 #UserNav .dropdown-content-c{
-  left: 1.75rem;
-  top: 1.5rem;
+  left: -0.5rem;
+  top: 1.75rem;
 }
 @media only screen and (max-width: 1340px) {
   .dropdown > button > a,
@@ -949,6 +953,9 @@ canvas {
   animation-duration: 1s;
   margin-left: 20px;
   margin-right: 20px;
+}
+.dropdown-b:hover .dropdown-content-b {
+  display: block;
 }
 .dropdown-c:hover .dropdown-content-c {
   display: block;

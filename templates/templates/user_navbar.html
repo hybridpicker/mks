@@ -23,21 +23,23 @@
           </div>
           <div class="dropdown-b arrow">
             <button class="dropbtn-b">
-              <a href="{% url 'event_managing_view' %}">Veranstaltungen</a>
+              <a href="{% url 'get_controlling_student' %}">Schüler_innen</a>
             </button>
-            <div class="dropdown-content-b">
-            </div>
             <div class="dropdown-hover-section-b">
+            </div>
+            <div class="dropdown-content-b">
+              <a href="{% url 'get_controlling_student' %}">Anmeldungen</a>
             </div>
           </div>
           <div class="dropdown-c arrow">
             <button class="dropbtn-c">
-              <a href="{% url 'get_controlling_student' %}">Schüler_innen</a>
+              <a href="{% url 'event_managing_view' %}">Wartung</a>
             </button>
-            <div class="dropdown-hover-section-c">
-            </div>
             <div class="dropdown-content-c">
-              <a href="{% url 'get_controlling_student' %}">Anmeldungen</a>
+              <a href="{% url 'event_managing_view' %}">Veranstaltungen</a>
+              <a href="{% url 'create_blog_post' %}">Blogeintrag</a>
+            </div>
+            <div class="dropdown-hover-section-c">
             </div>
           </div>
           <div class="dropdown-e arrow">

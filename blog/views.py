@@ -2,6 +2,7 @@ from django.views.generic import View
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from blog.models import BlogPost
 from blog.forms import ArticleForm
@@ -17,6 +18,7 @@ def blog_summary(request):
         }
     return render(request, "blog/summary.html", context)
 
+@login_required(login_url='/team/login/')
 def blog_thanks(request):
     return render(request, "blog/form_thanks.html")
 
@@ -31,6 +33,7 @@ def create_slug_text(title):
     title = slugify(title)
     return title
 
+@login_required(login_url='/team/login/')
 def create_blog(request):
     form = ArticleForm(request.POST)
     if request.method == 'POST':
@@ -60,7 +63,6 @@ def create_blog(request):
             return HttpResponseRedirect('thanks/')
             # if a GET (or any other method) we'll create a blank form
         else:
-            print('not_valid')
             form = ArticleForm()
     context = {
         'form': form
