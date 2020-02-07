@@ -1982,9 +1982,9 @@ td {
 /*Events */
 .event-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-areas: "mks-event-date mks-event-title mks-event-title mks-event-title" "mks-event-time mks-event-venue mks-event-venue mks-event-venue";
+  grid-template-columns: 1.2fr 4fr;
+  grid-template-rows: 1fr 0.5fr;
+  grid-template-areas: "mks-event-date mks-event-title" "mks-event-time mks-event-venue";
   background-color: $whiteColor;
 }
 .banner{
@@ -2086,11 +2086,6 @@ td {
   height: 12rem;
   display:none;
 }
-@media only screen and (max-width: 850px) {
-  .event-container {
-    max-height: 25vw;
-  }
-}
 @media only screen and (max-width: 600px) {
   .counter-grid-container{
     grid-template-columns: none;
@@ -2100,15 +2095,12 @@ td {
     padding-top: 1rem;
   }
   .event-container {
-    max-height: 48vw;
-    margin-left: 2%;
-    margin-right: 2%;
+    grid-template-columns: 1.6fr 4fr;
+    grid-template-rows: 1fr;
+    margin-bottom: 23px;
   }
 }
 @media only screen and (max-width: 380px) {
-  .event-container {
-    height: 90vw;
-  }
   .counter-grid-container{
     height: 46vh;
   }
