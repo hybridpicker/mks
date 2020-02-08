@@ -860,7 +860,11 @@ canvas {
   font-family: $menudFontFamily;
   padding: 1rem;
 }
-.dropdown:hover, .dropdown-b:hover, .dropdown-c:hover, .dropdown-d:hover, .dropdown-e:hover{
+.dropdown > button:hover,
+.dropdown-b > button:hover,
+.dropdown-c > button:hover,
+.dropdown-d > button:hover,
+.dropdown-e > button:hover{
   cursor: pointer;
 }
 /* Dropdown Content (Hidden by Default) */
