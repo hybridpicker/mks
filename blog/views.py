@@ -1,5 +1,5 @@
 from django.views.generic import View
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -41,7 +41,6 @@ def create_blog(request):
         form = ArticleForm(request.POST, request.FILES)
         # check whether it's valid:
         if form.is_valid():
-            print('valid')
             title = form.cleaned_data['title']
             lead_paragraph = form.cleaned_data['lead_paragraph']
             content = form.cleaned_data['content']
@@ -60,7 +59,7 @@ def create_blog(request):
                                    content=content)
             new_article.save()
             # redirect to a blog_post_url:
-            return HttpResponseRedirect('thanks/')
+            return redirect('blog_thanks')
             # if a GET (or any other method) we'll create a blank form
         else:
             form = ArticleForm()
