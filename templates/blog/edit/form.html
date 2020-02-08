@@ -27,7 +27,7 @@
 <div class="mbs">
   <div class="container">
     <div class="blogpost">
-      <h1>Eintrag erstellen</h1>
+      <h1>Blogeintrag</h1>
       <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.media }}
@@ -45,7 +45,7 @@
         <p>Beitragsbild*: {{ form.image }}</p>
       </div>
       <a>
-      <button type="submit" name="form-save" onclick="return confirm('Wollen Sie wirklich diesen Eintrag veröffentlichen?');">Veröffentlichen</button>
+      <button type="submit" name="form-save" onclick="return confirm('Wollen Sie wirklich diesen Eintrag abspeichern?');">Speichern</button>
       </a>
       </form>
     </div>

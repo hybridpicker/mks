@@ -443,7 +443,8 @@ textarea{
   padding-right: 1.8em;
 }
 .mbs .container {
-  margin-top: 2em
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 /* Banner CSS */
 #mbimg {
@@ -1667,17 +1668,14 @@ a button {
 /* teaching material */
 .tmcb {
   display: grid;
-  grid-template-areas:
-  'mti mti';
+  grid-template-columns: auto auto;
   grid-column-gap: 8vw;
-  grid-row-gap: 68px;
   padding: 10px;
   justify-content: center;
 }
 @media only screen and (max-width: 870px) {
   .tmcb {
-    grid-template-areas:
-    'mti';
+    grid-template-columns: auto;
   }
   .tnmc {
     margin-left: 0;
@@ -1707,12 +1705,10 @@ a button {
   text-align: left;
 }
 .tmcbg {
-  background: url(/static/boxes/box_teaching_material_green_01.png);
   max-width: 28rem;
   background-repeat: no-repeat;
 }
 .tmcby {
-  background: url(/static/boxes/box_teaching_material_yellow_01.png);
   max-width: 28rem;
   background-repeat: no-repeat;
 }
@@ -1926,15 +1922,6 @@ a button {
 }
 
 /* Blog CSS */
-.tmcbpb {
-  background: url(/static/boxes/border_box_yellow.png);
-  width: 29rem;
-  height: 31rem;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 .tmcbpb .mti {
   padding-right: 20px;
   padding-left: 20px;
@@ -1945,43 +1932,6 @@ a button {
 }
 .tctm p {
   text-align: left;
-}
-@media only screen and (max-width: 772px) {
-  .tmcbpb {
-    background: url(/static/boxes/border_box_yellow.png);
-    background-repeat: repeat;
-    background-size: auto;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 29rem;
-    height: 32rem;
-  }
-}
-@media only screen and (max-width: 450px) {
-  .tmcbpb {
-    background: url(/static/boxes/border_box_yellow_mobile.png);
-    background-repeat: repeat;
-    background-size: auto;
-    background-repeat: repeat;
-    background-size: auto;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 22rem;
-    height: 39rem;
-  }
-}
-@media only screen and (max-width: 360px) {
-  .tmcbpb {
-    background: url(/static/boxes/border_box_yellow_mobile.png);
-    background-repeat: repeat;
-    background-size: auto;
-    background-repeat: repeat;
-    background-size: auto;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 330px;
-    height: 570px;
-  }
 }
 
 /* Blog */

@@ -1,0 +1,71 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% block extra_head %}
+<meta name="title" content="Blog - Regelmäßige Artikel rund um die Musik- und Kunstschule St. Pölten">
+<meta name="description" content="Ab sofort werden hier in regelmäßigen Abständen Blog-Einträge rund um die Musik- und Kunstschule online gestellt.">
+
+<style media="screen">
+  .mti img {
+    max-width: 75%;
+    height: auto;
+  }
+  .tmcb {
+    min-height: 520px;
+    grid-template-areas: 'mti mti';
+  }
+  @media only screen and (max-width: 1080px) {
+    .tmcb {
+      grid-template-areas:
+      'mti';
+    }
+  }
+  @media only screen and (max-width: 410px) {
+    .container {
+      padding-left: 0px;
+      padding-right: 0px;
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+    .tmcb {
+      width: 100%;
+    }
+  }
+</style>
+
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <a href="{% url 'create_blog_post' %}"><button type="button" name="button" style="margin-right: unset;">
+    + Neuer Blog-Eintrag
+    </button></a>
+    <h1>Veröffentlichte Einträge</h1>
+    <div class="tmcon">
+      <div class="tmcb">
+        {% for blog in all_blogs %}
+        <div class="tmcbpb">
+          <div class="mti">
+            <a href="post/{{blog.id}}">
+              <h2>{{ blog.title }}</h2>
+              <img src="{{ blog.image.url }}" alt="">
+            </a>
+            <div class="tctm">
+              <p>{{ blog.meta_description|linebreaks|truncatewords:30   }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+  {% block footer %}
+
+  {% endblock %}

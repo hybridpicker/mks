@@ -22,6 +22,14 @@ def blog_summary(request):
 def blog_thanks(request):
     return render(request, "blog/form_thanks.html")
 
+@login_required(login_url='/team/login/')
+def show_blogs_editing(request):
+    all_blogs = BlogPost.objects.all()
+    context = {
+        'all_blogs': all_blogs
+        }
+    return render(request, "blog/edit/show_blog_editing.html", context)
+
 def create_slug_text(title):
     # Remove space and make every character low #
     title =  title.lower()
@@ -66,10 +74,23 @@ def create_blog(request):
     context = {
         'form': form
         }
-    return render(request, "blog/form.html", context)
+    return render(request, "blog/edit/form.html", context)
 
 class BlogPostView(View):
     def get(self, request, *args, **kwargs):
         blog_post = get_object_or_404(BlogPost, slug=kwargs['slug'], published_year=kwargs['published_year'])
         context = {'blog_post': blog_post}
         return render(request, 'blog/blog_post.html', context)
+
+class BlogPostEditView(View):
+    def get(self, request, *args, **kwargs):
+        blog = get_object_or_404(BlogPost, id=kwargs['id'])
+        if request.method == "POST":
+            form = ArticleForm(request.POST, instance=blog)
+            if form.is_valid():
+                blog = form.save(commit=False)
+                blog.save()
+                return redirect('post_detail', pk=blog.pk)
+        else:
+            form = ArticleForm(instance=blog)
+        return render(request, 'blog/edit/form.html', {'form': form})
