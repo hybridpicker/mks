@@ -1,6 +1,7 @@
 /* Standard Variables */
-$primaryColor:#D73538;
+$primaryColor:#DC143C;
 $secondaryColor:#222528;
+$thirdColor: #2082a8;
 
 $whiteColor: #FDFDFD;
 $bgcolor: $whiteColor;
@@ -270,8 +271,6 @@ h1{
   font-size: $firstHeadingFontSize;
   color: $firstHeadingFontColor;
   text-align: center;
-  border-bottom: 0.4rem solid $primaryColor;
-  padding-bottom: 1rem;
 }
 h2{
   font-family: $secondHeadingFamily;
@@ -960,8 +959,13 @@ canvas {
   display: none;
   width: auto;
   height: 0.4rem;
-  background-color:$primaryColor;
   margin-bottom: -2rem;
+}
+.dropdown-hover-section, .dropdown-hover-section-d,{
+  background-color:$primaryColor;
+}
+.dropdown-hover-section-b, .dropdown-hover-section-e,{
+  background-color:$thirdColor;
 }
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-hover-section {
@@ -1131,7 +1135,7 @@ canvas {
   height: 400px;
 }
 .bcmk > .left{
-  background-color: $secondaryColor;
+  background-color: $thirdColor;
 }
 .bcmk > .right {
   background-color: $primaryColor;
@@ -2706,6 +2710,19 @@ a#show_art:hover{
 #blogEntrySection h1{
   margin-bottom: 0;
   margin-top: 3rem;
+  border-bottom: $thirdColor 5px solid;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#blogEntrySection .mti > a:hover {
+    text-decoration: none;
+}
+#blogEntrySection a{
+  color: $primaryColor;
+}
+#blogEntrySection h3:hover{
+    color: $primaryColor;
 }
 #blogEntrySection .tctm p,
 #blogEntrySection .tctm a, {
