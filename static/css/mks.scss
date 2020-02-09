@@ -1135,10 +1135,10 @@ canvas {
   height: 400px;
 }
 .bcmk > .left{
-  background-color: $thirdColor;
+  background-color: $primaryColor;
 }
 .bcmk > .right {
-  background-color: $primaryColor;
+  background-color: $thirdColor;
 }
 .bcmk > .middle{
   overflow: hidden;
@@ -1166,7 +1166,7 @@ canvas {
 
 }
 .bcmk .left section:hover a{
-  color: $secondaryColor;
+  color: $primaryColor;
   text-decoration: none;
 }
 .bcmk .left section a, .bcmk .right section a{
@@ -1180,7 +1180,7 @@ canvas {
 }
 }
 .bcmk .right section:hover a{
-  color: $primaryColor;
+  color: $thirdColor;
   text-decoration: none;
 }
 @media only screen and (max-width: 800px){
@@ -2254,6 +2254,8 @@ section.events-container-grid {
 }
 section.events-container-grid h1{
   margin-left: calc((100% / 4) * -1);
+  border-bottom: solid 5px $primaryColor;
+  padding-bottom: 0.5rem;
 }
 @media screen and (max-width: 800px) {
   section.events-container-grid {
@@ -2714,15 +2716,13 @@ a#show_art:hover{
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: 0.5rem;
 }
 #blogEntrySection .mti > a:hover {
     text-decoration: none;
 }
 #blogEntrySection a{
   color: $primaryColor;
-}
-#blogEntrySection h3:hover{
-    color: $primaryColor;
 }
 #blogEntrySection .tctm p,
 #blogEntrySection .tctm a, {
@@ -2754,5 +2754,19 @@ a#show_art:hover{
   }
   #blogEntrySection .tmcbpb:last-of-type{
     padding-bottom: 1rem;
+  }
+}
+@media only screen and (max-width: 800px){
+  #blogEntrySection h1{
+    width:100%;
+  }
+  #blogEntrySection.container{
+    margin:0;
+    width:100%;
+  }
+  #blogEntrySection .tmcbpb{
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
