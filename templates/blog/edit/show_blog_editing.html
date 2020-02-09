@@ -43,6 +43,7 @@
 {% block body %}
 <div class="mbs">
   <div class="container">
+    {% if all_blogs %}
     <a href="{% url 'create_blog_post' %}"><button type="button" name="button" style="margin-right: unset;">
     + Neuer Blog-Eintrag
     </button></a>
@@ -64,6 +65,13 @@
         {% endfor %}
       </div>
     </div>
+    {% else %}
+    <h2>Derzeit sind noch keine Blog-Einträge vorhanden</h2>
+    <h3>Starten Sie jetzt mit Ihrem ersten Eintrag:</h3>
+    <a href="{% url 'create_blog_post' %}"><button type="button" name="button">
+    + Neuer Blog-Eintrag
+    </button></a>
+    {% endif %}
   </div>
   {% endblock %}
   {% block footer %}
