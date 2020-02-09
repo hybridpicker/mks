@@ -961,11 +961,9 @@ canvas {
   height: 0.4rem;
   margin-bottom: -2rem;
 }
-.dropdown-hover-section, .dropdown-hover-section-d,{
-  background-color:$primaryColor;
-}
+.dropdown-hover-section, .dropdown-hover-section-d,
 .dropdown-hover-section-b, .dropdown-hover-section-e,{
-  background-color:$thirdColor;
+  background-color:$primaryColor;
 }
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-hover-section {
