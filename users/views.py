@@ -23,7 +23,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')
+            return redirect('change_password_success')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -31,6 +31,10 @@ def change_password(request):
     return render(request, 'registration/password_change.html', {
         'form': form
     })
+
+@login_required(login_url='/team/login/')
+def change_password_success(request):
+    return render(request, 'registration/password_change_success.html',)
 
 class SignUp(generic.CreateView):
     form_class = CustomUserCreationForm
