@@ -1140,10 +1140,18 @@ canvas {
   height: 400px;
 }
 .bcmk > .left{
-  background-color: $primaryColor;
+  background: $primaryColor;
+  background: -moz-linear-gradient(322deg, rgba(220,20,60,1) 0%, rgba(196,22,56,1) 100%);
+  background: -webkit-linear-gradient(322deg, rgba(220,20,60,1) 0%, rgba(196,22,56,1) 100%);
+  background: linear-gradient(322deg, rgba(220,20,60,1) 0%, rgba(196,22,56,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dc143c",endColorstr="#c41638",GradientType=1);
 }
 .bcmk > .right {
-  background-color: $thirdColor;
+  background: $thirdColor;
+  background: -moz-linear-gradient(56deg, rgba(32,130,168,1) 0%, rgba(33,120,154,1) 100%);
+  background: -webkit-linear-gradient(56deg, rgba(32,130,168,1) 0%, rgba(33,120,154,1) 100%);
+  background: linear-gradient(56deg, rgba(32,130,168,1) 0%, rgba(33,120,154,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2082a8",endColorstr="#21789a",GradientType=1);
 }
 .bcmk > .middle{
   overflow: hidden;
