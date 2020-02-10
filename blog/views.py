@@ -1,7 +1,8 @@
 from django.views.generic import View
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from blog.models import BlogPost
 from blog.forms import ArticleForm
@@ -17,8 +18,17 @@ def blog_summary(request):
         }
     return render(request, "blog/summary.html", context)
 
+@login_required(login_url='/team/login/')
 def blog_thanks(request):
     return render(request, "blog/form_thanks.html")
+
+@login_required(login_url='/team/login/')
+def show_blogs_editing(request):
+    all_blogs = BlogPost.objects.all()
+    context = {
+        'all_blogs': all_blogs
+        }
+    return render(request, "blog/edit/show_blog_editing.html", context)
 
 def create_slug_text(title):
     # Remove space and make every character low #
@@ -31,6 +41,7 @@ def create_slug_text(title):
     title = slugify(title)
     return title
 
+@login_required(login_url='/team/login/')
 def create_blog(request):
     form = ArticleForm(request.POST)
     if request.method == 'POST':
@@ -38,7 +49,6 @@ def create_blog(request):
         form = ArticleForm(request.POST, request.FILES)
         # check whether it's valid:
         if form.is_valid():
-            print('valid')
             title = form.cleaned_data['title']
             lead_paragraph = form.cleaned_data['lead_paragraph']
             content = form.cleaned_data['content']
@@ -57,18 +67,30 @@ def create_blog(request):
                                    content=content)
             new_article.save()
             # redirect to a blog_post_url:
-            return HttpResponseRedirect('thanks/')
+            return redirect('blog_thanks')
             # if a GET (or any other method) we'll create a blank form
         else:
-            print('not_valid')
             form = ArticleForm()
     context = {
         'form': form
         }
-    return render(request, "blog/form.html", context)
+    return render(request, "blog/edit/form.html", context)
 
 class BlogPostView(View):
     def get(self, request, *args, **kwargs):
         blog_post = get_object_or_404(BlogPost, slug=kwargs['slug'], published_year=kwargs['published_year'])
         context = {'blog_post': blog_post}
         return render(request, 'blog/blog_post.html', context)
+
+class BlogPostEditView(View):
+    def get(self, request, *args, **kwargs):
+        blog = get_object_or_404(BlogPost, id=kwargs['id'])
+        if request.method == "POST":
+            form = ArticleForm(request.POST, instance=blog)
+            if form.is_valid():
+                blog = form.save(commit=False)
+                blog.save()
+                return redirect('post_detail', pk=blog.pk)
+        else:
+            form = ArticleForm(instance=blog)
+        return render(request, 'blog/edit/form.html', {'form': form})

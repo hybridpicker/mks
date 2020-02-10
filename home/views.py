@@ -9,6 +9,7 @@ from school.models import MusicSchool
 from events.models import Event
 from teaching.models import Teacher
 from gallery.models import Photo
+from blog.models import BlogPost
 # Create your views here.
 
 def get_random_pic():
@@ -35,10 +36,12 @@ def home (request):
     logo = school_data.school_logo
     events = Event.objects.all()
     teachers = Teacher.objects.all()
+    blog = BlogPost.objects.all().order_by('-date')[0:3]
     teacher_counter = len(teachers)
     middle_pic = get_random_pic()
     photos = get_photo_data()
     context = {
+        'blog': blog,
         'events': events,
         'name': name,
         'logo': logo,

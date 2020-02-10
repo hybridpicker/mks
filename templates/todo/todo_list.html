@@ -6,6 +6,8 @@
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
+<meta name="robots" content="noindex">
+
 {% load sass_tags %}
 <link href="{% sass_src 'css/todo.scss' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
@@ -29,7 +31,6 @@
       {% endfor %}
     </div>
     <form id="todoForm" action="" method="post">
-      <h3>Neuer Eintrag:</h3>
       <a href="javascript:void(0)" id="closebtn-todo" class="closebtn" onclick="closeTodoForm()">
         {% include "templates/svg/nav_bar_crossburger.html" %}
       </a>
@@ -115,12 +116,11 @@
                     <input name="cat" value="{{todo.category.id}}" style="display: none;">
                     <button class="taskChange" name="changeTask" type="submit">Ändern</button>
                   </div>
+                  <div class="item5">
+                    <button class="taskChange" name="changeTask" onclick="unShowNotes({{todo.id}})">Schließen</button>
+                  </div>
                 </form>
-              </div>
-              <div class="priorityHeading">
-                <input class="priorityCheck" type="checkbox" id="priorityChecker">
-                <label for="priority" class="checker priority{{todo.priority}}" ></label>
-              </div>
+        </div>
       </li>
       {% endfor %}
     </ul>

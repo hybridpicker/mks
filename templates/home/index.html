@@ -68,23 +68,32 @@
     </section>
   </div>
 </div>
+{% if blog %}
+<section id="blogEntrySection" class="container">
+  <h1>Neuigkeiten aus der Musik- und Kunstschule</h1>
+  <div class="tmcon">
+    <div class="tmcb">
+      {% for blog in blog %}
+      <div class="tmcbpb">
+        <div class="mti">
+          <a href="blog/{{blog.published_year}}/{{blog.slug}}">
+            <h3>{{ blog.title }}</h3>
+            <img src="{{ blog.image.url }}" alt="">
+          </a>
+          <div class="tctm">
+            <p>{{ blog.meta_description|linebreaks|truncatewords:30 }}</p>
+            <a href="blog/{{blog.published_year}}/{{blog.slug}}">Weiterlesen</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
 
 <div class="mbs">
 
-  <div class="counter-grid-container">
-    <div class="counter-left">
-      <section>
-        <h2>> 2000</h2>
-        <p>Schüler_innen</p>
-      </section>
-    </div>
-    <div class="counter-right">
-      <section>
-        <h2>> 90</h2>
-        <p>Lehrer_innen</p>
-      </section>
-    </div>
-  </div>
   <section class="events-container-grid">
     <div class="all-events-banner"></div>
     <div class="all-events-container">
