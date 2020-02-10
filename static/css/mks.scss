@@ -922,7 +922,7 @@ canvas {
   left: 0.75rem;
 }
 #UserNav .dropdown-content{
-  left: -2.5rem;
+  left: 0rem;
   top: 1.75rem;
 }
 #UserNav .dropdown-content-b{
@@ -2721,6 +2721,7 @@ a#show_art:hover{
 }
 #blogEntrySection a{
   color: $primaryColor;
+  font-family: $firstHeadingFamily;
 }
 #blogEntrySection .tctm p,
 #blogEntrySection .tctm a, {
@@ -2766,5 +2767,8 @@ a#show_art:hover{
     width: 98%;
     margin-left: auto;
     margin-right: auto;
+  }
+  #blogEntrySection .mti .tctm{
+    text-align: center;
   }
 }

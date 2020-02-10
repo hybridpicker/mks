@@ -128,8 +128,8 @@ li.taskItem{
   width: 85%;
   display: grid;
   grid-template-areas:
-    'header header header header header right'
-    'main main main main main right';
+    'header'
+    'main';
 }
 .todo-content:hover{
   cursor: pointer;
@@ -143,13 +143,6 @@ li.taskItem{
   grid-area: right;
   margin:auto;
   display:block;
-}
-
-.todo-content {
-  display: grid;
-  grid-template-areas:
-    'header header header header header right'
-    'main main main main main right';
 }
 .todo-content strong{
   font-size: 18px;
@@ -380,7 +373,9 @@ li .item3 {
 li .item2, li .item3{
   width: 168px;
 }
-li .item4 { grid-area: footer; }
+li .item4 { grid-area: save; }
+
+li .item5 { grid-area: cancel; }
 
 .item2 > input, .item3 > input{
   width: 90%;
@@ -388,13 +383,11 @@ li .item4 { grid-area: footer; }
   margin-right: auto;
   display: block;
 }
-.item4 > button {
-  width: 50%;
-  margin-top: 10px;
-  margin-top: 10px;
+.item4 > button, .item5 > button {
+  width: 120px;
+  display: block;
   margin-left: auto;
   margin-right: auto;
-  display: block;
 }
 .item2 > h4, .item3 > h4{
   margin-bottom: 0.5rem;
@@ -402,11 +395,57 @@ li .item4 { grid-area: footer; }
 li .extra-todo-container {
   padding-top: 20px;
   display: none;
-  grid-template-areas: 'menu main priority' 'menu footer footer';
+  grid-template-areas: 'menu main priority' 'menu cancel save';
   grid-gap: 0 2rem;
 }
 li .extra-todo-container > div {
   padding: 0;
+}
+@media only screen and (max-width: 1324px) {
+  li .extra-todo-container{
+    padding-top: 20px;
+    grid-template-areas: 'menu' 'main' 'priority' 'cancel' 'save';
+    grid-gap: 1rem 0rem;
+    row-gap: 1rem;
+    column-gap: 0rem;
+  }
+  li .extra-todo-container > div{
+    width:100%;
+    margin-left:0;
+    margin-right:0;
+  }
+  .item2 > input, .item3 > input{
+    margin:0;
+  }
+  .todo-content {
+    width: 100%;
+  }
+  textarea.taskName{
+    width: 90%!important;
+  }
+  #clickPriority > .sese {
+    width: 123%;
+  }
+  .item4 > button, .item5 > button {
+    width: 188px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .taskItem > input {
+    grid-area: taskCheckbox;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+  }
+  .todo-content {
+    width: 95%;
+  }
+  li.taskItem{
+    grid-template-columns: 1fr 5fr;
+  }
+  #todoForm{
+    overflow-y: scroll;
+  }
 }
 input#content{
   height: 100%;
@@ -566,20 +605,6 @@ textarea.taskName{
   }
   .sese{
     width:98%;
-  }
-  .todo-content{
-    width: 80%;
-  }
-}
-@media only screen and (max-width: 620px) {
-  .todo-content{
-    width: 72%;
-  }
-}
-
-@media only screen and (max-width: 500px) {
-  .todo-content{
-    width: 64%;
   }
 }
 

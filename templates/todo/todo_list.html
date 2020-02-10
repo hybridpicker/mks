@@ -116,12 +116,11 @@
                     <input name="cat" value="{{todo.category.id}}" style="display: none;">
                     <button class="taskChange" name="changeTask" type="submit">Ändern</button>
                   </div>
+                  <div class="item5">
+                    <button class="taskChange" name="changeTask" onclick="unShowNotes({{todo.id}})">Schließen</button>
+                  </div>
                 </form>
-              </div>
-              <div class="priorityHeading">
-                <input class="priorityCheck" type="checkbox" id="priorityChecker">
-                <label for="priority" class="checker priority{{todo.priority}}" ></label>
-              </div>
+        </div>
       </li>
       {% endfor %}
     </ul>
