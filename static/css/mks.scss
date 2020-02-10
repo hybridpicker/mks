@@ -218,6 +218,13 @@ a:hover {
   .overlay-content{
     padding-top: 4rem;
   }
+  #mks-nav-mobile-menu .overlay-content{
+    padding-top: 2rem;
+  }
+  #mks-nav-mobile-menu a.closebtn{
+    top: -29px;
+    right: 10px;
+  }
   .overlay-content a {
     font-size: 32px;
     line-height: 30px;
@@ -253,16 +260,16 @@ a:hover {
     padding-right: unset;
   }
   #closeMobileMenu{
-    padding-right: 4%;
+    padding-right: 0.5rem;
   }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 480px) {
   .overlay-content a {
-    font-size: 30px;
+    font-size: 25px;
   }
   .overlay-content a.categoryHeadingMobileNoCursor{
-    font-size: 26px;
+    font-size: 22px;
   }
 }
 /* Font */
@@ -597,7 +604,7 @@ canvas {
   display: none;
   justify-content: right;
   align-items: center;
-  padding-right: 1%;
+  padding-right: 0.5rem;
 }
 #menuIcon{
   margin-left: 2rem;

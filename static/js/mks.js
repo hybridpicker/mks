@@ -1,7 +1,14 @@
 function openNav() {
-  document.getElementById("mks-nav-mobile-menu").style.width = "95%";
-  document.getElementById("menuIcon").style.visibility = "hidden";
-  document.getElementById("closeMobileMenu").style.display = "flex";
+  if (window.innerWidth < 500) {
+    document.getElementById("mks-nav-mobile-menu").style.width = "95%";
+    document.getElementById("menuIcon").style.visibility = "hidden";
+    document.getElementById("closeMobileMenu").style.display = "flex";
+  }
+  else{
+    document.getElementById("mks-nav-mobile-menu").style.width = "400px";
+    document.getElementById("menuIcon").style.visibility = "hidden";
+    document.getElementById("closeMobileMenu").style.display = "flex";
+  }
 }
 
 function closeNav() {
