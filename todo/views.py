@@ -54,6 +54,8 @@ def todo_view(request):
             date = request.GET['date']
             task = TodoList.objects.get(id=int(task_id))
             task.due_date = date
+            if date == "":
+                task.due_date = None
             task.priority = priority
             if request.GET['content']:
                 content = request.GET['content']

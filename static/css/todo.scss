@@ -74,7 +74,13 @@ li.taskItem{
   display: grid;
   grid-template-columns: 1fr 10fr;
   grid-template-rows: 1fr;
-  grid-template-areas: "taskCheckbox todo-content todo-content todo-content";
+  grid-template-areas: "taskCheckbox todo-content todo-content todo-content todo-priority-heading";
+}
+li.taskItem > .todoPriorityHeading{
+    grid-area: todo-priority-heading;
+    width:160px;
+    display: flex;
+    align-items:center;
 }
 .taskItem > input{
   grid-area: taskCheckbox;
@@ -117,15 +123,24 @@ li.taskItem{
   -moz-box-shadow: 6px 6px 5px -8px rgba(34,37,40,1);
   box-shadow: 6px 6px 5px -8px rgba(34,37,40,1);
 }
+@media only screen and (max-width: 1120px){
+  li.taskItem{
+  grid-template-areas: "taskCheckbox todo-content todo-content todo-content";
+  }
+  li.taskItem > .todoPriorityHeading{
+    display: none;
+  }
+}
+
 .todo-content{
   grid-area: todo-content;
+  min-height: 45px;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   display: grid;
   font-size: 20px;
   padding-top: 8px;
   padding-bottom: 8px;
-  width: 85%;
   display: grid;
   grid-template-areas:
     'header'

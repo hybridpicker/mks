@@ -41,7 +41,7 @@
         </div>
         <div class="task-form-date">
           <div class="inputContainer">
-            <input type="date" id="dueDate" class="taskDate" name="date" placeholder="yyyy-mm-dd" required>
+            <input type="date" id="dueDate" class="taskDate" name="date" placeholder="yyyy-mm-dd">
           </div>
         </div>
         <div class="task-form-priority">
@@ -49,7 +49,9 @@
             <select id="priority" class="taskPriority" name="priority_select" required>
               <option class="disabled" selected="true" disabled="disabled">Priorität*</option>
               {% for x,y in priority_choices.fields.priority.choices %}
+              {% if x != "" %}
               <option value="{{ x }}">{{ y }}</option>
+              {% endif %}
               {% endfor %}
             </select>
           </div>
@@ -78,6 +80,13 @@
     <ul class="taskList">
       {% for todo in todos %}
       <li id="li_{{todo.id}}" class="taskItem cat_{{ todo.category.id }} li_prior_{{todo.priority}}">
+        <div class="todoPriorityHeading" id="priorityHeading_{{todo.id}}">
+          {% for x,y in priority_choices.fields.priority.choices %}
+            {% if todo.priority == x %}
+            <h4>{{ y }}</h4>
+            {% endif %}
+          {% endfor %}
+        </div>
         <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="window.location.href = '?delete_task={{ todo.id }}&cat={{todo.category.id}}';"></input>
         <div class="todo-content" id="contentTodo{{ todo.id }}" onclick="showNotes({{todo.id}})">
           <h4>{{ todo.title }}</h4>
@@ -95,12 +104,16 @@
               </div>
               <div class="item2">
                 <h4>Deadline:</h2>
+                  {% if todo.due_date%}
                   <input type="date" id="dueDate{{todo.id}}" class="taskDate" name="date" value="{{ todo.due_date|date:"Y-m-d" }}">
+                  {% else %}
+                  <input type="date" id="dueDate{{todo.id}}" class="taskDate" name="date">
+                  {% endif %}
                 </div>
                 <div class="item3">
                   <h4>Priorität</h2>
                     <div class="sfbsfcon" id="clickPriority">
-                      <select id="priority" class="taskPriority" name="priority_select" required>
+                      <select id="prioritySelect{{todo.id}}" class="taskPriority" name="priority_select" required>
                         {% for x,y in priority_choices.fields.priority.choices %}
                         {% if todo.priority == x %}
                         <option value="{{ todo.priority }}" selected>{{ y }}</option>
@@ -113,7 +126,7 @@
                   </div>
                   <div class="item4">
                     <input name="task_id" value="{{todo.id}}" style="display: none;">
-                    <input name="cat" value="{{todo.category.id}}" style="display: none;">
+                    <input id="catFormChangeTodo{{todo.id}}" name="cat" value="{{todo.category.id}}" style="display: none;">
                     <button class="taskChange" name="changeTask" type="submit">Ändern</button>
                   </div>
                   <div class="item5">
@@ -215,12 +228,17 @@
     document.getElementById("extra-todo-container-"+id).style.display = "grid"
     // Set Reverse Function
     document.getElementById('contentTodo' + id).classList.add("active");
+    document.getElementById('priorityHeading_' + id).style.display = "none"
   }
   function unShowNotes(id){
     // Save Input Icon Layout
     var input = document.getElementById(id);
     input.style.marginTop = "auto";
-    document.getElementById("extra-todo-container-"+id).style.display = "none"
+    document.getElementById("extra-todo-container-"+id).style.display = "none";
+    document.getElementById('priorityHeading_' + id).style.display = "flex";
+    if (document.getElementById('h3_cat_all').classList.contains('active')) {
+      document.getElementById('catFormChangeTodo' + id).value = "";
+    }
   }
   function closeTodoForm(){
     document.getElementById("todoForm").style.display = "none";
