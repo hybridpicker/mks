@@ -134,6 +134,7 @@ li.taskItem > .todoPriorityHeading{
 
 .todo-content{
   grid-area: todo-content;
+  min-height: 45px;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   display: grid;

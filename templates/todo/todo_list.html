@@ -41,7 +41,7 @@
         </div>
         <div class="task-form-date">
           <div class="inputContainer">
-            <input type="date" id="dueDate" class="taskDate" name="date" placeholder="yyyy-mm-dd" required>
+            <input type="date" id="dueDate" class="taskDate" name="date" placeholder="yyyy-mm-dd">
           </div>
         </div>
         <div class="task-form-priority">
@@ -102,7 +102,11 @@
               </div>
               <div class="item2">
                 <h4>Deadline:</h2>
+                  {% if todo.due_date%}
                   <input type="date" id="dueDate{{todo.id}}" class="taskDate" name="date" value="{{ todo.due_date|date:"Y-m-d" }}">
+                  {% else %}
+                  <input type="date" id="dueDate{{todo.id}}" class="taskDate" name="date">
+                  {% endif %}
                 </div>
                 <div class="item3">
                   <h4>Priorität</h2>
