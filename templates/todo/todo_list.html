@@ -49,7 +49,9 @@
             <select id="priority" class="taskPriority" name="priority_select" required>
               <option class="disabled" selected="true" disabled="disabled">Priorität*</option>
               {% for x,y in priority_choices.fields.priority.choices %}
+              {% if x != "" %}
               <option value="{{ x }}">{{ y }}</option>
+              {% endif %}
               {% endfor %}
             </select>
           </div>
