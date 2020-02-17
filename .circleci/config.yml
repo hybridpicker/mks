@@ -9,7 +9,11 @@ jobs:
       # specify the version you desire here
 
       - image: circleci/python:3.6.9
-#      - image: circleci/postgres:9.4
+      - image: circleci/postgres:9.6.17
+        environment:
+          POSTGRES_USER: mks
+          POSTGRES_DB: mks_test
+          POSTGRES_PASSWORD: ""
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
