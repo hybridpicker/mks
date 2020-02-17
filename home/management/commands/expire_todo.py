@@ -3,7 +3,7 @@ import datetime
 
 class Command(BaseCommand):
 
-    help = 'Expires event objects which are out-of-date'
+    help = 'Delete Todo-Tasks that are expired'
 
     def handle(self, *args, **options):
         from todo.models import FinishedItems
