@@ -9,7 +9,7 @@ jobs:
       # specify the version you desire here
 
       - image: circleci/python:3.6.9
-      - image: circleci/postgres:9.6.18
+      - image: circleci/postgres:9.6.7
         environment:
           POSTGRES_USER: mks
           POSTGRES_DB: mks_test
