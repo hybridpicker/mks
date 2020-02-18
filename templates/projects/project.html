@@ -32,6 +32,25 @@
       <h1>{{ project.title }}</h1>
       {{ project.description | safe }}
     </div>
+    {% if events %}
+    <h2>Kommende Konzerte</h2>
+      {% for event in events %}
+      <div class="event-container">
+        <div class="mks-event-date">
+          <h3>{{ event.get_date_presentation }}</h3>
+        </div>
+        <div class="mks-event-title">
+          <h3>{{ event.name }}</h3>
+        </div>
+        <div class="mks-event-time">
+          <p>{{ event.get_time_presentation }}</p>
+        </div>
+        <div class="mks-event-venue">
+          <p>{{ event.venue }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
     <div class="youtube">
       <h2>Musikalische Referenzen</h2>
       <div class="youtube-grid">
@@ -41,8 +60,12 @@
       <iframe src="https://www.youtube.com/embed/{{ project.youtube_id_two }}"
       frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
+    </div>
+  </div>
+
+
 </div>
-</div>
+
 </div>
 
 </div>
