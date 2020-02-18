@@ -5,6 +5,8 @@ from location.models import Country
 from django.utils.dateformat import DateFormat
 from django.utils.formats import get_format
 
+from projects.models import Project
+
 # Create your models here.
 
 class Event(models.Model):
@@ -27,6 +29,10 @@ class Event(models.Model):
         db_index=True,
         blank=True
     )
+    project = models.ForeignKey(
+            'projects.Project',
+            on_delete=models.CASCADE,
+            blank=True, null=True)
     def __str__(self):
         return '%s: %s' % (self.name, self.date)
 
@@ -44,7 +50,7 @@ class Event(models.Model):
 
     class Meta:  # pylint: disable=too-few-public-methods
         '''
-        Meta class for Student
+        Meta class for Event
         '''
         ordering = ('date',)
         verbose_name = u'Event'
