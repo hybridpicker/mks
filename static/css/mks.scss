@@ -824,7 +824,6 @@ canvas {
 @media only screen and (max-width: 700px) {
   h1{
     font-size: 24px;
-    border-bottom: 0.3rem solid $primaryColor;
   }
   h2, h3{
     font-size: 22px;
@@ -2791,9 +2790,28 @@ a#show_art:hover{
   display: grid;
   grid-template-columns: auto auto;
   grid-gap: 1rem;
-  height: 450px;
 }
 .youtube-grid > iframe{
   min-height: 425px;
   width: 100%;
+}
+@media only screen and (max-width: 700px) {
+  .youtube-grid{
+    grid-template-columns: auto;
+    grid-gap: 1rem;
+  }
+  .youtube-grid > iframe{
+    min-height: 400px;
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 420px) {
+  .youtube-grid{
+    grid-template-columns: auto;
+    grid-gap: 1rem;
+  }
+  .youtube-grid > iframe{
+    min-height: 200px;
+    width: 100%;
+  }
 }
