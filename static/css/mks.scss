@@ -2793,3 +2793,7 @@ a#show_art:hover{
   grid-gap: 1rem;
   height: 450px;
 }
+.youtube-grid > iframe{
+  min-height: 425px;
+  width: 100%;
+}
