@@ -2787,3 +2787,9 @@ a#show_art:hover{
     text-align: center;
   }
 }
+.youtube-grid{
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 1rem;
+  height: 450px;
+}
