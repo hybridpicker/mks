@@ -1,0 +1,52 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% block extra_head %}
+<meta name="title" content="{{ project.title }}">
+<meta name="description" content="{{ blog.meta_description }}">
+<style media="screen">
+  .bs > img {
+    width: 100%;
+  }
+  @media only screen and (max-width: 772px) {
+    .bs > img {
+      width: 100%;
+      padding-top: 3rem;
+      border-radius: 0 0 4rem 0;
+    }
+  }
+</style>
+
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+<img src="{{ project.image.url }}" alt="">
+<img id="mbimg" src="{{ project.image.url }}" alt="">
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <div class="blogpost">
+      <h1>{{ project.title }}</h1>
+      {{ project.description | safe }}
+    </div>
+    <div class="youtube">
+      <h2>Musikalische Referenzen</h2>
+      <div class="youtube-grid">
+        <iframe src="https://www.youtube.com/embed/{{ project.youtube_id_one }}"
+        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+      </iframe>
+      <iframe src="https://www.youtube.com/embed/{{ project.youtube_id_two }}"
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+</div>
+</div>
+</div>
+
+</div>
+{% endblock %}
+{% block footer %}
+
+{% endblock %}

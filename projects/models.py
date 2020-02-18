@@ -1,6 +1,7 @@
 from django.utils.translation import gettext as _
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.template.defaultfilters import slugify
 
 class Project(models.Model):
     title = models.CharField(max_length=30)
@@ -40,6 +41,9 @@ class Project(models.Model):
         max_length=24, blank=True)
     youtube_id_two = models.CharField(_(u'Youtube Video ID 2'),
         max_length=24, blank=True)
+    slug = models.SlugField(_("slug"), max_length=200,
+        null=True,
+        unique=True)
 
     def __str__(self):
         return str(self.title)
