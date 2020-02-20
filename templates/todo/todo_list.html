@@ -144,7 +144,9 @@
         <input checked=checked onclick="window.location.href = '?undelete_id={{ todo.id }}&cat={{todo.category.id}}';" type="checkbox" class="taskCheckbox" name="done-checked-box" id="{{ todo.id }}" value="{{ todo.id }}">
         <div class="todo-content">
           <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
+          {% if todo.due_date %}
           <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.due_date }}</strong>
+          {% endif %}
         </div>
       </li>
       {% endfor %}
