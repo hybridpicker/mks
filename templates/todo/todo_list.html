@@ -97,7 +97,7 @@
             <div id="extra-todo-container-{{todo.id}}" class="extra-todo-container">
               <div class="item1">
                 {% if todo.content %}
-                <textarea id="content{{todo.id}}" class="taskName" placeholder="{{todo.content}}" name="content" rows="6" cols="60"></textarea>
+                <textarea id="content{{todo.id}}" class="taskName" placeholder="{{todo.content}}" name="content" rows="6" cols="60">{{todo.content}}</textarea>
                 {% else %}
                 <textarea id="content{{todo.id}}" class="taskName" placeholder="Notizfeld" name="content" rows="6" cols="60"></textarea>
                 {% endif %}
