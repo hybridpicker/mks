@@ -69,6 +69,7 @@ def todo_view(request):
                             content=task.content,
                             due_date=task.due_date,
                             category=task.category,
+                            priority=task.priority,
                             created_by_id=int(task.created_by.id),)
                 done.save()
                 task.delete()
@@ -100,6 +101,7 @@ def todo_view(request):
                                 content=task.content,
                                 due_date=task.due_date,
                                 category=task.category,
+                                priority=task.priority,
                                 created_by_id=created_by.id,)
                 else:
                     todo = TodoList(title=task.title,
