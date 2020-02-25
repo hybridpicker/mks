@@ -21,15 +21,16 @@
 
 {% block navbar %}
 {% endblock %}
-{% block banner %}
-<img src="{{ project.image.url }}" alt="">
-<img id="mbimg" src="{{ project.image.url }}" alt="">
-{% endblock %}
+
+
 {% block body %}
 <div class="mbs">
   <div class="container">
     <div class="blogpost">
       <h1>{{ project.title }}</h1>
+      <p>{{ project.lead_paragraph }}</p>
+      <img src="{{ project.image.url }}" alt="">
+      <h2>Pressetext:</h2>
       {{ project.description | safe }}
     </div>
     {% if events %}
@@ -51,6 +52,7 @@
       </div>
       {% endfor %}
     {% endif %}
+    {% if project.youtube_id_one %}
     <div class="youtube">
       <h2>Musikalische Referenzen</h2>
       <div class="youtube-grid">
@@ -62,6 +64,7 @@
     </iframe>
     </div>
   </div>
+  {% endif %}
 
 
 </div>
