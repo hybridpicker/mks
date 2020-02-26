@@ -29,6 +29,8 @@ def show_teacher_view(request):
     teacher_art = get_teachers_from_category("Kunstschule")
     director = get_teachers_from_category("Direktion")
     secretary = get_teachers_from_category("Sekretariat")
+    elementary_teaching = get_teachers_from_category("Musikalische Früherziehung")
+    print(elementary_teaching)
     context = {
         'categories': categories,
         'director': director,
@@ -42,5 +44,6 @@ def show_teacher_view(request):
         'teacher_wood': teacher_wood,
         'teacher_dance': teacher_dance,
         'teacher_art': teacher_art,
+        'elementary_teaching': elementary_teaching,
     }
     return render(request, 'teaching/all_teachers.html', context)
