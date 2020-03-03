@@ -87,7 +87,7 @@
             {% endif %}
           {% endfor %}
         </div>
-        <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="window.location.href = '?delete_task={{ todo.id }}&cat={{todo.category.id}}';"></input>
+        <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="clickTask({{ todo.id }},{{ todo.category.id }})"></input>
         <div class="todo-content" id="contentTodo{{ todo.id }}" onclick="showNotes({{todo.id}})">
           <h4>{{ todo.title }}</h4>
           {% if todo.due_date %}
@@ -103,7 +103,7 @@
                 {% endif %}
               </div>
               <div class="item2">
-                <h4>Deadline:</h2>
+                <h4>Deadline:</h4>
                   {% if todo.due_date%}
                   <input type="date" id="dueDate{{todo.id}}" class="taskDate" name="date" value="{{ todo.due_date|date:"Y-m-d" }}">
                   {% else %}
@@ -111,7 +111,7 @@
                   {% endif %}
                 </div>
                 <div class="item3">
-                  <h4>Priorität</h2>
+                  <h4>Priorität</h4>
                     <div class="sfbsfcon" id="clickPriority">
                       <select id="prioritySelect{{todo.id}}" class="taskPriority" name="priority_select" required>
                         {% for x,y in priority_choices.fields.priority.choices %}
@@ -141,7 +141,7 @@
     <ul class="checkedList">
       {% for todo in checked %}
       <li class="taskItem cat_{{ todo.category.id }}" style="display: grid;">
-        <input checked=checked onclick="window.location.href = '?undelete_id={{ todo.id }}&cat={{todo.category.id}}';" type="checkbox" class="taskCheckbox" name="done-checked-box" id="{{ todo.id }}" value="{{ todo.id }}">
+        <input checked=checked onclick="undeleteTask({{todo.id}}, {{todo.category.id}})" type="checkbox" class="taskCheckbox" name="done-checked-box" id="{{ todo.id }}" value="{{ todo.id }}">
         <div class="todo-content">
           <label for="{{ todo.id }}"><span class="complete-"><h4>{{ todo.title }}</h4></span></label>
           {% if todo.due_date %}
@@ -242,6 +242,25 @@
       document.getElementById('catFormChangeTodo' + id).value = "";
     }
   }
+  function clickTask(todo, cat){
+    var checkAll = document.getElementById("h3_cat_all").classList.contains("active");
+    if ( checkAll ){
+      window.location.href = '?delete_task=' + todo + '&cat=' + cat+ '&all=true';
+    }
+    else {
+      window.location.href = '?delete_task=' + todo + '&cat=' + cat;
+    }
+  }
+  function undeleteTask(todo, cat){
+    var checkAll = document.getElementById("h3_cat_all").classList.contains("active");
+    if ( checkAll ){
+      window.location.href = '?undelete_task=' + todo + '&cat=' + cat + '&all=true';
+    }
+    else {
+      window.location.href = '?undelete_task=' + todo + '&cat=' + cat;
+    }
+  }
+  //window.location.href = '?undelete_id={{ todo.id }}&cat={{todo.category.id}}
   function closeTodoForm(){
     document.getElementById("todoForm").style.display = "none";
     document.getElementById("anchorButtonAdd").style.display = "block";
@@ -251,9 +270,15 @@
 <script type="text/javascript">
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
+  const allTag = urlParams.get('all')
   const categoryId = urlParams.get('cat');
   if ( categoryId ){
-    ActiveCategory(categoryId);
+    if ( allTag ){
+      // pass
+    }
+    else {
+      ActiveCategory(categoryId);
+    }
   }
   checkedHeadlineNeeded();
 </script>
