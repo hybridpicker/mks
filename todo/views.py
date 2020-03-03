@@ -91,7 +91,7 @@ def todo_view(request):
         except MultiValueDictKeyError:
             pass
         try:
-            id = request.GET['undelete_id']
+            id = request.GET['undelete_task']
             try:
                 #Save it into Finished Items before deleting#
                 task = FinishedItems.objects.get(id=int(id))
