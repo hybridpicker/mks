@@ -1,0 +1,114 @@
+{% extends "templates/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+
+<!-- CSS fretboard -->
+<link rel="stylesheet" href="{% static "css/fretboard.css" %}" type="text/css" media="screen">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet">
+
+<script type="text/javascript">
+  var scale_data = {{ scale_json_data|safe }}
+</script>
+
+<script src="{% static '/js/base.js' %}"></script>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+
+<img id="homebanner" src="/static/banner/home_banner.jpg" alt="">
+<img id="mbimg" src="/static/banner/mobile/home_banner.jpg" alt="">
+
+{% endblock %}
+{% block body %}
+
+<div class="mbs">
+  <form id="fretboard_form" action="" method="get" style="text-align: center;">
+    <div class="sfbsf" id="catsfbsf">
+      <select name="models_select" id="models_select">
+        <option value="1">......</option>
+        {% for category_option in category %}
+        {% if selected_category == category_option.id %}
+        <option value="{{ category_option.id }}" id="cat{{ category_option.id }}" selected>{{ category_option.category_name }}</option>
+        {% else %}
+        <option value="{{ category_option.id }}" id="cat{{ category_option.id }}">{{ category_option.category_name }}</option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="sfbsf">
+      <select name="root" id="root">
+        <option>.....</option>
+        {% for root_option in root_options %}
+        {% if selected_root_id == root_option.id %}
+        <option value="{{ root_option.id }}" selected>{{ root_option.name }}</option>
+        {% else %}
+        <option value="{{ root_option.id }}">{{ root_option.name }}</option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="sfbsfnos">
+      <select name="notes_options_select" id="notes_options_select">
+        <option value="1">......</option>
+        {% for option in notes_options %}
+        {% if selected_notes == option.id %}
+        <option value="{{ option.id }}" selected>{{ option.note_name}}</option>
+        {% else %}
+        <option value="{{ option.id }}">{{ option.note_name}}</option>
+        {% endif %}
+
+        {% endfor %}
+      </select>
+    </div>
+    <div class="sfbsfpos">
+      <select name="position_select" id="position_select">
+        <option value="0">Alle Noten</option>
+        {% if selected_position == 0 %}
+        <option value="0" selected>Alle Noten</option>
+        {% else %}
+        <option value="0">Alle Noten</option>
+        {% endif %}
+        {% for position in position_options %}
+        {% if selected_position == position.position_order %}
+        <option value="{{ position.position_order }}" selected>
+          Position: {{ position.position_order }}
+        </option>
+        {% else %}
+        <option value="{{ position.position_order }}">
+          Position: {{ position.position_order }}
+        </option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <button id="show_note_name_button" type="button" onclick="getNoteNameFromData()" style="width: 8em;">Notennamen</button>
+
+  </form>
+
+  <br>
+  <div class="analysis_container" style="text-align: center;">
+    Tensions:
+    {% for tension in tensions %}
+    <b>{{ tension }}</b>
+    {% endfor %}
+    <br>
+    Notennamen:
+    {% for note_name in note_names %}
+    <b>{{ note_name }}</b>
+    {% endfor %}
+  </div>
+  {% include 'fretboard/fretboard_fretboard.html' %}
+
+</div>
+{% endblock %}
+
+{% block fretboard %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
