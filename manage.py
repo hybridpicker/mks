@@ -16,13 +16,6 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
-"""
-Combine migrate with fixture Loading
-"""
-#    if len(sys.argv) == 2 and sys.argv[1] == 'migrate':
-#        execute_from_command_line(['manage.py', 'import_data'])
-
-
 
 if __name__ == '__main__':
     main()
