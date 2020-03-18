@@ -1,0 +1,161 @@
+{% load static %}
+
+<!-- CSS fretboard -->
+<link rel="stylesheet" href="{% static "css/fretboard.css" %}" type="text/css" media="screen">
+
+<!-- Dosis Font -->
+<link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet">
+
+<!-- Play function -->
+<script src="{% static '/js/base.js' %}"></script>
+
+<script type="text/javascript">var voicing_data = {{ chord_json_data|safe }}</script>
+{% block header %}
+{% endblock %}
+
+<div class="mbs">
+
+{% block heading %}
+{% endblock %}
+
+<form id="fretboard_form" action="" method="get" style="text-align: center;">
+  <div class="sfbsf" id="catsfbsf">
+    <select name="models_select" id="models_select">
+      <option value="1" id="cat1">{{ category|first }}</option>
+      {% for category_option in category %}
+      {% if selected_category == category_option.id %}
+      <option value="{{ category_option.id }}" id="cat{{ category_option.id }}" selected>{{ category_option.category_name }}</option>
+      {% else %}
+      <option value="{{ category_option.id }}" id="cat{{ category_option.id }}">{{ category_option.category_name }}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  <div class="sfbsf">
+    <select name="root" id="root">
+      <option value="{{ root_id }}" selected>{{ root_name }}</option>
+      {% for option in root_options %}
+      <option value="{{ option.id }}">{{ option.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="sfbsf">
+    <select name="type_options_select" id="type_options_select">
+      <option value="{{ type_options|first }}">{{ type_options|first }}</option>
+      {% for option in type_options %}
+      {% if selected_type == option %}
+      <option value="{{ option }}" selected>{{ option }}</option>
+      {% else %}
+      <option value="{{ option }}">{{ option }}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  <div class="sfbsf">
+    <select name="chords_options_select" id="chords_options_select">
+      <option value="{{ chord_options|first }}">{{ chord_options|first }}</option>
+      {% for option in chord_options %}
+      {% if selected_chord == option %}
+      <option value="{{ option }}" selected>{{ option }}</option>
+      {% else %}
+      <option value="{{ option }}">{{ option }}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  <div class="sfbsfnr">
+    <select name="note_range" id="note_range">
+      <option value="{{ first_range_option }}">{{ first_range_option }}</option>
+      {% for option in range_options %}
+      <option value="{{ option.range }}">{{ option.range }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="sfbsfpos">
+    <select name="position_select" id="position_select">
+      <option value="Basic Position">Basic Position</option>
+      {% for option in position_options %}
+      <option value="{{ option.inversion_order }}">{{ option.inversion_order }}</option>
+      {% endfor %}
+
+    </select>
+  </div>
+  <button id="show_tension_button" type="button" onclick=show_tension_notes_chords() style="width: 8em;">Show Tensions</button>
+
+</form>
+<br>
+{% block form %}
+{% endblock %}
+
+{% include 'fretboard_fretboard.html' %}
+
+<!-- Fretboard Form Script -->
+<script type="text/javascript">
+
+  window.onload = navBarFretboardChords("sfbsfnr")
+  window.onload = navBarFretboardChords("catsfbsf")
+  window.onload = navBarFretboardChords("sfbsfpos")
+
+  /* If the user clicks anywhere outside the select box,
+  then close all select boxes: */
+  document.addEventListener("click", closeAllSelect);
+
+  var x, i, j, selElmnt, a, b, c;
+  /* Look for any elements with the class "sfbsf": */
+  x = document.getElementsByClassName("sfbsf");
+  for (i = 0; i < x.length; i++) {
+    selElmnt = x[i].getElementsByTagName("select")[0];
+    /* For each element, create a new DIV that will act as the selected item: */
+    a = document.createElement("DIV");
+    a.setAttribute("class", "sese");
+    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+    x[i].appendChild(a);
+    /* For each element, create a new DIV that will contain the option list: */
+    b = document.createElement("DIV");
+    b.setAttribute("class", "slit sehi");
+    for (j = 1; j < selElmnt.length; j++) {
+      /* For each option in the original select element,
+      create a new DIV that will act as an option item: */
+      c = document.createElement("DIV");
+      c.innerHTML = selElmnt.options[j].innerHTML;
+      c.addEventListener("click", function(e) {
+        /* When an item is clicked, update the original select box,
+        and the selected item: */
+        var y, i, k, s, h;
+        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        h = this.parentNode.previousSibling;
+        for (i = 0; i < s.length; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("swasd");
+            for (k = 0; k < y.length; k++) {
+              y[k].removeAttribute("class");
+            }
+            this.setAttribute("class", "swasd");
+            break;
+          }
+        }
+        h.click();
+        document.getElementById("fretboard_form").submit()
+      });
+      b.appendChild(c);
+    }
+    x[i].appendChild(b);
+    a.addEventListener("click", function(e) {
+      /* When the select box is clicked, close any other select boxes,
+      and open/close the current select box: */
+      e.stopPropagation();
+      closeAllSelect(this);
+      this.nextSibling.classList.toggle("sehi");
+      this.classList.toggle("slar-active");
+    });
+  }
+  // getting Tones from Function 0=Template
+  var pos_val = document.getElementById('position_select').value
+  var note_range = document.getElementById('note_range').value
+  window.onload = getTonesFromDataChords(pos_val, note_range)
+</script>
+
+{% block footer %}
+{% endblock %}

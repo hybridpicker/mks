@@ -16,5 +16,6 @@ class Command(BaseCommand):
         call_command('loaddata', 'downloadsection/fixtures/forms.json')
 #        call_command('loaddata', 'todo/fixtures/todo.json')
         call_command('loaddata', 'school/fixtures/dump_data.json')
+        call_command('loaddata', 'positionfinder/fixtures/databasedump.json')
         result = {'message': "Successfully Loading initial data"}
         return json.dumps(result)

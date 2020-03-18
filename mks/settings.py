@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'downloadsection.apps.DownloadsectionConfig',
     'todo',
     'projects.apps.ProjectsConfig',
+    'positionfinder.apps.PositionfinderConfig',
     #sitemaps
     'django.contrib.sitemaps',
 ]
