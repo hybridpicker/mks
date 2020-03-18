@@ -52,7 +52,7 @@ function getTonesFromDataScales(y){
   }
 
   /* Change for RootNote Color */
-  var string_array = ['eString', 'bString', 'gString', 'dString', 'AString', 'eLowString']
+  var string_array = ['eString', 'bString', 'gString', 'dString', 'AString', 'ELowString']
   for (var key in scale_data.root) {
     if (scale_data.root.hasOwnProperty(key)) {
       var root = scale_data.root[key]
@@ -89,7 +89,7 @@ function getTonesFromDataChords(x, y){
   }
 
   /* Change for RootNote Color */
-  var string_array = ['eString', 'bString', 'gString', 'dString', 'AString', 'eLowString']
+  var string_array = ['eString', 'bString', 'gString', 'dString', 'AString', 'ELowString']
   for (var key in voicing_data.root) {
     if (voicing_data.root.hasOwnProperty(key)) {
       var root = voicing_data.root[key]

@@ -1,7 +1,4 @@
-body {
-  font-family: 'Dosis', sans-serif;
-  font-size: 18px;
-}
+
 .fretboard {
   display: grid;
   grid-column-gap: 0 !important;
@@ -24,7 +21,7 @@ body {
 .eString, .bString, .gString {
   border-top: 2px solid rgb(136,138,154);
 }
-.dString, .AString, .eLowString {
+.dString, .AString, .ELowString {
   border-top: 2.5px solid rgb(171,173,193);
 }
 .fret .note {
@@ -303,7 +300,6 @@ h1 {
 /* The container must be positioned relative: */
 .sfbsf, .sfbsfnr, .sfbsfpos, .sfbsfnos {
   position: relative;
-  font-family: 'Dosis', sans-serif;
   font-size: 18px;
   font-color: #0F262B;
   display: inline-block;
@@ -419,7 +415,6 @@ select {
   padding-bottom: 1%;
 }
 form button {
-  font-family: 'Dosis', sans-serif;
   font-size: 18px;
   box-shadow: 0 4px #791006;
   width: 20%;

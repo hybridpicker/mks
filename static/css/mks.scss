@@ -486,7 +486,7 @@ textarea{
   margin-right: 6em;
   margin-top: 3em;
   color: $whiteColor;
-  font-family: 'Dosis', sans-serif;
+  font-family: $paragraphFontFamily;
   font-size: 18px;
 }
 
@@ -521,7 +521,7 @@ ul {
 .blogpost ul {
   list-style-image: url(/static/ul_li/bullet_icon.jpg);
   overflow: hidden;
-  font-family: 'Dosis';
+  font-family: $paragraphFontFamily;
   font-size: 22px;
   margin-left: 2rem;
   padding-left: 2rem;
@@ -1725,7 +1725,7 @@ a button {
 /* The container must be positioned relative: */
 .sfbsf {
   position: relative;
-  font-family: 'Dosis', sans-serif;
+  font-family: $paragraphFontFamily;
   font-size: 18px;
   font-color: #0F262B;
   display: inline-block;
@@ -1743,7 +1743,7 @@ a button {
 /* The container must be positioned relative: */
 .sfbsfnr {
   position: relative;
-  font-family: 'Dosis', sans-serif;
+  font-family: $paragraphFontFamily;
   font-size: 18px;
   font-color: #0F262B;
   display: inline-block;
@@ -1762,7 +1762,7 @@ a button {
 /* The container must be positioned relative: */
 .sfbsfpos {
   position: relative;
-  font-family: 'Dosis', sans-serif;
+  font-family: $paragraphFontFamily;
   font-size: 18px;
   font-color: #0F262B;
   display: inline-block;
@@ -1780,7 +1780,7 @@ a button {
 /* The container must be positioned relative: */
 .sfbsfnos {
   position: relative;
-  font-family: 'Dosis', sans-serif;
+  font-family: $paragraphFontFamily;
   font-size: 18px;
   font-color: #0F262B;
   display: inline-block;
