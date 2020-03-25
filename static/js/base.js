@@ -2,8 +2,9 @@ function playtone(x, y){
   var audio = new Audio('/static/fretboardmedia/tone_sounds/' + x + '.wav');
   var string = '.' + y
   audio.play();
-  var root_class = document.querySelector(string + ' img.tone.' + x + '.active').classList.contains('root')
-  if ( root_class == true ) {
+  console.log(x)
+  var root_class = document.querySelector(string + ' img.tone.' + x + '.active').getAttribute('src')
+  if ( root_class == '/static/fretboardmedia/red_dot.svg' ) {
   document.querySelector(string + ' img.tone.' + x + '.active').setAttribute('src', '/static/fretboardmedia/red_dot_active.svg');
   setTimeout(function () {
     document.querySelector(string + ' img.tone.' + x + '.active').setAttribute('src', '/static/fretboardmedia/red_dot.svg');
