@@ -2196,9 +2196,6 @@ td {
 
 section.events-container-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-areas: "all-events-banner all-events-container all-events-container all-events-container" "all-events-banner all-events-container all-events-container all-events-container" "all-events-banner all-events-container all-events-container all-events-container";
 }
 
 .all-events-banner {
@@ -2210,7 +2207,6 @@ section.events-container-grid {
   grid-area: all-events-container;
 }
 section.events-container-grid h1{
-  margin-left: calc((100% / 4) * -1);
   border-bottom: solid 5px $primaryColor;
   padding-bottom: 0.5rem;
 }
@@ -2718,9 +2714,12 @@ a#show_art:hover, a#show_elementary{
   #blogEntrySection h1{
     width:100%;
   }
-  #blogEntrySection.container{
+  #blogEntrySection.container, .mbs.container{
     margin:0;
     width:100%;
+  }
+  .mbs.container{
+    padding: 0;
   }
   #blogEntrySection .tmcbpb{
     width: 98%;
