@@ -28,6 +28,7 @@ def get_student(request):
     last_name = student.last_name
     start_date = student.start_date
     subject = student.subject
+    birth_date = student.birth_date
     '''
     Parent data
     '''
@@ -43,6 +44,7 @@ def get_student(request):
                 'first_name': first_name,
                 'last_name': last_name,
                 'start_date': start_date,
+                'birth_date': birth_date,
                 'subject': subject,
                 'parent_first_name': parent_first_name,
                 'parent_last_name': parent_last_name,

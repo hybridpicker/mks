@@ -83,6 +83,9 @@ class Student(models.Model):
     start_date = models.DateField(
         _("start date"),
         default=datetime.date.today, blank=True)
+    birth_date = models.DateField(
+        _("birth_date"),
+        default=datetime.date.today, blank=True)
     phone = PhoneField(_(u'telephone number'),
                        blank=True, default='+43 ', help_text='Telefonnummer')
     email = models.EmailField(_(u'e-mail'), max_length=70, blank=True)

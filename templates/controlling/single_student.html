@@ -19,6 +19,9 @@
   <h1>{{ first_name }} {{ last_name }}</h1>
   <br>
   <p>Instrument: <strong>{{ subject }}</strong></p>
+  {% if birth_date %}
+  <p>Geburtstag: <strong>{{ birth_date }}</strong></p>
+  {% endif %}
   <p>Anmeldungsdatum: <strong>{{ start_date }}</strong></p>
   <br>
   <h2>Eltern</h2>
