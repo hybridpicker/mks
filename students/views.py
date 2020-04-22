@@ -33,7 +33,7 @@ def mail_new_student(from_email, student_context, send_mail=True):
     to = settings.EMAIL_USER_RECEIVER
 
     if send_mail:
-        
+
         """
         #TODO: get attachment to automate message
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
@@ -110,12 +110,17 @@ def signInView(request):
             parent_first_name = request.POST['parent_first_name']
             parent_last_name = request.POST['parent_last_name']
             from_email = request.POST['from_email']
+            birthdate_year = request.POST['birthdate_year']
+            birthdate_month = request.POST['birthdate_month']
+            birthdate_day = request.POST['birthdate_day']
             adress_line = request.POST['adress_line']
             subject = form.cleaned_data['subject'].id
             house_number = request.POST['house_number']
             postal_code = request.POST['postal_code']
             city = request.POST['city']
             email = request.POST['from_email']
+            date_string = birthdate_month + ' ' + birthdate_day + ' ' + birthdate_year
+            birthdate = datetime.datetime.strptime(date_string, '%m %d %Y')
             new_parent = Parent(first_name=parent_first_name,
                                 last_name=parent_last_name,
                                 house_number=house_number,
@@ -126,6 +131,7 @@ def signInView(request):
             new_parent.save()
             new_student = Student(first_name=first_name,
                                   last_name=last_name,
+                                  birth_date=birthdate,
                                   subject_id=subject,
                                   parent_id=new_parent.id)
             new_student.save()
