@@ -10,6 +10,7 @@ from events.models import Event
 from teaching.models import Teacher
 from gallery.models import Photo
 from blog.models import BlogPost
+from home.models import IndexText
 # Create your views here.
 
 def get_random_pic():
@@ -37,10 +38,12 @@ def home (request):
     events = Event.objects.all()
     teachers = Teacher.objects.all()
     blog = BlogPost.objects.all().order_by('-date')[0:3]
+    index_text = IndexText.objects.all().first()
     teacher_counter = len(teachers)
     middle_pic = get_random_pic()
     photos = get_photo_data()
     context = {
+        'index_text': index_text,
         'blog': blog,
         'events': events,
         'name': name,
