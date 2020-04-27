@@ -37,7 +37,8 @@
             </button>
             <div class="dropdown-content-c">
               <a href="{% url 'event_managing_view' %}">Veranstaltungen</a>
-              <a href="{% url 'show_blogs_editing'%}">Blog</a>
+              <a href="{% url 'show_blogs_editing' %}">Blog</a>
+              <a href="{% url 'get_index_text' %}">Startseite</a>
             </div>
             <div class="dropdown-hover-section-c">
             </div>
@@ -96,6 +97,7 @@
         <a class="categoryHeadingMobileNoCursor" href="{% url 'todo_categories_view'%}">Kategorien</a>
         <a class="mainHeadingMobile" href="{% url 'event_managing_view' %}">Veranstaltungen</a>
         <a class="mainHeadingMobile" href="{% url 'get_controlling_student' %}">Schüler_innen</a>
+        <a class="mainHeadingMobile" href="{% url 'get_index_text' %}">Startseite</a>
         <a class="categoryHeadingMobileNoCursor" href="{% url 'get_controlling_student' %}">Anmeldungen</a>
         <a class="mainHeadingMobile" href="{% url 'logout' %}">Logout</a>
       </div>
