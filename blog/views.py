@@ -111,15 +111,15 @@ class BlogPostView(View):
             context = {'blog_post': blog_post}
         return render(request, 'blog/blog_post.html', context)
 
-class BlogPostEditView(View):
-    def get(self, request, *args, **kwargs):
-        blog = get_object_or_404(BlogPost, id=kwargs['id'])
-        if request.method == "POST":
-            form = ArticleForm(request.POST, instance=blog)
-            if form.is_valid():
-                blog = form.save(commit=False)
-                blog.save()
-                return redirect('post_detail', pk=blog.pk)
-        else:
-            form = ArticleForm(instance=blog)
-        return render(request, 'blog/edit/form.html', {'form': form})
+@login_required(login_url='/team/login/')
+def post_edit(request, pk):
+    post = get_object_or_404(BlogPost, pk=pk)
+    if request.method == "POST":
+        form = ArticleForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+        return redirect('show_blogs_editing')
+    else:
+        form = ArticleForm(instance=post)
+    return render(request, 'blog/edit/form.html', {'form': form})
