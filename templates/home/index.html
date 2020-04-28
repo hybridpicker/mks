@@ -88,6 +88,9 @@
       </div>
       {% endfor %}
     </div>
+    <a class="categoryHeadingMobileNoCursor" href="{% url 'blog_summary' %}">
+      <button>Blogbeiträge</button>
+    </a>
   </div>
 </section>
 {% endif %}
@@ -125,10 +128,6 @@
   {% endblock %}
   <script type="text/javascript">
     document.onload = randomPicShow();
-    window.onload = function exampleFunction() {
-      console.log('PING');
-      // Function to be executed
-    }
   </script>
 <script>
 
