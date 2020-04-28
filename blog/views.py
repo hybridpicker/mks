@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+from urllib.parse import urlparse
 
 from blog.models import BlogPost
 from blog.forms import ArticleForm
@@ -17,6 +18,29 @@ def blog_summary(request):
         'all_blogs': all_blogs
         }
     return render(request, "blog/summary.html", context)
+
+def youtube_id(url):
+    o = urlparse(url)
+    if o.netloc == 'youtu.be':
+        return o.path[1:]
+    elif o.netloc in ('www.youtube.com', 'youtube.com'):
+        if o.path == '/watch':
+            id_index = o.query.index('v=')
+            return o.query[id_index+2:id_index+13]
+        elif o.path[:7] == '/embed/':
+            return o.path.split('/')[2]
+        elif o.path[:3] == '/v/':
+            return o.path.split('/')[2]
+    return None  # fail?
+
+def check_youtube_link(content):
+    if content.find('>https://www.youtube'):
+        first_position = content.find('>https://www.youtube') + 1
+        last_postion = content.find('</a>')
+        url = content[first_position:last_postion]
+        return youtube_id(url)
+    else:
+        return False
 
 @login_required(login_url='/team/login/')
 def blog_thanks(request):
@@ -79,7 +103,12 @@ def create_blog(request):
 class BlogPostView(View):
     def get(self, request, *args, **kwargs):
         blog_post = get_object_or_404(BlogPost, slug=kwargs['slug'], published_year=kwargs['published_year'])
-        context = {'blog_post': blog_post}
+        youtube = check_youtube_link(blog_post.content)
+        if youtube:
+            print(youtube)
+            context = {'blog_post': blog_post, 'youtube':youtube}
+        else:
+            context = {'blog_post': blog_post}
         return render(request, 'blog/blog_post.html', context)
 
 class BlogPostEditView(View):
