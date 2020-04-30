@@ -8,7 +8,7 @@ def gallery_view (request):
     try:
         category_id = int(request.GET['category'])
     except MultiValueDictKeyError:
-            category_id = 1
+            category_id = PhotoCategory.objects.all().order_by('title').first().id
     photos = Photo.objects.filter(category_id=category_id)
     category = PhotoCategory.objects.all()
 

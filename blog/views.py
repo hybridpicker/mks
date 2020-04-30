@@ -48,7 +48,7 @@ def blog_thanks(request):
 
 @login_required(login_url='/team/login/')
 def show_blogs_editing(request):
-    all_blogs = BlogPost.objects.all()
+    all_blogs = BlogPost.objects.all().order_by("date").reverse()
     context = {
         'all_blogs': all_blogs
         }
