@@ -37,7 +37,7 @@ def home (request):
     logo = school_data.school_logo
     events = Event.objects.all()
     teachers = Teacher.objects.all()
-    blog = BlogPost.objects.all().order_by('-date')[0:3]
+    blog = BlogPost.objects.all().order_by('-date')[0:6]
     index_text = IndexText.objects.all().first()
     teacher_counter = len(teachers)
     middle_pic = get_random_pic()
