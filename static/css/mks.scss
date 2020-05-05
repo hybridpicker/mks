@@ -1049,11 +1049,29 @@ canvas {
   color: #0F262B;
   padding: 10px 0;
 }
+.bcls > div{
+  margin:auto;
+}
 .bcrs {
   position: relative;
 }
 .bcls {
   position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-items: end;
+}
+.bcls > a{
+  padding: 0;
+}
+.bcls > a > img{
+  height: 36px;
+  width: auto;
+  padding-top: 20px;
+  opacity: 65%;
+}
+.bcls > a > img:hover{
+  opacity: 100%;
 }
 .cbsf{
   font-family: $linkFontFamily;
@@ -2545,7 +2563,7 @@ html:not([data-scroll='0']) {
     margin-left: auto;
     margin-right: auto;
   }
-  .nvb{
+  .nvb, .bfsc{
     max-width: 1800px;
     margin-left: auto;
     margin-right: auto;
