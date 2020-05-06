@@ -291,6 +291,14 @@ button.button{
 button.button{
   display:none;
 }
+@media only screen and (max-width: 1120px) {
+  button.button{
+    grid-area: contentClose;
+  }
+  li.taskItem {
+    grid-template-areas: "taskCheckbox todo-content todo-content todo-content todo-priority-heading contentClose";
+  }
+}
 @media only screen and (max-width: 771px){
   button.todoButton {
     width: 11rem !important;
