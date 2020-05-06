@@ -1362,7 +1362,7 @@ input {
     padding: 10px;
   }
 }
-form button, a button {
+form button, a button, button.button {
   font-family: $firstHeadingFamily;
   font-size: 18px;
   box-shadow: 0 4px #BD2123;
@@ -1374,7 +1374,7 @@ form button, a button {
   border-color: #FF1B1E;
   margin: 1rem;
 }
-form button:hover, a button:hover {
+form button:hover, a button:hover, button.button:hover {
   transform: translate(0, 1.5px);
   box-shadow: 0 2.5px #BD2123;
   cursor: pointer;

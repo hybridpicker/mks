@@ -80,6 +80,7 @@
     <ul class="taskList">
       {% for todo in todos %}
       <li id="li_{{todo.id}}" class="taskItem cat_{{ todo.category.id }} li_prior_{{todo.priority}}">
+        <button class="button" type="button" onclick="unShowNotes({{todo.id}})" id="un-show-button-{{todo.id}}">X</button>
         <div class="todoPriorityHeading" id="priorityHeading_{{todo.id}}">
           {% for x,y in priority_choices.fields.priority.choices %}
             {% if todo.priority == x %}
@@ -130,7 +131,6 @@
                     <button class="taskChange" name="changeTask" type="submit">Ändern</button>
                   </div>
                   <div class="item5">
-                    <button class="taskChange" name="changeTask" onclick="unShowNotes({{todo.id}})">Schließen</button>
                   </div>
                 </form>
         </div>
@@ -231,12 +231,15 @@
     // Set Reverse Function
     document.getElementById('contentTodo' + id).classList.add("active");
     document.getElementById('priorityHeading_' + id).style.display = "none"
+    document.getElementById("un-show-button-"+id).style.display = "block";
   }
   function unShowNotes(id){
     // Save Input Icon Layout
     var input = document.getElementById(id);
     input.style.marginTop = "auto";
-    document.getElementById("extra-todo-container-"+id).style.display = "none";
+    var content_container =  document.getElementById("extra-todo-container-"+id)
+    content_container.style.display = "none";
+    document.getElementById("un-show-button-"+id).style.display = "none";
     document.getElementById('priorityHeading_' + id).style.display = "flex";
     if (document.getElementById('h3_cat_all').classList.contains('active')) {
       document.getElementById('catFormChangeTodo' + id).value = "";

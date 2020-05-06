@@ -150,7 +150,7 @@ li.taskItem > .todoPriorityHeading{
   cursor: pointer;
 }
 .todo-content.active:hover{
-  cursor: auto;
+  cursor: pointer;
 }
 .todo-content > label { grid-area: header; }
 .taskDate { grid-area: main; }
@@ -284,6 +284,13 @@ button.todoButton:hover{
   box-shadow: 0 2.5px #BD2123;
   cursor: pointer;
 }
+button.button{
+  height: auto;
+  width: 36px;
+}
+button.button{
+  display:none;
+}
 @media only screen and (max-width: 771px){
   button.todoButton {
     width: 11rem !important;
@@ -410,7 +417,7 @@ li .item5 { grid-area: cancel; }
 li .extra-todo-container {
   padding-top: 20px;
   display: none;
-  grid-template-areas: 'menu main priority' 'menu cancel save';
+  grid-template-areas: 'menu main priority' 'menu save save';
   grid-gap: 0 2rem;
 }
 li .extra-todo-container > div {
