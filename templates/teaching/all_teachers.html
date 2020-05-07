@@ -30,6 +30,16 @@
 {% endblock %}
 
 {% block banner %}
+{% if group_photo %}
+
+<img id="homebanner" src="{{ group_photo.image.url }}" alt="">
+{% if group_photo.mobile_image %}
+<img id="mbimg" src="{{ group_photo.mobile_image.url }}" alt="">
+{% else %}
+<img id="mbimg" src="{{ group_photo.image.url }}" alt="">
+{% endif %}
+
+{% endif %}
 {% endblock %}
 
 {% block body %}

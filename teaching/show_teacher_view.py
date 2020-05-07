@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from teaching.models import Teacher
+from teaching.models import Teacher, GroupPhoto
 from teaching.subject import SubjectCategory, Subject
 
 def get_teachers_from_category(subject_name):
@@ -17,6 +17,7 @@ def get_teachers_from_category(subject_name):
     return y.distinct()
 
 def show_teacher_view(request):
+    group_photo = GroupPhoto.objects.all().first()
     categories = SubjectCategory.objects.all()
     teacher_picked = get_teachers_from_category("Zupfinstrumente")
     teacher_keys = get_teachers_from_category("Tasteninstrumente")
@@ -30,8 +31,8 @@ def show_teacher_view(request):
     director = get_teachers_from_category("Direktion")
     secretary = get_teachers_from_category("Sekretariat")
     elementary_teaching = get_teachers_from_category("Musikalische Früherziehung")
-    print(elementary_teaching)
     context = {
+        'group_photo': group_photo,
         'categories': categories,
         'director': director,
         'secretary': secretary,
