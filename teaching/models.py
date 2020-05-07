@@ -8,6 +8,21 @@ from location.models import Location, Country
 from users.models import CustomUser
 from teaching.subject import Subject
 
+class GroupPhoto(models.Model):
+    image = models.ImageField(
+        upload_to='teachers/images/', blank=True,)
+    mobile_image = models.ImageField(
+        upload_to='teachers/images/mobile/', blank=True,)
+        
+    class Meta: # pylint: disable=too-few-public-methods
+        '''
+        Meta class for GroupPhoto
+        '''
+        ordering = ('image',)
+        verbose_name = u'Group Photo'
+        verbose_name_plural = u'Group Photos'
+
+
 class Teacher(models.Model):
     '''
     Model holding teacher data
