@@ -32,6 +32,8 @@
       {% csrf_token %}
       {{ form.media }}
       <div class="form-content">
+        <p>Lead*:</p>
+        {{ form.lead_paragraph }}
         <p>Text*:</p>
         {{ form.content }}
       </div>

@@ -11,6 +11,7 @@ from teaching.models import Teacher
 from gallery.models import Photo
 from blog.models import BlogPost
 from home.models import IndexText
+from downloadsection.models import IndexDownload
 # Create your views here.
 
 def get_random_pic():
@@ -42,10 +43,12 @@ def home (request):
     teacher_counter = len(teachers)
     middle_pic = get_random_pic()
     photos = get_photo_data()
+    material_data = IndexDownload.objects.all()
     context = {
         'index_text': index_text,
         'blog': blog,
         'events': events,
+        'material_data': material_data,
         'name': name,
         'logo': logo,
         'teacher_counter': teacher_counter,
