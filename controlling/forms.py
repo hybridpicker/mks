@@ -7,4 +7,4 @@ class IndexForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = IndexText
-        fields = ['content']
+        fields = ['content', 'lead_paragraph']
