@@ -48,6 +48,7 @@ class BlogPost(models.Model):
     meta_title = models.CharField(max_length=60)
     meta_description = models.TextField()
     slug = models.SlugField(_("slug"), max_length=200, unique=True)
+    ordering = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return '%s (%s)' % (self.title, self.published_year)
@@ -56,6 +57,6 @@ class BlogPost(models.Model):
         '''
         Meta class for BlogPosts
         '''
-        ordering = ('category', 'date')
+        ordering = ('category', 'date', 'ordering')
         verbose_name = u'Blog Post'
         verbose_name_plural = u'Blog Posts'
