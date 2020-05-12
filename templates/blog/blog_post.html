@@ -9,7 +9,7 @@
 <meta property="og:title" content="{{ blog_post.title }}">
 <meta property="og:description" content="{{ blog_post.meta_description }}">
 <meta property="og:image" content="{{blog_post.image.url}}">
-<meta property="og:url" content="https://musik-kunst-schule.at/blog/{{blog_post.published_year}}/{{blog_post.slug}}">
+<meta property="og:url" content="{{ HTTP_HOST }}/blog/{{blog_post.published_year}}/{{blog_post.slug}}">
 
 <meta name="twitter:title" content="Galerie der Musik- und Kunstschule St. Pölten"">
 <meta name="twitter:description" content="{{ blog_post.meta_description }}">
