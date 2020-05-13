@@ -56,7 +56,9 @@
   <div class="container">
     <div class="blogpost">
       <h1>{{ blog_post.title }}</h1>
-      {{ blog_post.content|safe }}
+      <div id="blogContent">
+        {{ blog_post.content|safe }}
+      </div>
     </div>
     {% if youtube %}
     <div class="youtube">
@@ -71,5 +73,27 @@
 </div>
 {% endblock %}
 {% block footer %}
+<script type="text/javascript">
+  function createGallery(){
+    var countImg = document.getElementById("blogContent").getElementsByTagName("img").length
+    // Creating for every Img an ID and className
+    for (i = 0; i < countImg; i++) {
+        document.getElementById("blogContent").getElementsByTagName("img")[i].setAttribute("id", "blogImg" + i);
+        document.getElementById("blogContent").getElementsByTagName("img")[i].setAttribute("class", "blogImg");
+        document.getElementById("blogContent").getElementsByTagName("img")[i].removeAttribute('height');
+        document.getElementById("blogContent").getElementsByTagName("img")[i].removeAttribute('width');
+        console.log(i)
+    }
+    // Find paragraphs that contains an Image
+    var paragraphCount = document.querySelectorAll("p").length
+    for (i = 0; i < paragraphCount; i++) {
+        if (document.querySelectorAll("p")[i].contains(document.querySelector(".blogImg"))){
+          document.querySelectorAll("p")[i].setAttribute("class", "gallery-show");
+          console.log('found')
+        }
+        console.log(i)
+    }
 
+  }
+</script>
 {% endblock %}
