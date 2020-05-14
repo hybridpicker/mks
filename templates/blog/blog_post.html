@@ -56,7 +56,9 @@
   <div class="container">
     <div class="blogpost">
       <h1>{{ blog_post.title }}</h1>
-      {{ blog_post.content|safe }}
+      <div id="blogContent">
+        {{ blog_post.content|safe }}
+      </div>
     </div>
     {% if youtube %}
     <div class="youtube">
@@ -71,5 +73,8 @@
 </div>
 {% endblock %}
 {% block footer %}
+
+<!--- Blog JS --->
+<script src="{% static '/js/blog.js' %}"></script>
 
 {% endblock %}
