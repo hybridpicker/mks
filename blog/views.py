@@ -36,7 +36,7 @@ def youtube_id(url):
 def check_youtube_link(content):
     if content.find('>https://www.youtube'):
         first_position = content.find('>https://www.youtube') + 1
-        last_postion = content.find('</a>')
+        last_postion = content.find('</a>', first_position)
         url = content[first_position:last_postion]
         return youtube_id(url)
     else:
