@@ -40,10 +40,10 @@
             <td style="text-align:center;" align="left"><strong>{{student.start_date}}</strong></td>
             <td>
               <div class="student-cross-burger">
-                <a href="?id={{ student.id }}">
+                <a style="display:none;" href="?id={{ student.id }}">
                   {% include "templates/svg/student_nav_bar_crossburger.html" %}
                 </a>
-                <span class="tooltiptext">Eintrag löschen</span>  
+                <span class="tooltiptext">Eintrag löschen</span>
               </div>
             </td>
           </tr>
