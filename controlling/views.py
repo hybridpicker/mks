@@ -42,6 +42,7 @@ def get_student(request):
     postal_code = student.parent.postal_code
     city = student.parent.city
     email = student.parent.email
+    parent_phone = student.parent.phone
     # Model data
     context = {
                 'first_name': first_name,
@@ -57,6 +58,7 @@ def get_student(request):
                 'city': city,
                 'postal_code': postal_code,
                 'email': email,
+                'parent_phone': parent_phone,
                 }
     return render(request, 'controlling/single_student.html', context)
 

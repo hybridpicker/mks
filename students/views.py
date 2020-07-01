@@ -102,6 +102,7 @@ def signInView(request):
             email = form.cleaned_data['from_email']
             parent_first_name = request.POST['parent_first_name']
             parent_last_name = request.POST['parent_last_name']
+            phone = request.POST['phone']
             '''
             Request Data
             '''
@@ -119,6 +120,7 @@ def signInView(request):
             postal_code = request.POST['postal_code']
             city = request.POST['city']
             email = request.POST['from_email']
+            phone = request.POST['phone']
             date_string = birthdate_month + ' ' + birthdate_day + ' ' + birthdate_year
             birthdate = datetime.datetime.strptime(date_string, '%m %d %Y')
             new_parent = Parent(first_name=parent_first_name,
@@ -127,7 +129,8 @@ def signInView(request):
                                 postal_code=postal_code,
                                 adress_line=adress_line,
                                 city=city,
-                                email=email,)
+                                email=email,
+                                phone=phone)
             new_parent.save()
             new_student = Student(first_name=first_name,
                                   last_name=last_name,

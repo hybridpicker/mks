@@ -29,6 +29,9 @@
   <p>Straße: {{ adressline }} {{ house_number }}</p>
   <p>Ort: {{ postal_code }} {{ city }}</p>
   <p>Email: <a href="mailto:{{email}}">{{ email }}</a></p>
+  {% if parent_phone %}
+  <p>Telefonnummer: {{ parent_phone }}</p>
+  {% endif %}
   </div>
 </div>
 {% endblock %}
