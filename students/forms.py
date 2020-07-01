@@ -3,6 +3,7 @@ from django import forms
 from django.forms import ModelChoiceField
 from teaching.subject import Subject
 from datetime import datetime
+from phone_field import PhoneField
 
 def get_years_signinform():
     year_now = datetime.now().year
@@ -29,3 +30,4 @@ class SignInForm(forms.Form):
     house_number = forms.CharField(label="house_number", max_length=80, required=True)
     postal_code = forms.CharField(label="postal_code", max_length=30, required=True)
     city = forms.CharField(label="city", max_length=30, required=True)
+    phone = forms.CharField(label="phone", max_length=30, required=True)
