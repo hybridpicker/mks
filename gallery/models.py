@@ -3,6 +3,7 @@ from django.utils.translation import gettext as _
 
 class PhotoCategory(models.Model):
     title = models.CharField(_(u'Project Name'), max_length=50)
+    ordering = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return str(self.title)
@@ -11,7 +12,7 @@ class PhotoCategory(models.Model):
         '''
         Meta class for PhotoCategory
         '''
-        ordering = ['title']
+        ordering = ['ordering']
         verbose_name = u'Photo Category'
         verbose_name_plural = u'Photo Categories'
 
