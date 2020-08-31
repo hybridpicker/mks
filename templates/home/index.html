@@ -35,8 +35,19 @@
     document.getElementById("overlay-image-section").style.display = "none";
     document.getElementById("trailer").src="";
     document.querySelector("header").style.zIndex = "99"
+    document.cookie = "trailer=true";
   }
 </script>
+<style media="screen">
+  @media only screen and (max-width: 1200px) {
+    #overlay-image-section {
+      display:none !important;
+    }
+  }
+  #trailer{
+    margin-top: 2%;
+  }
+</style>
 {% endblock %}
 
 
@@ -50,19 +61,22 @@
 {% endblock %}
 {% block body %}
 
+{% if not request.COOKIES.trailer == 'true' %}
 <section onclick="disableYT()" id="overlay-image-section" class="overlay image" style="z-index:100; display:block;">
 
 <iframe id="trailer" width="90%" height="90%" src="https://www.youtube.com/embed/iHsmA76LMUw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-  <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="disableYT()">
+  <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="disableYT()" style="padding-right: 1rem;">
     {% include "templates/svg/nav_bar_crossburger.html" %}
 </a>
 <p id="gallery-text-overlay"></p>
 </section>
+{% endif %}
 
 <div class="mbs">
   <div id="home-container" class="container">
     <h1>{{ name }}</h1>
+
     <p><b>{{index_text.lead_paragraph|safe}}<b></p>
     {{index_text.content|safe}}
     <a href="{% url 'teaching_music'%}">
