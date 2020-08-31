@@ -70,7 +70,7 @@
 
 {% if not request.COOKIES.trailer == 'true' %}
 <section onclick="disableYT()" id="overlay-image-section" class="overlay image" style="z-index:100; display:block;">
-<iframe id="trailer" width="70%" height="70%" src="https://www.youtube.com/embed/iHsmA76LMUw?autoplay=1" allow="autoplay" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe id="trailer" width="70%" height="70%" src="https://www.youtube.com/embed/iHsmA76LMUw?autoplay=1" allow="autoplay" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
   <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="disableYT()" style="padding-right: 1rem;">
     {% include "templates/svg/nav_bar_crossburger.html" %}
