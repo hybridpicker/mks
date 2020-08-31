@@ -45,7 +45,7 @@
 <div class="mbs">
   <div id="home-container" class="container">
     <h1>{{ name }}</h1>
-    <p><b>{{index_text.lead_paragraph}}</b></p>
+    <p><b>{{index_text.lead_paragraph|safe}}<b></p>
     {{index_text.content|safe}}
     <a href="{% url 'teaching_music'%}">
       <button>Weiterlesen</button>
