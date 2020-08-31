@@ -47,6 +47,13 @@
   #trailer{
     margin-top: 2%;
   }
+  @media only screen and (min-width: 1800px) {
+    #trailer {
+      width: 1800px !important;
+      height: 1010px !important;
+      margin-top: 96px;
+    }
+  }
 </style>
 {% endblock %}
 
@@ -63,7 +70,6 @@
 
 {% if not request.COOKIES.trailer == 'true' %}
 <section onclick="disableYT()" id="overlay-image-section" class="overlay image" style="z-index:100; display:block;">
-
 <iframe id="trailer" width="90%" height="90%" src="https://www.youtube.com/embed/iHsmA76LMUw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
   <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="disableYT()" style="padding-right: 1rem;">
