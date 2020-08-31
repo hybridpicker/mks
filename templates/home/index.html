@@ -30,7 +30,15 @@
        randomPicShow();
    }
 </script>
+<script>
+  function disableYT(){
+    document.getElementById("overlay-image-section").style.display = "none";
+    document.getElementById("trailer").src="";
+    document.querySelector("header").style.zIndex = "99"
+  }
+</script>
 {% endblock %}
+
 
 {% block navbar %}
 {% endblock %}
@@ -41,6 +49,16 @@
 
 {% endblock %}
 {% block body %}
+
+<section onclick="disableYT()" id="overlay-image-section" class="overlay image" style="z-index:100; display:block;">
+
+<iframe id="trailer" width="90%" height="90%" src="https://www.youtube.com/embed/iHsmA76LMUw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+  <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="disableYT()">
+    {% include "templates/svg/nav_bar_crossburger.html" %}
+</a>
+<p id="gallery-text-overlay"></p>
+</section>
 
 <div class="mbs">
   <div id="home-container" class="container">
@@ -155,9 +173,7 @@
   <script type="text/javascript">
     document.onload = randomPicShow();
   </script>
-<script>
 
-</script>
   {% block footer %}
 
   {% endblock %}
