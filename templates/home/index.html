@@ -159,14 +159,12 @@
   </div>
 </section>
 {% endif %}
-<!--
+{% if events %}
 <div class="mbs container">
 
   <section class="events-container-grid">
     <div class="all-events-container">
       <h1>Veranstaltungen</h1>
-      <h3 style="color: #dc143c;">Aufgrund der COVID-19-Krise sind derzeit alle Veranstaltungen der Musik- und Kunstschule in diesem Schuljahr bis auf Weiteres abgesagt.</h3>
-
       {% for event in events %}
       <div class="event-container">
         <div class="mks-event-date">
@@ -188,7 +186,7 @@
     </section>
 
   </div>
---->
+{% endif %}
   {% endblock %}
   <script type="text/javascript">
     document.onload = randomPicShow();
