@@ -30,7 +30,33 @@
        randomPicShow();
    }
 </script>
+<script>
+  function disableYT(){
+    document.getElementById("overlay-image-section").style.display = "none";
+    document.getElementById("trailer").src="";
+    document.querySelector("header").style.zIndex = "99"
+    document.cookie = "trailer=true";
+  }
+</script>
+<style media="screen">
+  @media only screen and (max-width: 1200px) {
+    #overlay-image-section {
+      display:none !important;
+    }
+  }
+  #trailer{
+    margin-top: 7%;
+  }
+  @media only screen and (min-width: 1800px) {
+    #trailer {
+      width: 1800px !important;
+      height: 1010px !important;
+      margin-top: 96px;
+    }
+  }
+</style>
 {% endblock %}
+
 
 {% block navbar %}
 {% endblock %}
@@ -42,10 +68,22 @@
 {% endblock %}
 {% block body %}
 
+{% if not request.COOKIES.trailer == 'true' %}
+<section onclick="disableYT()" id="overlay-image-section" class="overlay image" style="z-index:100; display:block;">
+<iframe id="trailer" width="70%" height="70%" src="https://www.youtube.com/embed/iHsmA76LMUw?autoplay=1" allow="autoplay" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+
+  <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="disableYT()" style="padding-right: 1rem;">
+    {% include "templates/svg/nav_bar_crossburger.html" %}
+</a>
+<p id="gallery-text-overlay"></p>
+</section>
+{% endif %}
+
 <div class="mbs">
   <div id="home-container" class="container">
     <h1>{{ name }}</h1>
-    <p><b>{{index_text.lead_paragraph}}</b></p>
+
+    <p><b>{{index_text.lead_paragraph|safe}}<b></p>
     {{index_text.content|safe}}
     <a href="{% url 'teaching_music'%}">
       <button>Weiterlesen</button>
@@ -121,14 +159,12 @@
   </div>
 </section>
 {% endif %}
-<!--
+{% if events %}
 <div class="mbs container">
 
   <section class="events-container-grid">
     <div class="all-events-container">
       <h1>Veranstaltungen</h1>
-      <h3 style="color: #dc143c;">Aufgrund der COVID-19-Krise sind derzeit alle Veranstaltungen der Musik- und Kunstschule in diesem Schuljahr bis auf Weiteres abgesagt.</h3>
-
       {% for event in events %}
       <div class="event-container">
         <div class="mks-event-date">
@@ -150,14 +186,12 @@
     </section>
 
   </div>
---->
+{% endif %}
   {% endblock %}
   <script type="text/javascript">
     document.onload = randomPicShow();
   </script>
-<script>
 
-</script>
   {% block footer %}
 
   {% endblock %}
