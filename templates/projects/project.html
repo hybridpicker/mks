@@ -15,6 +15,9 @@
       border-radius: 0 0 4rem 0;
     }
   }
+  span {
+      text-decoration: none;
+  }
 </style>
 
 {% endblock %}
@@ -30,10 +33,8 @@
       <h1>{{ project.title }}</h1>
       <p>{{ project.lead_paragraph }}</p>
       <img src="{{ project.image.url }}" alt="">
-      <h2>Pressetext:</h2>
       {{ project.description | safe }}
     </div>
-    <!--
     {% if events %}
     <h2>Kommende Veranstaltungen</h2>
       {% for event in events %}
@@ -53,10 +54,9 @@
       </div>
       {% endfor %}
     {% endif %}
-    -->
     {% if project.youtube_id_one %}
     <div class="youtube">
-      <h2>Musikalische Referenzen</h2>
+      <h2>Referenzen</h2>
       <div class="youtube-grid">
         <iframe src="https://www.youtube.com/embed/{{ project.youtube_id_one }}"
         frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
