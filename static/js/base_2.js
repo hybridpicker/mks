@@ -33,8 +33,7 @@ function getTonesFromDataScales(y){
 
   reset_fretboard()
   var frets = ['one','two','three','four','five','six',
-              'seven','eight','nine','ten','eleven', 'twelve',
-              'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen']
+              'seven','eight','nine','ten','eleven', 'twelve']
   var strings = ['ELowString', 'AString', 'dString',
                 'gString', 'bString', 'eString']
   /* x sets the id of inversions */
@@ -58,26 +57,20 @@ function getTonesFromDataScales(y){
           if (pos_val != 0){
             /* Count String Range of String X and String Y -> Deactivate Tone with wider range on */
             /* 1. Find String Name of Active Notes */
+            /* 2. Find Range lowest to highest Note on Strings */
+            /* 3. Deactivate Note with longest Range */
             var multiple_tone = tone_name;
-            var list_of_strings = []
             for (variable in frets) {
               for (string in strings){
-                if (document.querySelectorAll('.' + frets[variable] + '.' + strings[string] + ' .' + tone_name + '.active').length != 0 ){
-                  /* push string into list */
-                  list_of_strings.push(strings[string])
+                console.log('.' + frets[variable] + '.' + strings[string] + '.active')
+
+                if (document.querySelectorAll('.' + frets[variable] + '.' + strings[string] + '.active').length != 0 ){
+                  /* Create Dict for frets */
+                  console.log('FOUND')
                 }
               }
+
             }
-            /* 2. Find Range lowest to highest Note on Strings */
-            for (string in list_of_strings){
-              for (fret in frets){
-                if (document.querySelectorAll('.' + list_of_strings[string] + '.' + frets[fret] + ' .active').length > 0){
-                  console.log(frets[fret])
-                  console.log(list_of_strings[string])
-                }
-              }
-            }
-            /* 3. Deactivate Note with longest Range */
           }
         }
       }
