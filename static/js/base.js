@@ -69,15 +69,37 @@ function getTonesFromDataScales(y){
               }
             }
             /* 2. Find Range lowest to highest Note on Strings */
-            for (string in list_of_strings){
+            var first_string = []
+            var second_string = []
+            var available_strings = []
+            for (string in strings){
               for (fret in frets){
                 if (document.querySelectorAll('.' + list_of_strings[string] + '.' + frets[fret] + ' .active').length > 0){
-                  console.log(frets[fret])
-                  console.log(list_of_strings[string])
+                  if (string > 0){
+                    second_string.push(fret)
+                  }
+                  else {
+                    first_string.push(fret)
+                  }
+                  available_strings.push(list_of_strings[string])
                 }
               }
             }
+            var first_string_range = (first_string[first_string.length - 1]) - first_string[0]
+            var second_string_range = (second_string[second_string.length - 1]) - second_string[0]
+            var first_string = available_strings[1]
+            var second_string = available_strings[available_strings.length - 1]
             /* 3. Deactivate Note with longest Range */
+            if (first_string_range > second_string_range){
+              element = document.querySelectorAll('.' + first_string + ' .' + tone_name);
+              element[0].classList.remove("active")
+              element[1].classList.remove("active")
+            }
+            else {
+              element = document.querySelectorAll('.' + second_string + ' .' + tone_name);
+              element[0].classList.remove("active")
+              element[1].classList.remove("active")
+            }
           }
         }
       }
