@@ -2,7 +2,6 @@ function playtone(x, y){
   var audio = new Audio('/static/fretboardmedia/tone_sounds/' + x + '.wav');
   var string = '.' + y
   audio.play();
-  console.log(x)
   var root_class = document.querySelector(string + ' img.tone.' + x + '.active').getAttribute('src')
   if ( root_class == '/static/fretboardmedia/red_dot.svg' ) {
   document.querySelector(string + ' img.tone.' + x + '.active').setAttribute('src', '/static/fretboardmedia/red_dot_active.svg');
@@ -29,14 +28,78 @@ function reset_fretboard(){
   }
 }
 
-function getTonesFromDataScales(y){
+function multiple_notes(tone_name, y){
 
-  reset_fretboard()
   var frets = ['one','two','three','four','five','six',
               'seven','eight','nine','ten','eleven', 'twelve',
               'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen']
+
   var strings = ['ELowString', 'AString', 'dString',
                 'gString', 'bString', 'eString']
+
+  for (var key in scale_data[y]) {
+    if (scale_data[y].hasOwnProperty(key)) {
+        for (var z in scale_data[y][key][0]["tones"]) {
+            var tone_name = scale_data[y][key][0]["tones"][z]
+            element = document.querySelectorAll('.' + tone_name + '.active');
+            if (element.length > 2) {
+              var pos_val = document.getElementById('position_select').value
+              if (pos_val != 0){
+                /* Count String Range of String X and String Y -> Deactivate Tone with wider range on */
+                /* 1. Find String Name of Active Notes */
+                var multiple_tone = tone_name;
+                var list_of_strings = []
+                for (variable in frets) {
+                  for (string in strings){
+                    if (document.querySelectorAll('.' + frets[variable] + '.' + strings[string] + ' .' + tone_name + '.active').length != 0 ){
+                      /* push string into list */
+                      list_of_strings.push(strings[string])
+                    }
+                  }
+                }
+                /* 2. Find Range lowest to highest Note on Strings */
+                var first_string = []
+                var second_string = []
+                var available_strings = []
+                for (string in strings){
+                  for (fret in frets){
+                    if (document.querySelectorAll('.' + list_of_strings[string] + '.' + frets[fret] + ' .active').length != 0){
+                      if (string > 0){
+                        second_string.push(fret)
+                      }
+                      else {
+                        first_string.push(fret)
+                      }
+                      available_strings.push(list_of_strings[string])
+                    }
+                  }
+                }
+                var first_string_range = (first_string[first_string.length - 1]) - first_string[0]
+                var second_string_range = (second_string[second_string.length - 1]) - second_string[0]
+                var first_string = available_strings[1]
+                var second_string = available_strings[available_strings.length - 1]
+                /* 3. Deactivate Note with longest Range */
+                if (first_string_range > second_string_range){
+                  element = document.querySelectorAll('.' + first_string + ' .' + tone_name);
+                  element[0].classList.remove("active")
+                  element[1].classList.remove("active")
+                }
+                else {
+                  element = document.querySelectorAll('.' + second_string + ' .' + tone_name);
+                  element[0].classList.remove("active")
+                  element[1].classList.remove("active")
+                }
+              }
+            }
+          }
+        }
+    }
+}
+
+function getTonesFromDataScales(y){
+
+  reset_fretboard()
+
   /* x sets the id of inversions */
   var i = 0;
   for (var key in scale_data[y]) {
@@ -53,58 +116,14 @@ function getTonesFromDataScales(y){
           QuerySelect.classList.add('active');
         }
         element = document.querySelectorAll('.' + tone_name + '.active');
-        if (element.length > 2) {
-          var pos_val = document.getElementById('position_select').value
-          if (pos_val != 0){
-            /* Count String Range of String X and String Y -> Deactivate Tone with wider range on */
-            /* 1. Find String Name of Active Notes */
-            var multiple_tone = tone_name;
-            var list_of_strings = []
-            for (variable in frets) {
-              for (string in strings){
-                if (document.querySelectorAll('.' + frets[variable] + '.' + strings[string] + ' .' + tone_name + '.active').length != 0 ){
-                  /* push string into list */
-                  list_of_strings.push(strings[string])
-                }
-              }
-            }
-            /* 2. Find Range lowest to highest Note on Strings */
-            var first_string = []
-            var second_string = []
-            var available_strings = []
-            for (string in strings){
-              for (fret in frets){
-                if (document.querySelectorAll('.' + list_of_strings[string] + '.' + frets[fret] + ' .active').length > 0){
-                  if (string > 0){
-                    second_string.push(fret)
-                  }
-                  else {
-                    first_string.push(fret)
-                  }
-                  available_strings.push(list_of_strings[string])
-                }
-              }
-            }
-            var first_string_range = (first_string[first_string.length - 1]) - first_string[0]
-            var second_string_range = (second_string[second_string.length - 1]) - second_string[0]
-            var first_string = available_strings[1]
-            var second_string = available_strings[available_strings.length - 1]
-            /* 3. Deactivate Note with longest Range */
-            if (first_string_range > second_string_range){
-              element = document.querySelectorAll('.' + first_string + ' .' + tone_name);
-              element[0].classList.remove("active")
-              element[1].classList.remove("active")
-            }
-            else {
-              element = document.querySelectorAll('.' + second_string + ' .' + tone_name);
-              element[0].classList.remove("active")
-              element[1].classList.remove("active")
-            }
-          }
-        }
       }
     }
   }
+
+  /*Check if multiple tones are in position */
+  multiple_notes(tone_name, y);
+
+  /* TODO:  Check if not 4 notes on ELow and eString */
 
   /* Change for RootNote Color */
   var string_array = ['eString', 'bString', 'gString', 'dString', 'AString', 'ELowString']
