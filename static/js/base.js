@@ -96,6 +96,17 @@ function multiple_notes(tone_name, y){
     }
 }
 
+function avoid_four_notes_on_string(string){
+  var element = document.querySelectorAll('.' + string +' .active > img')
+  if (element.length > 3){
+    if (string == "ELowString"){
+      element[0].classList.remove("active")
+    }
+    else{
+    element[3].classList.remove("active")
+    }
+  }
+}
 function getTonesFromDataScales(y){
 
   reset_fretboard()
@@ -123,7 +134,9 @@ function getTonesFromDataScales(y){
   /*Check if multiple tones are in position */
   multiple_notes(tone_name, y);
 
-  /* TODO:  Check if not 4 notes on ELow and eString */
+  /* Check if not 4 notes on ELow and eString */
+  avoid_four_notes_on_string('eString')
+  avoid_four_notes_on_string('ELowString')
 
   /* Change for RootNote Color */
   var string_array = ['eString', 'bString', 'gString', 'dString', 'AString', 'ELowString']
