@@ -1,4 +1,5 @@
 var string_array = ['eString', 'bString', 'gString', 'dString', 'AString', 'ELowString']
+
 var frets = ['one','two','three','four','five','six',
             'seven','eight','nine','ten','eleven', 'twelve',
             'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen']
@@ -109,9 +110,8 @@ function avoid_four_notes_on_string(){
 }
 
 function getTonesFromDataScales(y){
-
+  /* First find all notes that are active and reset the fretboard*/
   reset_fretboard()
-
   /* x sets the id of inversions */
   var i = 0;
   for (var key in scale_data[y]) {
@@ -135,7 +135,7 @@ function getTonesFromDataScales(y){
   /*Check if multiple tones are in position */
   multiple_notes(tone_name, y);
 
-  /* Check if not 4 notes on ELow and eString */
+  /* Check if not 4 notes on highest or lowest string */
   var pos_val = document.getElementById('position_select').value
   if (pos_val != 0){
     avoid_four_notes_on_string();
@@ -234,7 +234,6 @@ function show_tension_notes_chords() {
     button.setAttribute("onclick","getToneNameFromDataChords()")
     button.innerHTML = 'Tone Names';
   }
-
 }
 
 function getToneNameFromDataChords() {
@@ -265,6 +264,7 @@ function getNoteNameFromData(){
   button.setAttribute("onclick","getNotePicFromData()")
   button.innerHTML = 'Only Tones';
 }
+
 function getNotePicFromData(){
   /* x sets the id of inversions */
   var notename_elements = document.querySelectorAll('.notename');
@@ -277,6 +277,7 @@ function getNotePicFromData(){
   button.setAttribute("onclick","getNoteNameFromData()")
   button.innerHTML = 'Note Name';
 }
+
 function navBarFretboardChords(class_name){
   var x, i, j, selElmnt, a, b, c;
   /* Look for any elements with the class "sfbsf": */
