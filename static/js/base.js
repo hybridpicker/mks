@@ -1,3 +1,8 @@
+var string_array = ['eString', 'bString', 'gString', 'dString', 'AString', 'ELowString']
+var frets = ['one','two','three','four','five','six',
+            'seven','eight','nine','ten','eleven', 'twelve',
+            'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen']
+
 function playtone(x, y){
   var audio = new Audio('/static/fretboardmedia/tone_sounds/' + x + '.wav');
   var string = '.' + y
@@ -29,14 +34,6 @@ function reset_fretboard(){
 }
 
 function multiple_notes(tone_name, y){
-
-  var frets = ['one','two','three','four','five','six',
-              'seven','eight','nine','ten','eleven', 'twelve',
-              'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen']
-
-  var strings = ['ELowString', 'AString', 'dString',
-                'gString', 'bString', 'eString']
-
   for (var key in scale_data[y]) {
     if (scale_data[y].hasOwnProperty(key)) {
         for (var z in scale_data[y][key][0]["tones"]) {
@@ -50,10 +47,10 @@ function multiple_notes(tone_name, y){
                 var multiple_tone = tone_name;
                 var list_of_strings = []
                 for (variable in frets) {
-                  for (string in strings){
-                    if (document.querySelectorAll('.' + frets[variable] + '.' + strings[string] + ' .' + tone_name + '.active').length != 0 ){
+                  for (string in string_array){
+                    if (document.querySelectorAll('.' + frets[variable] + '.' + string_array[string] + ' .' + tone_name + '.active').length != 0 ){
                       /* push string into list */
-                      list_of_strings.push(strings[string])
+                      list_of_strings.push(string_array[string])
                     }
                   }
                 }
@@ -61,7 +58,7 @@ function multiple_notes(tone_name, y){
                 var first_string = []
                 var second_string = []
                 var available_strings = []
-                for (string in strings){
+                for (string in string_array){
                   for (fret in frets){
                     if (document.querySelectorAll('.' + list_of_strings[string] + '.' + frets[fret] + ' .active').length != 0){
                       if (string > 0){
@@ -96,17 +93,21 @@ function multiple_notes(tone_name, y){
     }
 }
 
-function avoid_four_notes_on_string(string){
-  var element = document.querySelectorAll('.' + string +' .active > img')
-  if (element.length > 3){
-    if (string == "ELowString"){
-      element[0].classList.remove("active")
-    }
-    else{
-    element[3].classList.remove("active")
+function avoid_four_notes_on_string(){
+  var avoid_strings = [string_array[0], (string_array[string_array.length - 1])]
+  for (x in avoid_strings){
+    var element = document.querySelectorAll('.' + avoid_strings[x] +' .active > img')
+    if (element.length > 3){
+      if (avoid_strings[x] == avoid_strings[1]){
+        element[0].classList.remove("active")
+      }
+      else{
+        element[3].classList.remove("active")
+      }
     }
   }
 }
+
 function getTonesFromDataScales(y){
 
   reset_fretboard()
@@ -135,11 +136,12 @@ function getTonesFromDataScales(y){
   multiple_notes(tone_name, y);
 
   /* Check if not 4 notes on ELow and eString */
-  avoid_four_notes_on_string('eString')
-  avoid_four_notes_on_string('ELowString')
+  var pos_val = document.getElementById('position_select').value
+  if (pos_val != 0){
+    avoid_four_notes_on_string();
+  }
 
   /* Change for RootNote Color */
-  var string_array = ['eString', 'bString', 'gString', 'dString', 'AString', 'ELowString']
   for (var key in scale_data.root) {
     if (scale_data.root.hasOwnProperty(key)) {
       var root = scale_data.root[key]
@@ -175,7 +177,6 @@ function getTonesFromDataChords(x, y){
   }
 
   /* Change for RootNote Color */
-  var string_array = ['eString', 'bString', 'gString', 'dString', 'AString', 'ELowString']
   for (var key in voicing_data.root) {
     if (voicing_data.root.hasOwnProperty(key)) {
       var root = voicing_data.root[key]
