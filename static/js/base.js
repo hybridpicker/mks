@@ -34,6 +34,16 @@ function reset_fretboard(){
   }
 }
 
+function deactivate_active_notes(string, tone_name){
+  element = document.querySelectorAll('.' + string + ' .' + tone_name);
+  for (x in element){
+    /* check if elements in element are natural numbers */
+    if (!(isNaN(x))){
+      element[x].classList.remove("active");
+    }
+  }
+}
+
 function multiple_notes(tone_name, y){
   for (var key in scale_data[y]) {
     if (scale_data[y].hasOwnProperty(key)) {
@@ -78,14 +88,10 @@ function multiple_notes(tone_name, y){
                 var second_string = available_strings[available_strings.length - 1]
                 /* 3. Deactivate Note with longest Range */
                 if (first_string_range > second_string_range){
-                  element = document.querySelectorAll('.' + first_string + ' .' + tone_name);
-                  element[0].classList.remove("active")
-                  element[1].classList.remove("active")
+                  deactivate_active_notes(first_string, tone_name)
                 }
                 else {
-                  element = document.querySelectorAll('.' + second_string + ' .' + tone_name);
-                  element[0].classList.remove("active")
-                  element[1].classList.remove("active")
+                  deactivate_active_notes(second_string, tone_name)
                 }
               }
             }
@@ -254,8 +260,11 @@ function getNoteNameFromData(){
       for (var z in scale_data[y][key][0]["tones"]) {
         var tone_name = scale_data[y][key][0]["tones"][z]
         var QuerySelect = document.querySelector('.' + key + ' .notename.' + tone_name);
-        if (QuerySelect != null){
-          QuerySelect.classList.add("active")
+        var image = document.querySelector('.' + key + ' .' + tone_name + ' img.active');
+        if (image){
+          if (QuerySelect != null){
+            QuerySelect.classList.add("active")
+          }
         }
       }
     }
