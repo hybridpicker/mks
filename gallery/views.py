@@ -8,8 +8,11 @@ def gallery_view (request):
     try:
         category_id = int(request.GET['category'])
     except MultiValueDictKeyError:
+        if PhotoCategory.objects.all().first() is not None:
             category_id = PhotoCategory.objects.all().order_by('ordering').first().id
-    print(category_id)
+        else:
+            from django.http import Http404
+            raise Http404
     photos = Photo.objects.filter(category_id=category_id)
     category = PhotoCategory.objects.all()
 
