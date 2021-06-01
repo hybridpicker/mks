@@ -46,8 +46,10 @@
 
 <div class="mbs">
   <div id="home-container" class="container">
+    {% if name %}
     <h1>{{ name }}</h1>
-
+    {% endif %}
+    
     <p style="text-align:center;"><b>{{index_text.lead_paragraph|safe}}<b></p>
     {{index_text.content|safe}}
     <a href="{% url 'teaching_music'%}">

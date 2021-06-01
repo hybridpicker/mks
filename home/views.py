@@ -16,11 +16,14 @@ from downloadsection.models import IndexDownload
 
 def get_random_pic():
    max_id = Photo.objects.filter(category_id=1).aggregate(max_id=Max("id"))['max_id']
-   while True:
-       pk = random.randint(1, max_id)
-       photo = Photo.objects.filter(category_id=1, pk=pk).first()
-       if photo:
-           return photo
+   if max_id is not None:
+    while True:
+        pk = random.randint(1, max_id)
+        photo = Photo.objects.filter(category_id=1, pk=pk).first()
+        if photo:
+            return photo
+    else:
+        return None
 
 def get_photo_data():
     photo_data = {}
