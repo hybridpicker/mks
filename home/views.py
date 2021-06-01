@@ -37,8 +37,12 @@ def get_photo_data():
 
 def home (request):
     school_data = MusicSchool.objects.all().first()
-    name = school_data.school_name
-    logo = school_data.school_logo
+    if school_data:
+        name = school_data.school_name
+        logo = school_data.school_logo
+    else:
+        name = None
+        logo = None
     events = Event.objects.all()
     teachers = Teacher.objects.all()
     blog = BlogPost.objects.all().reverse()[0:6]
