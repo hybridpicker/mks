@@ -16,11 +16,14 @@ from downloadsection.models import IndexDownload
 
 def get_random_pic():
    max_id = Photo.objects.filter(category_id=1).aggregate(max_id=Max("id"))['max_id']
-   while True:
-       pk = random.randint(1, max_id)
-       photo = Photo.objects.filter(category_id=1, pk=pk).first()
-       if photo:
-           return photo
+   if max_id is not None:
+    while True:
+        pk = random.randint(1, max_id)
+        photo = Photo.objects.filter(category_id=1, pk=pk).first()
+        if photo:
+            return photo
+    else:
+        return None
 
 def get_photo_data():
     photo_data = {}
@@ -34,8 +37,12 @@ def get_photo_data():
 
 def home (request):
     school_data = MusicSchool.objects.all().first()
-    name = school_data.school_name
-    logo = school_data.school_logo
+    if school_data:
+        name = school_data.school_name
+        logo = school_data.school_logo
+    else:
+        name = None
+        logo = None
     events = Event.objects.all()
     teachers = Teacher.objects.all()
     blog = BlogPost.objects.all().reverse()[0:6]

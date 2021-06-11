@@ -1065,6 +1065,14 @@ canvas {
 .bcls > a{
   padding: 0;
 }
+@media only screen and (min-width: 772px){
+  .bcls > a{
+    padding: 0 0 0 1rem;
+  }
+  .fbls#stadtlogo, .fbls#noelogo{
+    width: 50vw
+  }
+}
 .bcls > a > img{
   height: 36px;
   width: auto;

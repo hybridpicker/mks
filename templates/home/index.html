@@ -38,16 +38,18 @@
 {% endblock %}
 {% block banner %}
 
-<img id="homebanner" src="/static/banner/home_banner.jpg" alt="">
-<img id="mbimg" src="/static/banner/mobile/home_banner.jpg" alt="">
+<img id="homebanner" src="/static/banner/home_banner.jpg" alt="Banner Musik- und Kunstchule St. Pölten">
+<img id="mbimg" src="/static/banner/mobile/home_banner.jpg" alt="Banner Musik- und Kunstchule St. Pölten Mobile">
 
 {% endblock %}
 {% block body %}
 
 <div class="mbs">
   <div id="home-container" class="container">
+    {% if name %}
     <h1>{{ name }}</h1>
-
+    {% endif %}
+    
     <p style="text-align:center;"><b>{{index_text.lead_paragraph|safe}}<b></p>
     {{index_text.content|safe}}
     <a href="{% url 'teaching_music'%}">
