@@ -4,18 +4,22 @@ from teaching.subject import SubjectCategory, Subject
 
 def get_teachers_from_category(subject_name):
     i = 1
-    for x in SubjectCategory.objects.get(name=subject_name).subject_set.all():
-        ''''
-        y = new query set
-        '''
-        z = x.teacher_set.all()
-        if i > 1:
-            y = y | z
-        else:
-            y = z
-        i += 1
-    return y.distinct()
-
+    from django.core.exceptions import ObjectDoesNotExist
+    try:
+        for x in SubjectCategory.objects.get(name=subject_name).subject_set.all():
+            ''''
+            y = new query set
+            '''
+            z = x.teacher_set.all()
+            if i > 1:
+                y = y | z
+            else:
+                y = z
+            i += 1
+        return y.distinct()
+    except ObjectDoesNotExist:
+        return None
+        
 def show_teacher_view(request):
     group_photo = GroupPhoto.objects.all().first()
     categories = SubjectCategory.objects.all()
