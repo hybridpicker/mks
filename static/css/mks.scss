@@ -1,6 +1,8 @@
+@import url("https://use.typekit.net/nvs2bby.css");
+
 /* Standard Variables */
-$primaryColor:#DC143C;
-$secondaryColor:#222528;
+$primaryColor:#D11317;
+$secondaryColor:#333333;
 $thirdColor: #2082a8;
 
 $whiteColor: #FDFDFD;
@@ -9,49 +11,49 @@ $blackColor: $secondaryColor;
 
 $textcolor: $secondaryColor;
 
-$firstHeadingFamily:'Montserrat', sans-serif;
-$firstHeadingFontSize:38px;
+$firstHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
+$firstHeadingFontSize:43px;
 $firstHeadingFontColor:$secondaryColor;
-$firstHeadingFontLineHeight:61px;
+$firstHeadingFontLineHeight:66px;
 
-$secondHeadingFamily:'Montserrat', sans-serif;
-$secondHeadingFontSize:34px;
+$secondHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
+$secondHeadingFontSize:39px;
 $secondHeadingFontColor:$secondaryColor;
-$secondHeadingFontLineHeight:61px;
+$secondHeadingFontLineHeight:66px;
 
-$thirdHeadingFamily:'Montserrat', sans-serif;
-$thirdHeadingFontSize:30px;
+$thirdHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
+$thirdHeadingFontSize:35px;
 $thirdHeadingFontColor:$secondaryColor;
-$thirdHeadingFontLineHeight:61px;
+$thirdHeadingFontLineHeight:66px;
 
-$fourthHeadingFamily:'Montserrat', sans-serif;
-$fourthHeadingFontSize:26px;
+$fourthHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
+$fourthHeadingFontSize:31px;
 $fourthHeadingFontColor:$secondaryColor;
-$fourthHeadingFontLineHeight:30px;
+$fourthHeadingFontLineHeight:35px;
 
-$paragraphFontFamily:'Lato', sans-serif;
-$paragraphFontSize:20px;
+$paragraphFontFamily:'jaf-bernina-sans-condensed', sans-serif;
+$paragraphFontSize:1.3rem;
 $paragraphFontColor:$secondaryColor;
-$paragraphFontLineHeight:35px;
+$paragraphFontLineHeight:2rem;
 
-$menuHeight: 100px;
+$menuHeight: 4.5rem;
 $menuColor: $secondaryColor;
-$menuFontSize: 20px;
-$menudFontFamily: 'Montserrat', sans-serif;
+$menuFontSize: 1.3rem;
+$menudFontFamily: 'jaf-bernina-sans-condensed', sans-serif;
 
-$mobileMenuFontSize: 24px;
-$mobileMenuFontFamily: 'Montserrat', sans-serif;
+$mobileMenuFontSize: 29px;
+$mobileMenuFontFamily: 'jaf-bernina-sans-condensed', sans-serif;
 
-$linkFontSize: 22px;
+$linkFontSize: 1.6rem;
 $linkColor: $primaryColor;
-$linkFontFamily: 'Montserrat', sans-serif;
+$linkFontFamily: 'jaf-bernina-sans-condensed', sans-serif;
 
 /* mobile Variables */
-$mobileFirstHeadingFontSize:30px;
-$mobileSecondHeadingFontSize:30px;
+$mobileFirstHeadingFontSize:35px;
+$mobileSecondHeadingFontSize:35px;
 $mobileParagraphFontSize:3vw;
-$mobileLinkFontSize: 20px;
-$mobileMenuFontSize: 20px;
+$mobileLinkFontSize: 25px;
+$mobileMenuFontSize: 25px;
 
 /* Use the variables */
 body {
@@ -278,6 +280,7 @@ h1{
   font-size: $firstHeadingFontSize;
   color: $firstHeadingFontColor;
   text-align: center;
+  font-weight: 600;
 }
 h2{
   font-family: $secondHeadingFamily;
@@ -285,6 +288,7 @@ h2{
   color: $secondHeadingFontColor;
   text-align: center;
   padding-bottom: 0.1em;
+  font-weight: 600;
 }
 h3{
   font-family: $thirdHeadingFamily;
@@ -292,6 +296,7 @@ h3{
   color: $thirdHeadingFontColor;
   text-align: center;
   padding-bottom: 0.1em;
+  font-weight: 600;
 }
 h4{
   font-family: $fourthHeadingFamily;
@@ -299,6 +304,7 @@ h4{
   color: $fourthHeadingFontColor;
   text-align: center;
   padding-bottom: 0.1em;
+  font-weight: 600;
 }
 p {
   font-family: $paragraphFontFamily;
@@ -326,6 +332,7 @@ span {
 strong, b {
   font-family: $firstHeadingFamily;
   font-size: $paragraphFontSize;
+  font-weight: 600;
 }
 @media screen and (max-height: 450px) {
   .overlay .closebtn {
@@ -389,7 +396,7 @@ textarea{
   width:80%;
   border-radius: 5px;
   max-height: 24rem;
-  margin-top:100px;
+  margin-top:4.5rem;
 }
 .bs > img{
   width: 100%;
@@ -437,9 +444,11 @@ textarea{
 .bns ul li a{
   color: #0F262B;
   padding-right: 2em;
+  font-weight: 600;
 }
 .bns ul li a img{
   padding-left: 0.4em;
+  font-weight: 600;
 }
 .bnbs .bun{
   position: relative;
@@ -453,6 +462,7 @@ textarea{
 .bun ul li a{
   color: #0F262B;
   padding-right: 1.8em;
+  font-weight: 600;
 }
 .mbs .container {
   margin-top: 2em;
@@ -642,7 +652,7 @@ canvas {
 #mks-logo-svg{
   position: absolute;
   bottom: 10px;
-  height: 3.9rem;
+  height: 2.7rem;
   padding-top: 34px;
   padding-left: 60px;
   transition: height 0.3s ease;
@@ -787,11 +797,12 @@ canvas {
 }
 /* Style The Dropdown Button */
 .dropbtn, .dropbtn-b, .dropbtn-c, .dropbtn-d, .dropbtn-e {
-  font-size: $menuFontSize;
-  font-family: $menudFontFamily;
+  font-size: $linkFontSize;
+  font-family: $linkFontFamily;
   border: none;
   background: none;
   width:auto;
+  font-weight: 600;
 }
 .dropbtn:hover, .dropbtn-b:hover, .dropbtn-c:hover,
 .dropbtn-d:hover, .dropbtn-e:hover {
@@ -800,12 +811,12 @@ canvas {
 .dropbtn-e:hover .st11{
   fill: $primaryColor;
 }
-/* The container <div> - needed to position the dropdown content */
 .dropdown, .nodown, .dropdown-b, .dropdown-c, .dropdown-d, .dropdown-e {
   position: relative;
   display: inline-block;
   width: auto;
   padding: 0.75rem 1.3rem;
+  font-weight: 300;
 }
 .dropdown a, .nodown a, .dropdown-b a, .dropdown-c a, .dropdown-d a, .dropdown-e a {
   text-decoration: none;
@@ -813,6 +824,7 @@ canvas {
   font-size: $menuFontSize;
   font-family: $menudFontFamily;
   padding: 1rem;
+  font-weight: 300;
 }
 .dropdown > button:hover,
 .dropdown-b > button:hover,
@@ -911,7 +923,7 @@ canvas {
 .dropdown-hover-section-e{
   display: none;
   width: auto;
-  height: 0.4rem;
+  height: 0.25rem;
   margin-bottom: -2rem;
 }
 .dropdown-hover-section, .dropdown-hover-section-d,
@@ -1037,7 +1049,7 @@ canvas {
 .bfsc > div {
   text-align: center;
   padding: 10px 0;
-  font-size: 18px;
+  font-size: &$linkFontSize;
   font-family: $linkFontFamily;
 }
 .bcrs > a{
@@ -1331,13 +1343,7 @@ input {
   padding: 10px 10px;
   cursor: pointer;
 }
-/*
-.slitcon div:last-of-type{
-  border-bottom: 1px solid;
-  border-bottom-color: currentcolor;
-  border-color: #22252854;
-}
-*/
+
 #catsfbsf > .slitcon div:last-of-type {
   border-bottom: 1px solid;
   border-bottom-color: currentcolor;
@@ -1372,8 +1378,8 @@ input {
   }
 }
 form button, a button, button.button {
-  font-family: $firstHeadingFamily;
-  font-size: 18px;
+  font-family: $linkFontFamily;
+  font-size: $linkFontSize;
   box-shadow: 0 4px #BD2123;
   width: 20%;
   height: 50px;
@@ -1382,6 +1388,7 @@ form button, a button, button.button {
   color: $whiteColor;
   border-color: #FF1B1E;
   margin: 1rem;
+  font-weight: 600;
 }
 form button:hover, a button:hover, button.button:hover {
   transform: translate(0, 1.5px);
@@ -1435,7 +1442,7 @@ a button {
 #contact_form_post p, #event_form_post p {
   padding-left: 0;
   margin-bottom: 4px;
-  font-weight: bolder;
+  font-weight: 600;
   font-family: "Montserrat", sans-serif;
 }
 .contact_form_grid_container{
