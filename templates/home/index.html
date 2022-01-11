@@ -16,21 +16,6 @@
 <meta name="twitter:image" content="static/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<script type="text/javascript">
-  var photo_data = {{ photos|safe }}
-  function randomPicShow(){
-     setInterval(function(){
-       var min=0;
-       var max=Object.keys(photo_data).length;
-       var random = Math.floor(Math.random() * (+max - +min)) + +min;
-       document.getElementById("middleImageIndex").src = photo_data[random];
-     }, 8000);
-   };
-   window.onload = function exampleFunction() {
-       randomPicShow();
-   }
-</script>
-
 {% endblock %}
 
 
@@ -126,9 +111,6 @@
   </div>
 {% endif %}
   {% endblock %}
-  <script type="text/javascript">
-    document.onload = randomPicShow();
-  </script>
 
   {% block footer %}
 

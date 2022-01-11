@@ -843,7 +843,7 @@ canvas {
   left:0;
 }
 .dropdown-content-d,{
-  left: 1.25rem;
+  left: 0.25rem;
 }
 /* Links inside the dropdown */
 .dropdown-content a, .dropdown-content-d a, .dropdown-content-e a {
@@ -880,7 +880,7 @@ canvas {
 }
 .dropdown-content-e{
   margin-top: 2rem;
-  left: 0.75rem;
+  left: 0.15rem;
 }
 #UserNav .dropdown-content{
   left: 0rem;
@@ -1134,7 +1134,7 @@ canvas {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2082a8",endColorstr="#21789a",GradientType=1);
 }
 .bcmk section{
-  margin: 3rem;
+  margin: 3rem 0 0 0;
   padding: 10px 12px 10px 12px;
 }
 .bcmk .left section a, .bcmk .right section a{
@@ -1145,7 +1145,7 @@ canvas {
 }
 @media only screen and (max-width: 700px), only screen and (max-height: 375px) {
   .bcmk .left section a, .bcmk .right section a{
-    font-size: 6vw;
+    font-size: 30px;
 }
 }
 @media only screen and (max-width: 800px){
@@ -1178,10 +1178,10 @@ canvas {
     max-height: 3.5rem;
   }
   .bcmk > div{
-    height: 200px;
+    height: 140px;
   }
   .bcmk section {
-    margin-top: 4rem;
+    margin-top: 2.2rem;
   }
   .bcmk{
     width: 100%;
@@ -1503,8 +1503,6 @@ a button {
   -webkit-box-shadow: 6px 7px 17px -2px #22252829;
   -moz-box-shadow: 6px 7px 17px -2px #22252829;
   box-shadow: 6px 7px 17px -2px #22252829;
-  border-bottom-right-radius: 0.8rem;
-  border-bottom-left-radius: 0.8rem;
 }
 .teaching-name > h3{
   margin-bottom: 0;
@@ -1542,12 +1540,7 @@ a button {
   text-align: center;
 }
 .info-text > a{
-  font-size: $linkFontSize;
-}
-.icc-tpcfptr{
-  border-bottom-width: 1rem;
-  border-bottom-style: solid;
-  border-color:$primaryColor;
+  font-size: 1.3rem;
 }
 .tpcf {
   width: auto;
@@ -1572,7 +1565,7 @@ a button {
   padding-left: 0;
   padding-right: 0;
   padding-top: 0;
-  height: 42rem;
+  height: 38rem;
   max-width: 18rem;
   margin-bottom: 2rem;
 }
@@ -2079,27 +2072,9 @@ td {
   }
 }
 @media only screen and (max-height: 420px) and (max-width: 900px){
-  /*
-  h1{
-    font-size: 5vw;
-  }
-  */
   .event-container{
     max-height: 24vw;
   }
-  /*
-  h2{
-    font-size: 3vw;
-    line-height: 6vw;
-  }
-  h3,h4{
-    font-size: 4vw;
-  }
-  p{
-    font-size: 3vw;
-    line-height: 6vw;
-  }
-  */
   .cbsf {
     font-size: 3vw !important;
   }
@@ -2110,7 +2085,7 @@ td {
     font-size: 5vw;
   }
   .bcmk .left section a, .bcmk .right section a {
-    font-size: 3vw;
+    font-size: 30px;
   }
 }
 .counter-left {
@@ -2208,11 +2183,6 @@ section.events-container-grid h1{
   }
 }
 /* Gallery */
-.cross_st0{
-  fill:none;
-  stroke:$primaryColor;
-  stroke-width:4;
-}
 .gallery-show > img{
   transition: transform .2s ease;
   border: 1px solid $whiteColor;
@@ -2345,7 +2315,7 @@ section.events-container-grid h1{
 .cross_st0{
   fill:none;
   stroke:$primaryColor;
-  stroke-width:4;
+  stroke-width:2;
 }
 @media screen and (max-width: 1024px) {
 #overlay-image-section .cross_st0{
