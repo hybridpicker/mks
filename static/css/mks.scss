@@ -1117,7 +1117,7 @@ canvas {
 .bcmk > div {
   text-align: center;
   color: $whiteColor;
-  height: 400px;
+  height: 10rem;
 }
 .bcmk > .left{
   background: $primaryColor;
@@ -1133,23 +1133,10 @@ canvas {
   background: linear-gradient(56deg, rgba(32,130,168,1) 0%, rgba(33,120,154,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2082a8",endColorstr="#21789a",GradientType=1);
 }
-.bcmk > .middle{
-  overflow: hidden;
-  z-index: -1;
-  display: flex;
-  justify-content: center;
-}
-.bcmk > .middle > img{
-  object-fit: contain;
-}
 .bcmk section{
-  margin-top: 12rem;
+  margin: 3rem;
   padding: 10px 12px 10px 12px;
-  border: solid 2px;
-  margin-left: 2rem;
-  margin-right: 2rem;
 }
-
 .bcmk .left section:hover, .bcmk .right section:hover{
   background-color: $whiteColor;
   box-shadow: inset inset 0px 0px 10px 0px #22252836;
@@ -1165,7 +1152,8 @@ canvas {
 .bcmk .left section a, .bcmk .right section a{
   color: $whiteColor;
   font-family: $firstHeadingFamily;
-  font-size: $linkFontSize;
+  font-size: 2rem;
+  font-weight: 600;
 }
 @media only screen and (max-width: 700px), only screen and (max-height: 375px) {
   .bcmk .left section a, .bcmk .right section a{
