@@ -1137,18 +1137,6 @@ canvas {
   margin: 3rem;
   padding: 10px 12px 10px 12px;
 }
-.bcmk .left section:hover, .bcmk .right section:hover{
-  background-color: $whiteColor;
-  box-shadow: inset inset 0px 0px 10px 0px #22252836;
-  -webkit-box-shadow: inset 0px 0px 10px 0px #22252836;
-  -moz-box-shadow: inset 0px 0px 10px 0px #22252836;
-  -o-box-shadow: inset 0px 0px 10px 0px #22252836;
-
-}
-.bcmk .left section:hover a{
-  color: $primaryColor;
-  text-decoration: none;
-}
 .bcmk .left section a, .bcmk .right section a{
   color: $whiteColor;
   font-family: $firstHeadingFamily;
@@ -1159,10 +1147,6 @@ canvas {
   .bcmk .left section a, .bcmk .right section a{
     font-size: 6vw;
 }
-}
-.bcmk .right section:hover a{
-  color: $thirdColor;
-  text-decoration: none;
 }
 @media only screen and (max-width: 800px){
   .cbsf{
