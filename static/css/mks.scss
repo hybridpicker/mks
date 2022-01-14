@@ -1199,7 +1199,7 @@ canvas {
 }
 /* Contact Form */
 
-#contact_form_post, #event_form_post {
+#contact_form_post, #event_form_post, #signin_form_post {
   text-align: left;
 }
 #contact_form_post select, #event_form_post select {
@@ -1477,7 +1477,21 @@ a button {
 #signin_form_post button{
   margin-left: 0;
 }
-
+select#id_birthdate_day, select#id_birthdate_month, select#id_birthdate_year{
+  height: 44px;
+  background: white;
+  border-width: 1px;
+  border-color: #22252854;
+}
+select#id_birthdate_day{
+  width: 60px;
+}
+select#id_birthdate_month{
+  width: 120px;
+}
+select#id_birthdate_year{
+  width: 80px;
+}
 @media only screen and (max-width: 1024px) {
   #signin_form_post input,
   #signin_form_post textarea, {
@@ -1488,6 +1502,10 @@ a button {
   }
   #signin_form_post .form-actions{
     text-align: center;
+  }
+  #signin_form_post{
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 /* Teacher Promo CSS */
