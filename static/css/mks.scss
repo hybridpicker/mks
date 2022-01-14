@@ -1243,7 +1243,6 @@ canvas {
   }
   #contact_form_post .row .col-4, #event_form_post .row .col-4 {
     text-align: left;
-    margin-left: 5%;
   }
 }
 form input {
@@ -1482,7 +1481,11 @@ select#id_birthdate_day, select#id_birthdate_month, select#id_birthdate_year{
   background: white;
   border-width: 1px;
   border-color: #22252854;
+  text-align: center;
+  font-family: $paragraphFontFamily;
+  font-size: $paragraphFontSize;
 }
+
 select#id_birthdate_day{
   width: 60px;
 }
