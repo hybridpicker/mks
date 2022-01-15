@@ -12,22 +12,22 @@ $blackColor: $secondaryColor;
 $textcolor: $secondaryColor;
 
 $firstHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
-$firstHeadingFontSize:43px;
+$firstHeadingFontSize:2.3rem;
 $firstHeadingFontColor:$secondaryColor;
 $firstHeadingFontLineHeight:66px;
 
 $secondHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
-$secondHeadingFontSize:39px;
+$secondHeadingFontSize:2.1rem;
 $secondHeadingFontColor:$secondaryColor;
 $secondHeadingFontLineHeight:66px;
 
 $thirdHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
-$thirdHeadingFontSize:35px;
+$thirdHeadingFontSize:2rem;
 $thirdHeadingFontColor:$secondaryColor;
 $thirdHeadingFontLineHeight:66px;
 
 $fourthHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
-$fourthHeadingFontSize:31px;
+$fourthHeadingFontSize:1.5rem;
 $fourthHeadingFontColor:$secondaryColor;
 $fourthHeadingFontLineHeight:35px;
 
@@ -393,9 +393,9 @@ textarea{
   display: grid;
   grid-auto-columns: 1fr;
   overflow-y: hidden;
-  width:80%;
-  max-height: 24rem;
-  margin-top:4.5rem;
+  width:100%;
+  height: 28rem;
+  margin-top:6rem;
 }
 .bs > img{
   width: 100%;
@@ -469,8 +469,11 @@ textarea{
   display: none;
 }
 @media only screen and (max-width: 771px) {
-  .bs img {
+  .bs #homebanner {
     display: none;
+  }
+  .bs{
+    height: auto;
   }
   #mbimg {
     display: unset;
@@ -839,7 +842,7 @@ canvas {
   min-width: 8.5rem;
   box-shadow: 3px 3px 2px #0F262B33;
   z-index: 1;
-  margin-top: 1rem;
+  margin-top: 0.25rem;
   left:0;
 }
 .dropdown-content-d,{
@@ -848,32 +851,32 @@ canvas {
 /* Links inside the dropdown */
 .dropdown-content a, .dropdown-content-d a, .dropdown-content-e a {
   color: black;
-  padding: 12px 16px;
+  padding: 0.8rem 0.8rem;
   text-decoration: none;
   display: block;
   line-height: 34px;
 }
 .dropdown-content-b a {
   color: black;
-  padding: 12px 16px;
+  padding: 0.8rem 0.8rem;
   text-decoration: none;
   display: block;
 }
 .dropdown-content-c a {
   color: black;
-  padding: 12px 16px;
+  padding: 0.8rem 0.8rem;
   text-decoration: none;
   display: block;
 }
 .dropdown-content-d a {
   color: black;
-  padding: 12px 16px;
+  padding: 0.8rem 0.8rem;
   text-decoration: none;
   display: block;
 }
 .dropdown-content-e a {
   color: black;
-  padding: 12px 16px;
+  padding: 0.8rem 0.8rem;
   text-decoration: none;
   display: block;
   line-height: 34px;
@@ -1078,7 +1081,7 @@ canvas {
     padding: 0 0 0 1rem;
   }
   .fbls#stadtlogo, .fbrs#noelogo{
-    width: 50vw
+    width: 100%;
   }
 }
 .bcls > a > img{

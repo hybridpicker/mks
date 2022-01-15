@@ -16,6 +16,7 @@
 <meta name="twitter:image" content="static/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
+<link href="{% static 'css/slider.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 
@@ -23,7 +24,12 @@
 {% endblock %}
 {% block banner %}
 
+{% include "templates/slider.html" %}
+
+<!--
 <img id="homebanner" src="/static/banner/home_banner.jpg" alt="Banner Musik- und Kunstchule St. Pölten">
+-->
+
 <img id="mbimg" src="/static/banner/mobile/home_banner.jpg" alt="Banner Musik- und Kunstchule St. Pölten Mobile">
 
 {% endblock %}
