@@ -34,7 +34,7 @@ $fourthHeadingFontLineHeight:35px;
 $paragraphFontFamily:'jaf-bernina-sans-condensed', sans-serif;
 $paragraphFontSize:1.3rem;
 $paragraphFontColor:$secondaryColor;
-$paragraphFontLineHeight:2rem;
+$paragraphFontLineHeight:1.8rem;
 
 $menuHeight: 5.8rem;
 $menuColor: $secondaryColor;
@@ -394,7 +394,7 @@ textarea{
   grid-auto-columns: 1fr;
   overflow-y: hidden;
   width:100%;
-  height: 28rem;
+  height: auto;
   margin-top:6rem;
 }
 .bs > img{
@@ -461,8 +461,8 @@ textarea{
   font-weight: 600;
 }
 .mbs .container {
-  margin-top: 2em;
-  margin-bottom: 2em;
+  margin-top: 30rem;
+  margin-bottom: 0rem;
 }
 /* Banner CSS */
 #mbimg {
@@ -1344,7 +1344,7 @@ input {
 }
 form button, a button, button.button {
   font-family: $linkFontFamily;
-  font-size: $linkFontSize;
+  font-size: $paragraphFontSize;
   box-shadow: 0 4px #BD2123;
   width: 20%;
   height: 50px;
@@ -2196,7 +2196,7 @@ section.events-container-grid {
   background-color: $primaryColor;
 }
 section.events-container-grid h1{
-  border-bottom: solid 5px $primaryColor;
+  border-bottom: solid 0.25rem $primaryColor;
   padding-bottom: 0.5rem;
 }
 @media screen and (max-width: 800px) {
@@ -2651,7 +2651,7 @@ a#show_theory:hover,{
 #blogEntrySection h1{
   margin-bottom: 0;
   margin-top: 3rem;
-  border-bottom: $thirdColor 5px solid;
+  border-bottom: $primaryColor 0.2rem solid;
   width: 80%;
   margin-left: auto;
   margin-right: auto;
