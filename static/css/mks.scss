@@ -478,6 +478,9 @@ textarea{
   #mbimg {
     display: unset;
   }
+  .mbs .container {
+    margin-top: 2rem;
+  }
 }
 /* Home CSS */
 #container {
@@ -2439,9 +2442,6 @@ grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
   }
   .gallery-show > img{
     width: 100%;
-  }
-  .mbs .container {
-    margin-top: 2rem;
   }
   .overlay .closebtn{
     top: -20px;
