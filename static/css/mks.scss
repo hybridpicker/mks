@@ -460,7 +460,7 @@ textarea{
   padding-right: 1.8em;
   font-weight: 600;
 }
-.mbs .container {
+#home-container {
   margin-top: 30rem;
   margin-bottom: 0rem;
 }
@@ -469,7 +469,7 @@ textarea{
   display: none;
 }
 @media only screen and (max-width: 771px) {
-  .bs #homebanner {
+  .bs > img, .bs #homebanner {
     display: none;
   }
   .bs{
@@ -478,7 +478,7 @@ textarea{
   #mbimg {
     display: unset;
   }
-  .mbs .container {
+  #home-container  {
     margin-top: 2rem;
   }
 }
