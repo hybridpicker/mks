@@ -365,6 +365,10 @@ textarea{
 .rbs { grid-area: rbs; }
 .bf { grid-area: bf; }
 
+.bf{
+  margin-top: 3rem;
+}
+
 .bgc {
   display: grid;
   grid-template-areas:
@@ -653,9 +657,8 @@ canvas {
 
 #mks-logo-svg{
   position: absolute;
-  bottom: 10px;
+  bottom: 1rem;
   height: 3.3rem;
-  padding-top: 34px;
   padding-left: 60px;
   transition: height 0.3s ease;
 }
@@ -691,7 +694,7 @@ canvas {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 0.2rem;
+    padding-top: 0.3rem;
   }
   #blessondNavMobile > div {
     width: 33%;
@@ -701,8 +704,10 @@ canvas {
     font-family: $linkFontFamily;
   }
   #mks-logo-svg{
-    padding-top: 4px;
+    padding-top: 0.4rem;
     position: unset;
+    width: auto;
+    height: 3rem;
   }
   #hamurger-mobile{
     padding-top: 6px;
@@ -1008,7 +1013,7 @@ canvas {
 .drops {
   position: absolute;
   padding-right: 3em;
-  bottom: 10px;
+  bottom: 0;
   right: 0;
 }
 #UserNav .drops{
@@ -2515,11 +2520,15 @@ grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
 @media only screen and (min-width: 1200px){
 html:not([data-scroll='0']) {
   .nvb {
-    height: 70px;
+    height: 4rem;
   }
   #mks-logo-svg {
     height: 2.4rem;
     padding-bottom: 0.3rem;
+    bottom: 0.5rem;
+  }
+  .drops{
+    bottom: 0.3rem;
   }
 }
 }
