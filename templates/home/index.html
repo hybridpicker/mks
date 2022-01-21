@@ -17,6 +17,39 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link href="{% static 'css/slider.css' %}" rel="stylesheet" type="text/css" />
+
+<style media="screen">
+    section > iframe {
+    width: 100% !important;
+    height: 650px !important;
+  }
+  @media only screen and (max-width: 1387px) {
+  section > iframe {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    padding-bottom: 20px;
+  }
+  }
+  @media only screen and (max-width: 677px) {
+  section > iframe {
+    width: 100% !important;
+    height: 200px !important;
+  }
+  }
+  @media only screen and (max-width: 400px) {
+  section > iframe {
+    width: 100% !important;
+    height: 180px !important;
+  }
+  }
+  @media only screen and (max-width: 370px) {
+  section > iframe {
+    width: 100% !important;
+    height: 150px !important;
+  }
+  }
+</style>
 {% endblock %}
 
 
@@ -88,6 +121,17 @@
   </div>
 </section>
 {% endif %}
+<div class="mbs container">
+  <div class="container">
+    <h1>Unser Schüler:innen stellen sich vor</h1>
+    <section>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/iHsmA76LMUw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </section>
+    <a href="{% url 'teaching_music'%}">
+      <button>Unterrichtsangebot</button>
+    </a>
+  </div>
+</div>
 {% if events %}
 <div class="mbs container">
 
