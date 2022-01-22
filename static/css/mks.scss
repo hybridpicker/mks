@@ -1046,18 +1046,21 @@ canvas {
   background-color: #FED700;
   height: 50px;
 }
-.fbls > a > svg, .fbrs > a > img {
-  max-height: 100%;
-  padding-right: 2em;
-}
 .bfsc{
   background-color: $blackColor;
 }
 .bfsc > div {
-  text-align: center;
   padding: 10px 0;
   font-size: &$linkFontSize;
   font-family: $linkFontFamily;
+}
+.bfsc > .fbls{
+  text-align: left;
+  padding-left: 0.4rem;
+}
+.bfsc > .fbrs{
+  text-align: right;
+  padding-right: 0.4rem;
 }
 .bcrs > a{
   display: block;
@@ -1084,12 +1087,15 @@ canvas {
 .bcls > a{
   padding: 0;
 }
+.fbls#stadtlogo{
+  background-color: $primaryColor;
+}
 @media only screen and (min-width: 772px){
   .bcls > a{
     padding: 0 0 0 1rem;
   }
   .fbls#stadtlogo, .fbrs#noelogo{
-    width: 100%;
+    width: 50vw;
   }
 }
 .bcls > a > img{
@@ -1132,9 +1138,6 @@ canvas {
 }
 .bcmk > .left{
   background: $primaryColor;
-  background: -moz-linear-gradient(322deg, rgba(220,20,60,1) 0%, rgba(196,22,56,1) 100%);
-  background: -webkit-linear-gradient(322deg, rgba(220,20,60,1) 0%, rgba(196,22,56,1) 100%);
-  background: linear-gradient(322deg, rgba(220,20,60,1) 0%, rgba(196,22,56,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dc143c",endColorstr="#c41638",GradientType=1);
 }
 .bcmk > .right {
