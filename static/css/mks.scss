@@ -1032,11 +1032,45 @@ canvas {
 
 .bfsc {
   display: grid;
-  grid-template-areas:
-  'bcls cbsf cbsf bcrs'
-  'fbls fbls fbrs fbrs';
-  grid-gap: 0px;
+  grid-template-areas: 'fbls fbrs';
+  grid-gap: 0;
   margin-bottom: 0;
+}
+.link-footer{
+  display: grid;
+  grid-column-gap: 0;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 0;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  border-top: solid 0.1rem;
+  border-bottom: solid 0.1rem;
+}
+.link-footer h3{
+  font-size: 1.6rem;
+  text-align: left;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.link-footer a:hover{
+  text-decoration: none;
+}
+.footer-info {  
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  grid-auto-flow: row;
+  padding: 0;
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+.footer-info h3{
+  font-size: 1.6rem;
+  text-align: left;
+}
+.footer-info p{
+  padding-left: 0;
+  padding-right: 2rem;
 }
 .fbls {
   background-color: $whiteColor;
@@ -2163,11 +2197,21 @@ td {
 
 /* Footer */
 .logo-footer-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto auto auto;
+  display: flex;
   grid-column-gap: 70px;
   grid-row-gap: 100px;
-  padding: 2rem;
+  padding: 2rem 5rem 0 5rem
+}
+.socialmedia-icons-footer{
+  display: flex;
+  grid-column-gap: 70px;
+  grid-row-gap: 100px;
+  padding: 2rem 5rem 0 5rem;
+}
+.socialmedia-icons-footer > a > img {
+  width: 2.2rem;
+  height: 2.2rem;
+  margin-bottom: 1rem;
 }
 @media screen and (min-width: 1400px) {
 .logo-footer-container > div{
