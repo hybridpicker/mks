@@ -1043,8 +1043,8 @@ canvas {
   padding: 0;
   margin-left: 5rem;
   margin-right: 5rem;
-  border-top: solid 0.1rem;
-  border-bottom: solid 0.1rem;
+  border-top: solid 0.1rem $secondaryColor;
+  border-bottom: solid 0.1rem $secondaryColor;
 }
 .link-footer h3{
   font-size: 1.6rem;
@@ -1061,8 +1061,8 @@ canvas {
   gap: 0;
   grid-auto-flow: row;
   padding: 0;
-  margin-left: 5rem;
-  margin-right: 5rem;
+  margin: 0rem 5rem 2rem 5rem;
+  border-top: 0.1rem solid $secondaryColor;
 }
 .footer-info h3{
   font-size: 1.6rem;
@@ -1071,6 +1071,22 @@ canvas {
 .footer-info p{
   padding-left: 0;
   padding-right: 2rem;
+}
+@media only screen and (min-width: 900px){
+  .footer-info{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media only screen and (min-width: 772px){
+  .footer-info{
+    grid-template-columns: 1fr;
+  }
+  .link-footer{
+    grid-template-columns: 1fr;
+  }
+  .link-footer h3{
+    text-align: center;
+  }
 }
 .fbls {
   background-color: $whiteColor;
@@ -1084,17 +1100,26 @@ canvas {
   background-color: $blackColor;
 }
 .bfsc > div {
-  padding: 10px 0;
   font-size: &$linkFontSize;
   font-family: $linkFontFamily;
 }
+.bfsc #stadtlogo svg{
+  padding-left: 5rem;
+  padding-top: 0.4rem;
+}
+.bfsc #noelogo svg{
+  padding-right: 5rem;
+  padding-top: 0.65rem;
+}
 .bfsc > .fbls{
   text-align: left;
-  padding-left: 0.4rem;
 }
 .bfsc > .fbrs{
   text-align: right;
   padding-right: 0.4rem;
+}
+.bfsc > div{
+  height:auto;
 }
 .bcrs > a{
   display: block;
@@ -1412,6 +1437,8 @@ a button {
   display:block;
   margin-left: auto;
   margin-right: auto;
+  padding: 0.75rem 1rem;
+  height: auto;
 }
 #button-login{
   margin-left: auto;
@@ -2199,8 +2226,8 @@ td {
 .logo-footer-container {
   display: flex;
   grid-column-gap: 70px;
-  grid-row-gap: 100px;
-  padding: 2rem 5rem 0 5rem
+  grid-row-gap: 70px;
+  padding: 2rem 5rem 5rem 5rem
 }
 .socialmedia-icons-footer{
   display: flex;
@@ -2213,6 +2240,19 @@ td {
   height: 2.2rem;
   margin-bottom: 1rem;
 }
+@media screen and (max-width: 900px) {
+  .socialmedia-icons-footer{
+    padding:2rem
+  }
+  .logo-footer-container{
+    padding: 2rem;
+  }
+  .link-footer, .footer-info{
+    margin:0;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+}
 @media screen and (min-width: 1400px) {
 .logo-footer-container > div{
   max-width: 8vw;
@@ -2223,22 +2263,23 @@ td {
 }
 @media screen and (max-width: 1200px) {
   .logo-footer-container{
-    grid-template-columns: auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto ;
   }
 }
 @media screen and (max-width: 800px) {
   .logo-footer-container{
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto;
+    display: grid;
   }
 }
 @media screen and (max-width: 650px) {
   .logo-footer-container{
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
   }
 }
 @media screen and (max-width: 490px) {
   .logo-footer-container{
-    grid-template-columns: auto auto;
+    grid-template-columns: auto;
   }
 }
 
