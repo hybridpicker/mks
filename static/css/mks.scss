@@ -1141,6 +1141,11 @@ canvas {
     width: 50vw;
   }
 }
+@media only screen and (min-width: 1800px){
+  .fbls#stadtlogo, .fbrs#noelogo{
+    width: 100%;
+  }
+}
 .bcls > a > img{
   height: 36px;
   width: auto;
@@ -2618,7 +2623,8 @@ html:not([data-scroll='0']) {
 }
 /* Huge Screens */
 @media only screen and (min-width: 1800px) {
-  .bcmk, .mbs, .bs, .logo-footer-container, #blogEntrySection{
+  .bcmk, .mbs, .bs, .logo-footer-container, 
+  #blogEntrySection, .footer{
     max-width: 1800px;
     margin-left: auto;
     margin-right: auto;
