@@ -1,18 +1,5 @@
 {% load static %}
 <!--Footer Grid Section -->
-<div class="bcmk">
-  <div class="left">
-    <section>
-      <a href="{% url 'students_signin' %}">Anmeldung Musikfächer</a>
-    </section>
-  </div>
-  <div class="right">
-    <section>
-      <a target="_blank" href="https://www.mkmnoe.at/angebote-fuer-kinder-jugendliche/kreativakademie/anmeldung">Anmeldung Kunstfächer</a>
-    </section>
-  </div>
-</div>
-
 <div class="footer">
   <div class="socialmedia-icons-footer">
     <a href="https://www.youtube.com/channel/UCN_tTW1dN-IpOdDz93KnuwA" target="_blank">
@@ -43,8 +30,19 @@
         <br>
         T: +43 2742 333 2682</p>
     </div>
-    <div class="footer-lead">
-      <h3>Leitung</h3>
+    <div class="footer-signin">
+      <section id="signin_music">
+        <a href="{% url 'students_signin' %}">Anmeldung Musikfächer<svg xmlns="http://www.w3.org/2000/svg" width="25.635" height="37.183" viewBox="0 0 25.635 37.183">
+          <path id="sign_in_music_symbol" d="M24.336,17.888c-1.364,2.274-1.971,3.184-2.425,3.032s1.213-2.425,1.213-4.548-1.819-3.638-3.335-4.245-4.244-1.819-4.244-1.819V18.8c0,1.516.606,8.186.606,9.7a11,11,0,0,1-.409,2.856l-.049-.155c-.512,2.4-2.95,4.681-6.294,5.591C5.114,37.955.973,36.436.145,33.4S2.119,26.949,6.4,25.782c3.211-.873,6.342-.236,8.058,1.416,0,0-.733-8.4-.733-9.614V0A21.6,21.6,0,0,1,17.06,2.122c1.516,1.213,8.034,6.821,8.489,9.095a12.442,12.442,0,0,1-1.213,6.67" transform="translate(0)" fill="#fff"/>
+        </svg>
+        </a>
+      </section>
+      <section id="signin_art">
+        <a target="_blank" href="https://www.mkmnoe.at/angebote-fuer-kinder-jugendliche/kreativakademie/anmeldung">Anmeldung Kunstfächer<svg xmlns="http://www.w3.org/2000/svg" width="38.066" height="33.795" viewBox="0 0 38.066 33.795">
+          <path id="sign_in_art_symbol" d="M27.407,18.125a19.285,19.285,0,0,0-1.849,2.861,8.153,8.153,0,0,1,2.6,3.122,24.457,24.457,0,0,0,3.267-1.8c5.636-4.76,19.469-21.8,19-22.292-.5-.53-18.045,12.656-23.015,18.109M23.93,22.317c-2.459-.434-4.876,1.118-6.493,4.989s-4.508,5.423-5.068,5.327c3.016,1.1,12.205,3.882,14.489-6.733a7,7,0,0,0-2.927-3.583" transform="translate(-12.368 0)" fill="#fff"/>
+        </svg>
+        </a>
+      </section>
     </div>
   </div>
 
@@ -53,7 +51,7 @@
       <h3>Impressum</h3>
     </a>
     <a href="">
-      <h3>Datenschutz</h3>
+      <h3>Formulare</h3>
     </a>
     <a href="">
       <h3>FAQ</h3>

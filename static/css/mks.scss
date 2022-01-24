@@ -762,13 +762,6 @@ canvas {
   }
 }
 @media only screen and (max-width: 700px), only screen and (max-height: 375px) {
-  .bcmk{
-    grid-template-areas: 'left''right';
-    grid-template-columns: none !important;
-  }
-  .bcmk > .middle{
-    display: none !important;
-  }
   header, .nvb{
     position: absolute;
   }
@@ -1169,47 +1162,6 @@ canvas {
     font-size: 5vw !important;
   }
 }
-.bcmk {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 0px;
-  grid-auto-columns: 1fr;
-  grid-auto-flow: column;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-.bcmk > div {
-  text-align: center;
-  color: $whiteColor;
-  height: 10rem;
-}
-.bcmk > .left{
-  background: $primaryColor;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dc143c",endColorstr="#c41638",GradientType=1);
-}
-.bcmk > .right {
-  background: $thirdColor;
-  background: -moz-linear-gradient(56deg, rgba(32,130,168,1) 0%, rgba(33,120,154,1) 100%);
-  background: -webkit-linear-gradient(56deg, rgba(32,130,168,1) 0%, rgba(33,120,154,1) 100%);
-  background: linear-gradient(56deg, rgba(32,130,168,1) 0%, rgba(33,120,154,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2082a8",endColorstr="#21789a",GradientType=1);
-}
-.bcmk section{
-  margin: 3rem 0 0 0;
-  padding: 10px 12px 10px 12px;
-}
-.bcmk .left section a, .bcmk .right section a{
-  color: $whiteColor;
-  font-family: $firstHeadingFamily;
-  font-size: 2rem;
-  font-weight: 600;
-}
-@media only screen and (max-width: 700px), only screen and (max-height: 375px) {
-  .bcmk .left section a, .bcmk .right section a{
-    font-size: 30px;
-}
-}
 @media only screen and (max-width: 800px){
   .cbsf{
     font-size: 3vw !important;
@@ -1238,15 +1190,6 @@ canvas {
   }
   .fbls > svg, .fbrs > img{
     max-height: 3.5rem;
-  }
-  .bcmk > div{
-    height: 140px;
-  }
-  .bcmk section {
-    margin-top: 2.2rem;
-  }
-  .bcmk{
-    width: 100%;
   }
 }
 
@@ -2173,9 +2116,6 @@ td {
   .overlay-content a.categoryHeadingMobileNoCursor {
     font-size: 5vw;
   }
-  .bcmk .left section a, .bcmk .right section a {
-    font-size: 30px;
-  }
 }
 .counter-left {
   grid-area: counter-left;
@@ -2228,6 +2168,45 @@ td {
   width: 2.2rem;
   height: 2.2rem;
   margin-bottom: 1rem;
+}
+.footer-signin{
+  display: grid;
+}
+.footer-signin a{
+  color: $whiteColor;
+  width: 18rem;
+  font-size: 1.5rem;
+  display: flex;
+  margin-left: auto;
+  padding: 0.75rem 1rem 0.75rem 3rem;
+}
+@media only screen and (max-width: 1200px) {
+  .footer-signin a{
+    width: 16rem;
+  }
+}
+@media only screen and (max-width: 940px) {
+  .footer-signin a{
+    width: 16rem;
+  }
+}
+.footer-signin a:hover{
+  text-decoration: none;
+}
+#signin_music > a{
+  background: $primaryColor;
+  background: url("/static/footer/signin_music_bg.svg");
+  margin-top: 5.75rem;
+}
+#signin_art > a{
+  background: $thirdColor;
+  background: url("/static/footer/signin_art_bg.svg");
+}
+.footer-signin section a svg {
+  height: 1.5rem;
+  width: auto;
+  padding-left: .75rem;
+  padding-top: .15rem;
 }
 @media screen and (max-width: 900px) {
   .socialmedia-icons-footer{
@@ -2623,7 +2602,7 @@ html:not([data-scroll='0']) {
 }
 /* Huge Screens */
 @media only screen and (min-width: 1800px) {
-  .bcmk, .mbs, .bs, .logo-footer-container, 
+  .mbs, .bs, .logo-footer-container, 
   #blogEntrySection, .footer{
     max-width: 1800px;
     margin-left: auto;
@@ -2640,10 +2619,6 @@ html:not([data-scroll='0']) {
   .gallery-show img{
     max-width: 98%;
   }
-  .bcmk > .middle > img{
-    object-fit: cover;
-  }
-
 }
 @media only screen and (min-width: 2000px){
 .grtnmc{
@@ -2668,11 +2643,6 @@ h1{
 }
 #forms-text{
   text-align: center;
-}
-.bcmk > div > section{
-  width: 420px;
-  margin-left: auto;
-  margin-right: auto;
 }
 p{
   padding-left:unset;
