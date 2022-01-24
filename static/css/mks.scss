@@ -2622,7 +2622,8 @@ html:not([data-scroll='0']) {
 }
 /* Huge Screens */
 @media only screen and (min-width: 1800px) {
-  .bcmk, .mbs, .bs, .logo-footer-container, #blogEntrySection{
+  .bcmk, .mbs, .bs, .logo-footer-container, #blogEntrySection, 
+  .socialmedia-icons-footer, .footer-info, .footer-contact, .link-footer{
     max-width: 1800px;
     margin-left: auto;
     margin-right: auto;
