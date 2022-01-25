@@ -3,8 +3,8 @@ from faq.models import FAQ
 
 # Create your views here.
 def faq_view (request):
-    faq = FAQ.objects.all()
+    faqs = FAQ.objects.all()
     context = {
-        'faq': faq,
+        'faqs': faqs,
     }
     return render (request, 'faq/faq.html', context)
