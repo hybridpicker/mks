@@ -21,7 +21,7 @@
     <div class="container">
       <h1>FAQ - Häufig gestellte Fragen</h1>
       {% for faq in faqs %}
-      <a id="show_{{faq.pk}}" onclick="showSection('{{faq.pk}}')"><h2 class="heading-teaching"
+      <a class="faq-link" id="show_{{faq.pk}}" onclick="showSection('{{faq.pk}}')"><h2 class="heading-faq"
         data-aos="fade-right"
         data-aos-duration="1000">{{ faq.question }}</h2></a>
         <section id="{{faq.pk}}" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">

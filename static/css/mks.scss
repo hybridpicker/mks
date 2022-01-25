@@ -1601,12 +1601,15 @@ select#id_birthdate_year{
   max-width: 18rem;
   margin-bottom: 2rem;
 }
-.heading-teaching{
+.heading-teaching, .faq-teaching{
   color:$primaryColor;
   text-align: left;
 }
+.faq-teaching a{
+  text-decoration: none;
+}
 @media only screen and (max-width: 800px) {
-  .heading-teaching{
+  .heading-teaching, .faq-teaching{
     text-align: center;
   }
 }
@@ -2661,7 +2664,7 @@ p{
   padding-left: 78px;
 }
 }
-h2.heading-teaching{
+h2.heading-teaching, h2.faq-heading{
   color: $blackColor;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
@@ -2671,12 +2674,15 @@ h2.heading-teaching{
 a.active > h2{
   color: $primaryColor;
 }
-h2.heading-teaching:hover{
+h2.heading-teaching:hover, h2.faq-heading:hover{
   color: $primaryColor;
   cursor: pointer;
 }
+a.faq-link:hover{
+  text-decoration: none;
+}
 @media only screen and (max-width: 1024px) {
-  h2.heading-teaching:hover{
+  h2.heading-teaching:hover, h2.faq-heading:hover{
     color: $blackColor;
   }
 }
