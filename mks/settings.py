@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'todo',
     'projects.apps.ProjectsConfig',
     'positionfinder.apps.PositionfinderConfig',
+    'faq.apps.FaqConfig',
     #sitemaps
     'django.contrib.sitemaps',
 ]
