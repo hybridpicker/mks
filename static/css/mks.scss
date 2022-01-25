@@ -1348,7 +1348,7 @@ form button, a button, button.button {
   font-family: $linkFontFamily;
   font-size: $paragraphFontSize;
   box-shadow: 0 4px #BD2123;
-  width: 20%;
+  width: auto;
   height: 50px;
   background: $primaryColor;
   border-width: 0.5px;
@@ -2221,15 +2221,22 @@ td {
     margin-right: 2rem;
   }
 }
-@media only screen and (max-width: 900px){
-  .footer-info{
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media only screen and (max-width: 772px){
+@media only screen and (max-width: 950px){
   .footer-info{
     grid-template-columns: 1fr;
   }
+  #signin_music > a{
+    margin-top: 2rem;
+  }
+  #signin_music > a, #signin_art > a{
+    margin-bottom: 2rem;
+  }
+  .footer-signin a{
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media only screen and (max-width: 772px){
   .link-footer{
     grid-template-columns: 1fr;
   }
