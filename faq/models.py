@@ -12,4 +12,4 @@ class FAQ(models.Model):
         verbose_name_plural = ("FAQ-Questions")
 
     def __str__(self):
-        return self.title
+        return self.question
