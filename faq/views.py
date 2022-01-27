@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from faq.models import FAQ
+from faq.forms import FaqForm
 
 # Create your views here.
 def faq_view (request):
@@ -8,3 +9,19 @@ def faq_view (request):
         'faqs': faqs,
     }
     return render (request, 'faq/faq.html', context)
+
+def get_faq(request):
+    faqs = FAQ.objects.all().first()
+    if request.method == "POST":
+        form = FaqForm(request.POST, instance=faqs)
+        if form.is_valid():
+            faq = form.save(commit=False)
+            faq.save()
+            return redirect('home_view')
+    else:
+        form = FaqForm(instance=faqs)
+    # Model data
+    context = {
+        'form': form,
+        }
+    return render(request, 'controlling/faq_form.html', context)
