@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from faq.models import FAQ
 from faq.forms import FaqForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def faq_view (request):
@@ -10,6 +11,7 @@ def faq_view (request):
     }
     return render (request, 'faq/faq.html', context)
 
+@login_required(login_url='/team/login/')
 def get_faq(request):
 #    faqs = FAQ.objects.all().first()
     faqs = request.GET['pk']
@@ -28,6 +30,7 @@ def get_faq(request):
         }
     return render(request, 'controlling/faq_form.html', context)
 
+@login_required(login_url='/team/login/')
 def get_all_faqs(request):
     faqs = FAQ.objects.all()
     context ={
