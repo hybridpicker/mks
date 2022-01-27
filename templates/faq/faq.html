@@ -20,6 +20,7 @@
 <div class="mbs">
     <div class="container">
       <h1>FAQ - Häufig gestellte Fragen</h1>
+      {% if faqs %}
       {% for faq in faqs %}
       <a class="faq-link" id="show_{{faq.pk}}" onclick="showSection('{{faq.pk}}')"><h2 class="heading-faq"
         data-aos="fade-right"
@@ -28,6 +29,9 @@
             <p>{{faq.answer}}</p>
         </section>
       {% endfor %}
+      {% else %}
+      <p>Diese Seite befindet sich derzeit noch im Aufbau.</p>
+      {% endif %}
     </div>
 </div>
 {% endblock %}
