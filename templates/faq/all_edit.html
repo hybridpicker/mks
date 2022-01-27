@@ -1,0 +1,52 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% load i18n static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+<img src="/static/banner/msmusic_banner.jpg" alt="">
+<img id="mbimg" src="/static/banner/mobile/msmusic_banner.jpg" alt="">
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+    <div class="container">
+      <h1>FAQ - Fragen:</h1>
+      {% if faqs %}
+      {% for faq in faqs %}
+      <a class="faq-link-edit" href="get-faq?pk={{faq.pk}}">{{ faq.question }}</h2></a>
+        <section id="{{faq.pk}}" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
+            <p>{{faq.answer}}</p>
+        </section>
+      {% endfor %}
+      {% else %}
+      <p>Diese Seite befindet sich derzeit noch im Aufbau.</p>
+      {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+function showSection(id) {
+  document.getElementById(id).style.display = "contents";
+  document.getElementById("show_" + id).setAttribute("onclick","closeSection('" + id + "')");
+  document.getElementById("show_" + id).setAttribute("class", "active");
+  setTimeout(function(){ document.getElementById(id).style.opacity = "1"; }, 100);
+}
+function closeSection(id) {
+  document.getElementById(id).style.opacity = "0";
+  document.getElementById(id).style.display = "none";
+  document.getElementById("show_" + id).setAttribute("onclick","showSection('" + id + "')");
+  document.getElementById("show_" + id).removeAttribute("class", "active");
+}
+</script>
+{% endblock %}
