@@ -28,7 +28,7 @@ def get_faq(request):
     context = {
         'form': form,
         }
-    return render(request, 'controlling/faq_form.html', context)
+    return render(request, 'faq/faq_form.html', context)
 
 @login_required(login_url='/team/login/')
 def get_all_faqs(request):

@@ -22,7 +22,7 @@
       <h1>FAQ - Fragen:</h1>
       {% if faqs %}
       {% for faq in faqs %}
-      <a class="faq-link-edit" href="get-faq?pk={{faq.pk}}">{{ faq.question }}</h2></a>
+      <a class="faq-link-edit" href="get-faq?pk={{faq.pk}}"><h2>{{ faq.question }}</h2></a>
         <section id="{{faq.pk}}" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
             <p>{{faq.answer}}</p>
         </section>

@@ -1613,6 +1613,17 @@ select#id_birthdate_year{
     text-align: center;
   }
 }
+a.faq-link-edit:hover{
+  text-decoration: none;
+}
+a.faq-link-edit h2:hover{
+  color: $primaryColor;
+}
+.faq-edit-single textarea, .faq-edit-single input{
+  width: 100%;
+  padding-right: 1.5%;
+  padding-left: 1.5%;
+}
 .tpcfptr img {
   max-width: 100%;
 }
