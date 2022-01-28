@@ -780,17 +780,17 @@ canvas {
 }
 @media only screen and (max-width: 700px) {
   h1{
-    font-size: 24px;
+    font-size: 1.9rem;
   }
   h2, h3{
-    font-size: 22px;
+    font-size: 1.7rem;
   }
   h4{
     font-size: 20px;
   }
   p, .slitcon, #dsgvo-text p, #dsgvo-text a, strong, b {
-    font-size: 1.1rem;
-    line-height: 1.5rem;
+    font-size: 1.2rem;
+    line-height: 1.7rem;
     padding-left: 0;
     padding-right: 0;
   }
@@ -2251,13 +2251,35 @@ td {
     margin-left: auto;
     margin-right: auto;
   }
+  .footer-info h3, .footer-info p{
+    text-align: center;
+  }
 }
 @media only screen and (max-width: 772px){
   .link-footer{
     grid-template-columns: 1fr;
+    border:none;
   }
   .link-footer h3{
     text-align: center;
+  }
+  .socialmedia-icons-footer {
+    padding: 0rem 2rem 0 2rem;
+    grid-column-gap: 0;
+  }
+  .socialmedia-icons-footer a{
+    margin-left: auto; 
+    margin-right: auto;
+  }
+  .socialmedia-icons-footer > a > img{
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+  .footer-info{
+    border-top: none;
+  }
+  .footer-info p{
+    padding: 0;
   }
 }
 @media screen and (min-width: 1400px) {
@@ -2275,19 +2297,23 @@ td {
 }
 @media screen and (max-width: 800px) {
   .logo-footer-container{
-    grid-template-columns: auto auto auto  auto;
+    grid-template-columns: auto auto auto;
     display: grid;
     padding: 1rem 2rem 1rem 2rem;
   }
 }
 @media screen and (max-width: 650px) {
   .logo-footer-container{
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
   }
 }
 @media screen and (max-width: 490px) {
   .logo-footer-container{
-    grid-template-columns: auto auto;
+    grid-template-columns: auto;
+  }
+  .logo-footer-container div{
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
