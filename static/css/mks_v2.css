@@ -1,4 +1,7 @@
 @import url("https://use.typekit.net/nvs2bby.css");
+/* Standard Variables */
+/* mobile Variables */
+/* Use the variables */
 body {
   background-color: #FDFDFD;
   color: #333333; }
@@ -400,7 +403,7 @@ textarea {
   .bs > img, .bs #homebanner {
     display: none; }
   .bs {
-    height: 18rem; }
+    height: 15rem; }
   #mbimg {
     display: unset; }
   #home-container {
