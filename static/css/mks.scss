@@ -1350,19 +1350,16 @@ input {
 form button, a button, button.button {
   font-family: $linkFontFamily;
   font-size: $paragraphFontSize;
-  box-shadow: 0 4px #BD2123;
   width: auto;
   height: 50px;
   background: $primaryColor;
-  border-width: 0.5px;
   color: $whiteColor;
-  border-color: #FF1B1E;
   margin: 1rem;
   font-weight: 600;
+  border: none;
 }
 form button:hover, a button:hover, button.button:hover {
   transform: translate(0, 1.5px);
-  box-shadow: 0 2.5px #BD2123;
   cursor: pointer;
 }
 .form-actions {
@@ -1372,8 +1369,9 @@ a button {
   display:block;
   margin-left: auto;
   margin-right: auto;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1rem 0.75rem 1.5rem;
   height: auto;
+  background: url("/static/footer/signin_music_bg.svg");
 }
 #button-login{
   margin-left: auto;
@@ -2332,7 +2330,6 @@ section.events-container-grid {
   background-color: $primaryColor;
 }
 section.events-container-grid h1{
-  border-bottom: solid 0.25rem $primaryColor;
   padding-bottom: 0.5rem;
 }
 @media screen and (max-width: 800px) {
@@ -2778,7 +2775,6 @@ a#show_theory:hover,{
 #blogEntrySection h1{
   margin-bottom: 0;
   margin-top: 3rem;
-  border-bottom: $primaryColor 0.2rem solid;
   width: 80%;
   margin-left: auto;
   margin-right: auto;
