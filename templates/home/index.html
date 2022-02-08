@@ -16,21 +16,40 @@
 <meta name="twitter:image" content="static/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<script type="text/javascript">
-  var photo_data = {{ photos|safe }}
-  function randomPicShow(){
-     setInterval(function(){
-       var min=0;
-       var max=Object.keys(photo_data).length;
-       var random = Math.floor(Math.random() * (+max - +min)) + +min;
-       document.getElementById("middleImageIndex").src = photo_data[random];
-     }, 8000);
-   };
-   window.onload = function exampleFunction() {
-       randomPicShow();
-   }
-</script>
+<link href="{% static 'css/slider.css' %}" rel="stylesheet" type="text/css" />
 
+<style media="screen">
+    section > iframe {
+    width: 100% !important;
+    height: 650px !important;
+  }
+  @media only screen and (max-width: 1387px) {
+  section > iframe {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    padding-bottom: 20px;
+  }
+  }
+  @media only screen and (max-width: 677px) {
+  section > iframe {
+    width: 100% !important;
+    height: 200px !important;
+  }
+  }
+  @media only screen and (max-width: 400px) {
+  section > iframe {
+    width: 100% !important;
+    height: 180px !important;
+  }
+  }
+  @media only screen and (max-width: 370px) {
+  section > iframe {
+    width: 100% !important;
+    height: 150px !important;
+  }
+  }
+</style>
 {% endblock %}
 
 
@@ -38,7 +57,12 @@
 {% endblock %}
 {% block banner %}
 
+{% include "templates/slider.html" %}
+
+<!--
 <img id="homebanner" src="/static/banner/home_banner.jpg" alt="Banner Musik- und Kunstchule St. Pölten">
+-->
+
 <img id="mbimg" src="/static/banner/mobile/home_banner.jpg" alt="Banner Musik- und Kunstchule St. Pölten Mobile">
 
 {% endblock %}
@@ -71,24 +95,9 @@
   </div>
 </div>
 
-<div class="bcmk">
-  <div class="left">
-    <section>
-      <a href="{% url 'students_signin' %}">Anmeldung Musikschule</a>
-    </section>
-  </div>
-  <div class="middle">
-    <img id="middleImageIndex" src="{{middle_pic.image.url}}" alt="{{middle_pic.title}}">
-  </div>
-  <div class="right">
-    <section>
-      <a target="_blank" href="https://www.mkmnoe.at/angebote-fuer-kinder-jugendliche/kreativakademie/anmeldung">Anmeldung Kunstschule</a>
-    </section>
-  </div>
-</div>
 {% if blog %}
 <section id="blogEntrySection" class="container">
-  <h1>Neuigkeiten aus der Musik- und Kunstschule</h1>
+  <h1>Aktuelle Blogbeiträge</h1>
   <div class="tmcon">
     <div class="tmcb">
       {% for blog in blog %}
@@ -112,6 +121,17 @@
   </div>
 </section>
 {% endif %}
+<div class="mbs container">
+  <div class="container">
+    <h1>Unser Schüler:innen stellen sich vor</h1>
+    <section id="banner-video">
+      <iframe src="https://player.vimeo.com/video/671871325?h=93312808d7?autoplay=1&loop=1&autopause=0&muted=1&background=1&muted=1&autoplay=1" width="640" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </section>
+    <a href="{% url 'teaching_music'%}">
+      <button>>> Unterrichtsangebot</button>
+    </a>
+  </div>
+</div>
 {% if events %}
 <div class="mbs container">
 
@@ -141,9 +161,6 @@
   </div>
 {% endif %}
   {% endblock %}
-  <script type="text/javascript">
-    document.onload = randomPicShow();
-  </script>
 
   {% block footer %}
 

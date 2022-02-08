@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from students.models import Student
 from home.models import IndexText
 from controlling.forms import IndexForm
+
 from django.utils.datastructures import MultiValueDictKeyError
 
 # Create your views here.
@@ -78,3 +79,4 @@ def get_index_text(request):
         'form': form,
         }
     return render(request, 'controlling/index_form.html', context)
+

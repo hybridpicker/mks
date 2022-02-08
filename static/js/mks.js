@@ -5,7 +5,7 @@ function openNav() {
     document.getElementById("closeMobileMenu").style.display = "flex";
   }
   else{
-    document.getElementById("mks-nav-mobile-menu").style.width = "400px";
+    document.getElementById("mks-nav-mobile-menu").style.width = "25rem";
     document.getElementById("menuIcon").style.visibility = "hidden";
     document.getElementById("closeMobileMenu").style.display = "flex";
   }
