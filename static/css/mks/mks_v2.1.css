@@ -403,7 +403,8 @@ textarea {
   .bs > img, .bs #homebanner {
     display: none; }
   .bs {
-    height: 15rem; }
+    height: auto;
+    max-height: 15rem; }
   #mbimg {
     display: unset; }
   #home-container {
