@@ -478,7 +478,8 @@ textarea{
     display: none;
   }
   .bs{
-    height: 15rem;
+    height: auto;
+    max-height: 15rem;
   }
   #mbimg {
     display: unset;
