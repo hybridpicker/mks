@@ -20,13 +20,13 @@ class Photo(models.Model):
     title = models.CharField(_(u'Title of the Photo'), max_length=50)
     image = models.ImageField(
         upload_to='gallery/images/',
-        default='gallery_imageDefault', blank=True)
+        default='gallery_imageDefault.jpg', blank=True)
     image_thumbnail = models.ImageField(
         upload_to='gallery/images/thumbnail',
-        default='gallery_thumbnail_imageDefault', blank=True)
+        default='gallery_thumbnail_imageDefault.jpg', blank=True)
     image_lazy = models.ImageField(
         upload_to='gallery/images/lazy/',
-        default='gallery_lazy_imageDefault', blank=True)
+        default='gallery_lazy_imageDefault.jpg', blank=True)
     description = models.TextField(null=True, blank=True, max_length=120)
     copyright_by = models.CharField(_(u'Copyright Owner of Photo'), max_length=100, null=True, blank=True)
     ordering = models.IntegerField(null=True, blank=True)
