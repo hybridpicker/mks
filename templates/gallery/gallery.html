@@ -21,14 +21,10 @@
 
 <script type="text/javascript">
 var photo_data = {{ gallery_json_data|safe }}
+console.log(photo_data)
 </script>
-
-@media only screen and (max-width: 771px) {
-  .bs{
-    height: auto;
-  }
-}
-
+<!-- lazyload -->
+<script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
 {% endblock %}
 
 {% block navbar %}
@@ -59,29 +55,54 @@ var photo_data = {{ gallery_json_data|safe }}
       {% if photo.image.height <= photo.image.width %}
       <img data-aos="zoom-in"
            data-aos-duration="2000"
-           onclick="showImg({{photo.id}})" id="{{photo.id}}"
+           onclick="showImg({{photo.id}})" 
+           id="{{photo.id}}"
            class="landscape lazyload"
-           style=""
-           src="{{ photo.image.url }}"
-           alt="">
+           {% if photo.image_lazy %}
+           src="{{ photo.image_lazy.url }}"
+           {% if photo.image_thumbnail %}
+           data-src="{{ photo.image_thumbnail.url }}"
+           {% else %}
+           data-src="{{ photo.image.url }}"
+           {% endif %}
+           {% else %}
+           data-src="{{ photo.image.url }}"
+           {% endif %}
+           alt="{{ photo.image.title }} Musikschule St. pölten">
       {% elif photo.image.height <= photo.image.width %}
       <img data-aos="zoom-in"
            data-aos-duration="2000"
            onclick="showImg({{photo.id}})"
            id="{{photo.id}}"
            class="square lazyload"
-           style=""
-           src="{{ photo.image.url }}"
-           alt="">
+           {% if photo.image_lazy %}
+           src="{{ photo.image_lazy.url }}"
+           {% if photo.image_thumbnail %}
+           data-src="{{ photo.image_thumbnail.url }}"
+           {% else %}
+           data-src="{{ photo.image.url }}"
+           {% endif %}
+           {% else %}
+           data-src="{{ photo.image.url }}"
+           {% endif %}
+           alt="{{ photo.image.title }} Musikschule St. pölten">
       {% else %}
       <img data-aos="zoom-in"
            data-aos-duration="2000"
            onclick="showImg({{photo.id}})"
            id="{{photo.id}}"
            class="portrait lazyload"
-           style=""
-           src="{{ photo.image.url }}"
-           alt="">
+           {% if photo.image_lazy %}
+           src="{{ photo.image_lazy.url }}"
+           {% if photo.image_thumbnail %}
+           data-src="{{ photo.image_thumbnail.url }}"
+           {% else %}
+           data-src="{{ photo.image.url }}"
+           {% endif %}
+           {% else %}
+           data-src="{{ photo.image.url }}"
+           {% endif %}
+           alt="{{ photo.image.title }} Musikschule St. pölten">
       {% endif %}
       {% endfor %}
     </section>
@@ -100,6 +121,7 @@ var photo_data = {{ gallery_json_data|safe }}
 <script type="text/javascript">
   function showImg(id){
     src = document.getElementById(id).src
+    src = photo_data[id]["image"]
     document.getElementById("overlay-show-img").src = src
     document.getElementById("overlay-image-section").style.display = "block";
     document.querySelector("header").style.zIndex = "0"
@@ -120,8 +142,10 @@ var photo_data = {{ gallery_json_data|safe }}
 </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
 </script>
-
 <script>
+  lazyload();
+</script>
+<script>  
 AOS.init({disable: 'mobile',});
 </script>
 {% endblock %}
