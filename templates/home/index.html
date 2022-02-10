@@ -109,15 +109,16 @@
           </a>
           <div class="tctm">
             <p>{{ blog.meta_description|linebreaks|truncatewords:30 }}</p>
-            <a href="blog/{{blog.published_year}}/{{blog.slug}}">Weiterlesen</a>
+            <a href="blog/{{blog.published_year}}/{{blog.slug}}">
+              <button>
+              Weiterlesen
+              </button>
+            </a>
           </div>
         </div>
       </div>
       {% endfor %}
     </div>
-    <a class="categoryHeadingMobileNoCursor" href="{% url 'blog_summary' %}">
-      <button>Blogbeiträge</button>
-    </a>
   </div>
 </section>
 {% endif %}

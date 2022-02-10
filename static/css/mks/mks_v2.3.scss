@@ -712,7 +712,7 @@ canvas {
     height: 3rem;
   }
   #hamurger-mobile{
-    padding-top: 0.6rem;
+    padding-top: calc((4rem - 40px) / 2);
   }
   .bnbs{
     display:none;
@@ -845,7 +845,7 @@ canvas {
   min-width: 8.5rem;
   box-shadow: 3px 3px 2px #0F262B33;
   z-index: 1;
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
   left:0;
 }
 .dropdown-content-d,{
@@ -933,7 +933,9 @@ canvas {
 }
 .dropdown-hover-section, .dropdown-hover-section-d,
 .dropdown-hover-section-b, .dropdown-hover-section-e,{
-  background-color:$primaryColor;
+  border-bottom: 0.3rem solid $primaryColor;
+  border-left: 0.25rem solid transparent;
+  height: 0;
 }
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-hover-section {
