@@ -66,6 +66,8 @@ INSTALLED_APPS = [
     'faq.apps.FaqConfig',
     #sitemaps
     'django.contrib.sitemaps',
+    #thumbnails
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -204,6 +206,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USER_RECEIVER = 'musikschule@st-poelten.gv.at'
 
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+
+THUMBNAIL_FORCE_OVERWRITE = True
 
 if os.path.isfile(os.path.join(BASE_DIR, 'local_settings.py')):
     from local_settings import *

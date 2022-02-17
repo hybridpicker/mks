@@ -5,6 +5,7 @@ from teaching.subject import Subject
 from django.utils.translation import gettext as _
 from django.utils import timezone
 import datetime
+from sorl.thumbnail import ImageField
 
 class Author(models.Model):
     first_name = models.CharField(max_length=60)

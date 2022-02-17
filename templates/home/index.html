@@ -1,6 +1,8 @@
 {% extends "templates/base.html" %}
 
 {% load static %}
+{% load thumbnail %}
+
 {% block extra_head %}
 <meta name="title" content="Musik- und Kunschule St. Pölten | Musikunterricht in St. Pölten">
 <meta name="description" content="Erfolgreicher Musikunterricht für St. Pölten. Besuchen Sie uns und unsere Musiklehrer:innen für eine Vielzahl von Instrumenten und Stilrichtungen.">
@@ -105,7 +107,15 @@
         <div class="mti">
           <a href="blog/{{blog.published_year}}/{{blog.slug}}">
             <h3>{{ blog.title }}</h3>
-            <img src="{{ blog.image.url }}" alt="">
+            {% thumbnail blog.image "600" crop="center" as im %}
+            <img src="{{ im.url }}" 
+            alt=""
+            src="{{ im.url }}" 
+            width="{{ im.width }}" 
+            height="{{ im.height }}"
+            alt="{{ blog.image.title }} Beitragsbild"
+            style="width: 100%;height: auto;">
+            {% endthumbnail %}
           </a>
           <div class="tctm">
             <p>{{ blog.meta_description|linebreaks|truncatewords:30 }}</p>

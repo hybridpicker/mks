@@ -1,6 +1,8 @@
 {% extends "templates/base.html" %}
 
 {% load static %}
+{% load thumbnail %}
+
 {% block extra_head %}
 <meta name="title" content="Galerie der Musik- und Kunstschule St. Pölten">
 <meta name="description" content="Bilder und Impressionen der Musik- und Kunstschule St. Pölten in der Voithvilla am Südpark sowie unserer Schülerinnen, Schüler, Lehrer und Lehrerinnen.">
@@ -21,7 +23,6 @@
 
 <script type="text/javascript">
 var photo_data = {{ gallery_json_data|safe }}
-console.log(photo_data)
 </script>
 <!-- lazyload -->
 <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
@@ -53,56 +54,31 @@ console.log(photo_data)
     <section class="gallery-show">
       {% for photo in photos %}
       {% if photo.image.height <= photo.image.width %}
+      {% thumbnail photo.image "750" crop="center" as im %}
       <img data-aos="zoom-in"
            data-aos-duration="2000"
            onclick="showImg({{photo.id}})" 
            id="{{photo.id}}"
-           class="landscape lazyload"
-           {% if photo.image_lazy %}
-           src="{{ photo.image_lazy.url }}"
-           {% if photo.image_thumbnail %}
-           data-src="{{ photo.image_thumbnail.url }}"
-           {% else %}
-           data-src="{{ photo.image.url }}"
-           {% endif %}
-           {% else %}
-           data-src="{{ photo.image.url }}"
-           {% endif %}
-           alt="{{ photo.image.title }} Musikschule St. Pölten">
-      {% elif photo.image.height <= photo.image.width %}
-      <img data-aos="zoom-in"
-           data-aos-duration="2000"
-           onclick="showImg({{photo.id}})"
-           id="{{photo.id}}"
-           class="square lazyload"
-           {% if photo.image_lazy %}
-           src="{{ photo.image_lazy.url }}"
-           {% if photo.image_thumbnail %}
-           data-src="{{ photo.image_thumbnail.url }}"
-           {% else %}
-           data-src="{{ photo.image.url }}"
-           {% endif %}
-           {% else %}
-           data-src="{{ photo.image.url }}"
-           {% endif %}
-           alt="{{ photo.image.title }} Musikschule St. Pölten">
+           class="landscape"
+           src="{{ im.url }}" 
+           width="{{ im.width }}" 
+           height="{{ im.height }}"
+           alt="{{ photo.image.title }} Musikschule St. Pölten"
+           style="width: 100%;height: auto;">
+      {% endthumbnail %}
       {% else %}
+      {% thumbnail photo.image "400" crop="center" as im %}
       <img data-aos="zoom-in"
            data-aos-duration="2000"
-           onclick="showImg({{photo.id}})"
+           onclick="showImg({{photo.id}})" 
            id="{{photo.id}}"
-           class="portrait lazyload"
-           {% if photo.image_lazy %}
-           src="{{ photo.image_lazy.url }}"
-           {% if photo.image_thumbnail %}
-           data-src="{{ photo.image_thumbnail.url }}"
-           {% else %}
-           data-src="{{ photo.image.url }}"
-           {% endif %}
-           {% else %}
-           data-src="{{ photo.image.url }}"
-           {% endif %}
-           alt="{{ photo.image.title }} Musikschule St. Pölten">
+           class="landscape"
+           src="{{ im.url }}" 
+           width="{{ im.width }}" 
+           height="{{ im.height }}"
+           alt="{{ photo.image.title }} Musikschule St. Pölten"
+           style="height: 100%;width:auto;">
+      {% endthumbnail %}
       {% endif %}
       {% endfor %}
     </section>
