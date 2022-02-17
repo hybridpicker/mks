@@ -66,6 +66,8 @@ INSTALLED_APPS = [
     'faq.apps.FaqConfig',
     #sitemaps
     'django.contrib.sitemaps',
+    #thumbnails
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [

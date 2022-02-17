@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext as _
+from sorl.thumbnail import ImageField
 
 class PhotoCategory(models.Model):
     title = models.CharField(_(u'Project Name'), max_length=50)
