@@ -2652,3 +2652,7 @@ a#show_theory:hover {
   .youtube-grid > iframe {
     min-height: 200px;
     width: 100%; } }
+
+@media only screen and (max-width: 771px) {
+  #banner-video, .mbs.container.banner-video {
+    display: none; } }
