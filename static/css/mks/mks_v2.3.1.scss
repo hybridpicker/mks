@@ -711,8 +711,8 @@ canvas {
     width: auto;
     height: 3rem;
   }
-  #hamurger-mobile{
-    padding-top: 0.25rem;
+  #hamburger-mobile{
+      padding-top: 0.25rem;
   }
   .bnbs{
     display:none;
@@ -1357,6 +1357,7 @@ form button, a button, button.button {
   width: auto;
   height: 50px;
   background: $primaryColor;
+  background: url("/static/footer/signin_music_bg.svg");
   color: $whiteColor;
   margin: 1rem;
   font-weight: 600;
@@ -1438,6 +1439,11 @@ a button {
   }
   .contact_form_grid_container p{
     text-align: left;
+  }
+}
+@media only screen and (max-width: 771px){
+  #contact_form_post .form-actions {
+    text-align: center;
   }
 }
 /* Sign In Form CSS */
@@ -1754,6 +1760,12 @@ a.faq-link-edit h2:hover{
 .tmcon {
   width: 98%;
   margin: auto;
+}
+.tmcon a:hover{
+  text-decoration: none;
+}
+.tmcon h2:hover{
+  color: $primaryColor;
 }
 .sfbsf-text {
   display: inline-block;

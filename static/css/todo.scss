@@ -1,6 +1,9 @@
+@import url("https://use.typekit.net/nvs2bby.css");
+
 /* Standard Variables */
-$primaryColor:#D73538;
-$secondaryColor:#222528;
+$primaryColor:#D11317;
+$secondaryColor:#333333;
+$thirdColor: #2082a8;
 
 $whiteColor: #FDFDFD;
 $bgcolor: $whiteColor;
@@ -8,42 +11,42 @@ $blackColor: $secondaryColor;
 
 $textcolor: $secondaryColor;
 
-$firstHeadingFamily:'Montserrat', sans-serif;
-$firstHeadingFontSize:45px;
+$firstHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
+$firstHeadingFontSize:2.3rem;
 $firstHeadingFontColor:$secondaryColor;
-$firstHeadingFontLineHeight:61px;
+$firstHeadingFontLineHeight:66px;
 
-$secondHeadingFamily:'Montserrat', sans-serif;
-$secondHeadingFontSize:40px;
+$secondHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
+$secondHeadingFontSize:2.1rem;
 $secondHeadingFontColor:$secondaryColor;
-$secondHeadingFontLineHeight:61px;
+$secondHeadingFontLineHeight:66px;
 
-$thirdHeadingFamily:'Montserrat', sans-serif;
-$thirdHeadingFontSize:30px;
+$thirdHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
+$thirdHeadingFontSize:2rem;
 $thirdHeadingFontColor:$secondaryColor;
-$thirdHeadingFontLineHeight:61px;
+$thirdHeadingFontLineHeight:66px;
 
-$fourthHeadingFamily:'Montserrat', sans-serif;
-$fourthHeadingFontSize:26px;
+$fourthHeadingFamily:'jaf-bernina-sans-condensed', sans-serif;
+$fourthHeadingFontSize:1.5rem;
 $fourthHeadingFontColor:$secondaryColor;
-$fourthHeadingFontLineHeight:30px;
+$fourthHeadingFontLineHeight:35px;
 
-$paragraphFontFamily:'Lato', sans-serif;
-$paragraphFontSize:24px;
+$paragraphFontFamily:'jaf-bernina-sans-condensed', sans-serif;
+$paragraphFontSize:1.3rem;
 $paragraphFontColor:$secondaryColor;
-$paragraphFontLineHeight:40px;
+$paragraphFontLineHeight:1.8rem;
 
-$menuHeight: 100px;
+$menuHeight: 5.8rem;
 $menuColor: $secondaryColor;
-$menuFontSize: 20px;
-$menudFontFamily: 'Montserrat', sans-serif;
+$menuFontSize: 1.3rem;
+$menudFontFamily: 'jaf-bernina-sans-condensed', sans-serif;
 
-$mobileMenuFontSize: 24px;
-$mobileMenuFontFamily: 'Montserrat', sans-serif;
+$mobileMenuFontSize: 29px;
+$mobileMenuFontFamily: 'jaf-bernina-sans-condensed', sans-serif;
 
-$linkFontSize: 22px;
+$linkFontSize: 1.6rem;
 $linkColor: $primaryColor;
-$linkFontFamily: 'Montserrat', sans-serif;
+$linkFontFamily: 'jaf-bernina-sans-condensed', sans-serif;
 
 /* mobile Variables */
 $mobileFirstHeadingFontSize:30px;
@@ -58,6 +61,7 @@ $priorityFirstColor: #BD2F32;
 $prioritySecondColor: #EB4B34;
 $priorityThirdColor: #eb8634;
 $priorityFourthColor: #e0de38;
+
 /* ToDo-List */
 .tag-container{
   display: flex;
@@ -303,6 +307,9 @@ button.button{
   button.todoButton {
     width: 11rem !important;
   }
+}
+.taskList .button{
+  background: $primaryColor;
 }
 .sese{
   height: 30px;
