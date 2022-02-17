@@ -54,7 +54,7 @@ var photo_data = {{ gallery_json_data|safe }}
     <section class="gallery-show">
       {% for photo in photos %}
       {% if photo.image.height <= photo.image.width %}
-      {% thumbnail photo.image "600" crop="center" as im %}
+      {% thumbnail photo.image "750" crop="center" as im %}
       <img data-aos="zoom-in"
            data-aos-duration="2000"
            onclick="showImg({{photo.id}})" 
@@ -67,7 +67,7 @@ var photo_data = {{ gallery_json_data|safe }}
            style="width: 100%;height: auto;">
       {% endthumbnail %}
       {% else %}
-      {% thumbnail photo.image "250" crop="center" as im %}
+      {% thumbnail photo.image "400" crop="center" as im %}
       <img data-aos="zoom-in"
            data-aos-duration="2000"
            onclick="showImg({{photo.id}})" 
