@@ -8,10 +8,10 @@
   {% if name %}
   <title>{{ name }}</title>
   {% endif %}
-  <!-- write your code here -->
-  <!-- SASS -->
-  {% load sass_tags %}
-  <link href="{% sass_src 'css/mks/mks_v2.3.3.scss' %}" rel="stylesheet" type="text/css" />
+  <!-- critical CSS -->
+  <style>
+    @import url("https://use.typekit.net/nvs2bby.css");body{background-color:#FDFDFD;color:#333}html,body{max-width:100%;max-height:100%;overflow-x:hidden;padding:env(safe-area-inset);margin:0;scroll-behavior:smooth}a{color:#D11317;text-decoration:none;font-family:"jaf-bernina-sans-condensed",sans-serif}header{display:block;text-align:right;position:fixed;top:0;left:0;width:100%;background-color:#FDFDFD;opacity:.98;z-index:2}.nvb{grid-area:nvb}.nvb{height:5.8rem;z-index:1}.bls{grid-area:logo}.bnbs{display:grid;grid-template-areas:'logo nav nav';height:100%}.bnbs>div{text-align:center;font-size:1.3rem;font-family:"jaf-bernina-sans-condensed",sans-serif}.bls{position:relative}#mks-logo-svg{position:absolute;bottom:1rem;height:3.3rem;padding-left:60px}.bnbs>.bls{text-align:left}@media only screen and (max-width:1200px),only screen and (max-height:375px){header{text-align:left}body{background:#FDFDFD;margin-bottom:0}.nvb{padding-bottom:0;z-index:1;padding-top:0;padding-left:0;position:fixed;width:100%}#mks-logo-svg{padding-top:.4rem;position:unset;width:auto;height:3rem}.bnbs{display:none}.nvb{height:4rem;width:100%;background:#FDFDFD;z-index:1}#mks-logo-svg{padding-left:unset}}@media only screen and (max-width:700px),only screen and (max-height:375px){header,.nvb{position:absolute}}
+  </style>
   <!-- Viewport Settings -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
@@ -82,5 +82,8 @@
   {% block footer %}
   {% endblock %}
 
+<!-- CSS-->
+{% load sass_tags %}
+<link href="{% sass_src 'css/mks/mks_v2.3.3.scss' %}" rel="stylesheet" type="text/css" />
 </body>
 </html>
