@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load thumbnail %}
+{% load user_agents %}
 
 {% block extra_head %}
 <meta name="title" content="Musik- und Kunschule St. Pölten | Musikunterricht in St. Pölten">
@@ -18,50 +19,14 @@
 <meta name="twitter:image" content="static/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<link href="{% static 'css/slider.css' %}" rel="stylesheet" type="text/css" />
-
-<style media="screen">
-    section > iframe {
-    width: 100% !important;
-    height: 650px !important;
-  }
-  @media only screen and (max-width: 1387px) {
-  section > iframe {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
-    padding-bottom: 20px;
-  }
-  }
-  @media only screen and (max-width: 677px) {
-  section > iframe {
-    width: 100% !important;
-    height: 200px !important;
-  }
-  }
-  @media only screen and (max-width: 400px) {
-  section > iframe {
-    width: 100% !important;
-    height: 180px !important;
-  }
-  }
-  @media only screen and (max-width: 370px) {
-  section > iframe {
-    width: 100% !important;
-    height: 150px !important;
-  }
-  }
-</style>
 {% endblock %}
-
 
 {% block navbar %}
 {% endblock %}
 {% block banner %}
 
 {% include "templates/slider.html" %}
-
-<img id="mbimg" src="/static/banner/mobile/home_banner.png" alt="Banner Musik- und Kunstchule St. Pölten Mobile">
+<img id="mbimg" src="/static/banner/mobile/home_banner.webp" alt="Banner Musik- und Kunstchule St. Pölten Mobile">
 
 {% endblock %}
 {% block body %}
@@ -128,7 +93,9 @@
   </div>
 </section>
 {% endif %}
-<div class="mbs container banner-video">
+{% if request|is_mobile %}
+{% else %}
+<div class="mbs container video">
   <div class="container">
     <h1>Unser Schüler:innen stellen sich vor</h1>
     <section id="banner-video">
@@ -139,6 +106,7 @@
     </a>
   </div>
 </div>
+{% endif %}
 {% if events %}
 <div class="mbs container">
 
@@ -170,5 +138,7 @@
   {% endblock %}
 
   {% block footer %}
-
+  <style media="screen">
+  section>iframe{width:100%!important;height:650px!important}@media only screen and (max-width:1387px){section>iframe{margin-left:auto;margin-right:auto;display:block;padding-bottom:20px}}@media only screen and (max-width:677px){section>iframe{width:100%!important;height:200px!important}}@media only screen and (max-width:400px){section>iframe{width:100%!important;height:180px!important}}@media only screen and (max-width:370px){section>iframe{width:100%!important;height:150px!important}}
+  </style>
   {% endblock %}

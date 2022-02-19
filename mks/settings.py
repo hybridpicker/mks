@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     #thumbnails
     'sorl.thumbnail',
+    #user-agents
+    'django_user_agents',
 ]
 
 MIDDLEWARE = [
@@ -208,6 +210,8 @@ EMAIL_USER_RECEIVER = 'musikschule@st-poelten.gv.at'
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
 THUMBNAIL_FORCE_OVERWRITE = True
+
+USER_AGENTS_CACHE = 'default'
 
 if os.path.isfile(os.path.join(BASE_DIR, 'local_settings.py')):
     from local_settings import *

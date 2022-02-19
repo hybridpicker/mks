@@ -2654,5 +2654,5 @@ a#show_theory:hover {
     width: 100%; } }
 
 @media only screen and (max-width: 771px) {
-  #banner-video, .mbs.container.banner-video {
+  #banner-video, .mbs.container.video {
     display: none; } }
