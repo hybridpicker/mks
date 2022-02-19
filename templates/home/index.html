@@ -124,6 +124,8 @@
   </div>
 </section>
 {% endif %}
+{% if request.user_agent.is_mobile %}
+{% else %}
 <div class="mbs container video">
   <div class="container">
     <h1>Unser Schüler:innen stellen sich vor</h1>
@@ -135,6 +137,7 @@
     </a>
   </div>
 </div>
+{% endif %}
 {% if events %}
 <div class="mbs container">
 
