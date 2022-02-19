@@ -93,7 +93,7 @@
   </div>
 </section>
 {% endif %}
-{% if request.user_agent.is_mobile %}
+{% if request|is_mobile %}
 {% else %}
 <div class="mbs container video">
   <div class="container">
@@ -139,35 +139,6 @@
 
   {% block footer %}
   <style media="screen">
-    section > iframe {
-    width: 100% !important;
-    height: 650px !important;
-  }
-  @media only screen and (max-width: 1387px) {
-  section > iframe {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
-    padding-bottom: 20px;
-  }
-  }
-  @media only screen and (max-width: 677px) {
-  section > iframe {
-    width: 100% !important;
-    height: 200px !important;
-  }
-  }
-  @media only screen and (max-width: 400px) {
-  section > iframe {
-    width: 100% !important;
-    height: 180px !important;
-  }
-  }
-  @media only screen and (max-width: 370px) {
-  section > iframe {
-    width: 100% !important;
-    height: 150px !important;
-  }
-  }
-</style>
+  section>iframe{width:100%!important;height:650px!important}@media only screen and (max-width:1387px){section>iframe{margin-left:auto;margin-right:auto;display:block;padding-bottom:20px}}@media only screen and (max-width:677px){section>iframe{width:100%!important;height:200px!important}}@media only screen and (max-width:400px){section>iframe{width:100%!important;height:180px!important}}@media only screen and (max-width:370px){section>iframe{width:100%!important;height:150px!important}}
+  </style>
   {% endblock %}
