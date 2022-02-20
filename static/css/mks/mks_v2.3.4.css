@@ -2676,6 +2676,7 @@ slide:nth-child(1) {
   left: 0%;
   animation-delay: 0s;
   background-image: url(/static/banner/slideshow/01.jpg);
+  background-image: url(/static/banner/slideshow/01.webp);
   background-size: cover;
   background-position: center; }
 
@@ -2683,13 +2684,15 @@ slide:nth-child(2) {
   left: 0%;
   animation-delay: 4.5s;
   background-image: url(/static/banner/slideshow/02.jpg);
+  background-image: url(/static/banner/slideshow/02.webp);
   background-size: cover;
   background-position: center; }
 
 slide:nth-child(3) {
   left: 0%;
-  animation-delay: 9s;
+  animation-delay: 9s;  
   background-image: url(/static/banner/slideshow/03.jpg);
+  background-image: url(/static/banner/slideshow/03.webp);
   background-size: cover;
   background-position: center; }
 
