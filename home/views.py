@@ -70,5 +70,8 @@ def impressum (request):
 def history (request):
     return render (request, 'home/history.html')
 
+def logo (request):
+    return render (request, 'home/logo.html')
+
 def view_404(request, *args, **kwargs):
     return redirect('home_view')
