@@ -18,9 +18,6 @@
 <meta name="twitter:image" content="static/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- AOS Plugin -->
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
 <script type="text/javascript">
 var photo_data = {{ gallery_json_data|safe }}
 </script>
@@ -55,9 +52,7 @@ var photo_data = {{ gallery_json_data|safe }}
       {% for photo in photos %}
       {% if photo.image.height <= photo.image.width %}
       {% thumbnail photo.image "750" crop="center" as im %}
-      <img data-aos="zoom-in"
-           data-aos-duration="2000"
-           onclick="showImg({{photo.id}})" 
+      <img onclick="showImg({{photo.id}})" 
            id="{{photo.id}}"
            class="landscape"
            src="{{ im.url }}" 
@@ -68,9 +63,7 @@ var photo_data = {{ gallery_json_data|safe }}
       {% endthumbnail %}
       {% else %}
       {% thumbnail photo.image "400" crop="center" as im %}
-      <img data-aos="zoom-in"
-           data-aos-duration="2000"
-           onclick="showImg({{photo.id}})" 
+      <img onclick="showImg({{photo.id}})" 
            id="{{photo.id}}"
            class="portrait"
            src="{{ im.url }}" 
@@ -116,12 +109,7 @@ var photo_data = {{ gallery_json_data|safe }}
       }
   };
 </script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
-</script>
 <script>
   lazyload();
-</script>
-<script>  
-AOS.init({disable: 'mobile',});
 </script>
 {% endblock %}
