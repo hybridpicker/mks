@@ -2179,18 +2179,14 @@ section.events-container-grid h1 {
 .gallery-show {
   display: grid;
   grid-template-columns: repeat(6, 1fr);  
-  grid-template-rows: 24rem;;
-  grid-gap: 20px;
+  grid-template-rows: auto;
+  grid-gap: 1rem;
   align-items: end; }
 
 .gallery-show > img {
   transition: transform .2s ease;
   border: 1px solid #FDFDFD;
   max-width: 100%;
-  box-shadow: inset inset 0px 0px 10px 0px #22252836;
-  -webkit-box-shadow: inset 0px 0px 10px 0px #22252836;
-  -moz-box-shadow: inset 0px 0px 10px 0px #22252836;
-  -o-box-shadow: inset 0px 0px 10px 0px #22252836; 
   height: 100%;
   width: 100%; 
   object-fit: cover;}
@@ -2241,7 +2237,7 @@ section.events-container-grid h1 {
   grid-column: span 2; }
 
 .portrait {
-  grid-row: span 2; }
+  grid-row: span 1; }
 
 .xxl {
   grid-column: span 4;
@@ -2373,9 +2369,11 @@ section.events-container-grid h1 {
     width: calc(100% + 4em);
     margin-left: -2em;
     grid-template-columns: unset;
-    display: inherit; }
+    display: grid; }
   .gallery-show > img {
     width: 100%; }
+  .portrait {
+      grid-column: span 2; }
   .overlay .closebtn {
     top: -20px;
     right: 10px; } }
