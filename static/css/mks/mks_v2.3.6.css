@@ -1269,7 +1269,9 @@ a button {
 #button-login {
   margin-left: auto;
   margin-right: auto;
-  display: block; }
+  display: block; 
+  padding-left: 2rem;
+  padding-right: 2rem;}
 
 @media only screen and (max-width: 700px) {
   a button {
@@ -2239,7 +2241,7 @@ section.events-container-grid h1 {
 .portrait {
   grid-row: span 1;
   grid-column: span 2;}
-  
+
 .xxl {
   grid-column: span 4;
   grid-row: span 4; }
