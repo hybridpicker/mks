@@ -2237,8 +2237,9 @@ section.events-container-grid h1 {
   grid-column: span 2; }
 
 .portrait {
-  grid-row: span 1; }
-
+  grid-row: span 1;
+  grid-column: span 2;}
+  
 .xxl {
   grid-column: span 4;
   grid-row: span 4; }
