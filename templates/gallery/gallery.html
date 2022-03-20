@@ -58,8 +58,7 @@ var photo_data = {{ gallery_json_data|safe }}
            src="{{ im.url }}" 
            width="{{ im.width }}" 
            height="{{ im.height }}"
-           alt="{{ photo.image.title }} Musikschule St. Pölten"
-           style="width: 100%;height: auto;">
+           alt="{{ photo.image.title }} Musikschule St. Pölten">
       {% endthumbnail %}
       {% else %}
       {% thumbnail photo.image "400" crop="center" as im %}
@@ -69,8 +68,7 @@ var photo_data = {{ gallery_json_data|safe }}
            src="{{ im.url }}" 
            width="{{ im.width }}" 
            height="{{ im.height }}"
-           alt="{{ photo.image.title }} Musikschule St. Pölten"
-           style="height: 100%;width:auto;">
+           alt="{{ photo.image.title }} Musikschule St. Pölten">
       {% endthumbnail %}
       {% endif %}
       {% endfor %}
