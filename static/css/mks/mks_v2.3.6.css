@@ -2180,7 +2180,7 @@ section.events-container-grid h1 {
 /* Gallery */
 .gallery-show {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);  
+  grid-template-columns: repeat(9, 1fr);  
   grid-template-rows: auto;
   grid-gap: 1rem;
   align-items: end; }
