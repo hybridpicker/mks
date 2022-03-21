@@ -2236,11 +2236,11 @@ section.events-container-grid h1 {
   font-size: 30px; }
 
 .landscape {
-  grid-column: span 2;
+  grid-column: span 3;
   grid-row: span 1; }
 
 .portrait {
-  grid-row: span 1;
+  grid-row: span 2;
   grid-column: span 1;}
 
 .square {
