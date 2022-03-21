@@ -140,7 +140,7 @@ a:hover {
   font-size: 60px; }
 
 #cross-burger-gallery {
-  width: 3rem;
+  width: 2.5rem;
   margin-top: 2rem; }
 
 #cross-burger-students {
@@ -1003,7 +1003,7 @@ canvas {
   background-color: #333333; }
 
 .bfsc > div {
-  font-size: .bfsc > div 1.6rem;
+  font-size: 1.6rem;
   font-family: "jaf-bernina-sans-condensed", sans-serif; }
 
 .bfsc #stadtlogo svg {
@@ -1652,7 +1652,7 @@ a.faq-link-edit h2:hover {
   position: relative;
   font-family: "jaf-bernina-sans-condensed", sans-serif;
   font-size: 18px;
-  font-color: #0F262B;
+  color: #0F262B;
   display: inline-block;
   width: 11rem;
   margin-left: 0.5em;
@@ -1670,7 +1670,7 @@ a.faq-link-edit h2:hover {
   position: relative;
   font-family: "jaf-bernina-sans-condensed", sans-serif;
   font-size: 18px;
-  font-color: #0F262B;
+  color: #0F262B;
   display: inline-block;
   width: 11rem;
   margin-left: 0.5em;
@@ -1688,7 +1688,7 @@ a.faq-link-edit h2:hover {
   position: relative;
   font-family: "jaf-bernina-sans-condensed", sans-serif;
   font-size: 18px;
-  font-color: #0F262B;
+  color: #0F262B;
   display: inline-block;
   width: 11rem;
   margin-left: 0.5em;
@@ -1706,7 +1706,7 @@ a.faq-link-edit h2:hover {
   position: relative;
   font-family: "jaf-bernina-sans-condensed", sans-serif;
   font-size: 18px;
-  font-color: #0F262B;
+  color: #0F262B;
   display: inline-block;
   width: 11rem;
   margin-left: 0.5em;
@@ -2180,7 +2180,7 @@ section.events-container-grid h1 {
 /* Gallery */
 .gallery-show {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);  
+  grid-template-columns: repeat(7, 1fr);  
   grid-template-rows: auto;
   grid-gap: 1rem;
   align-items: end; }
@@ -2236,15 +2236,15 @@ section.events-container-grid h1 {
   font-size: 30px; }
 
 .landscape {
-  grid-column: span 3;
+  grid-column: span 2;
   grid-row: span 1; }
 
 .portrait {
   grid-row: span 1;
-  grid-column: span 2;}
+  grid-column: span 1;}
 
 .square {
-  grid-column: span 3;
+  grid-column: span 2;
   grid-row: span 1; }
 
 .gallery-nav-bar {
