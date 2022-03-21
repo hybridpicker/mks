@@ -18,9 +18,6 @@
 <meta name="twitter:image" content="static/thumbnail/twitter/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- AOS Plugin -->
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
 <script type="text/javascript">
 var photo_data = {{ gallery_json_data|safe }}
 </script>
@@ -53,31 +50,35 @@ var photo_data = {{ gallery_json_data|safe }}
     </nav>
     <section class="gallery-show">
       {% for photo in photos %}
-      {% if photo.image.height <= photo.image.width %}
+      {% if photo.image.width > photo.image.height %}
       {% thumbnail photo.image "750" crop="center" as im %}
-      <img data-aos="zoom-in"
-           data-aos-duration="2000"
-           onclick="showImg({{photo.id}})" 
+      <img onclick="showImg({{photo.id}})" 
            id="{{photo.id}}"
            class="landscape"
            src="{{ im.url }}" 
            width="{{ im.width }}" 
            height="{{ im.height }}"
-           alt="{{ photo.image.title }} Musikschule St. Pölten"
-           style="width: 100%;height: auto;">
+           alt="{{ photo.image.title }} Musikschule St. Pölten">
+      {% endthumbnail %}
+      {% elif photo.image.width == photo.image.height %}
+      {% thumbnail photo.image "750" crop="center" as im %}
+      <img onclick="showImg({{photo.id}})" 
+           id="{{photo.id}}"
+           class="square"
+           src="{{ im.url }}" 
+           width="{{ im.width }}" 
+           height="{{ im.height }}"
+           alt="{{ photo.image.title }} Musikschule St. Pölten">
       {% endthumbnail %}
       {% else %}
       {% thumbnail photo.image "400" crop="center" as im %}
-      <img data-aos="zoom-in"
-           data-aos-duration="2000"
-           onclick="showImg({{photo.id}})" 
+      <img onclick="showImg({{photo.id}})" 
            id="{{photo.id}}"
-           class="landscape"
+           class="portrait"
            src="{{ im.url }}" 
            width="{{ im.width }}" 
            height="{{ im.height }}"
-           alt="{{ photo.image.title }} Musikschule St. Pölten"
-           style="height: 100%;width:auto;">
+           alt="{{ photo.image.title }} Musikschule St. Pölten">
       {% endthumbnail %}
       {% endif %}
       {% endfor %}
@@ -116,12 +117,7 @@ var photo_data = {{ gallery_json_data|safe }}
       }
   };
 </script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
-</script>
 <script>
   lazyload();
-</script>
-<script>  
-AOS.init({disable: 'mobile',});
 </script>
 {% endblock %}
