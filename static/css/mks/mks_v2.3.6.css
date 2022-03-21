@@ -2236,15 +2236,16 @@ section.events-container-grid h1 {
   font-size: 30px; }
 
 .landscape {
-  grid-column: span 2; }
+  grid-column: span 4;
+  grid-row: span 1; }
 
 .portrait {
   grid-row: span 1;
   grid-column: span 2;}
 
-.xxl {
-  grid-column: span 4;
-  grid-row: span 4; }
+.square {
+  grid-column: span 2;
+  grid-row: span 2; }
 
 .gallery-nav-bar {
   display: grid;

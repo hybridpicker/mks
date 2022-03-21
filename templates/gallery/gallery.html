@@ -50,7 +50,7 @@ var photo_data = {{ gallery_json_data|safe }}
     </nav>
     <section class="gallery-show">
       {% for photo in photos %}
-      {% if photo.image.height <= photo.image.width %}
+      {% if photo.image.width >= photo.image.height %}
       {% thumbnail photo.image "750" crop="center" as im %}
       <img onclick="showImg({{photo.id}})" 
            id="{{photo.id}}"
