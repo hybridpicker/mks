@@ -50,11 +50,21 @@ var photo_data = {{ gallery_json_data|safe }}
     </nav>
     <section class="gallery-show">
       {% for photo in photos %}
-      {% if photo.image.width >= photo.image.height %}
+      {% if photo.image.width > photo.image.height %}
       {% thumbnail photo.image "750" crop="center" as im %}
       <img onclick="showImg({{photo.id}})" 
            id="{{photo.id}}"
            class="landscape"
+           src="{{ im.url }}" 
+           width="{{ im.width }}" 
+           height="{{ im.height }}"
+           alt="{{ photo.image.title }} Musikschule St. Pölten">
+      {% endthumbnail %}
+      {% elif photo.image.width == photo.image.height %}
+      {% thumbnail photo.image "750" crop="center" as im %}
+      <img onclick="showImg({{photo.id}})" 
+           id="{{photo.id}}"
+           class="square"
            src="{{ im.url }}" 
            width="{{ im.width }}" 
            height="{{ im.height }}"
