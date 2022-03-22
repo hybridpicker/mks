@@ -90,7 +90,7 @@
         </div>
         <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}" onclick="clickTask({{ todo.id }},{{ todo.category.id }})"></input>
         <div class="todo-content" id="contentTodo{{ todo.id }}" onclick="showNotes({{todo.id}})">
-          <h4>{{ todo.title }} {% if todo.created_by %}<b style="color: crimson;">({{ todo.created_by }})</b>{% endif %}</h4>
+          <h4>{{ todo.title }}</h4>
           {% if todo.due_date %}
           <strong id="strongDueDate{{todo.id}}" class="taskDate" placeholder="yyyy-mm-dd">{{ todo.due_date }}</strong>
           {% endif %}
