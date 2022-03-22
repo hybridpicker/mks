@@ -2,6 +2,8 @@
 
 {% load static %}
 {% block extra_head %}
+{% load thumbnail %}
+
 <meta name="title" content="Blog - Regelmäßige Artikel rund um die Musik- und Kunstschule St. Pölten">
 <meta name="description" content="Ab sofort werden hier in regelmäßigen Abständen Blog-Einträge rund um die Musik- und Kunstschule online gestellt.">
 
@@ -51,7 +53,19 @@
           <div class="mti">
             <a href="{{blog.published_year}}/{{ blog.slug }}">
               <h2>{{ blog.title }}</h2>
-              <img src="{{ blog.image.url }}" alt="">
+              <picture>
+                {% thumbnail blog.image "400x300" crop="center" format="WEBP" as im %}
+                <source srcset="{{ im.url }}" type="image/webp">
+                {% endthumbnail %}
+                {% thumbnail blog.image "400x300" crop="center" format="JPEG" as im %}
+                <source srcset="{{ im.url }}" type="image/jpeg">
+                <img src="{{ im.url }}" 
+                width="{{ im.width }}" 
+                height="{{ im.height }}"
+                alt="{{ blog.image.title }} Beitragsbild"
+                style="width: 100%;height: auto;">
+                {% endthumbnail %}
+              </picture>
             </a>
             <div class="tctm">
               <p>{{ blog.meta_description|linebreaks  }}</p>
