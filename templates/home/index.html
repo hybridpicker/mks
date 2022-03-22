@@ -67,12 +67,11 @@
       <div class="tmcbpb">
         <div class="mti">
           <a href="blog/{{blog.published_year}}/{{blog.slug}}">
-            <h3>{{ blog.title }}</h3>
             <picture>
-              {% thumbnail blog.image "600" crop="center" format="WEBP" as im %}
+              {% thumbnail blog.image "400x300" crop="center" format="WEBP" as im %}
               <source srcset="{{ im.url }}" type="image/webp">
               {% endthumbnail %}
-              {% thumbnail blog.image "600" crop="center" format="JPEG" as im %}
+              {% thumbnail blog.image "400x300" crop="center" format="JPEG" as im %}
               <source srcset="{{ im.url }}" type="image/jpeg">
               <img src="{{ im.url }}" 
               width="{{ im.width }}" 
@@ -80,7 +79,8 @@
               alt="{{ blog.image.title }} Beitragsbild"
               style="width: 100%;height: auto;">
               {% endthumbnail %}
-          </picture>
+            </picture>
+            <h3>{{ blog.title }}</h3>
           </a>
           <div class="tctm">
             <p>{{ blog.meta_description|linebreaks|truncatewords:30 }}</p>
