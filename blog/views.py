@@ -13,7 +13,7 @@ from slugify import slugify
 # Create your views here.
 
 def blog_summary(request):
-    all_blogs = BlogPost.objects.all().order_by("date")
+    all_blogs = BlogPost.objects.all()
     context = {
         'all_blogs': all_blogs
         }
