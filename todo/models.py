@@ -21,8 +21,8 @@ class TodoList(models.Model):
     priority = PriorityChoicesField(_("Priority"),
                                     null=True, blank=True)
     content = models.TextField(blank=True)
-    created = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    due_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"), null=True, blank=True)
+    created = models.DateField(null=True, blank=True)
+    due_date = models.DateField(null=True, blank=True)
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
@@ -46,7 +46,7 @@ class TodoList(models.Model):
 Class for saving finished Tasks
 '''
 class FinishedItems(models.Model):
-    done_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    done_date = models.DateField(null=True, blank=True)
     done_user = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
@@ -54,8 +54,8 @@ class FinishedItems(models.Model):
         blank=True,)
     title = models.CharField(max_length=250)
     content = models.TextField(blank=True)
-    created = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    due_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"), null=True, blank=True)
+    created = models.DateField(null=True, blank=True)
+    due_date = models.DateField(null=True, blank=True)
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
