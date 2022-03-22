@@ -6,9 +6,11 @@ from .forms import PriorityForm
 
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
 @login_required(login_url='/team/login/')
+@staff_member_required
 def todo_view(request):
     todos = TodoList.objects.all()
     checked = FinishedItems.objects.all()

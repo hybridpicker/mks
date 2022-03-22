@@ -12,12 +12,14 @@
       <div class="bns">
         <div class="drops">
           <div class="dropdown arrow">
+            {% if request.user.is_staff %}
             <button class="dropbtn">
               <a href="{% url 'todo_view' %}">To-Do</a>
             </button>
             <div class="dropdown-content">
               <a href="{% url 'todo_categories_view'%}">Kategorien</a>
             </div>
+            {% endif %}
             <div class="dropdown-hover-section">
             </div>
           </div>
