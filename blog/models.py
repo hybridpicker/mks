@@ -58,6 +58,6 @@ class BlogPost(models.Model):
         '''
         Meta class for BlogPosts
         '''
-        ordering = ('category', 'date', 'ordering')
+        ordering = ('category', '-date', 'ordering')
         verbose_name = u'Blog Post'
         verbose_name_plural = u'Blog Posts'
