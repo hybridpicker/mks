@@ -6,10 +6,13 @@ body {
 html, body {
   max-width: 100%;
   max-height: 100%;
-  overflow-x: hidden;
-  padding: env(safe-area-inset);
   margin: 0;
-  scroll-behavior: smooth; }
+}
+html{
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 
 footer {
   clear: both;
@@ -149,6 +152,9 @@ a:hover {
 
 /* Mobile Overlay */
 @media only screen and (max-width: 1200px) {
+  html, body{
+    position: fixed;
+  }
   .overlay-content {
     padding-top: 4rem; }
   #mks-nav-mobile-menu .overlay-content {
@@ -2714,9 +2720,8 @@ slide:nth-child(3) {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.8);
-  position: fixed;
-  z-index: 200;
   display: none;
+  position: unset;
 }
 #cookie-consent p{
   color: white;
