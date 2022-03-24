@@ -2714,7 +2714,10 @@ slide:nth-child(3) {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  z-index: 200;
+  display: none;
 }
-#cookie-conset p{
+#cookie-consent p{
   color: white;
 }
