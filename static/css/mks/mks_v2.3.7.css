@@ -2714,6 +2714,28 @@ slide:nth-child(3) {
     opacity: 0; } 
 }
 
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes fadeincookie {
+  0% {
+    opacity: 0; }
+  75% {
+    opacity: 0; }
+  90% {
+    opacity: 0.8; }
+  100% {
+    opacity: 1; } }
+
+/* Standard syntax */
+@keyframes fadeincookie {
+  0% {
+    opacity: 0; }
+  75% {
+    opacity: 0; }
+  90% {
+    opacity: 0.8; }
+  100% {
+    opacity: 1; } }
+    
 /** Cookie Conset **/
 #cookie-consent{
   left: 0;
@@ -2722,7 +2744,15 @@ slide:nth-child(3) {
   background-color: rgba(0, 0, 0, 0.8);
   display: none;
   position: unset;
+  -webkit-animation-name: fadeincookie;
+  /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 1s;
+  /* Safari 4.0 - 8.0 */
+  animation-name: fadeincookie;
+  animation-duration: 2s;
 }
 #cookie-consent p{
   color: white;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
