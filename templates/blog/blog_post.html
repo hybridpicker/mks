@@ -2,6 +2,9 @@
 
 {% load static %}
 {% block extra_head %}
+
+{% load thumbnail %}
+
 <meta name="title" content="{{ blog_post.title }}">
 <meta name="description" content="{{ blog_post.meta_description }}">
 
@@ -53,8 +56,15 @@ span {
 {% block navbar %}
 {% endblock %}
 {% block banner %}
-<img src="{{ blog_post.image.url }}" alt="">
-<img id="mbimg" src="{{ blog_post.image.url }}" alt="">
+
+{% thumbnail blog_post.image "1800x400" crop="center" format="JPEG" as im %}
+<img src="{{ im.url }}" alt="">
+{% endthumbnail %}
+
+{% thumbnail blog_post.image "758x240" crop="center" format="JPEG" as im %}
+<img id="mbimg" src="{{ im.url }}" alt="">
+{% endthumbnail %}
+
 {% endblock %}
 {% block body %}
 <div class="mbs">
