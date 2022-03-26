@@ -152,8 +152,9 @@ a:hover {
 
 /* Mobile Overlay */
 @media only screen and (max-width: 1200px) {
-  html, body{
+  body{
     position: fixed;
+    width: 100%;
   }
   .overlay-content {
     padding-top: 4rem; }
@@ -2203,15 +2204,15 @@ section.events-container-grid h1 {
   grid-gap: 1rem;
   align-items: end; }
 
-.gallery-show > a > picture {
+.gallery-show > picture > * {
   transition: transform .2s ease;
   border: 1px solid #FDFDFD;
-  max-width: 100%;
+  max-height: 19rem;
   height: 100%;
   width: 100%; 
   object-fit: cover;}
 
-.gallery-show > a > picture:hover {
+.gallery-show > picture:hover {
   cursor: pointer;
   transform: scale(1.02) !important; }
 
@@ -2394,11 +2395,14 @@ section.events-container-grid h1 {
     display: grid; }
   .gallery-show > a > picture {
     width: 100%; }
-  .portrait {
-      grid-column: span 2; }
+  .portrait, .square {
+      grid-column: span 3; }
   .overlay .closebtn {
     top: -20px;
-    right: 10px; } }
+    right: 10px; } 
+    .gallery-show > picture > *{
+      max-height: unset;
+    }}
 
 @media screen and (max-width: 600px) {
   #overlay-show-img {

@@ -51,38 +51,33 @@ var photo_data = {{ gallery_json_data|safe }}
     <section class="gallery-show">
       {% for photo in photos %}
       {% if photo.image.width > photo.image.height %}
-      <a onclick="showImg({{photo.id}})">
-        <picture class="landscape">
-          {% thumbnail photo.image "700" crop="center" format="WEBP" as im %}
+      <picture class="landscape" onclick="showImg({{photo.id}})">
+          {% thumbnail photo.image "500" crop="center" format="WEBP" as im %}
             <source srcset="{{ im.url }}" type="image/webp">
             {% endthumbnail %}
-            {% thumbnail photo.image "700" crop="center" format="JPEG" as im %}
+            {% thumbnail photo.image "500" crop="center" format="JPEG" as im %}
             <source srcset="{{ im.url }}" type="image/jpeg">
             <img src="{{ im.url }}" 
             width="{{ im.width }}" 
             height="{{ im.height }}"
             alt="{{ blog.image.title }} Beitragsbild">
             {% endthumbnail %}
-        </picture>
-      </a>
+      </picture>
       {% elif photo.image.width == photo.image.height %}
-      <a onclick="showImg({{photo.id}})">
-          <picture class="square">
-          {% thumbnail photo.image "700" crop="center" format="WEBP" as im %}
+      <picture class="square" onclick="showImg({{photo.id}})">
+          {% thumbnail photo.image "500" crop="center" format="WEBP" as im %}
           <source srcset="{{ im.url }}" type="image/webp">
             {% endthumbnail %}
-            {% thumbnail photo.image "700" crop="center" format="JPEG" as im %}
+            {% thumbnail photo.image "500" crop="center" format="JPEG" as im %}
             <source srcset="{{ im.url }}" type="image/jpeg">
             <img src="{{ im.url }}" 
             width="{{ im.width }}" 
             height="{{ im.height }}"
             alt="{{ blog.image.title }} Beitragsbild">
             {% endthumbnail %}
-        </picture>
-      </a>
+      </picture>
       {% else %}
-      <a onclick="showImg({{photo.id}})">
-          <picture class="portrait">
+        <picture class="portrait" onclick="showImg({{photo.id}})">
           {% thumbnail photo.image "400" crop="center" format="WEBP" as im %}
           <source srcset="{{ im.url }}" type="image/webp">
             {% endthumbnail %}
@@ -94,7 +89,6 @@ var photo_data = {{ gallery_json_data|safe }}
             alt="{{ blog.image.title }} Beitragsbild">
             {% endthumbnail %}
         </picture>
-      </a>
       {% endif %}
       {% endfor %}
     </section>
