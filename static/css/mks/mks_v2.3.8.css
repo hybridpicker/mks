@@ -2203,7 +2203,7 @@ section.events-container-grid h1 {
   grid-gap: 1rem;
   align-items: end; }
 
-.gallery-show > img {
+.gallery-show > a > picture {
   transition: transform .2s ease;
   border: 1px solid #FDFDFD;
   max-width: 100%;
@@ -2211,7 +2211,7 @@ section.events-container-grid h1 {
   width: 100%; 
   object-fit: cover;}
 
-.gallery-show > img:hover {
+.gallery-show > a > picture:hover {
   cursor: pointer;
   transform: scale(1.02) !important; }
 
@@ -2392,7 +2392,7 @@ section.events-container-grid h1 {
     margin-left: -2em;
     grid-template-columns: unset;
     display: grid; }
-  .gallery-show > img {
+  .gallery-show > a > picture {
     width: 100%; }
   .portrait {
       grid-column: span 2; }
