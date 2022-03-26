@@ -51,35 +51,44 @@ var photo_data = {{ gallery_json_data|safe }}
     <section class="gallery-show">
       {% for photo in photos %}
       {% if photo.image.width > photo.image.height %}
-      {% thumbnail photo.image "750" crop="center" as im %}
-      <img onclick="showImg({{photo.id}})" 
-           id="{{photo.id}}"
-           class="landscape"
-           src="{{ im.url }}" 
-           width="{{ im.width }}" 
-           height="{{ im.height }}"
-           alt="{{ photo.image.title }} Musikschule St. Pölten">
-      {% endthumbnail %}
+      <picture class="landscape" onclick="showImg({{photo.id}})">
+          {% thumbnail photo.image "500" crop="center" format="WEBP" as im %}
+            <source srcset="{{ im.url }}" type="image/webp">
+            {% endthumbnail %}
+            {% thumbnail photo.image "500" crop="center" format="JPEG" as im %}
+            <source srcset="{{ im.url }}" type="image/jpeg">
+            <img src="{{ im.url }}" 
+            width="{{ im.width }}" 
+            height="{{ im.height }}"
+            alt="{{ blog.image.title }} Beitragsbild">
+            {% endthumbnail %}
+      </picture>
       {% elif photo.image.width == photo.image.height %}
-      {% thumbnail photo.image "750" crop="center" as im %}
-      <img onclick="showImg({{photo.id}})" 
-           id="{{photo.id}}"
-           class="square"
-           src="{{ im.url }}" 
-           width="{{ im.width }}" 
-           height="{{ im.height }}"
-           alt="{{ photo.image.title }} Musikschule St. Pölten">
-      {% endthumbnail %}
+      <picture class="square" onclick="showImg({{photo.id}})">
+          {% thumbnail photo.image "500" crop="center" format="WEBP" as im %}
+          <source srcset="{{ im.url }}" type="image/webp">
+            {% endthumbnail %}
+            {% thumbnail photo.image "500" crop="center" format="JPEG" as im %}
+            <source srcset="{{ im.url }}" type="image/jpeg">
+            <img src="{{ im.url }}" 
+            width="{{ im.width }}" 
+            height="{{ im.height }}"
+            alt="{{ blog.image.title }} Beitragsbild">
+            {% endthumbnail %}
+      </picture>
       {% else %}
-      {% thumbnail photo.image "400" crop="center" as im %}
-      <img onclick="showImg({{photo.id}})" 
-           id="{{photo.id}}"
-           class="portrait"
-           src="{{ im.url }}" 
-           width="{{ im.width }}" 
-           height="{{ im.height }}"
-           alt="{{ photo.image.title }} Musikschule St. Pölten">
-      {% endthumbnail %}
+        <picture class="portrait" onclick="showImg({{photo.id}})">
+          {% thumbnail photo.image "400" crop="center" format="WEBP" as im %}
+          <source srcset="{{ im.url }}" type="image/webp">
+            {% endthumbnail %}
+            {% thumbnail photo.image "400" crop="center" format="JPEG" as im %}
+            <source srcset="{{ im.url }}" type="image/jpeg">
+            <img src="{{ im.url }}" 
+            width="{{ im.width }}" 
+            height="{{ im.height }}"
+            alt="{{ blog.image.title }} Beitragsbild">
+            {% endthumbnail %}
+        </picture>
       {% endif %}
       {% endfor %}
     </section>
@@ -97,7 +106,6 @@ var photo_data = {{ gallery_json_data|safe }}
 {% block footer %}
 <script type="text/javascript">
   function showImg(id){
-    src = document.getElementById(id).src
     src = photo_data[id]["image"]
     document.getElementById("overlay-show-img").src = src
     document.getElementById("overlay-image-section").style.display = "block";
