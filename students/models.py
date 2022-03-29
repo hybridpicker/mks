@@ -105,6 +105,6 @@ class Student(models.Model):
         '''
         Meta class for Student
         '''
-        ordering = ('last_name',)
+        ordering = ('-start_date', 'last_name',)
         verbose_name = u'Student'
         verbose_name_plural = u'Students'
