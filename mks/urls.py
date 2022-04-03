@@ -56,7 +56,6 @@ urlpatterns = [
     path('', include('teaching.urls')),
     path('', include('students.urls')),
     path('', include('faq.urls')),
-    path('positionfinder/', include('positionfinder.urls')),
     path('projekte/', include('projects.urls')),
     re_path(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
