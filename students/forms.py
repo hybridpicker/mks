@@ -23,9 +23,9 @@ class SignInForm(forms.Form):
     from_email = forms.EmailField(label="E-Mailadresse",
                                   max_length=100,
                                   required=True)
-    subject = forms.ModelChoiceField(queryset=Subject.objects.all().order_by('subject').exclude(
-                                     subject='Direktor').exclude(
-                                     subject="Sekretariat"))
+    subject = forms.ModelChoiceField(queryset=Subject.objects.all().order_by('subject')
+                                     .exclude(hidden_subject=True,)
+                                     .exclude(complementary_subject=True))
     adress_line = forms.CharField(label="street", max_length=80, required=True)
     house_number = forms.CharField(label="house_number", max_length=80, required=True)
     postal_code = forms.CharField(label="postal_code", max_length=30, required=True)
