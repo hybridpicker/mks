@@ -13,8 +13,10 @@ class SubjectCategory(models.Model):
 
 class Subject(models.Model):
     subject = models.CharField(max_length=80)
+    complementary_subject = models.BooleanField(default=False)
     category = models.ForeignKey(SubjectCategory, on_delete=models.CASCADE)
     ordering = models.IntegerField(null=True, blank=True)
+    hidden_subject = models.BooleanField(default=False)
 
     def __str__(self):
         return "%s" % (self.subject)
