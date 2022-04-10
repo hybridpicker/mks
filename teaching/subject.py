@@ -25,6 +25,6 @@ class Subject(models.Model):
         '''
         Meta class for Subject
         '''
-        ordering = ('ordering',)
+        ordering = ('ordering','-complementary_subject','subject')
         verbose_name = u'Subject'
         verbose_name_plural = u'Subjects'
