@@ -170,19 +170,21 @@ a:hover {
     height: 2rem;}
   #mks-nav-mobile-menu .mainHeadingMobile{
     color: #D11317;
-    border-bottom: solid 0.08rem #333333b9;    
+    border-bottom: solid 0.08rem #33333363;    
   }
   #mks-nav-mobile-menu .categoryHeadingMobileNoCursor{
-    border-bottom: solid 0.08rem #333333b9; 
+    border-bottom: solid 0.08rem #33333363;
     color: #333333;
   }
   .overlay-content a {
     font-size: 32px;
     line-height: 30px; }
-  .overlay-content a.categoryHeadingMobileNoCursor {
+  .overlay-content a {
     font-size: 28px;
-    color: #D11317;
     line-height: 30px; }
+  .overlay-content a.categoryHeadingMobileNoCursor{
+    color: #D11317;
+  }
   #cross-burger-gallery {
     width: 2rem;
     margin-top: 2rem;
@@ -206,9 +208,8 @@ a:hover {
 
 @media only screen and (max-width: 480px) {
   .overlay-content a {
-    font-size: 25px; }
-  .overlay-content a.categoryHeadingMobileNoCursor {
-    font-size: 22px; } }
+    font-size: 22px; }
+ }
 
 /* Font */
 h1 {
@@ -2022,8 +2023,6 @@ td {
     max-height: 24vw; }
   .cbsf {
     font-size: 3vw !important; }
-  .overlay-content a {
-    font-size: 6vw; }
   }
 
 .counter-left {
