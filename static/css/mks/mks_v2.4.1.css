@@ -127,7 +127,7 @@ a:hover {
   display: block;
   color: #333333;
   transition: 0.3s;
-  padding-left: 1em; }
+  padding-left: 2rem; }
 
 .overlay-content {
   padding-top: 8%; }
@@ -143,9 +143,11 @@ a:hover {
   font-size: 60px; }
 
 #cross-burger-gallery {
-  width: 2.5rem;
-  margin-top: 2rem; }
+  margin: unset; }
 
+#mks-nav-mobile-menu #cross-burger-gallery{
+  margin:unset;
+}
 #cross-burger-students {
   width: 2rem;
   margin-top: 1rem; }
@@ -159,17 +161,27 @@ a:hover {
   .overlay-content {
     padding-top: 4rem; }
   #mks-nav-mobile-menu .overlay-content {
-    padding-top: 2rem; }
+    padding-top: 4rem; }
   #mks-nav-mobile-menu a.closebtn {
-    top: -29px;
-    right: 10px; }
+    top: 0;
+    right: 0;
+    width: 2rem;
+    padding: 2rem;
+    height: 2rem;}
+  #mks-nav-mobile-menu .mainHeadingMobile{
+    color: #D11317;
+    border-bottom: solid 0.08rem #333333b9;    
+  }
+  #mks-nav-mobile-menu .categoryHeadingMobileNoCursor{
+    border-bottom: solid 0.08rem #333333b9; 
+    color: #333333;
+  }
   .overlay-content a {
     font-size: 32px;
     line-height: 30px; }
   .overlay-content a.categoryHeadingMobileNoCursor {
     font-size: 28px;
     color: #D11317;
-    margin-left: 3rem;
     line-height: 30px; }
   #cross-burger-gallery {
     width: 2rem;
@@ -2012,8 +2024,7 @@ td {
     font-size: 3vw !important; }
   .overlay-content a {
     font-size: 6vw; }
-  .overlay-content a.categoryHeadingMobileNoCursor {
-    font-size: 5vw; } }
+  }
 
 .counter-left {
   grid-area: counter-left; }

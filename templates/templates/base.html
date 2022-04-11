@@ -56,16 +56,9 @@
   <!-- MKS Nav Script -->
 <script type="text/javascript">
     function openNav() {
-      if (window.innerWidth < 500) {
-        document.getElementById("mks-nav-mobile-menu").style.width = "95%";
+        document.getElementById("mks-nav-mobile-menu").style.width = "100vw";
         document.getElementById("menuIcon").style.visibility = "hidden";
         document.getElementById("closeMobileMenu").style.display = "flex";
-      }
-      else{
-        document.getElementById("mks-nav-mobile-menu").style.width = "25rem";
-        document.getElementById("menuIcon").style.visibility = "hidden";
-        document.getElementById("closeMobileMenu").style.display = "flex";
-      }
     }
 
     function closeNav() {
