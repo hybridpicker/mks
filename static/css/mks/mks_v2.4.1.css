@@ -156,7 +156,7 @@ a:hover {
 /* Mobile Overlay */
 @media only screen and (max-width: 1200px) {
   body{
-    position: relative;
+    position: static;
     width: 100%;
   }
   .overlay-content {
@@ -646,7 +646,9 @@ canvas {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 0.3rem; }
+    padding-top: 0.3rem;
+    position: fixed;
+    width: 100vw;}
   #blessondNavMobile > div {
     width: 33%;
     font-size: 20px;
