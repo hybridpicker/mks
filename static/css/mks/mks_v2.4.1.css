@@ -2300,6 +2300,10 @@ section.events-container-grid h1 {
 .gallery-nav-bar a:hover {
   text-decoration: none; }
 
+#cross-burger-gallery{
+  width: 2rem;
+  border: none;
+}
 @media only screen and (max-width: 1120px) {
   .gallery-nav-bar a {
     font-size: 26px; } }
