@@ -518,7 +518,7 @@ canvas {
   position: absolute; }
 
 /* Mobile Menu */
-#blessondNavMobile {
+#mks-nav-mobile {
   display: none;
   background: #FDFDFD; }
 
@@ -641,7 +641,7 @@ canvas {
     padding-left: 0;
     position: fixed;
     width: 100%; }
-  #blessondNavMobile {
+  #mks-nav-mobile {
     height: 4rem;
     display: flex;
     align-items: center;
@@ -649,7 +649,7 @@ canvas {
     padding-top: 0.3rem;
     position: fixed;
     width: 100vw;}
-  #blessondNavMobile > div {
+  #mks-nav-mobile > div {
     width: 33%;
     font-size: 20px;
     display: inline-grid;
