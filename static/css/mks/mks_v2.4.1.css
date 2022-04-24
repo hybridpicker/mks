@@ -2696,7 +2696,8 @@ slider {
   height: 28rem;
   background-color: #f1f1f1;
   overflow: hidden;
-  position: absolute; }
+  position: absolute; 
+  top: 5.8rem;}
 
 slider > * {
   position: absolute;
