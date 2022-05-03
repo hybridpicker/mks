@@ -2,7 +2,7 @@
 Class for holding Student model
 '''
 import datetime
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from phone_field import PhoneField
 from location.models import Location, Country
