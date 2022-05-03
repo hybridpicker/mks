@@ -26,6 +26,7 @@ import teaching.views
 
 admin.autodiscover()
 
+from django.urls import include, re_path
 from django.contrib import admin
 
 from django.contrib.sitemaps.views import sitemap
