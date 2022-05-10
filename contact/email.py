@@ -23,7 +23,7 @@ def contact_mail_student(to, message, student_context, send_mail=True):
     '''
     Preparing Mail to USER
     '''
-    subject = 'Ihre Anfrage ist bei uns eingegangen - Musik- und Kunstschule St. Pölten'
+    subject = 'Ihre Anfrage ist bei uns eingegangen - Musikschule St. Pölten'
     message = message
     answer = check_message(message)
     name = student_context.get('first_name') + ' ' + student_context.get('last_name')
