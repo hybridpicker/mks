@@ -16,7 +16,7 @@ Web-Application for improving presentation and organisation-system for schools o
 Design, Frontend and Backup-Code is made by Lukas Schönsgibl (aka hybridpicker)
 
 ## Example Site:
-https://www.musik-kunst-schule.at/
+https://www.musikschule-stp.at/
 
 ## Instructions:
 

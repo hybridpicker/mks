@@ -40,7 +40,7 @@ def mail_new_student(from_email, student_context, send_mail=True):
         '''
         Preparing Mail to Student
         '''
-        subject = 'Musik- und Kunstschule St. Pölten Anmeldung'
+        subject = 'Musikschule St. Pölten Anmeldung'
         to = student_context.get('from_email')
         if student_context.get('instrument') == "Musikalische Früherziehung":
             html_message = render_to_string('templates/mail/answer_mail_template_eme.html',
