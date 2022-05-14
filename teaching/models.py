@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 from phone_field import PhoneField
 from location.models import Location, Country
 from users.models import CustomUser
-from teaching.subject import Subject
+from teaching.subject import Subject, SubjectCategory
 
 class GroupPhoto(models.Model):
     image = models.ImageField(
@@ -35,6 +35,9 @@ class Teacher(models.Model):
     last_name = models.CharField(_(u'Nachname'), max_length=30)
     subject = models.ManyToManyField(
               Subject,
+              blank=True)
+    subject_coordinator = models.ManyToManyField(
+              SubjectCategory,
               blank=True)
     user = models.OneToOneField(
         CustomUser,
