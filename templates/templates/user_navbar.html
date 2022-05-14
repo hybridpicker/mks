@@ -19,7 +19,6 @@
             <div class="dropdown-content">
               <a href="{% url 'todo_categories_view'%}">Kategorien</a>
             </div>
-            {% endif %}
             <div class="dropdown-hover-section">
             </div>
           </div>
@@ -43,8 +42,12 @@
               <a href="{% url 'get_index_text' %}">Startseite</a>
               <a href="{% url 'get_all_faqs' %}">FAQ</a>
             </div>
+            {% endif %}
+            {% if request.user.coordinator %}
             <div class="dropdown-hover-section-c">
+              <a href="">Coordinator</a>
             </div>
+            {% endif %}
           </div>
           <div class="dropdown-e arrow">
             <button class="dropbtn-e">
@@ -99,12 +102,12 @@
         {% if request.user.is_staff %}
         <a class="mainHeadingMobile" href="{% url 'todo_view' %}">To-Do</a>
         <a class="categoryHeadingMobileNoCursor" href="{% url 'todo_categories_view'%}">Kategorien</a>
-        {% endif %}
         <a class="mainHeadingMobile" href="{% url 'event_managing_view' %}">Veranstaltungen</a>
         <a class="mainHeadingMobile" href="{% url 'get_controlling_student' %}">Schüler:innen</a>
         <a class="categoryHeadingMobileNoCursor" href="{% url 'get_controlling_student' %}">Anmeldungen</a>
         <a class="mainHeadingMobile" href="{% url 'get_index_text' %}">Startseite</a>
         <a class="mainHeadingMobile" href="{% url 'get_all_faqs' %}">FAQ</a>
+        {% endif %}
         <a class="mainHeadingMobile" href="{% url 'logout' %}">Logout</a>
       </div>
     </div>
