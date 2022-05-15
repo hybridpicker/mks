@@ -27,7 +27,7 @@ def get_all_students(request):
     return render(request, 'controlling/all_students.html', context)
 
 @login_required(login_url='/team/login/')
-def get_all_students(request):
+def get_all_students_coordinator(request):
     try:
         user_id = request.GET['user_id']
         category = Teacher.objects.get(user_id=user_id).subject_coordinator.all()
