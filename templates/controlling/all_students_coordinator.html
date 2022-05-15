@@ -21,7 +21,12 @@
 {% endblock %}
 {% block body %}
 <div class="mbs">
-
+  {% if error %}
+  <div class="container">
+    <h1>Das hätte nicht passieren dürfen ...</h1>
+    <h2>Leider wurden keine Schülerdaten gefunden. Wir arbeiten an der Behebungs des Problems.</h2>
+  </div>
+  {% else%}
   <div class="container">
     <h1>Fachgruppe {{ category }}</h1>
     <h2>Angemeldete Schüler:innen</h2>
@@ -54,6 +59,7 @@
       </tbody>
     </table>
   </div>
+  {% endif %}
 
 </div>
 {% endblock %}

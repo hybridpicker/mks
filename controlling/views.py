@@ -39,7 +39,7 @@ def get_all_students_coordinator(request):
             }
     except:
         print('ERROR: No User ID Found')
-        context = {}
+        context = {'error': True}
     return render(request, 'controlling/all_students_coordinator.html', context)
 
 @login_required(login_url='/team/login/')
