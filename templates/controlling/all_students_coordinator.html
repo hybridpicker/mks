@@ -33,26 +33,24 @@
     <table cellspacing="0" cellpadding="0" width="100%">
       <thead>
         <tr>
-          <th style="text-align:center" align="left">Name</th>
-          <th style="text-align:center" align="left">Instrument</th>
-          <th style="text-align:center" align="left">Anmeldedatum</th>
+          <th style="text-align:left" align="left">Name</th>
+          <th style="text-align:left" align="left">Instrument</th>
+          <th style="text-align:left" align="left">Telefonnummer</th>
+          <th style="text-align:left" align="left">E-Mail</th>
+          <th style="text-align:left" align="left">Anmeldedatum</th>
+          <th style="text-align:left" align="left">Schnupperstunde</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         {% for student in students.all %}
           <tr>
-            <td align="left"><a traget="_blank" href="single_student?id={{student.id}}">{{ student.first_name }} {{ student.last_name }}</a></td>
+            <td align="left"><a traget="_blank" href="/team/controlling/single_student?id={{student.id}}">{{ student.first_name }} {{ student.last_name }}</a></td>
             <td>{{student.subject }}</td>
-            <td style="text-align:center;" align="left"><strong>{{student.start_date}}</strong></td>
-            <td>
-              <div class="student-cross-burger">
-                <a style="display:none;" href="?id={{ student.id }}">
-                  {% include "templates/svg/student_nav_bar_crossburger.html" %}
-                </a>
-                <span class="tooltiptext">Eintrag löschen</span>
-              </div>
-            </td>
+            <td>{{student.parent.phone }}</td>
+            <td>{{student.parent.email }}</td>
+            <td><strong>{{student.start_date}}</strong></td>
+            <td><input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{student.id}}" value="trial_{{student.id}}" onclick="" style="width: 1.5rem;"></td>
           </tr>
         {% endfor %}
 
