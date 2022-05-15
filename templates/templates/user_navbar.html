@@ -44,7 +44,9 @@
             </div>
             {% endif %}
             {% if request.user.coordinator %}
-              <a href="">Coordinator</a>
+            <div class="dropbtn">
+              <a href="/team/controlling/coordinator/students?user_id={{ request.user.id }}">Schüler:innen</a>
+            </div>
             {% endif %}
           </div>
           <div class="dropdown-e arrow">
