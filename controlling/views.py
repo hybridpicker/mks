@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from students.models import Student
 from home.models import IndexText
 from controlling.forms import IndexForm
+from teaching.models import Teacher
+from teaching.subject import Subject
 
 from django.utils.datastructures import MultiValueDictKeyError
 
@@ -23,6 +25,22 @@ def get_all_students(request):
         'students': students,
         }
     return render(request, 'controlling/all_students.html', context)
+
+@login_required(login_url='/team/login/')
+def get_all_students_coordinator(request):
+    try:
+        user_id = request.GET['user_id']
+        category = Teacher.objects.get(user_id=user_id).subject_coordinator.all()
+        category_id = category[0].id
+        students = Student.objects.filter(subject__category=category_id)
+        context = {
+            'students': students,
+            'category': category[0]
+            }
+    except:
+        print('ERROR: No User ID Found')
+        context = {'error': True}
+    return render(request, 'controlling/all_students_coordinator.html', context)
 
 @login_required(login_url='/team/login/')
 def get_student(request):

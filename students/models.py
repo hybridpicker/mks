@@ -72,6 +72,7 @@ class Student(models.Model):
     lesson_form = models.ForeignKey(
         LessonForm,
         on_delete=models.CASCADE, blank=True, null=True)
+    trial_lesson = models.BooleanField(default=False)
     regular_lesson_time = models.TimeField(_("regular lesson time "), db_index=True,
                                            help_text='if lessonform is monthly',
                                            null=True, blank=True)

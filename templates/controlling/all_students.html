@@ -21,6 +21,7 @@
 {% endblock %}
 {% block body %}
 <div class="mbs">
+  {% if request.user.is_staff %}
   <div class="container">
     <h2>Angemeldete Schüler:innen</h2>
     <table cellspacing="0" cellpadding="0" width="100%">
@@ -52,6 +53,7 @@
       </tbody>
     </table>
   </div>
+  {% endif %}
 </div>
 {% endblock %}
 {% block footer %}
