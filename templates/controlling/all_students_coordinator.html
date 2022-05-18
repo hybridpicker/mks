@@ -50,7 +50,12 @@
             <td>{{student.parent.phone }}</td>
             <td>{{student.parent.email }}</td>
             <td><strong>{{student.start_date}}</strong></td>
+            <!-- TODO: funtcion Trial Lesson of ID -->
+            {% if student.trial_lesson == True %}
+            <td><input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{student.id}}" value="trial_{{student.id}}" onclick="" style="width: 1.5rem;" checked></td>
+            {% else %}
             <td><input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{student.id}}" value="trial_{{student.id}}" onclick="" style="width: 1.5rem;"></td>
+            {% endif%}
           </tr>
         {% endfor %}
 
