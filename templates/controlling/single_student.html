@@ -30,6 +30,20 @@
   <p>Ort: {{ postal_code }} {{ city }}</p>
   <p>Email: <a href="mailto:{{email}}">{{ email }}</a></p>
   <p>Telefonnummer: {{ parent_phone }}</p>
+  <br>
+  <h2>Evaluation</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-content">
+      <p>Anmerkungen: {{ form.note }}</p>
+      <p>Lehrerzuordnung: {{ form.teacher }}</p>
+      <p>Schnupperstunde abgehalten: {{ form.trial_lesson }}</p>
+    </div>
+    <a>
+    <button type="submit" name="form-save" onclick="return confirm('Wollen Sie wirklich diesen Eintrag abspeichern?');">Speichern</button>
+    </a>
+    </form>
+  <p></p>
   </div>
 </div>
 {% endblock %}

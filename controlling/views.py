@@ -4,9 +4,8 @@ from django.shortcuts import render, redirect
 
 from students.models import Student
 from home.models import IndexText
-from controlling.forms import IndexForm
+from controlling.forms import IndexForm, SingleStudentDataForm
 from teaching.models import Teacher
-from teaching.subject import Subject
 
 from django.utils.datastructures import MultiValueDictKeyError
 
@@ -46,11 +45,21 @@ def get_all_students_coordinator(request):
 def get_student(request):
     student_id = request.GET['id']
     student = Student.objects.get(id=student_id)
+    if request.method == "POST":
+        form = SingleStudentDataForm(request.POST, instance=student)
+        if form.is_valid():
+            student = form.save(commit=False)
+            student.save()
+    else:
+        form = SingleStudentDataForm(instance=student)
     first_name = student.first_name
     last_name = student.last_name
     start_date = student.start_date
     subject = student.subject
     birth_date = student.birth_date
+    note = student.note
+    trial_lesson = student.trial_lesson
+    teacher = student.teacher
     '''
     Parent data
     '''
@@ -78,7 +87,12 @@ def get_student(request):
                 'postal_code': postal_code,
                 'email': email,
                 'parent_phone': parent_phone,
+                'note': note,
+                'trial_lesson': trial_lesson,
+                'teacher': teacher,
+                'form': form,
                 }
+        
     return render(request, 'controlling/single_student.html', context)
 
 @login_required(login_url='/team/login/')

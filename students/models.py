@@ -69,6 +69,7 @@ class Student(models.Model):
     teacher = models.ForeignKey(
         'teaching.Teacher',
         on_delete=models.CASCADE, blank=True, null=True)
+    note = models.TextField(null=True)
     lesson_form = models.ForeignKey(
         LessonForm,
         on_delete=models.CASCADE, blank=True, null=True)

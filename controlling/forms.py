@@ -3,9 +3,15 @@ from django.utils.translation import gettext as _
 from django import forms
 
 from home.models import IndexText
+from students.models import Student
 
 class IndexForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = IndexText
         fields = ['content', 'lead_paragraph']
+
+class SingleStudentDataForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['teacher', 'note', 'trial_lesson']
