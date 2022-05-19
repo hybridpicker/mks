@@ -37,8 +37,8 @@ def get_all_students_coordinator(request):
             'students': students,
             'category': category[0]
             }
-    except:
-        print('ERROR: No User ID Found')
+    except Exception as e: 
+        print(e)
         context = {'error': True}
     return render(request, 'controlling/all_students_coordinator.html', context)
 
