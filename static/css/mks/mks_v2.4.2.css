@@ -1148,7 +1148,7 @@ canvas {
     display: none; } }
 
 /* Contact Form */
-#contact_form_post, #event_form_post, #signin_form_post {
+#contact_form_post, #event_form_post, #signin_form_post, #student-single-data-form {
   text-align: left; }
 
 #contact_form_post select, #event_form_post select {
@@ -1364,13 +1364,13 @@ a button {
     text-align: center; } }
 
 /* Sign In Form CSS */
-#signin_form_post p {
+#signin_form_post p, #student-single-data-form p {
   padding-left: 0;
   margin-bottom: 4px;
   font-weight: bolder;
   font-family: 'jaf-bernina-sans-condensed', sans-serif; }
 
-#signin_form_post {
+#signin_form_post, #student-single-data-form  {
   margin-left: 4rem;
   margin-right: 4rem; }
 
@@ -1378,26 +1378,26 @@ a button {
   border: none;
   color: #333333; }
 
-#signin_form_post h2 {
+#signin_form_post h2, #student-single-data-form h2 {
   text-align: left;
   color: #D11317; }
 
-#signin_form_post .sfbsfcon {
+#signin_form_post .sfbsfcon, #student-single-data-form .sfbsfcon {
   margin-left: 0; }
 
-#signin_form_post input {
+#signin_form_post input, #student-single-data-form  input {
   width: 50%; }
 
-#signin_form_post .sfbsfcon {
+#signin_form_post .sfbsfcon, #student-single-data-form .sfbsfcon {
   width: 100%; }
 
-#signin_form_post .sese {
+#signin_form_post .sese, #student-single-data-form .sese {
   width: 50%;
   margin-right: 0;
   padding-right: 1.5%;
   padding-left: 1.5%; }
 
-#signin_form_post .slitcon {
+#signin_form_post .slitcon, #student-single-data-form .slitcon {
   overflow-x: hidden;
   width: 50%;
   padding-right: 3%;
@@ -1405,10 +1405,10 @@ a button {
   border-top: none;
   max-height: 21rem; }
 
-#signin_form_post .slitcon > div {
+#signin_form_post .slitcon > div, #student-single-data-form .slitcon > div {
   margin-right: -6%; }
 
-#signin_form_post button {
+#signin_form_post button, #student-single-data-form button {
   margin-left: 0; }
 
 select#id_birthdate_day, select#id_birthdate_month, select#id_birthdate_year {
@@ -1429,18 +1429,42 @@ select#id_birthdate_month {
 select#id_birthdate_year {
   width: 80px; }
 
+#student-single-data-form textarea{
+  width: 50%;
+  height: 7rem;
+  margin-right: 0;
+  padding-right: 1.5%;
+  padding-left: 1.5%;
+}
+
+#student-single-data-form .slitcon{
+  border-left: 1px solid #22252854;
+  border-right: 1px solid #22252854;
+}
+
+#student-single-data-form textarea{
+  border: solid 1px #22252854;
+}
+
 @media only screen and (max-width: 1024px) {
   #signin_form_post input,
-  #signin_form_post textarea {
+  #signin_form_post textarea,
+  #student-single-data-form textarea,
+   {
     width: 95%; }
-  #signin_form_post .sese, #signin_form_post .slitcon {
+  #signin_form_post .sese, #signin_form_post .slitcon,
+  #student-single-data-form .sese, #student-single-data-form .slitcon {
     width: 95%; }
-  #signin_form_post .form-actions {
+  #signin_form_post .form-actions
+  #student-single-data-form .form-actions {
     text-align: center; }
-  #signin_form_post {
+  #signin_form_post,
+  #student-single-data-form {
     margin-left: 0;
     margin-right: 0; } }
-
+#student-single-data-form input{
+  width: 4rem;
+}
 /* Teacher Promo CSS */
 .tnmhl {
   grid-area: tnmhl; }
