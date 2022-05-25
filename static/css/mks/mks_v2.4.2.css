@@ -1929,6 +1929,13 @@ td {
     line-height: 28px;
     vertical-align: bottom; } }
 
+td #cross-burger-gallery {
+      width: 1.5rem;
+      border: none;
+}
+td #cross-burger-gallery .cross_st0{
+  stroke-width: 3;
+}
 /*Events */
 .event-container {
   display: grid;
