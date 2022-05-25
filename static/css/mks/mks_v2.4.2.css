@@ -1463,7 +1463,8 @@ select#id_birthdate_year {
     margin-left: 0;
     margin-right: 0; } }
 #student-single-data-form input{
-  width: 4rem;
+  width: 1.8rem;
+  height: 1.8rem;
 }
 /* Teacher Promo CSS */
 .tnmhl {

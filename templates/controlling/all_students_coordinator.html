@@ -33,11 +33,12 @@
     <table cellspacing="0" cellpadding="0" width="100%">
       <thead>
         <tr>
+          <th style="text-align:left" align="left">Anmeldedatum</th>
           <th style="text-align:left" align="left">Name</th>
           <th style="text-align:left" align="left">Instrument</th>
           <th style="text-align:left" align="left">Telefonnummer</th>
           <th style="text-align:left" align="left">E-Mail</th>
-          <th style="text-align:left" align="left">Anmeldedatum</th>
+          <th style="text-align:left" align="left">Lehrerzuteilung</th>
           <th style="text-align:left" align="left">Schnupperstunde</th>
           <th></th>
         </tr>
@@ -45,13 +46,13 @@
       <tbody>
         {% for student in students.all %}
           <tr>
+            <td><strong>{{student.start_date}}</strong></td>
             <td align="left"><a traget="_blank" href="/team/controlling/single_student?id={{student.id}}">{{ student.first_name }} {{ student.last_name }}</a></td>
             <td>{{student.subject }}</td>
             <td>{{student.parent.phone }}</td>
             <td>{{student.parent.email }}</td>
-            <td><strong>{{student.start_date}}</strong></td>
+            <td><input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{student.id}}" value="teacher_{{student.id}}" onclick="" style="width: 1.5rem;" disabled {% if student.teacher %}checked{% endif %}></td>
             <td><input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{student.id}}" value="trial_{{student.id}}" onclick="" style="width: 1.5rem;" disabled {% if student.trial_lesson == True %}checked{% endif %}></td>
-
           </tr>
         {% endfor %}
 

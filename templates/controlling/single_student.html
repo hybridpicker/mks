@@ -50,7 +50,12 @@
               {{ form.teacher }}
             </div>
           </div>
-          <p>Schnupperstunde abgehalten: {{ form.trial_lesson }}</p>
+          <div class="col-4">
+            <p>Schnupperstunde abgehalten:</p>
+          </div>
+          <div class="col-8">
+            {{ form.trial_lesson }}
+          </div>
         </div>
         <a>
         <button type="submit" name="form-save" style="width: 14rem;" onclick="return confirm('Wollen Sie wirklich diesen Eintrag abspeichern?');">Speichern</button>
