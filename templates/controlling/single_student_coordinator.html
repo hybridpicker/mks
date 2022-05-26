@@ -6,11 +6,6 @@
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
-<style>
-  .phone-field > span, .phone-field > #id_phone_1{
-    display: none;
-  }
-</style>
 {% endblock %}
 
 {% block navbar %}
@@ -24,52 +19,29 @@
     <h1>{{ first_name }} {{ last_name }}</h1>
     <br>
     <div class="row">
+      <p>Instrument: <strong>{{ subject }}</strong></p>
+      {% if birth_date %}
+      <p>Geburtstag: <strong>{{ birth_date }}</strong></p>
+      {% endif %}
       <p>Anmeldungsdatum: <strong>{{ start_date }}</strong></p>
       <br>
-      <h2>Schülerdaten:</h2>
+      <h2>Eltern</h2>
+      <p>{{ parent_first_name }} {{ parent_last_name }}</p>
+      <p>Straße: {{ adressline }} {{ house_number }}</p>
+      <p>Ort: {{ postal_code }} {{ city }}</p>
+      <p>Email: <a href="mailto:{{email}}">{{ email }}</a></p>
+      <p>Telefonnummer: {{ parent_phone }}</p>
+      <br>
+      <h2>Evaluation</h2>
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-content" id="student-single-data-form">
           <div class="col-4">
-            <p>Vorname:</p>
-          </div>
-          <div class="col-8">
-            {{ form.first_name }}
-          </div>
-          <div class="col-4">
-            <p>Nachname:</p>
-          </div>
-          <div class="col-8">
-            {{ form.last_name }}
-          </div>
-          <div class="col-4">
-            <p>Instrument:</p>
-          </div>
-          <div class="sfbsfcon">
-            <div class="col-8">
-              {{ form.subject }}
-            </div>
-          </div>
-          <div class="col-4">
-            <p>Geburtstag:</p>
-          </div>
-          <div class="col-8">
-            {{ form.birth_date }}
-          </div>
-          <div class="col-4">
-            <p>Elternteil:</p>
-          </div>
-          <div class="sfbsfcon">
-            <div class="col-8">
-              {{ form.parent }}
-            </div>
-          </div>
-          <div class="col-4">
             <p>Anmerkungen:</p>
-          </div>
+          <div>
           <div class="col-8">
             {{ form.note }}
-          </div>
+          <div>
           <div class="col-4">
             <p>Lehrerzuordnung:</p>
           </div>
@@ -81,59 +53,19 @@
           <div class="col-4">
             <p>Schnupperstunde abgehalten:</p>
           </div>
-          <div class="col-8 checkbox">
+          <div class="col-8">
             {{ form.trial_lesson }}
           </div>
         </div>
-        <h2>Elterndaten:</h2>
-        <div class="form-content" id="student-single-data-form">
-          <div class="col-4">
-            <p>Vorname:</p>
-          </div>
-          <div class="col-8">
-            {{ parent_form.first_name }}
-          </div>
-          <div class="col-4">
-            <p>Nachname:</p>
-          </div>
-          <div class="col-8">
-            {{ parent_form.last_name }}
-          </div>
-          <div class="col-4">
-            <p>Email:</p>
-          </div>
-          <div class="col-8">
-            {{ parent_form.email }}
-          </div>
-          <div class="col-4">
-            <p>Telefonnummer:</p>
-          </div>
-          <div class="col-8 phone-field">
-            {{ parent_form.phone }}
-          </div>
-          <div class="col-4">
-            <p>Straße:</p>
-          </div>
-          <div class="col-8">
-            {{ parent_form.adress_line }}
-          </div>
-          <div class="col-4">
-            <p>Hausnummer:</p>
-          </div>
-          <div class="col-8">
-            {{ parent_form.house_number }}
-          </div>
-        </div>
-        <br>
         <a>
-          <button type="submit" name="form-save" style="width: 14rem;" onclick="return confirm('Wollen Sie wirklich diesen Eintrag abspeichern?');">Speichern</button>
+        <button type="submit" name="form-save" style="width: 14rem;" onclick="return confirm('Wollen Sie wirklich diesen Eintrag abspeichern?');">Speichern</button>
         </a>
       </form>
     </div>
   </div>
+
 </div>
-
-
+</div>
 {% endblock %}
 
 {% block footer %}

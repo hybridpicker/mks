@@ -1462,7 +1462,7 @@ select#id_birthdate_year {
   #student-single-data-form {
     margin-left: 0;
     margin-right: 0; } }
-#student-single-data-form input{
+#student-single-data-form .checkbox input{
   width: 1.8rem;
   height: 1.8rem;
 }

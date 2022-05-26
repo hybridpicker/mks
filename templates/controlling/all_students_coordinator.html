@@ -51,9 +51,9 @@
       <tbody id="studentTable">
         {% for student in students.all %}
           <tr>
-            <td><a traget="_blank" href="/team/controlling/single_student?id={{student.id}}">{% include "templates/svg/pen_controlling.html" %}</a></td>
+            <td><a traget="_blank" href="/team/controlling/coordinator/single_student?id={{student.id}}">{% include "templates/svg/pen_controlling.html" %}</a></td>
             <td><strong>{{student.start_date}}</strong></td>
-            <td align="left"><a traget="_blank" href="/team/controlling/single_student?id={{student.id}}">{{ student.first_name }} {{ student.last_name }}</a></td>
+            <td align="left"><a traget="_blank" href="/team/controlling/coordinator/single_student?id={{student.id}}">{{ student.first_name }} {{ student.last_name }}</a></td>
             <td>{{student.subject }}</td>
             <td>{{student.parent.phone }}</td>
             <td>{{student.parent.email }}</td>

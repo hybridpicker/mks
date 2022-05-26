@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from students.models import Student
+from students.models import Student, Parent
 from home.models import IndexText
 from controlling.forms import IndexForm, SingleStudentDataForm
+from controlling.forms import SingleStudentDataFormCoordinator, ParentDataForm
 from teaching.models import Teacher
 
 from django.utils.datastructures import MultiValueDictKeyError
@@ -45,13 +46,44 @@ def get_all_students_coordinator(request):
 def get_student(request):
     student_id = request.GET['id']
     student = Student.objects.get(id=student_id)
+    parent = student.parent.id
+    parent = Parent.objects.get(id=parent)
     if request.method == "POST":
         form = SingleStudentDataForm(request.POST, instance=student)
+        parent_form = ParentDataForm(request.POST, instance=parent)
+        if form.is_valid():
+            student = form.save(commit=False)
+            student.save()
+            parent = parent_form.save(commit=False)
+            parent.save()
+    else:
+        form = SingleStudentDataForm(instance=student)
+        parent_form = ParentDataForm(instance=parent)
+    first_name = student.first_name
+    last_name = student.last_name
+    start_date = student.start_date
+
+    # Model data
+    context = {
+                'first_name': first_name,
+                'last_name': last_name,
+                'start_date': start_date,
+                'form': form,
+                'parent_form': parent_form,
+                }
+    return render(request, 'controlling/single_student.html', context)
+
+@login_required(login_url='/team/login/')
+def get_student_coordinator(request):
+    student_id = request.GET['id']
+    student = Student.objects.get(id=student_id)
+    if request.method == "POST":
+        form = SingleStudentDataFormCoordinator(request.POST, instance=student)
         if form.is_valid():
             student = form.save(commit=False)
             student.save()
     else:
-        form = SingleStudentDataForm(instance=student)
+        form = SingleStudentDataFormCoordinator(instance=student)
     first_name = student.first_name
     last_name = student.last_name
     start_date = student.start_date
@@ -93,7 +125,7 @@ def get_student(request):
                 'form': form,
                 }
         
-    return render(request, 'controlling/single_student.html', context)
+    return render(request, 'controlling/single_student_coordinator.html', context)
 
 @login_required(login_url='/team/login/')
 def get_index_text(request):
@@ -111,4 +143,3 @@ def get_index_text(request):
         'form': form,
         }
     return render(request, 'controlling/index_form.html', context)
-
