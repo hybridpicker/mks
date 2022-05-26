@@ -54,6 +54,7 @@ def get_student(request):
     student = Student.objects.get(id=student_id)
     parent_id = student.parent.id
     parent = Parent.objects.get(id=parent_id)
+    parent_name = parent.first_name + ' ' + parent.last_name
     if request.method == "POST":
         form = SingleStudentDataForm(request.POST, instance=student)
         parent_form = ParentDataForm(request.POST, instance=parent)
@@ -76,6 +77,7 @@ def get_student(request):
                 'form': form,
                 'parent_form': parent_form,
                 'parent_id': parent_id,
+                'parent_name': parent_name,
                 }
     return render(request, 'controlling/single_student.html', context)
 
