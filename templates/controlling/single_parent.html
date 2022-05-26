@@ -21,12 +21,10 @@
 <div class="mbs">
   <div class="container teacher-view">
     <img class="studentProfileImg" src="{{ image }}" width=150>
-    <h1>Schülerdaten</h1>
+    <h1>Elternstammdaten</h1>
     <br>
     <div class="row">
-      <p>Anmeldungsdatum: <strong>{{ start_date }}</strong></p>
-      <br>
-      <h2>Schülerdaten:</h2>
+
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-content" id="student-single-data-form">
@@ -43,87 +41,40 @@
             {{ form.last_name }}
           </div>
           <div class="col-4">
-            <p>Instrument:</p>
-          </div>
-          <div class="sfbsfcon">
-            <div class="col-8">
-              {{ form.subject }}
-            </div>
-          </div>
-          <div class="col-4">
-            <p>Geburtstag:</p>
-          </div>
-          <div class="col-8">
-            {{ form.birth_date }}
-          </div>
-          <div class="col-4">
-            <p>Elternteil:</p>
-          </div>
-          <div class="sfbsfcon">
-            <div class="col-8">
-              {{ form.parent }}
-            </div>
-          </div>
-          <a href="parent?id={{parent_id}}">Elternstammdaten ändern</a>
-          <div class="col-4">
-            <p>Anmerkungen:</p>
-          </div>
-          <div class="col-8">
-            {{ form.note }}
-          </div>
-          <div class="col-4">
-            <p>Lehrerzuordnung:</p>
-          </div>
-          <div class="sfbsfcon">
-            <div class="col-8">
-              {{ form.teacher }}
-            </div>
-          </div>
-          <div class="col-4">
-            <p>Schnupperstunde abgehalten:</p>
-          </div>
-          <div class="col-8 checkbox">
-            {{ form.trial_lesson }}
-          </div>
-        </div>
-        <h2>Kontaktdaten der Erziehungsberechtigten:</h2>
-        <p>Name: <strong>{{ parent_name }}</strong></p>
-        <div class="form-content" id="student-single-data-form">
-          <div class="col-4">
             <p>Email:</p>
           </div>
           <div class="col-8">
-            {{ parent_form.email }}
+            {{ form.email }}
           </div>
           <div class="col-4">
             <p>Telefonnummer:</p>
           </div>
           <div class="col-8 phone-field">
-            {{ parent_form.phone }}
+            {{ form.phone }}
           </div>
           <div class="col-4">
             <p>Straße:</p>
           </div>
           <div class="col-8">
-            {{ parent_form.adress_line }}
+            {{ form.adress_line }}
           </div>
           <div class="col-4">
             <p>Hausnummer:</p>
           </div>
           <div class="col-8">
-            {{ parent_form.house_number }}
+            {{ form.house_number }}
           </div>
           <div class="col-4">
             <p>PLZ:</p>
           </div>
           <div class="col-8">
-            {{ parent_form.postal_code }}
+            {{ form.postal_code }}
           </div>
           <div class="col-4">
             <p>Ort:</p>
           </div>
           <div class="col-8">
-            {{ parent_form.city }}
+            {{ form.city }}
           </div>
         </div>
         <br>

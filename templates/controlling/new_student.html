@@ -19,117 +19,107 @@
 {% endblock %}
 {% block body %}
 <div class="mbs">
-  <div class="container teacher-view">
-    <img class="studentProfileImg" src="{{ image }}" width=150>
-    <h1>Schülerdaten</h1>
+  <div class="container">
+    <h1>Neuer Schülereintrag</h1>
     <br>
     <div class="row">
-      <p>Anmeldungsdatum: <strong>{{ start_date }}</strong></p>
-      <br>
-      <h2>Schülerdaten:</h2>
-      <form method="post" enctype="multipart/form-data">
+      <form id="signin_form_post" method="post">
         {% csrf_token %}
-        <div class="form-content" id="student-single-data-form">
+        <div class="row">
+          <h2>Schüler:in</h2>
           <div class="col-4">
-            <p>Vorname:</p>
+            <p>Vorname*</p>
           </div>
           <div class="col-8">
             {{ form.first_name }}
+            {{ form.first_name.errors }}
           </div>
           <div class="col-4">
-            <p>Nachname:</p>
+            <p>Familienname*</p>
           </div>
           <div class="col-8">
             {{ form.last_name }}
+            {{ form.last_name.errors }}
           </div>
           <div class="col-4">
-            <p>Instrument:</p>
+            <p>Geburtstag*</p>
+          </div>
+          <div class="col-8">
+            {{ form.birthdate }}
+          </div>
+          <div class="col-4">
+            <p>Fach*</p>
           </div>
           <div class="sfbsfcon">
             <div class="col-8">
               {{ form.subject }}
             </div>
           </div>
+          {{ form.subject.errors }}
+          <h2>Erziehungsberechtigte</h2>
           <div class="col-4">
-            <p>Geburtstag:</p>
+            <p>Vorname*</p>
           </div>
           <div class="col-8">
-            {{ form.birth_date }}
+            {{ form.parent_first_name }}
+            {{ form.parent_first_name.errors }}
           </div>
           <div class="col-4">
-            <p>Elternteil:</p>
-          </div>
-          <div class="sfbsfcon">
-            <div class="col-8">
-              {{ form.parent }}
-            </div>
-          </div>
-          <a href="parent?id={{parent_id}}">Elternstammdaten ändern</a>
-          <div class="col-4">
-            <p>Anmerkungen:</p>
+            <p>Familienname*</p>
           </div>
           <div class="col-8">
-            {{ form.note }}
+            {{ form.parent_last_name }}
+            {{ form.parent_last_name.errors }}
           </div>
           <div class="col-4">
-            <p>Lehrerzuordnung:</p>
+            <p>Email*</p>
           </div>
-          <div class="sfbsfcon">
-            <div class="col-8">
-              {{ form.teacher }}
-            </div>
+          <div class="col-8">
+            {{ form.from_email }}
+            {{ form.from_email.errors }}
           </div>
           <div class="col-4">
-            <p>Schnupperstunde abgehalten:</p>
+            <p>Telefonnummer*</p>
           </div>
-          <div class="col-8 checkbox">
-            {{ form.trial_lesson }}
+          <div class="col-8">
+            {{ form.phone }}
+            {{ form.phone.errors }}
+          </div>
+          <div class="col-4">
+            <p>Straße*</p>
+          </div>
+          <div class="col-8">
+            {{ form.adress_line }}
+            {{ form.adress_line.errors }}
+          </div>
+          <div class="col-4">
+            <p>Hausnummer*</p>
+          </div>
+          <div class="col-8">
+            {{ form.house_number }}
+            {{ form.house_number.errors }}
+          </div>
+          <div class="col-4">
+            <p>Postleitzahl*</p>
+          </div>
+          <div class="col-4">
+            {{ form.postal_code }}
+            {{ form.postal_code.errors }}
+          </div>
+          <div class="col-4">
+            <p>Stadt*</p>
+          </div>
+          <div class="col-4">
+            {{ form.city }}
+            {{ form.city.errors }}
+          </div>
+          <div class="col-8">
+            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" value="">
           </div>
         </div>
-        <h2>Kontaktdaten der Erziehungsberechtigten:</h2>
-        <p>Name: <strong>{{ parent_name }}</strong></p>
-        <div class="form-content" id="student-single-data-form">
-          <div class="col-4">
-            <p>Email:</p>
-          </div>
-          <div class="col-8">
-            {{ parent_form.email }}
-          </div>
-          <div class="col-4">
-            <p>Telefonnummer:</p>
-          </div>
-          <div class="col-8 phone-field">
-            {{ parent_form.phone }}
-          </div>
-          <div class="col-4">
-            <p>Straße:</p>
-          </div>
-          <div class="col-8">
-            {{ parent_form.adress_line }}
-          </div>
-          <div class="col-4">
-            <p>Hausnummer:</p>
-          </div>
-          <div class="col-8">
-            {{ parent_form.house_number }}
-          </div>
-          <div class="col-4">
-            <p>PLZ:</p>
-          </div>
-          <div class="col-8">
-            {{ parent_form.postal_code }}
-          </div>
-          <div class="col-4">
-            <p>Ort:</p>
-          </div>
-          <div class="col-8">
-            {{ parent_form.city }}
-          </div>
+        <div class="form-actions">
+          <button type="submit" style="width: 8rem;">Anmelden</button>
         </div>
-        <br>
-        <a>
-          <button type="submit" name="form-save" style="width: 14rem;" onclick="return confirm('Wollen Sie wirklich diesen Eintrag abspeichern?');">Speichern</button>
-        </a>
       </form>
     </div>
   </div>
