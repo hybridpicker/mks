@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+
 from django.shortcuts import render, redirect
 
 from students.models import Student, Parent
@@ -12,6 +14,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 # Create your views here.
 @login_required(login_url='/team/login/')
+@staff_member_required
 def get_all_students(request):
     students = Student.objects.all().order_by('-start_date')
     try:
@@ -43,6 +46,7 @@ def get_all_students_coordinator(request):
     return render(request, 'controlling/all_students_coordinator.html', context)
 
 @login_required(login_url='/team/login/')
+@staff_member_required
 def get_student(request):
     student_id = request.GET['id']
     student = Student.objects.get(id=student_id)
