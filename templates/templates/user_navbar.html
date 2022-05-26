@@ -24,12 +24,12 @@
           </div>
           <div class="dropdown-b arrow">
             <button class="dropbtn-b">
-              <a href="{% url 'get_controlling_student' %}">Schüler:innen</a>
+              <a href="{% url 'get_controlling_students' %}">Schüler:innen</a>
             </button>
             <div class="dropdown-hover-section-b">
             </div>
             <div class="dropdown-content-b">
-              <a href="{% url 'get_controlling_student' %}">Anmeldungen</a>
+              <a href="{% url 'get_controlling_students' %}">Anmeldungen</a>
             </div>
           </div>
           <div class="dropdown-c arrow">
@@ -103,8 +103,8 @@
         <a class="mainHeadingMobile" href="{% url 'todo_view' %}">To-Do</a>
         <a class="categoryHeadingMobileNoCursor" href="{% url 'todo_categories_view'%}">Kategorien</a>
         <a class="mainHeadingMobile" href="{% url 'event_managing_view' %}">Veranstaltungen</a>
-        <a class="mainHeadingMobile" href="{% url 'get_controlling_student' %}">Schüler:innen</a>
-        <a class="categoryHeadingMobileNoCursor" href="{% url 'get_controlling_student' %}">Anmeldungen</a>
+        <a class="mainHeadingMobile" href="{% url 'get_controlling_students' %}">Schüler:innen</a>
+        <a class="categoryHeadingMobileNoCursor" href="{% url 'get_controlling_students' %}">Anmeldungen</a>
         <a class="mainHeadingMobile" href="{% url 'get_index_text' %}">Startseite</a>
         <a class="mainHeadingMobile" href="{% url 'get_all_faqs' %}">FAQ</a>
         {% endif %}

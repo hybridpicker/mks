@@ -50,32 +50,52 @@ def get_all_students_coordinator(request):
 def get_student(request):
     student_id = request.GET['id']
     student = Student.objects.get(id=student_id)
-    parent = student.parent.id
-    parent = Parent.objects.get(id=parent)
+    parent_id = student.parent.id
+    parent = Parent.objects.get(id=parent_id)
     if request.method == "POST":
         form = SingleStudentDataForm(request.POST, instance=student)
         parent_form = ParentDataForm(request.POST, instance=parent)
         if form.is_valid():
-            student = form.save(commit=False)
+            student = form.save()
             student.save()
+        if parent_form.is_valid():
             parent = parent_form.save(commit=False)
             parent.save()
+        return redirect('get_controlling_students')
     else:
         form = SingleStudentDataForm(instance=student)
         parent_form = ParentDataForm(instance=parent)
-    first_name = student.first_name
-    last_name = student.last_name
+
     start_date = student.start_date
 
     # Model data
     context = {
-                'first_name': first_name,
-                'last_name': last_name,
                 'start_date': start_date,
                 'form': form,
                 'parent_form': parent_form,
+                'parent_id': parent_id,
                 }
     return render(request, 'controlling/single_student.html', context)
+
+@login_required(login_url='/team/login/')
+@staff_member_required
+def get_parent(request):
+    parent_id = request.GET['id']
+    parent = Parent.objects.get(id=parent_id)
+    if request.method == "POST":
+        form = ParentDataForm(request.POST, instance=parent)
+        if form.is_valid():
+            parent = form.save(commit=False)
+            parent.save()
+        return redirect('get_controlling_students')
+    else:
+        form = ParentDataForm(instance=parent)
+
+    # Model data
+    context = {
+                'form': form,
+                }
+    return render(request, 'controlling/single_parent.html', context)
 
 @login_required(login_url='/team/login/')
 def get_student_coordinator(request):

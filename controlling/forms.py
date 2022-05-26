@@ -15,7 +15,7 @@ class SingleStudentDataForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ['first_name', 'last_name', 'birth_date', 'subject', 
-                  'teacher', 'note', 'trial_lesson', 'parent', 'house_number']
+                  'teacher', 'note', 'trial_lesson', 'parent', ]
 
 class ParentDataForm(forms.ModelForm):
     class Meta:

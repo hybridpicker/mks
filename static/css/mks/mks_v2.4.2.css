@@ -1148,7 +1148,8 @@ canvas {
     display: none; } }
 
 /* Contact Form */
-#contact_form_post, #event_form_post, #signin_form_post, #student-single-data-form {
+#contact_form_post, #event_form_post, #signin_form_post, 
+#student-single-data-form, #student-single-data-form {
   text-align: left; }
 
 #contact_form_post select, #event_form_post select {
@@ -1364,13 +1365,15 @@ a button {
     text-align: center; } }
 
 /* Sign In Form CSS */
-#signin_form_post p, #student-single-data-form p {
+#signin_form_post p, #student-single-data-form p,
+#parent-single-data-form p {
   padding-left: 0;
   margin-bottom: 4px;
   font-weight: bolder;
   font-family: 'jaf-bernina-sans-condensed', sans-serif; }
 
-#signin_form_post, #student-single-data-form  {
+#signin_form_post, #student-single-data-form,
+#parent-single-data-form  {
   margin-left: 4rem;
   margin-right: 4rem; }
 
@@ -1378,17 +1381,21 @@ a button {
   border: none;
   color: #333333; }
 
-#signin_form_post h2, #student-single-data-form h2 {
+#signin_form_post h2, #student-single-data-form h2,
+#parent-single-data-form h2 {
   text-align: left;
   color: #D11317; }
 
-#signin_form_post .sfbsfcon, #student-single-data-form .sfbsfcon {
+#signin_form_post .sfbsfcon, #student-single-data-form .sfbsfcon,
+#parent-single-data-form .sfbsfcon {
   margin-left: 0; }
 
-#signin_form_post input, #student-single-data-form  input {
+#signin_form_post input, #student-single-data-form  input,
+#parent-single-data-form input {
   width: 50%; }
 
-#signin_form_post .sfbsfcon, #student-single-data-form .sfbsfcon {
+#signin_form_post .sfbsfcon, #student-single-data-form .sfbsfcon,
+#parent-single-data-form .sfbsfcon {
   width: 100%; }
 
 #signin_form_post .sese, #student-single-data-form .sese {
@@ -1397,7 +1404,8 @@ a button {
   padding-right: 1.5%;
   padding-left: 1.5%; }
 
-#signin_form_post .slitcon, #student-single-data-form .slitcon {
+#signin_form_post .slitcon, #student-single-data-form .slitcon,
+#parent-single-data-form .slitcon{
   overflow-x: hidden;
   width: 50%;
   padding-right: 3%;
@@ -1405,10 +1413,12 @@ a button {
   border-top: none;
   max-height: 21rem; }
 
-#signin_form_post .slitcon > div, #student-single-data-form .slitcon > div {
+#signin_form_post .slitcon > div, #student-single-data-form .slitcon > div,
+#parent-single-data-form .slitcon > div {
   margin-right: -6%; }
 
-#signin_form_post button, #student-single-data-form button {
+#signin_form_post button, #student-single-data-form button,
+#parent-single-data-form button{
   margin-left: 0; }
 
 select#id_birthdate_day, select#id_birthdate_month, select#id_birthdate_year {
@@ -1429,7 +1439,8 @@ select#id_birthdate_month {
 select#id_birthdate_year {
   width: 80px; }
 
-#student-single-data-form textarea{
+#student-single-data-form textarea,
+#parent-single-data-form textarea{
   width: 50%;
   height: 7rem;
   margin-right: 0;
@@ -1437,12 +1448,14 @@ select#id_birthdate_year {
   padding-left: 1.5%;
 }
 
-#student-single-data-form .slitcon{
+#student-single-data-form .slitcon,
+#parent-single-data-form .slitcon{
   border-left: 1px solid #22252854;
   border-right: 1px solid #22252854;
 }
 
-#student-single-data-form textarea{
+#student-single-data-form textarea,
+#parent-single-data-form textarea{
   border: solid 1px #22252854;
 }
 
@@ -1450,19 +1463,24 @@ select#id_birthdate_year {
   #signin_form_post input,
   #signin_form_post textarea,
   #student-single-data-form textarea,
+  #parent-single-data-form textarea
    {
     width: 95%; }
   #signin_form_post .sese, #signin_form_post .slitcon,
-  #student-single-data-form .sese, #student-single-data-form .slitcon {
+  #student-single-data-form .sese, #student-single-data-form .slitcon,
+  #parent-single-data-form .sese, #parent-single-data-form .slitcon {
     width: 95%; }
-  #signin_form_post .form-actions
-  #student-single-data-form .form-actions {
+  #signin_form_post .form-actions,
+  #student-single-data-form .form-actions,
+  #parent-single-data-form .form-actions {
     text-align: center; }
   #signin_form_post,
-  #student-single-data-form {
+  #student-single-data-form,
+  #parent-single-data-form {
     margin-left: 0;
     margin-right: 0; } }
-#student-single-data-form .checkbox input{
+#student-single-data-form .checkbox input,
+#parent-single-data-form .checkbox input{
   width: 1.8rem;
   height: 1.8rem;
 }
