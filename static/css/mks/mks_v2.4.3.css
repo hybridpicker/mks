@@ -1908,11 +1908,11 @@ table thead tr th {
 table tbody tr {
   border-bottom: 1px solid #ba1a63; }
 
-tbody#studentTable > tr:nth-child(even){
-  background-color: #f4f4f4f4;
+tbody.studentTable > tr:nth-child(even){
+  background-color: #c6c6cd40;
 }
-tbody#studentTable > tr:hover{
-  background-color: #b3b3b3;
+tbody.studentTable > tr:hover{
+  background-color: #c6c6cd;
 }
 .blogtable {
   overflow-x: scroll; }

@@ -30,17 +30,17 @@
         <tr>
           <th></th>
           <th></th>
-          <th style="text-align:center" align="center">Anmeldedatum</th>
-          <th style="text-align:center" align="center">Name</th>
-          <th style="text-align:center" align="center">Instrument</th>
-          <th style="text-align:center" align="center">Telefonnummer</th>
-          <th style="text-align:center" align="center">E-Mail</th>
-          <th style="text-align:center" align="center">Lehrerzuteilung</th>
-          <th style="text-align:center" align="center">Schnupperstunde</th>
+          <th style="text-align:left" align="left">Anmeldedatum</th>
+          <th style="text-align:left" align="left">Name</th>
+          <th style="text-align:left" align="left">Instrument</th>
+          <th style="text-align:left" align="left">Telefonnummer</th>
+          <th style="text-align:left" align="left">E-Mail</th>
+          <th style="text-align:left" align="left">Lehrerzuteilung</th>
+          <th style="text-align:left" align="left">Schnupperstunde</th>
           <th></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="studentTable">
         {% for student in students.all %}
           <tr>
             <td><a traget="_blank" href="/team/controlling/single_student?id={{student.id}}">{% include "templates/svg/pen_controlling.html" %}</a></td>
