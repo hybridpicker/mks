@@ -26,6 +26,11 @@ def get_all_students(request):
         Student.objects.filter(id=student_id).delete()
     except MultiValueDictKeyError:
         pass
+    try:
+        category_id = request.GET['category']
+        students = Student.objects.filter(subject__category=category_id)
+    except MultiValueDictKeyError:
+        pass
 
     # Model data
     context = {

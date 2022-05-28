@@ -26,12 +26,12 @@
     <h2>Angemeldete Schüler:innen</h2>
     <a href="new_student"><button>+ Neuer Eintrag</button></a>
     <div class="tag-container all-students">
-      <a id="h3_cat_all" class="tags active" onclick="ShowAllTasks()">Alle </a>
+      <a id="a_cat_all" href="?" class="tags active">Alle </a>
       {% for category in categories %}
-      <a id="h3_cat_{{category.id}}" onclick="ActiveCategory({{category.id}}, '{{category.name}}')" class="tags">{{ category.name }} </a>
+      <a id="a_cat_{{category.id}}" href="?category={{category.id}}" class="tags">{{ category.name }} </a>
       {% endfor %}
     </div>
-    <table cellspacing="0" cellpadding="0" width="100%">
+    <table class="controlling" cellspacing="0" cellpadding="0" width="100%">
       <thead>
         <tr>
           <th></th>
@@ -48,16 +48,16 @@
       </thead>
       <tbody class="studentTable">
         {% for student in students.all %}
-          <tr>
-            <td><a traget="_blank" href="/team/controlling/single_student?id={{student.id}}">{% include "templates/svg/pen_controlling.html" %}</a></td>
+          <tr height="1rem">
+            <td><a class="edit" traget="_blank" href="/team/controlling/single_student?id={{student.id}}">{% include "templates/svg/pen_controlling.html" %}</a></td>
             <td><a href="?id={{student.id}}" onclick="return confirm('Wollen Sie wirklich den Eintrag {{ student.first_name }} {{ student.last_name }} löschen?');">{% include "templates/svg/nav_bar_crossburger.html" %}</a></td>
             <td><strong>{{student.start_date}}</strong></td>
             <td align="left"><a traget="_blank" href="/team/controlling/single_student?id={{student.id}}">{{ student.first_name }} {{ student.last_name }}</a></td>
             <td>{{student.subject }}</td>
             <td>{{student.parent.phone }}</td>
             <td>{{student.parent.email }}</td>
-            <td style="text-align: center;"><input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{student.id}}" value="teacher_{{student.id}}" onclick="" style="width: 1.5rem;" disabled {% if student.teacher %}checked{% endif %}></td>
-            <td style="text-align: center;"><input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{student.id}}" value="trial_{{student.id}}" onclick="" style="width: 1.5rem;" disabled {% if student.trial_lesson == True %}checked{% endif %}></td>
+            <td style="text-align: center;"><input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{student.id}}" value="teacher_{{student.id}}" onclick="" style="width: 1rem;" disabled {% if student.teacher %}checked{% endif %}></td>
+            <td style="text-align: center;"><input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{student.id}}" value="trial_{{student.id}}" onclick="" style="width: 1rem;" disabled {% if student.trial_lesson == True %}checked{% endif %}></td>
           </tr>
         {% endfor %}
 
@@ -68,4 +68,20 @@
 </div>
 {% endblock %}
 {% block footer %}
+<script>
+  var url_string = window.location.href;
+  var url = new URL(url_string);
+  var c = url.searchParams.get("category");
+  // Reset Headings
+  var categories = document.querySelectorAll('.tag-container > a'); 
+  if (c) {
+    for (i = 0; i < categories.length; i++) {
+      element = document.querySelectorAll('.tag-container > a')[i]
+      if (element.classList.contains('active')){
+        element.classList.remove('active');
+      }
+    }
+    document.getElementById('a_cat_' + c).classList.add("active");
+  }
+</script>
 {% endblock %}

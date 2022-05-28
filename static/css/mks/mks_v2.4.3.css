@@ -1914,7 +1914,37 @@ table tbody tr {
   flex-wrap: wrap;
   margin-bottom: 1rem;
 }
-
+.tag-container.all-students a{
+  font-size: 1.2rem;
+  margin: auto;
+  color:#0F262B;
+  font-weight: bold;
+}
+.tag-container.all-students a:hover{
+  text-decoration: none;
+  cursor: pointer;
+  color: #ba1a63;
+}
+.tag-container a.tags.active{
+  color: #ba1a63;
+}
+.table-controlling{
+  min-width: 1100px;
+}
+table.controlling tbody td,
+table.controlling tbody td strong{
+  font-size: 1.1rem;
+}
+table.controlling a.pen-edit{
+  max-width: 2rem;
+  max-height: 1.3rem;
+}
+table.controlling thead tr{
+  font-size: 1.2rem
+}
+table.controlling thead tr th{
+  height: 2.5rem;
+}
 tbody.studentTable > tr:nth-child(even){
   background-color: #c6c6cd40;
 }
@@ -1955,9 +1985,13 @@ td {
     vertical-align: bottom; } }
 
 td #cross-burger-gallery {
-      width: 1.5rem;
-      border: none;
+  width: 1rem;
+  border: none;
 }
+table.controlling tr td a > svg{
+  max-width: 1.3rem;
+  max-height: 1.3rem;
+} 
 td #cross-burger-gallery .cross_st0{
   stroke-width: 3;
 }
