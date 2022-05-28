@@ -25,6 +25,12 @@
   <div class="container">
     <h2>Angemeldete Schüler:innen</h2>
     <a href="new_student"><button>+ Neuer Eintrag</button></a>
+    <div class="tag-container all-students">
+      <a id="h3_cat_all" class="tags active" onclick="ShowAllTasks()">Alle </a>
+      {% for category in categories %}
+      <a id="h3_cat_{{category.id}}" onclick="ActiveCategory({{category.id}}, '{{category.name}}')" class="tags">{{ category.name }} </a>
+      {% endfor %}
+    </div>
     <table cellspacing="0" cellpadding="0" width="100%">
       <thead>
         <tr>

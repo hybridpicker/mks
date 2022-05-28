@@ -1908,6 +1908,13 @@ table thead tr th {
 table tbody tr {
   border-bottom: 1px solid #ba1a63; }
 
+/* Controlling */
+.tag-container.all-students{
+  display: flex; 
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
 tbody.studentTable > tr:nth-child(even){
   background-color: #c6c6cd40;
 }
