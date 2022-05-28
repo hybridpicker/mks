@@ -19,10 +19,10 @@
 
 {% block navbar %}
 {% endblock %}
+
 {% block banner %}
-<img src="/static/banner/kontakt_banner.jpg" alt="">
-<img id="mbimg" src="/static/banner/mobile/kontakt_banner.jpg" alt="">
 {% endblock %}
+
 {% block body %}
 <div class="mbs">
   {% if error %}
@@ -34,7 +34,8 @@
   <div class="container">
     <h1>Fachgruppe {{ category.name }}</h1>
     <h2>Angemeldete Schüler:innen</h2>
-    <table cellspacing="0" cellpadding="0" width="100%">
+    <table class="controlling" cellspacing="0" cellpadding="0" width="100%">
+      <!-- TODO: smaller Fontsize-->
       <thead>
         <tr>
           <th></th>
@@ -48,7 +49,7 @@
           <th></th>
         </tr>
       </thead>
-      <tbody id="studentTable">
+      <tbody class="studentTable">
         {% for student in students.all %}
           <tr>
             <td><a traget="_blank" href="/team/controlling/coordinator/single_student?id={{student.id}}">{% include "templates/svg/pen_controlling.html" %}</a></td>

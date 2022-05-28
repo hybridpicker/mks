@@ -52,11 +52,11 @@
       {% endfor %}
       {% for error in form.non_field_errors %}
           <div class="alert alert-error">
-              <strong>{{ error|escape }}</strong>
+              <p><strong>Fehler: </strong>{{ error|escape }}</p>
           </div>
       {% endfor %}
     {% endif %}
-    <p><a href="/team/password_reset">Passwort vergessen</a></p>
+    <p><a href="/team/password_reset">Passwort vergessen?</a></p>
   </div>
 </div>
 {% endblock %}

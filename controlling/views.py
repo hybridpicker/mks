@@ -11,6 +11,7 @@ from controlling.forms import IndexForm, SingleStudentDataForm
 from controlling.forms import SingleStudentDataFormCoordinator, ParentDataForm
 from teaching.models import Teacher
 from students.forms import SignInForm
+from teaching.models import SubjectCategory
 
 from django.utils.datastructures import MultiValueDictKeyError
 
@@ -19,15 +20,22 @@ from django.utils.datastructures import MultiValueDictKeyError
 @staff_member_required
 def get_all_students(request):
     students = Student.objects.all().order_by('-start_date')
+    categories = SubjectCategory.objects.all().exclude(hidden=True)
     try:
         student_id = request.GET['id']
         Student.objects.filter(id=student_id).delete()
+    except MultiValueDictKeyError:
+        pass
+    try:
+        category_id = request.GET['category']
+        students = Student.objects.filter(subject__category=category_id)
     except MultiValueDictKeyError:
         pass
 
     # Model data
     context = {
         'students': students,
+        'categories': categories,
         }
     return render(request, 'controlling/all_students.html', context)
 
