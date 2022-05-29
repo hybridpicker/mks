@@ -69,6 +69,8 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     #user-agents
     'django_user_agents',
+    #excel-export
+    'xlwt',
 ]
 
 MIDDLEWARE = [
