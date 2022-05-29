@@ -5,19 +5,22 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from students.models import Student
-from teaching.models import SubjectCategory
+from teaching.subject import SubjectCategory
 
 # Create your views here.
 @login_required(login_url='/team/login/')
-@staff_member_required
 def export_students_xls(request):
+    now = datetime.datetime.now()
+    now = now.strftime('%Y-%m-%d')
+    file_name = 'Anmeldungen_' + now
     try:
         category_id = request.GET['id']
         category = SubjectCategory.objects.get(id=category_id)
+        file_name = 'Anmeldungen_' + '_FG_' + category.name + '_' + now
     except:
         category = None
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="students.xls"'
+    response['Content-Disposition'] = 'attachment; filename=' + file_name + '.xls"'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('Students')
