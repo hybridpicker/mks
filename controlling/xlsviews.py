@@ -1,4 +1,5 @@
 import xlwt
+import datetime
 
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -21,19 +22,30 @@ def export_students_xls(request):
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
-    columns = ['Vorname', 'Nachname']
+    columns = ['Anmeldedatum', 'Eltern Vorname', 'Eltern Nachname', 
+               'Vorname', 'Nachname', 'Email', 'Geburtstag', 'Instrument', 
+               'Straße','Hausnummer', 'PLZ', 'Ort', 'Telefon',
+               'Anmerkung']
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
 
     # Sheet body, remaining rows
     font_style = xlwt.XFStyle()
+    style1 = xlwt.easyxf(num_format_str='D-MMM-YY')
+    font_style.num_format_str = 'dd/mm/yyyy'
 
-    rows = Student.objects.all().values_list('first_name', 'last_name', 'email')
+    rows = Student.objects.all().values_list('start_date', 'parent__first_name', 'parent__last_name', 'first_name', 
+                                            'last_name', 'parent__email', 'birth_date', 'subject__subject',
+                                            'parent__adress_line', 'parent__house_number', 'parent__postal_code', 
+                                            'parent__city', 'phone', 'note')
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], font_style)
+            if isinstance(row[col_num], datetime.datetime):
+                ws.write(row_num, col_num, row[col_num], style1)
+            else:
+                ws.write(row_num, col_num, row[col_num], font_style)
 
     wb.save(response)
     return response

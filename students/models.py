@@ -88,8 +88,7 @@ class Student(models.Model):
     birth_date = models.DateField(
         _("birth_date"),
         default=datetime.date.today, blank=True)
-    phone = PhoneField(_(u'telephone number'),
-                       blank=True, default='+43 ', help_text='Telefonnummer')
+    phone = models.CharField(_(u'telephone_number'), max_length=70, blank=True)
     email = models.EmailField(_(u'e-mail'), max_length=70, blank=True)
     iban = models.CharField(_(u'IBAN'), max_length=20, blank=True)
     bic = models.CharField(_(u'BIC'), max_length=20, blank=True)
