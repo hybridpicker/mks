@@ -26,8 +26,7 @@ class Parent(models.Model):
             null=True)
     first_name = models.CharField(_(u'first name'), max_length=30)
     last_name = models.CharField(_(u'last name'), max_length=30)
-    phone = PhoneField(_(u'telephone number'),
-                       blank=True, default='+43 ', help_text='Telefonnummer')
+    phone = models.CharField(_(u'telephone_number'), max_length=70, blank=True)
     email = models.EmailField(_(u'e-mail'), max_length=70, blank=True)
     adress_line = models.CharField(_(u'street'), max_length=80, blank=True)
     house_number = models.CharField(_(u'house number'), max_length=80, blank=True)
@@ -88,8 +87,7 @@ class Student(models.Model):
     birth_date = models.DateField(
         _("birth_date"),
         default=datetime.date.today, blank=True)
-    phone = PhoneField(_(u'telephone number'),
-                       blank=True, default='+43 ', help_text='Telefonnummer')
+    phone = models.CharField(_(u'telephone_number'), max_length=70, blank=True)
     email = models.EmailField(_(u'e-mail'), max_length=70, blank=True)
     iban = models.CharField(_(u'IBAN'), max_length=20, blank=True)
     bic = models.CharField(_(u'BIC'), max_length=20, blank=True)

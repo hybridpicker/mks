@@ -61,12 +61,13 @@ def mail_new_student(from_email, student_context, send_mail=True):
     return html_message
 
 
-def signInView(request):
+def signInView(request):    
     form = SignInForm(request.POST)
     public_key = settings.RECAPTCHA_SITE_KEY
     if request.method == 'POST':
         form = SignInForm(request.POST)
         if form.is_valid():
+            print('VALID')
             secret_key = settings.RECAPTCHA_SECRET_KEY
             data = {
             'response': request.POST.get('g-recaptcha-response'),

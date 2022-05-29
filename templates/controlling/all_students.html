@@ -24,7 +24,19 @@
   {% if request.user.is_staff %}
   <div class="container">
     <h2>Angemeldete Schüler:innen</h2>
-    <a href="new_student"><button>+ Neuer Eintrag</button></a>
+    <div class="controlling-menu">
+      <div class="left-button">
+        <a id="xls-button" href="{% url 'export_students_xls' %}">
+          <button>Export</button>
+        </a>
+      </div>
+      <div></div>
+      <div class="right-button">
+        <a href="new_student">
+          <button>+ Neuer Eintrag</button>
+        </a>
+      </div>
+    </div>
     <div class="tag-container all-students">
       <a id="a_cat_all" href="?" class="tags active">Alle </a>
       {% for category in categories %}
@@ -50,7 +62,7 @@
         {% for student in students.all %}
           <tr height="1rem">
             <td><a class="edit" traget="_blank" href="/team/controlling/single_student?id={{student.id}}">{% include "templates/svg/pen_controlling.html" %}</a></td>
-            <td><a href="?id={{student.id}}" onclick="return confirm('Wollen Sie wirklich den Eintrag {{ student.first_name }} {{ student.last_name }} löschen?');">{% include "templates/svg/nav_bar_crossburger.html" %}</a></td>
+            <td><a href="?id={{student.id}}" onclick="return confirm('Wollen Sie wirklich den Eintrag {{ student.first_name }} {{ student.last_name }} löschen?');">{% include "templates/svg/trash_delete_symbol.html" %}</a></td>
             <td><strong>{{student.start_date}}</strong></td>
             <td align="left"><a traget="_blank" href="/team/controlling/single_student?id={{student.id}}">{{ student.first_name }} {{ student.last_name }}</a></td>
             <td>{{student.subject }}</td>
@@ -82,6 +94,10 @@
       }
     }
     document.getElementById('a_cat_' + c).classList.add("active");
+    var link = document.getElementById("xls-button").href;
+    const rootLink = link
+    var link = link + '?id=' + c
+    document.getElementById("xls-button").href = link
   }
 </script>
 {% endblock %}

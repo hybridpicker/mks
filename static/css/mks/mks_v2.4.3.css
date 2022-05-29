@@ -1951,6 +1951,20 @@ tbody.studentTable > tr:nth-child(even){
 tbody.studentTable > tr:hover{
   background-color: #c6c6cd;
 }
+.controlling-menu{
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+.controlling-menu .right-button a button{
+  margin-right: 0;
+}
+.controlling-menu .left-button a button{
+  margin-left: 0;
+}
+.teacher-view #id_trial_lesson{
+  width: 1.7rem;
+  height: 1.7rem;
+}
 .blogtable {
   overflow-x: scroll; }
 
