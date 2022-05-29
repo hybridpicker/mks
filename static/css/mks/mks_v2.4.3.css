@@ -1958,6 +1958,9 @@ tbody.studentTable > tr:hover{
 .controlling-menu .right-button a button{
   margin-right: 0;
 }
+.controlling-menu .left-button a button{
+  margin-left: 0;
+}
 .teacher-view #id_trial_lesson{
   width: 1.7rem;
   height: 1.7rem;
