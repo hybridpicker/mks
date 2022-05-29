@@ -34,7 +34,7 @@ def export_students_xls(request):
     columns = ['Anmeldedatum', 'Eltern Vorname', 'Eltern Nachname', 
                'Vorname', 'Nachname', 'Email', 'Geburtstag', 'Instrument', 
                'Straße','Hausnummer', 'PLZ', 'Ort', 'Telefon',
-               'Anmerkung']
+               'Lehrkraft Vorname', 'Lehrkraft Nachname', 'Anmerkung']
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
@@ -50,7 +50,8 @@ def export_students_xls(request):
     rows = students.values_list('start_date', 'parent__first_name', 'parent__last_name', 'first_name', 
                                 'last_name', 'parent__email', 'birth_date', 'subject__subject',
                                 'parent__adress_line', 'parent__house_number', 'parent__postal_code', 
-                                'parent__city', 'parent__phone', 'note')
+                                'parent__city', 'parent__phone', 'teacher__first_name', 'teacher__lastname',
+                                'note')
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):
