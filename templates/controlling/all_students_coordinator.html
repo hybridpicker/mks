@@ -34,6 +34,16 @@
   <div class="container">
     <h1>Fachgruppe {{ category.name }}</h1>
     <h2>Angemeldete Schüler:innen</h2>
+    <div class="controlling-menu">
+      <div class="left-button">
+        <a href="{% url 'export_students_xls' %}?id={{ category.id }}">
+          <button>XLS-Export</button>
+        </a>
+      </div>
+      <div></div>
+      <div class="right-button">
+      </div>
+    </div>
     <table class="controlling" cellspacing="0" cellpadding="0" width="100%">
       <!-- TODO: smaller Fontsize-->
       <thead>

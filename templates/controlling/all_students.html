@@ -26,7 +26,7 @@
     <h2>Angemeldete Schüler:innen</h2>
     <div class="controlling-menu">
       <div class="left-button">
-        <a href="{% url 'export_students_xls' %}">
+        <a id="xls-button" href="{% url 'export_students_xls' %}">
           <button>XLS-Export</button>
         </a>
       </div>
@@ -94,6 +94,10 @@
       }
     }
     document.getElementById('a_cat_' + c).classList.add("active");
+    var link = document.getElementById("xls-button").href;
+    const rootLink = link
+    var link = link + '?id=' + c
+    document.getElementById("xls-button").href = link
   }
 </script>
 {% endblock %}
