@@ -21,7 +21,7 @@ def export_students_xls(request):
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
-    columns = ['First name', 'Last name']
+    columns = ['Vorname', 'Nachname']
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
