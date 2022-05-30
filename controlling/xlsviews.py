@@ -50,7 +50,7 @@ def export_students_xls(request):
     rows = students.values_list('start_date', 'parent__first_name', 'parent__last_name', 'first_name', 
                                 'last_name', 'parent__email', 'birth_date', 'subject__subject',
                                 'parent__adress_line', 'parent__house_number', 'parent__postal_code', 
-                                'parent__city', 'parent__phone', 'teacher__first_name', 'teacher__lastname',
+                                'parent__city', 'parent__phone', 'teacher__first_name', 'teacher__last_name',
                                 'note')
     for row in rows:
         row_num += 1
