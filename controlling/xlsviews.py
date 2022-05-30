@@ -20,7 +20,7 @@ def export_students_xls(request):
     except:
         category = None
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=' + file_name + '.xls"'
+    response['Content-Disposition'] = 'attachment; filename=' + file_name + '.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('Students')
