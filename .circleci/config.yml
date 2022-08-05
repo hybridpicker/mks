@@ -12,7 +12,7 @@ jobs:
       - image: cimg/postgres:10.19
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_DB: mks_test
+          POSTGRES_DB: mks
           POSTGRES_PASSWORD: test
 
       # Specify service dependencies here if necessary
