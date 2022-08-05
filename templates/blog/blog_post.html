@@ -72,7 +72,7 @@ span {
     <div class="blogpost">
       <h1>{{ blog_post.title }}</h1>
       <div id="blogContent">
-        {{ blog_post.content|linebreaks }}
+        {{ blog_post.content|safe }}
       </div>
     </div>
     {% if youtube %}
