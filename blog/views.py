@@ -13,7 +13,7 @@ from slugify import slugify
 # Create your views here.
 
 def blog_summary(request):
-    all_blogs = BlogPost.objects.all()
+    all_blogs = BlogPost.objects.all().exclude(category__category__name="Kunstschule")
     context = {
         'all_blogs': all_blogs
         }

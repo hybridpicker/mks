@@ -45,7 +45,7 @@ def home (request):
         logo = None
     events = Event.objects.all()
     teachers = Teacher.objects.all()
-    blog = BlogPost.objects.all()[0:6]
+    blog = BlogPost.objects.all().exclude(category__category__name="Kunstschule")[0:6]
     index_text = IndexText.objects.all().first()
     teacher_counter = len(teachers)
     middle_pic = get_random_pic()

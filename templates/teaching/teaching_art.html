@@ -3,6 +3,7 @@
 {% load static %}
 {% load i18n static %}
 
+{% load thumbnail %}
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
@@ -60,8 +61,46 @@
 {% block body %}
 <div class="mbs">
   <div class="container">
-    <h1>Bildungsangebot Kunstschule</h1>
-    <p>Unter der Bezeichnung "Musik- und Kunstschule" findet mit der <a href="http://noe-kreativakademie.at/de/standort/st-polten" target="_blank" rel="noopener">Kreativakademie Niederösterreich</a> des Landes Niederösterreich, der <a href="https://www.ndu.ac.at/" target="_blank">New Design University</a> (NDU St. Pölten), sowie dem Magistrat der Landeshauptstadt St. Pölten eine Kooperation in den Räumlichkeiten der Musikschule statt. Seit Oktober 2015 werden folgende Kreativakademien angeboten:</p>
+    <h1>Musik- und Kunstschule</h1>
+    <p>Unter der Bezeichnung "Musik- und Kunstschule" findet mit der <a href="http://noe-kreativakademie.at/de/standort/st-polten" target="_blank" rel="noopener">Kreativakademie Niederösterreich</a> des Landes Niederösterreich, der <a href="https://www.ndu.ac.at/" target="_blank">New Design University</a> (NDU St. Pölten), sowie dem Magistrat der Landeshauptstadt St. Pölten eine Kooperation in den Räumlichkeiten der Musikschule statt. <p>
+      {% if blog %}
+      <section id="blogEntrySection" class="container">
+        <div class="tmcon">
+          <div class="tmcb">
+            {% for blog in blog %}
+            <div class="tmcbpb">
+              <div class="mti">
+                <a href="blog/{{blog.published_year}}/{{blog.slug}}">
+                  <picture>
+                    {% thumbnail blog.image "400x300" crop="center" format="WEBP" as im %}
+                    <source srcset="{{ im.url }}" type="image/webp">
+                    {% endthumbnail %}
+                    {% thumbnail blog.image "400x300" crop="center" format="JPEG" as im %}
+                    <source srcset="{{ im.url }}" type="image/jpeg">
+                    <img src="{{ im.url }}" 
+                    width="{{ im.width }}" 
+                    height="{{ im.height }}"
+                    alt="{{ blog.image.title }} Beitragsbild">
+                    {% endthumbnail %}
+                  </picture>
+                  <h3>{{ blog.title }}</h3>
+                </a>
+                <div class="tctm">
+                  <p>{{ blog.meta_description|linebreaks|truncatewords:30 }}</p>
+                  <a href="blog/{{blog.published_year}}/{{blog.slug}}">
+                    <button>
+                    Weiterlesen
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+      {% endif %}
+    <p>Seit Oktober 2015 werden folgende Kreativakademien angeboten:</p>
     <h3>Für 6-11 Jahre:</h3> <p><strong>Schauspielakademie KIDS: </strong></p>
     <p>Die Beschäftigung mit Schauspiel ist wie das Öffnen einer Wundertüte – eine Überraschung nach der anderen. Bei der Schauspielakademie KIDS bedeutet das einen bunten Konfettiregen aus Fantasie, Spaß, Kostümen, Geschichten und natürlich vielen neuen FreundInnen. Ob schüchtern oder extrovertiert, jedes Kind profitiert vom Zusammenspiel mit anderen.</p>
     <p><strong>Musicalakademie KIDS: </strong></p> <p>Musical ist eine umfassende Bühnenkunst, bei der Geschichten, Musik und Choreographie zusammenspielen. Durch die Beschäftigung mit Sprache, Tanz, Rhythmus und Gesang erleben die Kinder die große Bandbreite ihrer Ausdrucksmöglichkeiten. In der Gruppe macht das nicht nur jede Menge Spaß, sondern hilft die Persönlichkeit zu entwickeln, stärkt das Selbstbewusstsein und fördert soziales Verhalten.</p>
