@@ -11,7 +11,7 @@ chardet==3.0.4
 cryptography==37.0.1
 decorator==4.4.1
 defusedxml==0.6.0
-Django==4.0.4
+Django==4.0.7
 django-allauth==0.50.0
 django-appconf==1.0.5
 django-ckeditor==6.4.0
