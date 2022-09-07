@@ -12,6 +12,8 @@ from django.shortcuts import render, redirect
 from students.models import Student
 from teaching.models import Teacher
 from django.contrib.auth.forms import AuthenticationForm
+from blog.models import BlogPost
+
 
 
 def get_calendar(student):
@@ -54,7 +56,9 @@ def teaching_music_view (request):
     return render (request, 'teaching/teaching_music.html')
 
 def teaching_art_view (request):
-    return render (request, 'teaching/teaching_art.html')
+    blog = BlogPost.objects.filter(category__category__name="Kunstschule")[0:6]
+    context = { 'blog': blog, }
+    return render (request, 'teaching/teaching_art.html', context)
 
 def teaching_prices_view (request):
     return render (request, 'teaching/prices.html')
