@@ -31,7 +31,6 @@ def show_teacher_view(request):
     teacher_vocal = get_teachers_from_category("Gesang")
     teacher_wood = get_teachers_from_category("Holzblasinstrumente")
     teacher_dance = get_teachers_from_category("Tanz")
-    teacher_art = get_teachers_from_category("Kunstschule")
     director = get_teachers_from_category("Direktion")
     secretary = get_teachers_from_category("Sekretariat")
     elementary_teaching = get_teachers_from_category("Musikalische Früherziehung")
@@ -48,7 +47,6 @@ def show_teacher_view(request):
         'teacher_vocal': teacher_vocal,
         'teacher_wood': teacher_wood,
         'teacher_dance': teacher_dance,
-        'teacher_art': teacher_art,
         'elementary_teaching': elementary_teaching,
     }
     return render(request, 'teaching/all_teachers.html', context)
