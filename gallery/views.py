@@ -14,7 +14,7 @@ def gallery_view (request):
             from django.http import Http404
             raise Http404
     photos = Photo.objects.filter(category_id=category_id)
-    category = PhotoCategory.objects.all()
+    category = PhotoCategory.objects.all().exclude(title="E-Learning")
 
     json_photo = {}
 
