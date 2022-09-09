@@ -1646,6 +1646,17 @@ a.faq-link-edit h2:hover {
   padding: 10px;
   justify-content: center; }
 
+@media only screen and (min-width: 900px) {
+  .tmcb#download-material{
+    grid-template-columns: auto auto auto;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .tmcb#download-material{
+    grid-template-columns: auto auto auto auto;
+  }
+}
 @media only screen and (max-width: 870px) {
   .tmcb {
     grid-template-columns: auto; }
