@@ -18,7 +18,7 @@
 <div class="mbs">
   <div class="container">
     <h1>Beiträge & Ermäßigungen</h1>
-    <h2>Schuljahr 2021/22</h2>
+    <h2>Schuljahr {{ current_school_year }}</h2>
     <nav class="prices-nav-bar">
       <h2>
         <a href="#musikschule">Musikschule</a>
@@ -30,15 +30,12 @@
         <a href="#erwachsene">Erwachsene</a>
       </h2>
       <h2>
-        <a href="#kunstakademie">Kunstschule</a>
-      </h2>
-      <h2>
         <a href="#ermaessigungen">Ermäßigungen</a>
       </h2>
     </nav>
     <p>Das Land Niederösterreich sowie die Stadt St.Pölten fördert Hauptfachunterricht von Kindern und Jugendlichen bis zum vollendeten 24. Lebensjahr (Stichtag ist der 30. Oktober des jeweiligen Schuljahres) sowie Ergänzungsfachunterricht, wenn die Mehrzahl der TeilnehmerInnen Kinder und Jugendliche bis zum vollendeten 24. Lebensjahr sind.</p>
-    <p>Im Schuljahr 2021/22 werden (monatlich) folgende Beträge eingehoben:</p>
-    <h3 id="musikschule">Tarife für Schülerinnen und Schüler mit Hauptwohnsitz in St. Pölten:</h3>
+    <p>Im Schuljahr {{ current_school_year }} werden (monatlich) folgende Beträge eingehoben:</p>
+    <h3 id="musikschule">Tarife für Schüler:innen mit Hauptwohnsitz in St. Pölten:</h3>
     <div>
       <table cellspacing="0" cellpadding="0" width="100%">
         <thead>
@@ -61,19 +58,19 @@
             <td style="text-align:right;" align="right"><strong>€ 29,50</strong></td>
           </tr>
           <tr>
-            <td align="left">Gruppenunterricht im Hauptfach bei zwei Schüler*innen</td>
+            <td align="left">Gruppenunterricht im Hauptfach bei zwei Schüler:innen</td>
             <td style="text-align:right;" align="right"><strong>€ 40,10</strong></td>
           </tr>
           <tr>
-            <td align="left">Gruppenunterricht im Hauptfach bei drei Schüler*innen</td>
+            <td align="left">Gruppenunterricht im Hauptfach bei drei Schüler:innen</td>
             <td style="text-align:right;" align="right"><strong>€ 31,90</strong></td>
           </tr>
           <tr>
-            <td align="left">Gruppenunterricht im Hauptfach bei vier Schüler*innen</td>
+            <td align="left">Gruppenunterricht im Hauptfach bei vier Schüler:innen</td>
             <td style="text-align:right;" align="right"><strong>€ 24,40</strong></td>
           </tr>
           <tr>
-            <td align="left">Gruppenunterricht im Hauptfach bei fünf Schüler*innen</td>
+            <td align="left">Gruppenunterricht im Hauptfach bei fünf Schüler:innen</td>
             <td style="text-align:right;" align="right"><strong>€ 18,50</strong></td>
           </tr>
           <tr>
@@ -107,7 +104,7 @@
         </tbody>
       </table>
     </div>
-    <h3>Tarife für Schüler*innen außerhalb St. Pöltens:</h3>
+    <h3>Tarife für Schüler:innen außerhalb St. Pöltens:</h3>
     <div>
       <table cellspacing="0" cellpadding="0" width="100%">
         <thead>
@@ -130,11 +127,11 @@
             <td style="text-align:right;" align="right"><strong>€ 34,90</strong></td>
           </tr>
           <tr>
-            <td align="left">Gruppenunterricht im Hauptfach bei zwei Schüler*innen</td>
+            <td align="left">Gruppenunterricht im Hauptfach bei zwei Schüler:innen</td>
             <td style="text-align:right;" align="right"><strong>€ 41,40</strong></td>
           </tr>
           <tr>
-            <td align="left">Gruppenunterricht im Hauptfach bei drei Schüler*innen</td>
+            <td align="left">Gruppenunterricht im Hauptfach bei drei Schüler:innen</td>
             <td style="text-align:right;" align="right"><strong>€ 32,80</strong></td>
           </tr>
           <tr>
@@ -157,7 +154,7 @@
       </table>
     </div>
     <section id="ballett">
-      <h3>Tarife für Ballettschüler*innen mit Hauptwohnsitz in St. Pölten</h3>
+      <h3>Tarife für Ballettschüler:innen mit Hauptwohnsitz in St. Pölten</h3>
       <div>
         <table cellspacing="0" cellpadding="0" width="100%">
           <thead>
@@ -186,7 +183,7 @@
           </tbody>
         </table>
       </div>
-      <h3>Tarife für Ballettschüler*innen außerhalb St. Pölten</h3>
+      <h3>Tarife für Ballettschüler:innen außerhalb St. Pölten</h3>
       <div>
         <table cellspacing="0" cellpadding="0" width="100%">
           <thead>
@@ -215,7 +212,7 @@
           </tbody>
         </table>
       </div>
-      <h3>Tarife für Ballettschüler*innen außerhalb St. Pölten</h3>
+      <h3>Tarife für Ballettschüler:innen außerhalb St. Pölten</h3>
       <div>
         <table cellspacing="0" cellpadding="0" width="100%">
           <thead>
@@ -246,7 +243,7 @@
       </div>
     </section>
     <section id="erwachsene">
-      <h3 style="margin-bottom: 0;">Tarife für erwachsene Schüler*innen*</h3>
+      <h3 style="margin-bottom: 0;">Tarife für erwachsene Schüler:innen*</h3>
       <h4 style="margin-top: 0;">(ab dem vollendeten 24. Lebensjahr)</h4>
       <div>
         <table cellspacing="0" cellpadding="0" width="100%">
@@ -269,25 +266,6 @@
         </table>
       </div>
       <p>*Wir bitten um Verständnis, dass bei bestehenden Wartelisten Kinder und Jugendliche bevorzugt einen Unterrichtsplatz erhalten.</p>
-    </section>
-    <section id="kunstakademie">
-      <h3>Kunstschule/Kreativakademie</h3>
-      <div>
-        <table cellspacing="0" cellpadding="0" width="100%">
-          <thead>
-            <tr>
-              <th align="left"></th>
-              <th style="text-align:right;padding-right: 1rem;" align="right">jährlicher Betrag</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td align="left">pro Kurs</td>
-              <td style="text-align:right;" align="right"><strong>€ 350,-</strong></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </section>
     <section id="verleihung">
       <h3>Verleihung</h3>
