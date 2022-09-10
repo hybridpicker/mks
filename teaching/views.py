@@ -14,7 +14,7 @@ from teaching.models import Teacher
 from django.contrib.auth.forms import AuthenticationForm
 from blog.models import BlogPost
 from teaching.show_teacher_view import get_teachers_from_category
-
+from school.school_year import get_current_school_year
 
 def get_calendar(student):
     '''
@@ -63,4 +63,6 @@ def teaching_art_view (request):
     return render (request, 'teaching/teaching_art.html', context)
 
 def teaching_prices_view (request):
-    return render (request, 'teaching/prices.html')
+    current_school_year = get_current_school_year()
+    context = { 'current_school_year': current_school_year,}
+    return render (request, 'teaching/prices.html', context)
