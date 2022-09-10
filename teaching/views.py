@@ -13,7 +13,7 @@ from students.models import Student
 from teaching.models import Teacher
 from django.contrib.auth.forms import AuthenticationForm
 from blog.models import BlogPost
-
+from teaching.show_teacher_view import get_teachers_from_category
 
 
 def get_calendar(student):
@@ -57,7 +57,9 @@ def teaching_music_view (request):
 
 def teaching_art_view (request):
     blog = BlogPost.objects.filter(category__category__name="Kunstschule")[0:6]
-    context = { 'blog': blog, }
+    teacher_art = get_teachers_from_category("Kunstschule")
+    context = { 'blog': blog, 
+                'teacher_art': teacher_art,}
     return render (request, 'teaching/teaching_art.html', context)
 
 def teaching_prices_view (request):

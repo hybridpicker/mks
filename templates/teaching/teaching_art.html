@@ -47,6 +47,9 @@
       height: auto;
     }
   }
+  .grtnmc{
+    display: grid !important;
+  }
 </style>
 {% endblock %}
 
@@ -126,7 +129,55 @@
     <p>Die Teilnehmer*innen bekommen hier ein Spektrum im Bereich Holzbearbeitung und Design geboten. So werden unter anderem die Grundlagen des Möbeldesigns und die Umsetzung eigener Entwürfe in Modelle und einfache Prototypen. Als Nonplusultra haben die TeilnehmerInnen die Möglichkeit zur Nutzung des Lasercutters und der 3D-Drucker.</p>
     <p><strong>Akademie Character Design, Illustration Art und Buchbinden</strong></p>
     <p>Es gibt vielleicht schon Ideen für ein eigenes Buch und es spucken auch schon so manche Charaktere dafür im Kopf herum? Hier bekommen die TeilnehmerInnen die Chance, ihre Ideen in die Tat umzusetzen und für ihre Charaktere wie zum Beispiel bereits für Batman, Wonderwomen, Spongebob etc. eine eigene Welt und Backgroundstory zu schaffen. Nach einem Einblick in das handwerkliche Buchbinden, werden eigene Wege für eine Darstellung gesucht. Verschiedene Techniken und Zeichenmaterialien können ausprobiert werden.</p>
-    <p><a href="http://noe-kreativakademie.at/de/anmeldung" target="_blank" rel="noopener">Anmeldung.</a> für die Fächer der Kreativakademien. (Weiterleitung zur Website des Musik- und Kunstschulmanagement NÖ)</p> <p>&nbsp;</p>
+    <p><a href="https://www.mkmnoe.at/angebote-fuer-kinder-jugendliche/kreativakademie/anmeldung" target="_blank" rel="noopener">Anmeldung.</a> für die Fächer der Kreativakademien. (Weiterleitung zur Website des Musik- und Kunstschulmanagement NÖ)</p> <p>&nbsp;</p>
+  
+    <h3>Referent:innen der Akademien</h3>
+  
+    <section id="art" class="grtnmc" data-aos="fade-left" 
+    style="display: grid; opacity: 1;" data-aos-duration="1000">
+  
+
+    {% for teacher in teacher_art %}
+    <div class="tnmc">
+      <div class="tnmhl">
+        <section class="teaching-name">
+          <h3>{{teacher.first_name}}</h3>
+          <h3>{{teacher.last_name}}</h3>
+        </section>
+      </div>
+      <div class="tpfcf">
+        <div class="tpcfptr">
+          <div class="icc-tpcfptr">
+            {% if teacher.image.height <= teacher.image.width %}
+            <img class="teacher_img square lazyload" src="{{ teacher.lazy_image.url }}"
+            data-src="{{ teacher.image.url }}"
+            alt="{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+            {% else %}
+            <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+            data-src="{{ teacher.image.url }}"
+            alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="tbt">
+        <div class="info-text">
+          <p>{% for subject in teacher.subject.all %}
+            {% if forloop.last %}
+            {{ subject }}
+            {% else %}
+            {{ subject }},
+            {% endif %}
+            {% endfor %}
+          </p>
+          <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    
+    </section>
+
   </div>
 </div>
 
@@ -137,4 +188,7 @@
 {% endblock %}
 
 {% block footer %}
+<script>
+  lazyload();
+</script>
 {% endblock %}
