@@ -25,8 +25,12 @@
 {% endblock %}
 {% block banner %}
 
-{% include "templates/slider.html" %}
-<img id="mbimg" src="/static/banner/mobile/home_banner_la.webp" alt="Banner Musik- und Kunstchule St. Pölten Mobile">
+<!-- {% include "templates/slider.html" %} -->
+
+<img id="homebanner" src="{% static 'banner/home_banner_ak.png' %}" alt="Banner Musikschule St. Pölten">
+
+
+<img id="mbimg" src="/static/banner/mobile/home_banner_ak_800.png" alt="Banner Musik- und Kunstchule St. Pölten Mobile">
 
 {% endblock %}
 {% block body %}
