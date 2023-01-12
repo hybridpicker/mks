@@ -6,7 +6,7 @@ def get_current_school_year():
     current_year = date.today().year
     current_month = date.today().month
     if current_month in old_year:
-        school_year = str(current_year) + "/" + str(current_year-1)
+        school_year = str(current_year-1) + "/" + str(current_year)
     else:
         school_year = str(current_year) + "/" + str(current_year+1)[-2:]
     return school_year
