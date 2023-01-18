@@ -23,6 +23,8 @@ def gallery_view (request):
         photo_dict["title"] = photo.title
         photo_dict["description"] = photo.description
         photo_dict["image"] = photo.image.url
+        if photo.copyright_by:
+            photo_dict["copyright_by"] = photo.copyright_by
         json_photo[photo.id] = photo_dict
 
     gallery_json_data = json.dumps(json_photo)

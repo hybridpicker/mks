@@ -110,7 +110,14 @@ var photo_data = {{ gallery_json_data|safe }}
     document.getElementById("overlay-show-img").src = src
     document.getElementById("overlay-image-section").style.display = "block";
     document.querySelector("header").style.zIndex = "0"
-    var descr = photo_data[id]["description"]
+    
+    if (photo_data[id]["copyright_by"]) {
+      var descr = photo_data[id]["description"] + " | © " + photo_data[id]["copyright_by"]
+      console.log("copyright")
+    }  
+    else {
+      var descr = photo_data[id]["description"]
+    }
     var overlayImage = document.querySelector("#overlay-image-section > p")
     overlayImage.innerHTML = descr;
   }
