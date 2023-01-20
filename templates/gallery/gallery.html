@@ -112,7 +112,12 @@ var photo_data = {{ gallery_json_data|safe }}
     document.querySelector("header").style.zIndex = "0"
     
     if (photo_data[id]["copyright_by"]) {
-      var descr = photo_data[id]["description"] + " | © " + photo_data[id]["copyright_by"]
+      if (photo_data[id]["description"]){
+        var descr = photo_data[id]["description"] + " | © " + photo_data[id]["copyright_by"]
+      }
+      else {
+        var descr = "© " + photo_data[id]["copyright_by"]
+      }
       console.log("copyright")
     }  
     else {
