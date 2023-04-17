@@ -18,6 +18,8 @@ def save_image(url):
     content = urllib.request.urlopen(url)
 
 def emailView(request):
+    """
+    # View for Contact Form with Google Captcha
     public_key = settings.RECAPTCHA_SITE_KEY
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -68,6 +70,11 @@ def emailView(request):
     else:
         form = ContactForm()
     return render(request, "contact/email.html", {'form': form, 'public_key': public_key})
+    """
+    return render (request, "contact/email.html")
 
+"""
+Sucess View for Google Captch Contact Form
 def successView(request):
     return render(request, "contact/success.html")
+"""

@@ -4,5 +4,9 @@ from . import views
 
 urlpatterns = [
     path('kontakt/', views.emailView, name='contact_email'),
-    path('contact/success/', views.successView, name='success_contact'),
 ]
+
+"""
+    Url Needed for Google Captcha View
+    path('contact/success/', views.successView, name='success_contact'),
+"""
