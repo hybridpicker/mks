@@ -3,7 +3,19 @@
 {% load static %}
 {% block extra_head %}
 <meta name="title" content="{{ project.title }}">
-<meta name="description" content="{{ blog.meta_description }}">
+<meta name="description" content="{{ project.lead_paragraph }}">
+
+<!-- Social Media Meta -->
+<meta property="og:title" content="{{ project.title }}">
+<meta property="og:description" content="{{ project.lead_paragraph }}">
+<meta property="og:image" content="{{ project.image_thumb }}">
+<meta property="og:url" content="https://musikschule-stp.at/{{ project.slug }}">
+
+<meta name="twitter:title" content="{{ project.title }}">
+<meta name="twitter:description" content="{{ project.lead_paragraph }}">
+<meta name="twitter:image" content="{{ project.image_thumb }}">
+<meta name="twitter:card" content="summary_large_image">
+
 <style media="screen">
   .bs > img {
     width: 100%;
@@ -31,8 +43,8 @@
   <div class="container">
     <div class="blogpost">
       <h1>{{ project.title }}</h1>
-      <p>{{ project.lead_paragraph }}</p>
       <img src="{{ project.image.url }}" alt="">
+      <p>{{ project.lead_paragraph }}</p>
       {{ project.description | safe }}
     </div>
     {% if events %}
