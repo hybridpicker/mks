@@ -37,13 +37,20 @@
 {% block navbar %}
 {% endblock %}
 
+{% block banner %}
+
+
+<img src="{{ project.image.url }}" alt="{{ project.title }} Banner">
+
+<img id="mbimg" src="{{ project.image.url }}" alt="{{ project.title }} Banner Mobil">
+{% endblock %}
+
 
 {% block body %}
 <div class="mbs">
   <div class="container">
     <div class="blogpost">
       <h1>{{ project.title }}</h1>
-      <img src="{{ project.image.url }}" alt="">
       <p>{{ project.lead_paragraph }}</p>
       {{ project.description | safe }}
     </div>
