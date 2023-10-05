@@ -2,19 +2,36 @@
 
 {% load static %}
 {% block extra_head %}
-<meta name="title" content="{{ project.title }}">
-<meta name="description" content="{{ project.lead_paragraph }}">
+<!-- Google -->
+<meta itemprop="name" content="{{ project.title }}">
+<meta itemprop="description" content="{{ project.lead_paragraph }}">
+{% if project.image_thumb %}
+<meta itemprop="image" content="https://musikschule-stp.at{{ project.image_thumb.url }}">
+{% else %}
+<meta itemprop="image" content="https://musikschule-stp.at{{ project.image.url }}">
+{% endif %}
 
-<!-- Social Media Meta -->
+<!-- Facebook -->
+<meta property="og:url" content="https://musikschule-stp.at/{{ project.slug }}">
+<meta property="og:type" content="website">
 <meta property="og:title" content="{{ project.title }}">
 <meta property="og:description" content="{{ project.lead_paragraph }}">
+{% if project.image_thumb %}
 <meta property="og:image" content="https://musikschule-stp.at{{ project.image_thumb.url }}">
-<meta property="og:url" content="https://musikschule-stp.at/{{ project.slug }}">
+{% else %}
+<meta property="og:image" content="https://musikschule-stp.at{{ project.image.url }}">
+{% endif %}
 
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ project.title }}">
 <meta name="twitter:description" content="{{ project.lead_paragraph }}">
+{% if project.image_thumb %}
 <meta name="twitter:image" content="https://musikschule-stp.at{{ project.image_thumb.url }}">
-<meta name="twitter:card" content="summary_large_image">
+{% else %}
+<meta name="twitter:image" content="https://musikschule-stp.at{{ project.image.url }}">
+{% endif %}
+
 
 <style media="screen">
   .bs > img {
