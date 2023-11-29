@@ -5,19 +5,28 @@
 
 {% load thumbnail %}
 
-<meta name="title" content="{{ blog_post.title }}">
+<!-- HTML Meta Tags -->
+<title>{{ blog_post.title }}</title>
 <meta name="description" content="{{ blog_post.meta_description }}">
 
-<!-- Social Media Meta --->
+<!-- Google -->
+<meta itemprop="name" content="{{ blog_post.title }}">
+<meta itemprop="description" content="{{ blog_post.meta_description }}">
+<meta itemprop="image" content="{{ request.scheme }}://{{ request.get_host }}{{blog_post.image.url}}">
+
+<!-- Facebook -->
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+<meta property="og:type" content="website">
 <meta property="og:title" content="{{ blog_post.title }}">
 <meta property="og:description" content="{{ blog_post.meta_description }}">
-<meta property="og:image" content="{{blog_post.image.url}}">
-<meta property="og:url" content="https://musikschule-stp.at/blog/{{blog_post.published_year}}/{{blog_post.slug}}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{blog_post.image.url}}">
 
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ blog_post.title }}">
 <meta name="twitter:description" content="{{ blog_post.meta_description }}">
-<meta name="twitter:image" content="{{blog_post.image.url}}">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{blog_post.image.url}}">
+
 
 <style media="screen">
 .bs{
