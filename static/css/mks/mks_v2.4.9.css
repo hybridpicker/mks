@@ -171,18 +171,15 @@ a:hover {
     height: 2rem;}
   #mks-nav-mobile-menu .mainHeadingMobile{
     color: #D11317;
-    border-bottom: solid 0.08rem #33333363;    
+    border-bottom: solid 0.08rem #33333324;    
   }
   #mks-nav-mobile-menu .categoryHeadingMobileNoCursor{
-    border-bottom: solid 0.08rem #33333363;
+    border-bottom: solid 0.08rem #33333324;
     color: #333333;
   }
   .overlay-content a {
-    font-size: 32px;
-    line-height: 30px; }
-  .overlay-content a {
-    font-size: 28px;
-    line-height: 30px; }
+    font-size: 1.4rem;
+    line-height: 1.75rem; }
   .overlay-content a.categoryHeadingMobileNoCursor{
     color: #D11317;
   }
@@ -716,16 +713,20 @@ canvas {
 
 @media only screen and (max-width: 700px) {
   h1 {
-    font-size: 1.9rem; }
-  h2, h3 {
     font-size: 1.7rem; }
+  h2, h3 {
+    font-size: 1.5rem; }
   h4 {
     font-size: 20px; }
   p, .slitcon, #dsgvo-text p, #dsgvo-text a, strong, b {
-    font-size: 1.2rem;
-    line-height: 1.7rem;
+    font-size: 1.1rem;
+    line-height: 1.5rem;
     padding-left: 0;
-    padding-right: 0; } }
+    padding-right: 0; }
+  li {
+    font-size: 1.1rem;
+  }
+  }
 
 /* Style The Dropdown Button */
 .dropbtn, .dropbtn-b, .dropbtn-c, .dropbtn-d, .dropbtn-e {
