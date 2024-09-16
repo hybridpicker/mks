@@ -38,6 +38,100 @@
 {% endblock %}
 {% block body %}
 
+<!-- Alert Message -->
+{% if alert_title or alert_message %}
+<div class="alert-overlay">
+    <div class="alert-content">
+        <span class="close-btn">&times;</span>  <!-- Das "X" zum Schließen -->
+        <h2>{{ alert_title }}</h2>  <!-- Der Titel als Überschrift -->
+        <p>{{ alert_message }}</p>   <!-- Der Nachrichtentext -->
+    </div>
+</div>
+<script>
+    // Funktion zum manuellen Schließen des Alerts durch Klick auf das "X"
+    document.querySelector('.close-btn').addEventListener('click', function() {
+        document.querySelector('.alert-overlay').style.display = 'none';
+    });
+
+    // Alert automatisch nach 20 Sekunden ausblenden
+    setTimeout(function() {
+        document.querySelector('.alert-overlay').style.display = 'none';
+    }, 20000);
+</script>
+
+<style>
+.alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);  /* Leicht transparentes dunkles Overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.alert-content {
+    background-color: white;  /* Weißer Hintergrund */
+    padding: 30px;
+    border-radius: 20px;  /* Mehr abgerundete Ecken */
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);  /* Weicherer, tieferer Schatten */
+    max-width: 800px;  /* Maximalbreite, um den Text besser zu strukturieren */
+    margin: 0 20px;  /* Leichter Rand für kleinere Bildschirme */
+    position: relative;
+}
+
+.alert-content h2 {
+    margin: 0 0 15px;
+    font-size: 2.5em;  /* Größere Schrift für den Titel */
+    color: #333;  /* Ein etwas weicheres Schwarz */
+    font-weight: bold;
+}
+
+.alert-content p {
+    font-size: 1.2em;
+    color: #555;  /* Dunkelgrauer Text für eine weichere Wirkung */
+    line-height: 1.6;  /* Bessere Lesbarkeit durch erhöhten Zeilenabstand */
+}
+
+.alert-content span{
+  text-decoration: none;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+@media (max-width: 600px) {
+    .alert-content {
+        padding: 20px;
+    }
+    
+    .alert-content h2 {
+        font-size: 1.8em;  /* Kleinere Schrift auf mobilen Geräten */
+    }
+    
+    .alert-content p {
+        font-size: 1em;
+    }
+}
+
+</style>
+{% endif %}
+
 <div class="mbs">
   <div id="home-container" class="container">
     {% if name %}
