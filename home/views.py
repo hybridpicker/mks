@@ -10,7 +10,7 @@ from events.models import Event
 from teaching.models import Teacher
 from gallery.models import Photo
 from blog.models import BlogPost
-from home.models import IndexText
+from home.models import IndexText, Alert
 from downloadsection.models import IndexDownload
 # Create your views here.
 
@@ -51,6 +51,9 @@ def home (request):
     middle_pic = get_random_pic()
     photos = get_photo_data()
     material_data = IndexDownload.objects.all()
+    # Den aktiven Alert abrufen
+    active_alert = Alert.objects.filter(is_active=True).first()  # Nur den ersten aktiven Alert anzeigen
+
     context = {
         'index_text': index_text,
         'blog': blog,
@@ -61,6 +64,9 @@ def home (request):
         'teacher_counter': teacher_counter,
         'middle_pic': middle_pic,
         'photos': photos,
+        # Alert Mode
+        'alert_message': active_alert.message if active_alert else None,
+        'alert_title': active_alert.title if active_alert else None,
         }
     return render(request, 'home/index.html', context)
 
