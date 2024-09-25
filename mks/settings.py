@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'todo',
     'projects.apps.ProjectsConfig',
     'faq.apps.FaqConfig',
+    'invitation.apps.InvitationConfig',
     #sitemaps
     'django.contrib.sitemaps',
     #thumbnails

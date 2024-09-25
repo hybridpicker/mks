@@ -1,0 +1,51 @@
+{% extends "templates/base.html" %}
+{% load static %}
+
+{% block tab_id %}id="invitation_tab"{% endblock %}
+
+{% block extra_head %}
+<style media="screen">
+  /* Fügen Sie hier bei Bedarf zusätzliches Styling hinzu */
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  {% if request.user.is_staff %}
+  <div class="container">
+    <h2>Zusagen zur Eröffnungsfeier 17.10.</h2>
+    <div class="controlling-menu">
+    </div>
+    <table class="controlling" cellspacing="0" cellpadding="0" width="100%">
+      <thead>
+        <tr>
+          <th style="text-align:left" align="left">Anmeldedatum</th>
+          <th style="text-align:left" align="left">Name</th>
+          <th style="text-align:left" align="left">E-Mail</th>
+        </tr>
+      </thead>
+      <tbody class="invitationTable">
+        {% for invitation in invitations %}
+          <tr height="1rem">
+            <td><strong>{{ invitation.timestamp|date:"d.m.Y H:i" }}</strong></td>
+            <td>{{ invitation.name }}</td>
+            <td>{{ invitation.email }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p>Gesamtanzahl der Anmeldungen: <b>{{ total_count }}</b></p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block footer %}
+<!-- Falls Sie zusätzliches JavaScript benötigen -->
+{% endblock %}
