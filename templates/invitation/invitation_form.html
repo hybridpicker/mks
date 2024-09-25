@@ -12,11 +12,13 @@
 
 {% block banner %}
 <img src="{% static 'banner/invitation_banner.jpg' %}" alt="Grillparzer Campus Eröffnungsfeier">
+<img id="mbimg" src="/static/banner/mobile/invitation_banner.jpg" alt="">
 {% endblock %}
 
 {% block body %}
 <div class="container">
   <h1>Anmeldung zur Eröffnungsfeier des Grillparzer Campus</h1>
+  <p>Hier haben Sie die Möglichkeit, sich für unsere Eröffnungsfeier am 17.10.2024 um 18:00 Uhr im Grillparzer Campus (Grillparzerstraße 17) anzumelden. Bitte füllen Sie die erforderlichen Felder aus und bestätigen Sie Ihre Anmeldung durch einen Klick auf den Button „Anmelden“.</p>
   <form method="post">
     {% csrf_token %}
     <div class="row">
@@ -28,7 +30,7 @@
         {{ form.name.errors }}
       </div>
       <div class="col-4">
-        <p>Email*:</p>
+        <p>Email-Adresse*:</p>
       </div>
       <div class="col-8">
         {{ form.email }}
@@ -40,11 +42,15 @@
     </div>
   </form>
   <div id="dsgvo-text">
-    <p>* Mit Betätigung des Buttons “Anmelden” stimme ich der Verwendung und Verarbeitung meiner personenbezogenen Daten gemäß den Datenschutzbestimmungen zu.</p>
-    <p>Weitere Informationen finden Sie in unserem <a target="_blank" href="{% url 'impressum' %}">Impressum</a>.</p>
+    <p>* Mit Betätigung des Buttons “Anmelden” stimme ich der Verwendung und Verarbeitung meiner personenbezogenen Daten gemäß den Datenschutzbestimmungen zu. Weitere Informationen finden Sie in unserem <a target="_blank" href="{% url 'impressum' %}">Impressum</a>.</p>
   </div>
 </div>
 {% endblock %}
 
 {% block footer %}
+<style>
+  form p{
+    padding-left: 0;
+  }
+</style>
 {% endblock %}

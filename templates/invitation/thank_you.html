@@ -1,12 +1,18 @@
 {% extends "templates/base.html" %}
+{% load static %}
 
 {% block extra_head %}
 <meta name="robots" content="noindex">
 {% endblock %}
 
+{% block banner %}
+<img src="{% static 'banner/invitation_banner.jpg' %}" alt="Grillparzer Campus Eröffnungsfeier">
+<img id="mbimg" src="/static/banner/mobile/invitation_banner.jpg" alt="">
+{% endblock %}
+
 {% block body %}
 <div class="container">
   <h1>Vielen Dank für Ihre Anmeldung!</h1>
-  <p>Wir freuen uns, Sie am 17.10. begrüßen zu dürfen.</p>
+  <p>Ihre Anmeldung war erfolgreich. Wir freuen uns darauf, Sie am 17.10.2024 um 18:00 Uhr im Grillparzer Campus (Grillparzerstraße 17) begrüßen zu dürfen.</p>
 </div>
 {% endblock %}
