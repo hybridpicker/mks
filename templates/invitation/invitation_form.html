@@ -1,0 +1,50 @@
+{% extends "templates/base.html" %}
+{% load static %}
+
+{% block tab_id %}id="invitation_tab"{% endblock %}
+
+{% block extra_head %}
+<meta name="robots" content="noindex">
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+<img src="{% static 'banner/invitation_banner.jpg' %}" alt="Grillparzer Campus Eröffnungsfeier">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1>Anmeldung zur Eröffnungsfeier des Grillparzer Campus</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-4">
+        <p>Name*:</p>
+      </div>
+      <div class="col-8">
+        {{ form.name }}
+        {{ form.name.errors }}
+      </div>
+      <div class="col-4">
+        <p>Email*:</p>
+      </div>
+      <div class="col-8">
+        {{ form.email }}
+        {{ form.email.errors }}
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" style="width: 8rem;">Anmelden</button>
+    </div>
+  </form>
+  <div id="dsgvo-text">
+    <p>* Mit Betätigung des Buttons “Anmelden” stimme ich der Verwendung und Verarbeitung meiner personenbezogenen Daten gemäß den Datenschutzbestimmungen zu.</p>
+    <p>Weitere Informationen finden Sie in unserem <a target="_blank" href="{% url 'impressum' %}">Impressum</a>.</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
