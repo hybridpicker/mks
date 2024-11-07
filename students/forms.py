@@ -9,7 +9,7 @@ def get_years_signinform():
     year_now = datetime.now().year
     max_birthyear = year_now - 24
     BIRTH_YEAR_CHOICES = []
-    for x in range(max_birthyear, year_now - 1):
+    for x in range(max_birthyear, year_now):
         BIRTH_YEAR_CHOICES.append(x)
     return BIRTH_YEAR_CHOICES
 
