@@ -33,31 +33,35 @@ def current_year():
 class BlogPost(models.Model):
     title = models.CharField(max_length=120)
     lead_paragraph = models.TextField(blank=True)
-    number_of_posts = models.IntegerField(null=True, blank=True)
     category = models.ForeignKey(
         Subject,
-        on_delete=models.CASCADE,
-        blank=True, null=True)
+        on_delete=models.SET_NULL,  # Verhindert das Löschen von Blogposts, wenn die Kategorie entfernt wird
+        blank=True, null=True
+    )
     content = RichTextField()
-    image = models.ImageField(upload_to='blog/posts/images/')
+    image = models.ImageField(upload_to='blog/posts/images/', blank=True, null=True)  # Bild optional
     author = models.ForeignKey(
         Author,
-        on_delete=models.CASCADE,
-        blank=True, null=True)
-    date = models.DateField(_(u"Blog Post Date"), default=timezone.now, blank=True)
-    published_year = models.IntegerField(_('Year of Article'), default=current_year)
+        on_delete=models.SET_NULL,  # Optionaler Autor
+        blank=True, null=True
+    )
+    date = models.DateField(_("Blog Post Date"), default=timezone.now, blank=True)
     meta_title = models.CharField(max_length=60)
     meta_description = models.TextField()
     slug = models.SlugField(_("slug"), max_length=200, unique=True)
     ordering = models.IntegerField(null=True, blank=True)
 
-    def __str__(self):
-        return '%s (%s)' % (self.title, self.published_year)
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        if not self.published_year:
+            self.published_year = current_year()  # Standardwert setzen
+        super().save(*args, **kwargs)
 
-    class Meta:  # pylint: disable=too-few-public-methods
-        '''
-        Meta class for BlogPosts
-        '''
+    def __str__(self):
+        return f"{self.title} ({self.date.year})"
+
+    class Meta:
         ordering = ('category', '-date', 'ordering')
-        verbose_name = u'Blog Post'
-        verbose_name_plural = u'Blog Posts'
+        verbose_name = "Blog Post"
+        verbose_name_plural = "Blog Posts"
