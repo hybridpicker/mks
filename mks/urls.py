@@ -56,8 +56,9 @@ urlpatterns = [
     path('', include('teaching.urls')),
     path('', include('students.urls')),
     path('', include('faq.urls')),
+    path('hexe-rabaukel/', include('invitation.urls')),
+
     path('', include('projects.urls')),
-    path('', include('invitation.urls')),
     re_path(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

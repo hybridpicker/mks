@@ -213,5 +213,7 @@ THUMBNAIL_FORCE_OVERWRITE = True
 
 USER_AGENTS_CACHE = 'default'
 
+APPEND_SLASH = True
+
 if os.path.isfile(os.path.join(BASE_DIR, 'local_settings.py')):
     from local_settings import *

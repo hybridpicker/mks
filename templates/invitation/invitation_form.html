@@ -11,14 +11,19 @@
 {% endblock %}
 
 {% block banner %}
-<img src="{% static 'banner/invitation_banner.jpg' %}" alt="Grillparzer Campus Eröffnungsfeier">
-<img id="mbimg" src="/static/banner/mobile/invitation_banner.jpg" alt="">
+<img src="{% static 'banner/invitation_banner_christmas.jpg' %}" alt="Die Hexe Rabaukel bekommt Weihnachtspost">
+<img id="mbimg" src="/static/banner/mobile/invitation_banner_christmas.jpg" alt="Die Hexe Rabaukel bekommt Weihnachtspost - Mobile Banner">
 {% endblock %}
 
 {% block body %}
 <div class="container">
-  <h1>Anmeldung zur Eröffnungsfeier des Grillparzer Campus</h1>
-  <p>Hier haben Sie die Möglichkeit, sich für unsere Eröffnungsfeier am 17.10.2024 um 18:00 Uhr im Grillparzer Campus (Grillparzerstraße 17) anzumelden. Bitte füllen Sie die erforderlichen Felder aus und bestätigen Sie Ihre Anmeldung durch einen Klick auf den Button „Anmelden“.</p>
+  <h1>Anmeldung: Die Hexe Rabaukel bekommt Weihnachtspost</h1>
+  <p>
+    Wir laden Sie herzlich zur Weihnachtsvorstellung "Die Hexe Rabaukel bekommt Weihnachtspost" ein. 
+    Die Vorstellung findet am 18. und 19. Dezember 2024 jeweils um 18:00 Uhr im Grillparzercampus Orchestersaal 
+    (Grillparzerstraße 17, 3100 St. Pölten) statt. <br><br>
+    Bitte füllen Sie die erforderlichen Felder aus und bestätigen Sie Ihre Anmeldung durch einen Klick auf den Button „Anmelden“.
+  </p>
   <form method="post">
     {% csrf_token %}
     <div class="row">
@@ -36,20 +41,28 @@
         {{ form.email }}
         {{ form.email.errors }}
       </div>
+      <div class="col-8">
+        {{ form.event_date }}
+        {{ form.event_date.errors }}
+      </div>
     </div>
     <div class="form-actions">
       <button type="submit" style="width: 8rem;">Anmelden</button>
     </div>
   </form>
   <div id="dsgvo-text">
-    <p>* Mit Betätigung des Buttons “Anmelden” stimme ich der Verwendung und Verarbeitung meiner personenbezogenen Daten gemäß den Datenschutzbestimmungen zu. Weitere Informationen finden Sie in unserem <a target="_blank" href="{% url 'impressum' %}">Impressum</a>.</p>
+    <p>
+      * Mit Betätigung des Buttons “Anmelden” stimme ich der Verwendung und Verarbeitung meiner personenbezogenen 
+      Daten gemäß den Datenschutzbestimmungen zu. Weitere Informationen finden Sie in unserem 
+      <a target="_blank" href="{% url 'impressum' %}">Impressum</a>.
+    </p>
   </div>
 </div>
 {% endblock %}
 
 {% block footer %}
 <style>
-  form p{
+  form p {
     padding-left: 0;
   }
 </style>

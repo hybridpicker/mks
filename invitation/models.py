@@ -5,5 +5,10 @@ class Invitation(models.Model):
     email = models.EmailField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    # Neue Felder für die Veranstaltung
+    event_name = models.CharField(max_length=255, default="Die Hexe Rabaukel bekommt Weihnachtspost")
+    event_date = models.DateTimeField(null=True, blank=True)  # Optionales Feld für Datum
+    location = models.TextField(default="Grillparzercampus Orchestersaal, Grillparzerstraße 17, 3100 St. Pölten")
+
     def __str__(self):
         return f"{self.name} - {self.email}"
