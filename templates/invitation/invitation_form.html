@@ -1,3 +1,5 @@
+<!-- invitation/invitation_form.html -->
+
 {% extends "templates/base.html" %}
 {% load static %}
 
@@ -12,7 +14,7 @@
 
 {% block banner %}
 <img src="{% static 'banner/invitation_banner_christmas.jpg' %}" alt="Die Hexe Rabaukel bekommt Weihnachtspost">
-<img id="mbimg" src="/static/banner/mobile/invitation_banner_christmas.jpg" alt="Die Hexe Rabaukel bekommt Weihnachtspost - Mobile Banner">
+<img id="mbimg" src="{% static 'banner/mobile/invitation_banner_christmas.jpg' %}" alt="Die Hexe Rabaukel bekommt Weihnachtspost - Mobile Banner">
 {% endblock %}
 
 {% block body %}
@@ -20,12 +22,13 @@
   <h1>Anmeldung: Die Hexe Rabaukel bekommt Weihnachtspost</h1>
   <p>
     Wir laden Sie herzlich zur Weihnachtsvorstellung "Die Hexe Rabaukel bekommt Weihnachtspost" ein. 
-    Die Vorstellung findet am 18. und 19. Dezember 2024 jeweils um 18:00 Uhr im Grillparzercampus Orchestersaal 
+    Die Vorstellung findet am 17. und 18. Dezember 2024 jeweils um 18:00 Uhr im Grillparzercampus Orchestersaal 
     (Grillparzerstraße 17, 3100 St. Pölten) statt. <br><br>
     Bitte füllen Sie die erforderlichen Felder aus und bestätigen Sie Ihre Anmeldung durch einen Klick auf den Button „Anmelden“.
   </p>
   <form method="post">
     {% csrf_token %}
+    {{ form.non_field_errors }}
     <div class="row">
       <div class="col-4">
         <p>Name*:</p>
@@ -41,9 +44,23 @@
         {{ form.email }}
         {{ form.email.errors }}
       </div>
+      <div class="col-4">
+        <p>Wunschtermin*:</p>
+      </div>
       <div class="col-8">
-        {{ form.event_date }}
+        {% for radio in form.event_date %}
+          <label for="{{ radio.id_for_label }}">
+            {{ radio.tag }} {{ radio.choice_label }}
+          </label><br>
+        {% endfor %}
         {{ form.event_date.errors }}
+      </div>
+      <div class="col-4">
+        <p>Anzahl der Begleitpersonen:</p>
+      </div>
+      <div class="col-8">
+        {{ form.number_of_guests }}
+        {{ form.number_of_guests.errors }}
       </div>
     </div>
     <div class="form-actions">

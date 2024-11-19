@@ -1,5 +1,10 @@
+<!-- invitation/invitation_list.html -->
+
 {% extends "templates/base.html" %}
 {% load static %}
+
+{% load dict_extras %}
+
 
 {% block tab_id %}id="invitation_tab"{% endblock %}
 
@@ -29,6 +34,7 @@
             <th>Anmeldedatum</th>
             <th>Name</th>
             <th>E-Mail</th>
+            <th>Anzahl Begleitpersonen</th>
           </tr>
         </thead>
         <tbody>
@@ -37,18 +43,17 @@
               <td>{{ invitation.timestamp|date:"d.m.Y H:i" }}</td>
               <td>{{ invitation.name }}</td>
               <td>{{ invitation.email }}</td>
+              <td>{{ invitation.number_of_guests }}</td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
-      <p>Gesamtanzahl für diesen Tag: {{ grouped_invitations|length }}</p>
+      <p>Gesamtanzahl für diesen Tag: {{ total_persons_by_date|dict_get:event_date }}</p>
     </div>
     {% endfor %}
-    <p>Gesamtanzahl aller Anmeldungen: <b>{{ total_count }}</b></p>
+    <p>Gesamtanzahl aller Personen: <b>{{ total_count }}</b></p>
   </div>
   {% endif %}
-  <pre>{{ invitations_by_date }}</pre>
-
 </div>
 {% endblock %}
 
