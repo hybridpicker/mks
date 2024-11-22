@@ -13,8 +13,8 @@
 {% endblock %}
 
 {% block banner %}
-<img src="{% static 'banner/invitation_banner_christmas.jpg' %}" alt="Die Hexe Rabaukel bekommt Weihnachtspost">
-<img id="mbimg" src="{% static 'banner/mobile/invitation_banner_christmas.jpg' %}" alt="Die Hexe Rabaukel bekommt Weihnachtspost - Mobile Banner">
+<img src="{% static 'banner/invitation_banner_rabaukel.jpg' %}" alt="Die Hexe Rabaukel bekommt Weihnachtspost">
+<img id="mbimg" src="{% static 'banner/mobile/invitation_banner_rabaukel.jpg' %}" alt="Die Hexe Rabaukel bekommt Weihnachtspost - Mobile Banner">
 {% endblock %}
 
 {% block body %}
@@ -48,12 +48,19 @@
         <p>Wunschtermin*:</p>
       </div>
       <div class="col-8">
-        {% for radio in form.event_date %}
-          <label for="{{ radio.id_for_label }}">
-            {{ radio.tag }} {{ radio.choice_label }}
-          </label><br>
-        {% endfor %}
-        {{ form.event_date.errors }}
+        <fieldset>
+            {% for radio in form.event_date %}
+                <div class="radio-option">
+                    {{ radio.tag }}
+                    <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                </div>
+            {% endfor %}
+            {% if form.event_date.errors %}
+                <div class="error">
+                    {{ form.event_date.errors }}
+                </div>
+            {% endif %}
+        </fieldset>
       </div>
       <div class="col-4">
         <p>Anzahl der Begleitpersonen:</p>
@@ -80,7 +87,63 @@
 {% block footer %}
 <style>
   form p {
-    padding-left: 0;
+      padding-left: 0;
+  }
+
+  /* Entferne störende Rahmen des Fieldsets */
+  fieldset{
+    border: none;
+  }
+  .radio-fieldset {
+      border: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  /* Stil für das legend */
+  .radio-fieldset legend {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+  }
+
+  /* Stil der Radio-Optionen */
+  .radio-option input[type="radio"] {
+      appearance: none; /* Entfernt das Standarddesign */
+      width: 20px; /* Einheitliche Breite */
+      height: 20px; /* Einheitliche Höhe */
+      border: 2px solid #ccc; /* Rahmen */
+      border-radius: 50%; /* Rund */
+      outline: none; /* Entfernt Fokus-Styling */
+      cursor: pointer; /* Zeiger bei Hover */
+      transition: all 0.3s ease; /* Animation */
+      margin: 0; /* Kein zusätzlicher Abstand */
+      padding: 0; /* Kein Padding */
+      display: inline-block; /* Inline-Block für Kontrolle */
+      box-sizing: content-box; /* Verhindert Breitenänderungen durch Border */
+  }
+
+  .radio-option input[type="radio"]:checked {
+      border-color: #D11317;
+      background-color: #D11317;
+  }
+
+  /* Sicherstellung der vertikalen Zentrierung */
+  .radio-option {
+      display: flex;
+      align-items: center; /* Zentriert Label und Button */
+      gap: 10px; /* Abstand zwischen Button und Label */
+  }
+
+  .radio-option label {
+      font-size: 16px;
+      color: #333;
+      cursor: pointer;
+      transition: color 0.3s ease;
+  }
+
+  .radio-option input[type="radio"]:checked + label {
+      color: #D11317;
   }
 </style>
 {% endblock %}

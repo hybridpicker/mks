@@ -42,8 +42,12 @@ class InvitationForm(forms.ModelForm):
 
     def clean_event_date(self):
         event_date_str = self.cleaned_data['event_date']
-        event_date = datetime.strptime(event_date_str, '%Y-%m-%d %H:%M')
-        return event_date
+        # Optional: Validierung der Datumsformatierung
+        try:
+            datetime.strptime(event_date_str, '%Y-%m-%d %H:%M')
+        except ValueError:
+            raise forms.ValidationError("Ungültiges Datum.")
+        return event_date_str  # Rückgabe als String
     
     def clean_number_of_guests(self):
         number_of_guests = self.cleaned_data.get('number_of_guests', 0)
