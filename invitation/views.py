@@ -11,8 +11,8 @@ from datetime import datetime
 def get_available_event_dates():
     # Definierte Veranstaltungstermine
     EVENT_CHOICES = [
-        ('2024-12-17 18:00', '17. Dezember 2024 um 18:00 Uhr'),
         ('2024-12-18 18:00', '18. Dezember 2024 um 18:00 Uhr'),
+        ('2024-12-19 18:00', '19. Dezember 2024 um 18:00 Uhr'),
     ]
     available_dates = []
     for event_date_str, label in EVENT_CHOICES:
