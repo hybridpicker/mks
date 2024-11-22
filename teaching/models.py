@@ -3,6 +3,8 @@ Class holding teacher data
 '''
 from django.db import models
 from django.utils.translation import gettext as _
+from django.core.validators import RegexValidator
+
 from phone_field import PhoneField
 from location.models import Location, Country
 from users.models import CustomUser
@@ -56,8 +58,26 @@ class Teacher(models.Model):
     socialSecurityField = models.CharField(
         _(u'Sozialversicherungs Nummer'),
         max_length=11, blank=True)
-    iban = models.CharField(_(u'IBAN'), max_length=24, blank=True)
-    bic = models.CharField(_(u'BIC'), max_length=20, blank=True)
+    bic = models.CharField(
+        max_length=11,
+        validators=[
+            RegexValidator(
+                regex=r'^[A-Z]{4}AT[A-Z0-9]{2}([A-Z0-9]{3})?$',
+                message='Invalid BIC format for Austria. Must be 8 or 11 characters.'
+            )
+        ],
+        help_text="Bank Identifier Code (BIC) for Austria"
+    )
+    iban = models.CharField(
+        max_length=20,  # IBAN-Länge für Österreich
+        validators=[
+            RegexValidator(
+                regex=r'^AT[0-9]{2}[0-9]{16}$',
+                message='Invalid IBAN format for Austria. Must be 20 characters.'
+            )
+        ],
+        help_text="International Bank Account Number (IBAN) for Austria"
+    )
     adress_line = models.CharField(_(u'Straße'), max_length=80, blank=True)
     house_number = models.CharField(_(u'Hausnummer'), max_length=80, blank=True)
     postal_code = models.CharField(_(u'Postleitzahl'), max_length=4, blank=True)

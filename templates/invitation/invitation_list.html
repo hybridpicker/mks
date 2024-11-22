@@ -1,5 +1,10 @@
+<!-- invitation/invitation_list.html -->
+
 {% extends "templates/base.html" %}
 {% load static %}
+
+{% load dict_extras %}
+
 
 {% block tab_id %}id="invitation_tab"{% endblock %}
 
@@ -19,28 +24,34 @@
 <div class="mbs">
   {% if request.user.is_staff %}
   <div class="container">
-    <h2>Zusagen zur Eröffnungsfeier 17.10.</h2>
-    <div class="controlling-menu">
-    </div>
-    <table class="controlling" cellspacing="0" cellpadding="0" width="100%">
-      <thead>
-        <tr>
-          <th style="text-align:left" align="left">Anmeldedatum</th>
-          <th style="text-align:left" align="left">Name</th>
-          <th style="text-align:left" align="left">E-Mail</th>
-        </tr>
-      </thead>
-      <tbody class="invitationTable">
-        {% for invitation in invitations %}
-          <tr height="1rem">
-            <td><strong>{{ invitation.timestamp|date:"d.m.Y H:i" }}</strong></td>
-            <td>{{ invitation.name }}</td>
-            <td>{{ invitation.email }}</td>
+    <h2>Anmeldungen nach Veranstaltungstagen</h2>
+    {% for event_date, grouped_invitations in invitations_by_date.items %}
+    <div class="event-section">
+      <h3>Veranstaltung am {{ event_date|date:"d.m.Y" }}</h3>
+      <table class="controlling" cellspacing="0" cellpadding="0" width="100%">
+        <thead>
+          <tr>
+            <th>Anmeldedatum</th>
+            <th>Name</th>
+            <th>E-Mail</th>
+            <th>Anzahl Begleitpersonen</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <p>Gesamtanzahl der Anmeldungen: <b>{{ total_count }}</b></p>
+        </thead>
+        <tbody>
+          {% for invitation in grouped_invitations %}
+            <tr>
+              <td>{{ invitation.timestamp|date:"d.m.Y H:i" }}</td>
+              <td>{{ invitation.name }}</td>
+              <td>{{ invitation.email }}</td>
+              <td>{{ invitation.number_of_guests }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p>Gesamtanzahl für diesen Tag: {{ total_persons_by_date|dict_get:event_date }}</p>
+    </div>
+    {% endfor %}
+    <p>Gesamtanzahl aller Personen: <b>{{ total_count }}</b></p>
   </div>
   {% endif %}
 </div>

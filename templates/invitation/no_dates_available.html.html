@@ -1,0 +1,19 @@
+<!-- invitation/thank_you.html -->
+{% extends "templates/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<meta name="robots" content="noindex">
+{% endblock %}
+
+{% block banner %}
+<img src="{% static 'banner/invitation_banner.jpg' %}" alt="Grillparzer Campus Eröffnungsfeier">
+<img id="mbimg" src="{% static 'banner/mobile/invitation_banner.jpg' %}" alt="">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1>Keine verfügbaren Termine</h1>
+  <p>Leider sind für alle Veranstaltungstage keine Plätze mehr verfügbar.</p>
+</div>
+{% endblock %}
