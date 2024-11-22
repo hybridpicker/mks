@@ -27,8 +27,8 @@ class InvitationForm(forms.ModelForm):
             self.fields['event_date'].choices = available_dates
         else:
             self.fields['event_date'].choices = [
-                ('2024-12-17 18:00', '17. Dezember 2024 um 18:00 Uhr'),
                 ('2024-12-18 18:00', '18. Dezember 2024 um 18:00 Uhr'),
+                ('2024-12-19 18:00', '19. Dezember 2024 um 18:00 Uhr'),
             ]
 
     class Meta:
