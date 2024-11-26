@@ -66,7 +66,8 @@ class Teacher(models.Model):
                 message='Invalid BIC format for Austria. Must be 8 or 11 characters.'
             )
         ],
-        help_text="Bank Identifier Code (BIC) for Austria"
+        help_text="Bank Identifier Code (BIC) for Austria",
+        blank=True
     )
     iban = models.CharField(
         max_length=20,  # IBAN-Länge für Österreich
@@ -76,7 +77,8 @@ class Teacher(models.Model):
                 message='Invalid IBAN format for Austria. Must be 20 characters.'
             )
         ],
-        help_text="International Bank Account Number (IBAN) for Austria"
+        help_text="International Bank Account Number (IBAN) for Austria",
+        blank=True
     )
     adress_line = models.CharField(_(u'Straße'), max_length=80, blank=True)
     house_number = models.CharField(_(u'Hausnummer'), max_length=80, blank=True)
