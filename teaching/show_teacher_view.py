@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.db.models import Case, When, Value, IntegerField
+
 from teaching.models import Teacher, GroupPhoto
 from teaching.subject import SubjectCategory, Subject
 
@@ -31,9 +33,23 @@ def show_teacher_view(request):
     teacher_vocal = get_teachers_from_category("Gesang")
     teacher_wood = get_teachers_from_category("Holzblasinstrumente")
     teacher_dance = get_teachers_from_category("Tanz")
-    director = get_teachers_from_category("Direktion")
+    
+    # Retrieve the QuerySet for the Direktion group
+    director_qs = get_teachers_from_category("Direktion")
+    
+    # Annotate each teacher with a flag 'is_director'
+    director = director_qs.annotate(
+        is_director=Case(
+            # Use the correct field name: 'subject__subject'
+            When(subject__subject="Direktion", then=Value(0)),
+            default=Value(1),
+            output_field=IntegerField()
+        )
+    ).order_by("is_director", "last_name")
+    
     secretary = get_teachers_from_category("Sekretariat")
     elementary_teaching = get_teachers_from_category("Musikalische Früherziehung")
+    
     context = {
         'group_photo': group_photo,
         'categories': categories,
@@ -50,3 +66,4 @@ def show_teacher_view(request):
         'elementary_teaching': elementary_teaching,
     }
     return render(request, 'teaching/all_teachers.html', context)
+
