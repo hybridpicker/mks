@@ -1,5 +1,6 @@
 {% extends "templates/base.html" %}
 {% load static i18n %}
+{% load custom_filters %}
 
 {% block title %}{% trans "Tanz & Bewegung - Stundenplan" %}{% endblock %}
 
@@ -68,6 +69,135 @@ body {
     font-family: 'Arial', sans-serif; /* Use a suitable font, adjust if needed */
     background-color: #fdfdfd; /* Heller Hintergrund */
     color: #000;
+}
+
+/* Filter Container Styling */
+.filter-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid #ececec;
+}
+
+.filter-heading {
+    color: #d11317;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.3rem;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    flex: 1;
+    max-width: 300px;
+}
+
+.filter-group label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.select-wrapper select {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: white;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.select-wrapper select:hover {
+    border-color: #d11317;
+}
+
+.select-wrapper select:focus {
+    outline: none;
+    border-color: #d11317;
+    box-shadow: 0 0 0 3px rgba(209, 19, 23, 0.1);
+}
+
+.select-arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #d11317;
+    pointer-events: none;
+}
+
+.filter-actions {
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.clear-filters {
+    display: inline-block;
+    padding: 6px 15px;
+    background-color: #f5f5f5;
+    color: #333;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    border: 1px solid #ddd;
+}
+
+.clear-filters:hover {
+    background-color: #e0e0e0;
+    color: #d11317;
+}
+
+/* Responsive Filter Styling */
+@media (max-width: 768px) {
+    .filter-form {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .filter-group {
+        width: 100%;
+        max-width: none;
+    }
+    
+    .filter-heading {
+        font-size: 1.2rem;
+    }
+    
+    .filter-container {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
 }
 
 .schedule-page-container {
@@ -198,6 +328,38 @@ body {
 }
 
 .timeslot-course:hover {
+    color: #d11317;
+}
+
+/* Active Filters Styling */
+.active-filters {
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    border: 1px dashed #d11317;
+}
+
+.active-filters-label {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #333;
+}
+
+.filter-tag {
+    display: inline-block;
+    background-color: #fff;
+    border: 1px solid #d11317;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.filter-type {
+    font-weight: bold;
     color: #d11317;
 }
 
@@ -379,6 +541,37 @@ body {
     text-align: center;
   }
   
+  /* Filter-Container für Mobile optimieren */
+  .filter-container {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .filter-heading {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+  }
+  
+  .filter-group {
+    margin-bottom: 12px;
+  }
+  
+  .filter-group label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+  
+  .select-wrapper select {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+  }
+  
+  .clear-filters {
+    font-size: 0.85rem;
+    padding: 5px 12px;
+  }
+  
   /* Zeitplan-Container für Mobile optimieren */
   .schedule-container {
     padding: 12px;
@@ -448,12 +641,70 @@ body {
         <h2>Unser Tanzangebot</h2>
         <p>Die neue Tanzsaison 2024/25 beginnt mit folgendem Angebot:</p>
         {% if user.is_authenticated %}
-        <a href="/tanz-und-bewegung/wartung/"><button style="background: url('{% static 'dance/img/edit_button_bg.svg' %}'); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Kursverwaltung</button></a>
+        <a href="/tanz-und-bewegung/wartung/"><button class="edit-button">Kursverwaltung</button></a>
         {% endif %}
+    </div>
+
+    <div class="filter-container">
+        <h3 class="filter-heading">Kurse filtern</h3>
+        <form method="get" action="{% url 'dance:schedule' %}" class="filter-form">
+            <div class="filter-group">
+                <label for="category-filter">Tanzstil:</label>
+                <div class="select-wrapper">
+                    <select name="category" id="category-filter" onchange="this.form.submit()">
+                        <option value="">Alle Tanzstile</option>
+                        {% for category in available_categories %}
+                            <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>
+                                {{ category }} ({{ category_counts|get_item:category }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label for="age-group-filter">Altersgruppe:</label>
+                <div class="select-wrapper">
+                    <select name="age_group" id="age-group-filter" onchange="this.form.submit()">
+                        <option value="">Alle Altersgruppen</option>
+                        {% for age_group in unique_age_groups %}
+                            <option value="{{ age_group }}" {% if selected_age_group == age_group %}selected{% endif %}>
+                                {{ age_group }} ({{ age_group_counts|get_item:age_group }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+            
+            {% if selected_category or selected_age_group %}
+            <div class="filter-actions">
+                <a href="{% url 'dance:schedule' %}" class="clear-filters">Filter zurücksetzen</a>
+            </div>
+            {% endif %}
+        </form>
     </div>
 
     <div class="schedule-container">
         <h1 class="schedule-heading">{% trans "Stundenplan - Tanz & Bewegung" %}</h1>
+        
+        {% if selected_category or selected_age_group %}
+        <div class="active-filters">
+            <span class="active-filters-label">Aktive Filter:</span>
+            {% if selected_category %}
+            <span class="filter-tag">
+                <span class="filter-type">Tanzstil:</span> {{ selected_category }}
+            </span>
+            {% endif %}
+            
+            {% if selected_age_group %}
+            <span class="filter-tag">
+                <span class="filter-type">Altersgruppe:</span> {{ selected_age_group }}
+            </span>
+            {% endif %}
+        </div>
+        {% endif %}
 
         {% if timeslots_by_day %}
             <div class="schedule-grid">

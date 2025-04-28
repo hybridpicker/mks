@@ -16,25 +16,208 @@ except locale.Error:
     except locale.Error:
         print("Warning: German locale not found, day sorting might be alphabetical.")
 
+def get_course_category(description):
+    """Infers course category based on description."""
+    if not description:
+        return "Kindertanz"
+        
+    description_lower = description.lower()
+    
+    # Traditioneller Tanz
+    if any(keyword in description_lower for keyword in [
+        'klassischen balletts', 'vaganova-methode', 'klassischen tanzes', 
+        'traditionellen methoden', 'historischer charaktertanz', 
+        'volkstümlichen charaktertänzen', 'ballett', 'klassisch', 'traditionell'
+    ]):
+        return 'Klassisches Ballett'
+    
+    # Modernen Tanz
+    elif any(keyword in description_lower for keyword in [
+        'modern', 'zeitgenössischer tanz', 'contemporary', 'zeitgenössisch',
+        'hiphop', 'funky moves', 'ausdruckstanz', 'jazz', 'urban'
+    ]):
+        return 'Moderner Tanz'
+    
+    # Musical Dance
+    elif any(keyword in description_lower for keyword in [
+        'musical-tanz', 'musicals', 'musical', 'showdance', 'show'
+    ]):
+        return 'Musical Dance'
+    
+    # Kindertanz basierend auf Altersgruppe (wird in der view noch überprüft)
+    elif any(keyword in description_lower for keyword in [
+        'kinder', 'elementar', 'junge', 'spielerisch', 'kreativ', 'anfänger'
+    ]):
+        return 'Kindertanz'
+    
+    # Default Kategorie
+    else:
+        return 'Allgemeiner Tanz'
+
 def dance_schedule_view(request):
-    """Displays the dance schedule grouped by day."""
+    """Displays the dance schedule grouped by day with filtering."""
+    category_filter = request.GET.get('category')
+    age_group_filter = request.GET.get('age_group')
+
     # Fetch all timeslots, efficiently grabbing related course and teacher info
     all_timeslots = TimeSlot.objects.select_related('course__teacher').order_by('day', 'start_time')
 
-    # Group timeslots by day
-    timeslots_by_day = defaultdict(list)
+    # Filter timeslots based on category and age group
+    filtered_timeslots = []
     for timeslot in all_timeslots:
+        course = timeslot.course
+        
+        # Determine category based on description and age
+        base_category = get_course_category(course.description or '')
+        
+        # If age indicates children's class, override category for children under certain age
+        age_text = course.age_group.lower() if course.age_group else ""
+        has_young_age = any(term in age_text for term in ['3-', '4-', '5-', '6-', '7-', '8-', 'kinder'])
+        
+        if has_young_age and base_category != 'Musical Dance':
+            course_category = 'Kindertanz'
+        else:
+            course_category = base_category
+
+        # Bestimme, zu welcher vordefinierten Altersgruppe der Kurs gehört
+        actual_age_group = course.age_group.lower() if course.age_group else ""
+        mapped_age_group = ""
+        
+        # Zuordnung der tatsächlichen Altersangaben zu den vordefinierten Filtern
+        if any(x in actual_age_group for x in ["3", "4", "5"]) or "kleinkinder" in actual_age_group:
+            mapped_age_group = "3-6 Jahre"
+        elif any(x in actual_age_group for x in ["6", "7", "8", "9"]) or "grundschule" in actual_age_group:
+            mapped_age_group = "6-9 Jahre"
+        elif any(x in actual_age_group for x in ["10", "11", "12", "13", "14", "15", "16"]) or "jugendliche" in actual_age_group:
+            mapped_age_group = "10-16 Jahre"
+        elif any(x in actual_age_group for x in ["16+", "17", "18", "erwachsene"]):
+            mapped_age_group = "16+"
+        else:
+            # Fallback basierend auf den ersten Zahlen im String
+            import re
+            age_numbers = re.findall(r'\d+', actual_age_group)
+            if age_numbers:
+                first_age = int(age_numbers[0])
+                if first_age <= 6:
+                    mapped_age_group = "3-6 Jahre"
+                elif first_age <= 9:
+                    mapped_age_group = "6-9 Jahre"
+                elif first_age <= 16:
+                    mapped_age_group = "10-16 Jahre"
+                else:
+                    mapped_age_group = "16+"
+        
+        # Speichere die zugeordnete Altersgruppe für die Anzeige
+        timeslot.mapped_age_group = mapped_age_group
+        
+        # Apply filters
+        category_match = not category_filter or course_category == category_filter
+        age_group_match = not age_group_filter or mapped_age_group == age_group_filter
+
+        if category_match and age_group_match:
+            filtered_timeslots.append(timeslot)
+            # Store the computed category for display in template
+            timeslot.computed_category = course_category
+
+    # Group filtered timeslots by day
+    timeslots_by_day = defaultdict(list)
+    for timeslot in filtered_timeslots:
         timeslots_by_day[timeslot.day].append(timeslot)
 
     # Order the days correctly (using locale if possible, otherwise default order)
-    # Define the desired order of days
     day_order = {day[0]: i for i, day in enumerate(TimeSlot.DAYS_OF_WEEK)}
-    # Sort the grouped dictionary by the custom day order
     sorted_timeslots_by_day = dict(sorted(timeslots_by_day.items(), key=lambda item: day_order.get(item[0], 99)))
+
+    # Verwende feste Altersgruppen statt die aus der Datenbank
+    all_courses = Course.objects.all()
+    unique_age_groups = ["3-6 Jahre", "6-9 Jahre", "10-16 Jahre", "16+"]
+    
+    # Generate available categories by actually analyzing the courses
+    available_categories = []
+    for course in all_courses:
+        base_category = get_course_category(course.description or '')
+        
+        # Override for young children
+        age_text = course.age_group.lower() if course.age_group else ""
+        has_young_age = any(term in age_text for term in ['3-', '4-', '5-', '6-', '7-', '8-', 'kinder'])
+        
+        if has_young_age and base_category != 'Musical Dance':
+            category = 'Kindertanz'
+        else:
+            category = base_category
+            
+        if category not in available_categories:
+            available_categories.append(category)
+    
+    available_categories.sort()
+
+    # Count courses per category and age group for display
+    category_counts = {}
+    age_group_counts = {}
+    
+    # Initialisiere Zähler für Altersgruppen
+    for age_group in unique_age_groups:
+        age_group_counts[age_group] = 0
+    
+    # Zähle Kurse pro Kategorie
+    for category in available_categories:
+        count = 0
+        for course in all_courses:
+            base_cat = get_course_category(course.description or '')
+            age_text = course.age_group.lower() if course.age_group else ""
+            has_young_age = any(term in age_text for term in ['3-', '4-', '5-', '6-', '7-', '8-', 'kinder'])
+            
+            if has_young_age and base_cat != 'Musical Dance':
+                comp_cat = 'Kindertanz'
+            else:
+                comp_cat = base_cat
+                
+            if comp_cat == category:
+                count += 1
+        category_counts[category] = count
+    
+    # Zähle Kurse pro Altersgruppe
+    for course in all_courses:
+        age_text = course.age_group.lower() if course.age_group else ""
+        
+        # Zuordnung zu einer der vordefinierten Altersgruppen
+        if any(x in age_text for x in ["3", "4", "5"]) or "kleinkinder" in age_text:
+            age_group_counts["3-6 Jahre"] += 1
+        elif any(x in age_text for x in ["6", "7", "8", "9"]) or "grundschule" in age_text:
+            age_group_counts["6-9 Jahre"] += 1
+        elif any(x in age_text for x in ["10", "11", "12", "13", "14", "15", "16"]) or "jugendliche" in age_text:
+            age_group_counts["10-16 Jahre"] += 1
+        elif any(x in age_text for x in ["16+", "17", "18", "erwachsene"]):
+            age_group_counts["16+"] += 1
+        else:
+            # Fallback basierend auf den ersten Zahlen im String
+            import re
+            age_numbers = re.findall(r'\d+', age_text)
+            if age_numbers:
+                first_age = int(age_numbers[0])
+                if first_age <= 6:
+                    age_group_counts["3-6 Jahre"] += 1
+                elif first_age <= 9:
+                    age_group_counts["6-9 Jahre"] += 1
+                elif first_age <= 16:
+                    age_group_counts["10-16 Jahre"] += 1
+                else:
+                    age_group_counts["16+"] += 1
+            else:
+                # Falls keine Altersinformation gefunden wurde, zum Standardwert
+                age_group_counts["3-6 Jahre"] += 1
 
     context = {
         'timeslots_by_day': sorted_timeslots_by_day,
-        'page_title': 'Tanz & Bewegung - Stundenplan' # Example title
+        'page_title': 'Tanz & Bewegung - Stundenplan',
+        'unique_age_groups': unique_age_groups,
+        'available_categories': available_categories,
+        'category_counts': category_counts,
+        'age_group_counts': age_group_counts,
+        'selected_category': category_filter,
+        'selected_age_group': age_group_filter,
+        'total_courses': len(all_courses),
+        'filtered_count': len(filtered_timeslots),
     }
     return render(request, 'dance/schedule.html', context)
 

@@ -2938,3 +2938,11 @@ slide:nth-child(3) {
 .timeslot:hover {
   transform: scale(1.02);
 }
+.edit-button {
+  background: url('/static/dance/img/edit_button_bg.svg');
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}

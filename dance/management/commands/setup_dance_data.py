@@ -9,26 +9,22 @@ class Command(BaseCommand):
     help = 'Überprüft, ob Tanzdaten vorhanden sind, und lädt ggf. das Fixture'
 
     def handle(self, *args, **options):
-        # Prüfen, ob bereits Daten vorhanden sind
-        if not self.data_exists():
-            self.stdout.write(self.style.WARNING('Keine Tanzdaten gefunden. Lade Fixture...'))
-            
-            # Fixture-Pfad
-            fixture_path = os.path.join(settings.BASE_DIR, 'dance', 'fixtures', 'dance_data.json')
-            
-            # Wenn das Fixture nicht existiert, erstelle es zuerst
-            if not os.path.exists(fixture_path):
-                self.create_initial_fixture(fixture_path)
-                self.stdout.write(self.style.SUCCESS('Initiales Fixture erstellt: {}'.format(fixture_path)))
-            
-            # Lade das Fixture
-            try:
-                call_command('loaddata', 'dance_data.json', app_label='dance')
-                self.stdout.write(self.style.SUCCESS('Tanzdaten erfolgreich geladen!'))
-            except Exception as e:
-                self.stdout.write(self.style.ERROR('Fehler beim Laden des Fixtures: {}'.format(str(e))))
-        else:
-            self.stdout.write(self.style.SUCCESS('Tanzdaten bereits vorhanden. Keine Aktion notwendig.'))
+        self.stdout.write(self.style.WARNING('Lade Tanzdaten aus Fixture...'))
+        
+        # Fixture-Pfad
+        fixture_path = os.path.join(settings.BASE_DIR, 'dance', 'fixtures', 'dance_data.json')
+        
+        # Wenn das Fixture nicht existiert, erstelle es zuerst
+        if not os.path.exists(fixture_path):
+            self.create_initial_fixture(fixture_path)
+            self.stdout.write(self.style.SUCCESS('Initiales Fixture erstellt: {}'.format(fixture_path)))
+        
+        # Lade das Fixture
+        try:
+            call_command('loaddata', 'dance_data.json', app_label='dance')
+            self.stdout.write(self.style.SUCCESS('Tanzdaten erfolgreich geladen!'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR('Fehler beim Laden des Fixtures: {}'.format(str(e))))
 
     def data_exists(self):
         """Prüft, ob bereits Daten in der Datenbank vorhanden sind."""

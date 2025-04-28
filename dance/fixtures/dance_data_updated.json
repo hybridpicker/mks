@@ -1,0 +1,149 @@
+[
+{
+  "model": "dance.teacher",
+  "pk": 1,
+  "fields": {
+    "name": "Marijana Zeisel",
+    "email": "marijana.zeisel@musikschule-stp.at"
+  }
+},
+{
+  "model": "dance.teacher",
+  "pk": 2,
+  "fields": {
+    "name": "Yulia Bauer",
+    "email": "yuliya.bauer@musikschule-stp.at"
+  }
+},
+{
+  "model": "dance.teacher",
+  "pk": 3,
+  "fields": {
+    "name": "Chulpan Usmanova",
+    "email": "chulpan.usmanova@musikschule-stp.at"
+  }
+},
+{
+  "model": "dance.teacher",
+  "pk": 4,
+  "fields": {
+    "name": "Anna Grüssinger",
+    "email": "anna.gruessinger@musikschule-stp.at"
+  }
+},
+{
+  "model": "dance.teacher",
+  "pk": 5,
+  "fields": {
+    "name": "Katharina Holzweber",
+    "email": "katharina.holzweber@musikschule-stp.at"
+  }
+},
+{
+  "model": "dance.course",
+  "pk": 1,
+  "fields": {
+    "name": "Vom Plié zur Pirouette 1",
+    "teacher": 1,
+    "age_group": "8-11 Jahre",
+    "description": "Erleben Sie die Grundlagen der Vaganova-Methode, die sich durch eine schülerzentrierte Arbeitsweise auszeichnet. Kinder und Jugendliche erlernen nicht nur die Ursprünge des klassischen Balletts, sondern haben auch die Möglichkeit, ihre künstlerische Ausdrucksfähigkeit und Bühnenpräsenz zu entwickeln. Unabhängig davon, ob Anfänger:in oder erfahrene Tänzer:in, wir heißen alle willkommen, die die Schönheit und Disziplin des klassischen Balletts erkunden möchten."
+  }
+},
+{
+  "model": "dance.course",
+  "pk": 2,
+  "fields": {
+    "name": "Vom Plié zur Pirouette 2",
+    "teacher": 1,
+    "age_group": "11-14 Jahre",
+    "description": "Erleben Sie die Grundlagen der Vaganova-Methode, die sich durch eine schülerzentrierte Arbeitsweise auszeichnet. Kinder und Jugendliche erlernen nicht nur die Ursprünge des klassischen Balletts, sondern haben auch die Möglichkeit, ihre künstlerische Ausdrucksfähigkeit und Bühnenpräsenz zu entwickeln. Unabhängig davon, ob Anfänger:in oder erfahrene Tänzer:in, wir heißen alle willkommen, die die Schönheit und Disziplin des klassischen Balletts erkunden möchten."
+  }
+},
+{
+  "model": "dance.course",
+  "pk": 3,
+  "fields": {
+    "name": "Vom Plié zur Pirouette 3",
+    "teacher": 1,
+    "age_group": "15-25 Jahre",
+    "description": "Erleben Sie die Grundlagen der Vaganova-Methode, die sich durch eine schülerzentrierte Arbeitsweise auszeichnet. Kinder und Jugendliche erlernen nicht nur die Ursprünge des klassischen Balletts, sondern haben auch die Möglichkeit, ihre künstlerische Ausdrucksfähigkeit und Bühnenpräsenz zu entwickeln. Unabhängig davon, ob Anfänger:in oder erfahrene Tänzer:in, wir heißen alle willkommen, die die Schönheit und Disziplin des klassischen Balletts erkunden möchten."
+  }
+},
+{
+  "model": "dance.course",
+  "pk": 4,
+  "fields": {
+    "name": "Kreativer Ausdruckstanz",
+    "teacher": 1,
+    "age_group": "15-25 Jahre",
+    "description": "Dieser Kurs zeigt, wie Geschichten in bewegende Kunstwerke umgesetzt werden können. Egal, ob es sich um wahre Erlebnisse, erfundene Ereignisse, bildhafte Geschichten oder persönliche Erfahrungen handelt; sie alle können als Impuls dienen, damit die Schüler:innen lernen, sich in einer bewegten Sprache auszudrücken, die über Worte hinausgeht. Das Endprodukt sind Choreografien, die im Moment entstehen und die künstlerische Stimme zum Ausdruck bringen."
+  }
+},
+{
+  "model": "dance.course",
+  "pk": 5,
+  "fields": {
+    "name": "Kindertanz 1",
+    "teacher": 1,
+    "age_group": "4-5 Jahre",
+    "description": "Dieser Kurs fördert die körperliche und kreative Entwicklung von Kindern. In spielerischer Atmosphäre lernen sie Tanzgrundlagen und nutzen ihre Fantasie. Ziele des Kurses sind die motorischen Fähigkeiten und die Körperkoordination zu verbessern, die Vorstellungskraft zu fördern, Selbstbewusstsein zu stärken und Musikbegeisterung zu entwickeln."
+  }
+},
+{
+  "model": "dance.course",
+  "pk": 6,
+  "fields": {
+    "name": "Kindertanz 4",
+    "teacher": 1,
+    "age_group": "7-8 Jahre",
+    "description": "In diesem Kurs werden Kinder intensiv auf die Kunst des Tanzes vorbereitet. Bodenübungen stärken den Körper und fördern das Verständnis der Muskelfunktion. Vielfältige Bewegungen im Raum schulen die Koordination und den Rhythmus."
+  }
+},
+{
+  "model": "dance.course",
+  "pk": 7,
+  "fields": {
+    "name": "Kindertanz 2",
+    "teacher": 2,
+    "age_group": "5-6 Jahre",
+    "description": "Erfahren Sie, wie Kinder Bewegungsrhythmen koordinieren und verstehen lernen. Der Kurs vermittelt Konzepte zur räumlichen Orientierung und integriert leichte Bewegungen zur Stärkung und Entwicklung der Haltung."
+  }
+},
+{
+  "model": "dance.course",
+  "pk": 8,
+  "fields": {
+    "name": "Kindertanz 4",
+    "teacher": 2,
+    "age_group": "7-8 Jahre",
+    "description": "Keine spezifische Beschreibung im Text gefunden."
+  }
+},
+{
+  "model": "dance.course",
+  "pk": 9,
+  "fields": {
+    "name": "Modern 1",
+    "teacher": 2,
+    "age_group": "8-10 Jahre",
+    "description": "Dieser Kurs umfasst zwei Richtungen des Jazztanzes: klassisch und modern. Kinder lernen, ihren Körper zu koordinieren und zu kontrollieren, sowohl bei langsamer als auch bei schneller Musik. Intensive Stärkung aller Muskeln des Körpers fördert die künstlerische Entwicklung und Wahrnehmung."
+  }
+},
+{
+  "model": "dance.course",
+  "pk": 10,
+  "fields": {
+    "name": "Modern 2",
+    "teacher": 2,
+    "age_group": "10-14 Jahre",
+    "description": "Dieser Kurs konzentriert sich auf moderne Tanzstile und -techniken, darunter Modern Dance. Schüler:innen haben die Möglichkeit, ihre Fähigkeiten in einer Tanzgruppe zu entwickeln und sich kreativ auszudrücken, während sie sich in die Welt des modernen Tanzes vertiefen."
+  }
+},
+{
+  "model": "dance.course",
+  "pk": 11,
+  "fields": {
+    "name": "Musical Dance I",
+    "teacher": 2,
+    "age_group": "8-14 Jahre",
+    "description": "Der Musical-Tanz vereint viele Richtungen der Chore
