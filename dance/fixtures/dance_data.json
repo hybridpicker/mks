@@ -287,7 +287,8 @@
     "day": "Montag",
     "start_time": "15:30:00",
     "end_time": "17:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -298,7 +299,8 @@
     "day": "Mittwoch",
     "start_time": "15:30:00",
     "end_time": "17:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -309,7 +311,8 @@
     "day": "Montag",
     "start_time": "17:00:00",
     "end_time": "18:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -320,7 +323,8 @@
     "day": "Mittwoch",
     "start_time": "17:00:00",
     "end_time": "18:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -331,7 +335,8 @@
     "day": "Montag",
     "start_time": "18:30:00",
     "end_time": "20:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -342,7 +347,8 @@
     "day": "Mittwoch",
     "start_time": "18:30:00",
     "end_time": "20:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -353,7 +359,8 @@
     "day": "Freitag",
     "start_time": "17:00:00",
     "end_time": "19:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -364,7 +371,8 @@
     "day": "Dienstag",
     "start_time": "14:00:00",
     "end_time": "15:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -375,7 +383,8 @@
     "day": "Dienstag",
     "start_time": "15:30:00",
     "end_time": "17:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -386,7 +395,8 @@
     "day": "Freitag",
     "start_time": "15:30:00",
     "end_time": "17:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -397,7 +407,8 @@
     "day": "Mittwoch",
     "start_time": "14:15:00",
     "end_time": "15:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -408,7 +419,8 @@
     "day": "Dienstag",
     "start_time": "15:30:00",
     "end_time": "17:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -419,7 +431,8 @@
     "day": "Donnerstag",
     "start_time": "15:30:00",
     "end_time": "17:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -430,7 +443,8 @@
     "day": "Montag",
     "start_time": "15:30:00",
     "end_time": "17:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -441,7 +455,8 @@
     "day": "Mittwoch",
     "start_time": "15:30:00",
     "end_time": "17:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -452,7 +467,8 @@
     "day": "Montag",
     "start_time": "17:00:00",
     "end_time": "18:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -463,7 +479,8 @@
     "day": "Donnerstag",
     "start_time": "17:00:00",
     "end_time": "18:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -474,7 +491,8 @@
     "day": "Dienstag",
     "start_time": "18:30:00",
     "end_time": "20:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -485,7 +503,8 @@
     "day": "Donnerstag",
     "start_time": "18:30:00",
     "end_time": "20:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Campus"
   }
 },
 {
@@ -496,7 +515,8 @@
     "day": "Dienstag",
     "start_time": "14:00:00",
     "end_time": "15:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Wagram"
   }
 },
 {
@@ -507,7 +527,8 @@
     "day": "Donnerstag",
     "start_time": "15:30:00",
     "end_time": "17:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Wagram"
   }
 },
 {
@@ -518,7 +539,8 @@
     "day": "Montag",
     "start_time": "14:00:00",
     "end_time": "15:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Wagram"
   }
 },
 {
@@ -529,7 +551,8 @@
     "day": "Freitag",
     "start_time": "14:00:00",
     "end_time": "15:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Wagram"
   }
 },
 {
@@ -540,7 +563,8 @@
     "day": "Mittwoch",
     "start_time": "14:00:00",
     "end_time": "15:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Wagram"
   }
 },
 {
@@ -551,7 +575,8 @@
     "day": "Freitag",
     "start_time": "15:30:00",
     "end_time": "17:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Wagram"
   }
 },
 {
@@ -562,7 +587,8 @@
     "day": "Dienstag",
     "start_time": "18:30:00",
     "end_time": "20:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Wagram"
   }
 },
 {
@@ -573,7 +599,8 @@
     "day": "Donnerstag",
     "start_time": "18:30:00",
     "end_time": "20:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Wagram"
   }
 },
 {
@@ -584,7 +611,8 @@
     "day": "Donnerstag",
     "start_time": "17:00:00",
     "end_time": "18:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Wagram"
   }
 },
 {
@@ -595,7 +623,8 @@
     "day": "Donnerstag",
     "start_time": "14:30:00",
     "end_time": "15:20:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Spratzern"
   }
 },
 {
@@ -606,7 +635,8 @@
     "day": "Donnerstag",
     "start_time": "15:30:00",
     "end_time": "16:45:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Spratzern"
   }
 },
 {
@@ -617,7 +647,8 @@
     "day": "Donnerstag",
     "start_time": "17:00:00",
     "end_time": "18:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Spratzern"
   }
 },
 {
@@ -628,7 +659,8 @@
     "day": "Mittwoch",
     "start_time": "14:30:00",
     "end_time": "15:20:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Spratzern"
   }
 },
 {
@@ -639,7 +671,8 @@
     "day": "Mittwoch",
     "start_time": "15:30:00",
     "end_time": "16:30:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Spratzern"
   }
 },
 {
@@ -650,7 +683,8 @@
     "day": "Mittwoch",
     "start_time": "16:30:00",
     "end_time": "18:00:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Spratzern"
   }
 },
 {
@@ -661,7 +695,8 @@
     "day": "Mittwoch",
     "start_time": "18:15:00",
     "end_time": "19:45:00",
-    "studio": null
+    "studio": null,
+    "location": "Kulturhaus Spratzern"
   }
 }
 ]
