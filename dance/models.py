@@ -43,6 +43,7 @@ class TimeSlot(models.Model):
     start_time = models.TimeField(_("Startzeit"))
     end_time = models.TimeField(_("Endzeit"))
     studio = models.CharField(_("Studio"), max_length=50, blank=True, null=True, help_text=_("Optional, z.B. Studio 1")) # Optional studio field
+    location = models.CharField(_("Standort"), max_length=100, blank=True, null=True, help_text=_("Optional, z.B. Campus oder Kulturheim Spratzern")) # Optional location field
 
     def __str__(self):
         return f"{self.course.name} - {self.get_day_display()} {self.start_time.strftime('%H:%M')}-{self.end_time.strftime('%H:%M')}"

@@ -58,6 +58,7 @@ def dance_schedule_view(request):
     """Displays the dance schedule grouped by day with filtering."""
     category_filter = request.GET.get('category')
     age_group_filter = request.GET.get('age_group')
+    location_filter = request.GET.get('location')
 
     # Fetch all timeslots, efficiently grabbing related course and teacher info
     all_timeslots = TimeSlot.objects.select_related('course__teacher').order_by('day', 'start_time')
@@ -113,8 +114,9 @@ def dance_schedule_view(request):
         # Apply filters
         category_match = not category_filter or course_category == category_filter
         age_group_match = not age_group_filter or mapped_age_group == age_group_filter
+        location_match = not location_filter or timeslot.location == location_filter
 
-        if category_match and age_group_match:
+        if category_match and age_group_match and location_match:
             filtered_timeslots.append(timeslot)
             # Store the computed category for display in template
             timeslot.computed_category = course_category
@@ -127,6 +129,11 @@ def dance_schedule_view(request):
     # Order the days correctly (using locale if possible, otherwise default order)
     day_order = {day[0]: i for i, day in enumerate(TimeSlot.DAYS_OF_WEEK)}
     sorted_timeslots_by_day = dict(sorted(timeslots_by_day.items(), key=lambda item: day_order.get(item[0], 99)))
+    
+    # Get all unique locations for the filter - ensure true uniqueness
+    locations = list(TimeSlot.objects.values_list('location', flat=True))
+    # Remove None/empty values and convert to set to ensure uniqueness
+    unique_locations = sorted(set([loc for loc in locations if loc]))
 
     # Verwende feste Altersgruppen statt die aus der Datenbank
     all_courses = Course.objects.all()
@@ -207,15 +214,25 @@ def dance_schedule_view(request):
                 # Falls keine Altersinformation gefunden wurde, zum Standardwert
                 age_group_counts["3-6 Jahre"] += 1
 
+    # Count timeslots per location for display
+    location_counts = {}
+    for location in unique_locations:
+        # Count the number of timeslots at this location
+        count = TimeSlot.objects.filter(location=location).count()
+        location_counts[location] = count
+
     context = {
         'timeslots_by_day': sorted_timeslots_by_day,
         'page_title': 'Tanz & Bewegung - Stundenplan',
         'unique_age_groups': unique_age_groups,
         'available_categories': available_categories,
+        'unique_locations': unique_locations,
         'category_counts': category_counts,
         'age_group_counts': age_group_counts,
+        'location_counts': location_counts,
         'selected_category': category_filter,
         'selected_age_group': age_group_filter,
+        'selected_location': location_filter,
         'total_courses': len(all_courses),
         'filtered_count': len(filtered_timeslots),
     }
@@ -322,6 +339,7 @@ def timeslot_action(request):
         start_time = request.POST.get('start_time')
         end_time = request.POST.get('end_time')
         studio = request.POST.get('studio')
+        location = request.POST.get('location')
         
         course = get_object_or_404(Course, id=course_id)
         
@@ -333,6 +351,7 @@ def timeslot_action(request):
             timeslot.start_time = start_time
             timeslot.end_time = end_time
             timeslot.studio = studio
+            timeslot.location = location
             timeslot.save()
         else:
             # Neues Zeitfenster hinzufügen
@@ -341,7 +360,8 @@ def timeslot_action(request):
                 day=day,
                 start_time=start_time,
                 end_time=end_time,
-                studio=studio
+                studio=studio,
+                location=location
             )
         
         return redirect('dance:maintenance')
@@ -375,11 +395,42 @@ def delete_action(request):
 def course_detail(request, course_id):
     """API-Endpunkt für Kursbeschreibungen."""
     course = get_object_or_404(Course, id=course_id)
+    
+    # Sammle die Standorte aus allen Zeitfenstern des Kurses
+    locations = course.timeslots.values_list('location', flat=True).distinct()
+    locations = [loc for loc in locations if loc]  # Filtere leere Einträge
+    
     data = {
         'id': course.id,
         'name': course.name,
         'description': course.description,
         'teacher': course.teacher.name,
-        'age_group': course.age_group
+        'teacher_id': course.teacher.id,
+        'age_group': course.age_group,
+        'locations': list(locations)
+    }
+    return JsonResponse(data)
+
+def teacher_detail_api(request, teacher_id):
+    """API-Endpunkt für Lehrerdaten."""
+    teacher = get_object_or_404(Teacher, id=teacher_id)
+    data = {
+        'id': teacher.id,
+        'name': teacher.name,
+        'email': teacher.email
+    }
+    return JsonResponse(data)
+
+def timeslot_detail_api(request, timeslot_id):
+    """API-Endpunkt für Zeitfensterdaten."""
+    timeslot = get_object_or_404(TimeSlot, id=timeslot_id)
+    data = {
+        'id': timeslot.id,
+        'course_id': timeslot.course.id,
+        'day': timeslot.day,
+        'start_time': timeslot.start_time.strftime('%H:%M'),
+        'end_time': timeslot.end_time.strftime('%H:%M'),
+        'studio': timeslot.studio or '',
+        'location': timeslot.location or ''
     }
     return JsonResponse(data)

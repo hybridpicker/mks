@@ -30,6 +30,15 @@
                     document.getElementById('course-teacher').textContent = data.teacher;
                     document.getElementById('course-age').textContent = data.age_group;
                     
+                    // Standorte aus der API-Antwort auslesen
+                    let locationText = 'Keine Information verfügbar';
+                    
+                    if (data.locations && data.locations.length > 0) {
+                        locationText = data.locations.join(', ');
+                    }
+                    
+                    document.getElementById('course-location').textContent = locationText;
+                    
                     // Modal anzeigen
                     document.getElementById('course-modal').style.display = 'block';
                 })
@@ -678,9 +687,24 @@ body {
                 </div>
             </div>
             
-            {% if selected_category or selected_age_group %}
+            <div class="filter-group">
+                <label for="location-filter">Standort:</label>
+                <div class="select-wrapper">
+                    <select name="location" id="location-filter" onchange="this.form.submit()">
+                        <option value="">Alle Standorte</option>
+                        {% for location in unique_locations %}
+                            <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>
+                                {{ location }} ({{ location_counts|get_item:location }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+            
+            {% if selected_category or selected_age_group or selected_location %}
             <div class="filter-actions">
-                <a href="{% url 'dance:schedule' %}" class="clear-filters">Filter zurücksetzen</a>
+                <a href="{% url 'dance:schedule' %}" class="clear-filters">Alle Filter zurücksetzen</a>
             </div>
             {% endif %}
         </form>
@@ -689,7 +713,7 @@ body {
     <div class="schedule-container">
         <h1 class="schedule-heading">{% trans "Stundenplan - Tanz & Bewegung" %}</h1>
         
-        {% if selected_category or selected_age_group %}
+        {% if selected_category or selected_age_group or selected_location %}
         <div class="active-filters">
             <span class="active-filters-label">Aktive Filter:</span>
             {% if selected_category %}
@@ -701,6 +725,12 @@ body {
             {% if selected_age_group %}
             <span class="filter-tag">
                 <span class="filter-type">Altersgruppe:</span> {{ selected_age_group }}
+            </span>
+            {% endif %}
+            
+            {% if selected_location %}
+            <span class="filter-tag">
+                <span class="filter-type">Standort:</span> {{ selected_location }}
             </span>
             {% endif %}
         </div>
@@ -724,6 +754,9 @@ body {
                                     {% endif %}
                                     {% if timeslot.studio %}
                                         <span><span class="detail-label">{% trans "Studio" %}:</span> {{ timeslot.studio }}</span>
+                                    {% endif %}
+                                    {% if timeslot.location %}
+                                        <span><span class="detail-label">{% trans "Standort" %}:</span> {{ timeslot.location }}</span>
                                     {% endif %}
                                 </div>
                             </div>
@@ -752,6 +785,7 @@ body {
                 </p>
                 <p><span class="info-label">Lehrkraft:</span> <span id="course-teacher"></span></p>
                 <p><span class="info-label">Altersgruppe:</span> <span id="course-age"></span></p>
+                <p><span class="info-label">Standort:</span> <span id="course-location">wird geladen...</span></p>
                 
                 <div style="text-align: center; margin-top: 20px;">
                     <button onclick="closeModal()" style="background-color: #d11317; color: white; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background-color 0.3s;">

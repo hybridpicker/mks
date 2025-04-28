@@ -23,8 +23,8 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(TimeSlot)
 class TimeSlotAdmin(admin.ModelAdmin):
-    list_display = ('course', 'day', 'start_time', 'end_time', 'studio')
-    list_filter = ('day', 'studio', 'course__teacher')
-    search_fields = ('course__name', 'studio')
+    list_display = ('course', 'day', 'start_time', 'end_time', 'studio', 'location')
+    list_filter = ('day', 'studio', 'location', 'course__teacher')
+    search_fields = ('course__name', 'studio', 'location')
     # Consider making course selectable via raw_id_fields if many courses exist
     # raw_id_fields = ('course',) 

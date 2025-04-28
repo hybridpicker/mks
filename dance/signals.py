@@ -3,6 +3,8 @@ from django.dispatch import receiver
 from django.core.management import call_command
 from django.apps import apps
 from django.db import connection
+import os
+from django.conf import settings
 
 @receiver(post_migrate)
 def load_initial_data(sender, **kwargs):
@@ -39,5 +41,18 @@ def load_initial_data(sender, **kwargs):
                     cursor.execute("DELETE FROM sqlite_sequence WHERE name='dance_course'")
                     cursor.execute("DELETE FROM sqlite_sequence WHERE name='dance_timeslot'")
             
-            # Führe das Management-Kommando aus, um die neuen Daten zu laden
-            call_command('setup_dance_data')
+            # Prüfe, ob dance_fixture.json existiert
+            fixture_path = os.path.join(settings.BASE_DIR, 'dance_fixture.json')
+            if os.path.exists(fixture_path):
+                try:
+                    # Führe das Management-Kommando aus, um die Daten aus dance_fixture.json zu laden
+                    call_command('loaddata', 'dance_fixture.json')
+                    print("Tanzdaten aus dance_fixture.json erfolgreich geladen")
+                except Exception as e:
+                    print(f"Fehler beim Laden von dance_fixture.json: {str(e)}")
+                    # Fallback auf die Standard-Daten, wenn es ein Problem mit dance_fixture.json gibt
+                    call_command('setup_dance_data')
+            else:
+                # Führe das Standard-Kommando aus, wenn dance_fixture.json nicht existiert
+                call_command('setup_dance_data')
+                print("Standard-Tanzdaten wurden geladen (dance_fixture.json nicht gefunden)")

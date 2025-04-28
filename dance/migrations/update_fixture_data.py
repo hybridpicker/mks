@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
     Diese Migration wird ausgeführt, wenn ein git pull durchgeführt wird.
     """
     dependencies = [
-        ('dance', '0001_initial'),
+        ('dance', '0002_timeslot_location'),
     ]
 
     operations = [

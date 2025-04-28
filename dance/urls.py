@@ -11,4 +11,8 @@ urlpatterns = [
     path('zeitfenster-aktion/', views.timeslot_action, name='timeslot_action'),
     path('loeschen/', views.delete_action, name='delete_action'),
     path('kurs/<int:course_id>/', views.course_detail, name='course_detail'),
+    
+    # API-Endpunkte für die AJAX-Funktionalität
+    path('api/lehrer/<int:teacher_id>/', views.teacher_detail_api, name='teacher_detail_api'),
+    path('api/zeitfenster/<int:timeslot_id>/', views.timeslot_detail_api, name='timeslot_detail_api'),
 ]

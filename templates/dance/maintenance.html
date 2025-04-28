@@ -307,7 +307,7 @@
         
         <div class="course-list">
             {% for course in courses %}
-            <div class="course-item">
+            <div class="course-item" id="course-{{ course.id }}">
                 <h4>{{ course.name }}</h4>
                 <p><strong>Lehrer:</strong> {{ course.teacher.name }}</p>
                 <p><strong>Altersgruppe:</strong> {{ course.age_group }}</p>
@@ -316,8 +316,13 @@
                 <div class="timeslots">
                     <h5>Zeitfenster:</h5>
                     {% for timeslot in course.timeslots.all %}
-                    <div class="timeslot-item">
-                        <p>{{ timeslot.get_day_display }}, {{ timeslot.start_time|time:"H:i" }} - {{ timeslot.end_time|time:"H:i" }} Uhr{% if timeslot.studio %}, Studio: {{ timeslot.studio }}{% endif %}</p>
+                    <div class="timeslot-item" id="timeslot-{{ timeslot.id }}" data-id="{{ timeslot.id }}" data-course-id="{{ course.id }}">
+                        <p>
+                            <span class="timeslot-day">{{ timeslot.get_day_display }}</span>, 
+                            <span class="timeslot-time">{{ timeslot.start_time|time:"H:i" }} - {{ timeslot.end_time|time:"H:i" }} Uhr</span>
+                            {% if timeslot.studio %}, <span class="timeslot-studio">Studio: {{ timeslot.studio }}</span>{% endif %}
+                            {% if timeslot.location %}, <span class="timeslot-location">Standort: {{ timeslot.location }}</span>{% endif %}
+                        </p>
                         <button class="action-btn" onclick="editTimeslot({{ timeslot.id }})">Bearbeiten</button>
                         <button class="action-btn delete-btn" onclick="deleteTimeslot({{ timeslot.id }})">Löschen</button>
                     </div>
@@ -467,6 +472,10 @@
                     <label for="timeslot_studio">Studio (optional)</label>
                     <input type="text" id="timeslot_studio" name="studio">
                 </div>
+                <div class="form-group">
+                    <label for="timeslot_location">Standort (optional)</label>
+                    <input type="text" id="timeslot_location" name="location" placeholder="z.B. Campus oder Kulturheim Spratzern">
+                </div>
             </div>
             <div class="btn-container">
                 <button type="submit" class="btn">Speichern</button>
@@ -522,12 +531,29 @@
     function editTeacher(teacherId) {
         document.getElementById('teacherModalTitle').innerText = 'Lehrer bearbeiten';
         
-        // Hier würde im echten System ein AJAX-Aufruf kommen,
-        // um die Lehrerdaten zu laden
-        
-        document.getElementById('teacher_id').value = teacherId;
-        // Felder mit Daten füllen
-        openModal('teacherModal');
+        // AJAX-Anfrage zum Laden der Lehrerdaten
+        fetch(`/tanz-und-bewegung/kurs/${teacherId}/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Lehrerdaten');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Formular mit Daten füllen
+                document.getElementById('teacher_id').value = teacherId;
+                document.getElementById('teacher_name').value = data.teacher;
+                document.getElementById('teacher_email').value = data.email || '';
+                
+                // Modal öffnen
+                openModal('teacherModal');
+            })
+            .catch(error => {
+                console.error('Fehler:', error);
+                // Trotzdem das Modal öffnen, mit ID
+                document.getElementById('teacher_id').value = teacherId;
+                openModal('teacherModal');
+            });
     }
     
     function deleteTeacher(teacherId) {
@@ -550,12 +576,40 @@
     function editCourse(courseId) {
         document.getElementById('courseModalTitle').innerText = 'Kurs bearbeiten';
         
-        // Hier würde im echten System ein AJAX-Aufruf kommen,
-        // um die Kursdaten zu laden
-        
-        document.getElementById('course_id').value = courseId;
-        // Felder mit Daten füllen
-        openModal('courseModal');
+        // AJAX-Anfrage zum Laden der Kursdaten
+        fetch(`/tanz-und-bewegung/kurs/${courseId}/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Kursdaten');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Formular mit Daten füllen
+                document.getElementById('course_id').value = courseId;
+                document.getElementById('course_name').value = data.name;
+                
+                // Finde den richtigen Lehrer anhand des Namens
+                const teacherSelect = document.getElementById('course_teacher');
+                for (let i = 0; i < teacherSelect.options.length; i++) {
+                    if (teacherSelect.options[i].text === data.teacher) {
+                        teacherSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+                
+                document.getElementById('course_age_group').value = data.age_group;
+                document.getElementById('course_description').value = data.description;
+                
+                // Modal öffnen
+                openModal('courseModal');
+            })
+            .catch(error => {
+                console.error('Fehler:', error);
+                // Trotzdem das Modal öffnen, mit ID
+                document.getElementById('course_id').value = courseId;
+                openModal('courseModal');
+            });
     }
     
     function deleteCourse(courseId) {
@@ -579,11 +633,76 @@
     function editTimeslot(timeslotId) {
         document.getElementById('timeslotModalTitle').innerText = 'Zeitfenster bearbeiten';
         
-        // Hier würde im echten System ein AJAX-Aufruf kommen,
-        // um die Zeitfensterdaten zu laden
+        // Funktion, um das Zeitfenster zu laden - entweder über die AJAX-API oder
+        // indem wir die DOM-Elemente direkt nutzen (als Fallback)
+        function getTimeslotDataFromDOM(timeslotId) {
+            // Finde das Zeitfenster-Element im DOM
+            const timeslotElement = document.querySelector(`.timeslot-item[data-id="${timeslotId}"]`);
+            if (!timeslotElement) return null;
+            
+            // Extrahiere die Daten aus dem DOM
+            const courseId = timeslotElement.getAttribute('data-course-id');
+            const dayText = timeslotElement.querySelector('.timeslot-day').textContent;
+            const timeText = timeslotElement.querySelector('.timeslot-time').textContent;
+            const studioText = timeslotElement.querySelector('.timeslot-studio')?.textContent || '';
+            const locationText = timeslotElement.querySelector('.timeslot-location')?.textContent || '';
+            
+            // Extrahiere Tag aus dem Text
+            const day = dayText.trim();
+            
+            // Extrahiere Start- und Endzeit aus dem Text (Format: "15:30 - 17:00 Uhr")
+            const timeMatch = timeText.match(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/);
+            const startTime = timeMatch ? timeMatch[1] : '';
+            const endTime = timeMatch ? timeMatch[2] : '';
+            
+            // Extrahiere Studio und Standort (falls vorhanden)
+            const studio = studioText.replace('Studio:', '').trim();
+            const location = locationText.replace('Standort:', '').trim();
+            
+            return {
+                id: timeslotId,
+                course_id: courseId,
+                day: day,
+                start_time: startTime,
+                end_time: endTime,
+                studio: studio,
+                location: location
+            };
+        }
         
-        document.getElementById('timeslot_id').value = timeslotId;
-        // Felder mit Daten füllen
+        try {
+            // Versuche, die Daten aus dem DOM zu extrahieren
+            const timeslotData = getTimeslotDataFromDOM(timeslotId);
+            
+            if (timeslotData) {
+                // Formular mit Daten füllen
+                document.getElementById('timeslot_id').value = timeslotData.id;
+                document.getElementById('timeslot_course_id').value = timeslotData.course_id;
+                
+                // Tag (Wochentag) setzen
+                const daySelect = document.getElementById('timeslot_day');
+                for (let i = 0; i < daySelect.options.length; i++) {
+                    if (daySelect.options[i].text === timeslotData.day) {
+                        daySelect.selectedIndex = i;
+                        break;
+                    }
+                }
+                
+                document.getElementById('timeslot_start_time').value = timeslotData.start_time;
+                document.getElementById('timeslot_end_time').value = timeslotData.end_time;
+                document.getElementById('timeslot_studio').value = timeslotData.studio;
+                document.getElementById('timeslot_location').value = timeslotData.location;
+            } else {
+                // Fallback: Nur die ID setzen
+                document.getElementById('timeslot_id').value = timeslotId;
+            }
+        } catch (error) {
+            console.error('Fehler beim Extrahieren der Zeitfenster-Daten:', error);
+            // Fallback: Nur die ID setzen
+            document.getElementById('timeslot_id').value = timeslotId;
+        }
+        
+        // Modal öffnen
         openModal('timeslotModal');
     }
     
@@ -613,6 +732,20 @@
         // Zur gefilterten URL navigieren
         window.location.href = url;
     }
+    
+    // Beim Laden der Seite
+    document.addEventListener('DOMContentLoaded', function() {
+        // Füge allen Zeitfenstern data-Attribute für die Bearbeitung hinzu
+        document.querySelectorAll('.timeslot-item').forEach(function(timeslotItem) {
+            const timeslotId = timeslotItem.getAttribute('id')?.replace('timeslot-', '') || '';
+            const courseId = timeslotItem.closest('.course-item').getAttribute('id')?.replace('course-', '') || '';
+            
+            if (timeslotId) {
+                timeslotItem.setAttribute('data-id', timeslotId);
+                timeslotItem.setAttribute('data-course-id', courseId);
+            }
+        });
+    });
 </script>
 {% else %}
 <div class="maintenance-container">
