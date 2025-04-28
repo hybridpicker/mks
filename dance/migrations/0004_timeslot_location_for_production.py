@@ -4,7 +4,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dance', '0003_merge_0002_timeslot_location_update_fixture_data'),
+        ('dance', 'update_fixture_data'),
     ]
 
     operations = [
