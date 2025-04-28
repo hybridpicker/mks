@@ -99,12 +99,19 @@ class Migration(migrations.Migration):
         # Weist Standorte den Lehrern zu
         migrations.RunPython(assign_locations),
         
-        # Stellt sicher, dass das Feld im Modell definiert ist
-        migrations.AddField(
-            model_name='timeslot',
-            name='location',
-            field=models.CharField(blank=True, help_text='Optional, z.B. Campus oder Kulturheim Spratzern', max_length=100, null=True, verbose_name='Standort'),
-            # SeparateDatabaseAndState sorgt dafür, dass die Spalte nicht erneut hinzugefügt wird
-            preserve_default=True,
+        # Wir verwenden SeparateDatabaseAndState, um das Modell zu aktualisieren, 
+        # ohne die Datenbank zu verändern (die Spalte wurde bereits hinzugefügt)
+        migrations.SeparateDatabaseAndState(
+            # Keine Datenbankänderung
+            database_operations=[],
+            
+            # Nur Änderung am Modellstatus
+            state_operations=[
+                migrations.AddField(
+                    model_name='timeslot',
+                    name='location',
+                    field=models.CharField(blank=True, help_text='Optional, z.B. Campus oder Kulturheim Spratzern', max_length=100, null=True, verbose_name='Standort'),
+                ),
+            ],
         ),
     ]
