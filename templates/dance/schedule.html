@@ -147,6 +147,9 @@ body {
     font-size: 0.9em;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Even lighter shadow */
 }
+.timeslot:hover{
+    cursor: pointer;
+}
 
 .timeslot-time {
     font-weight: bold;
@@ -261,6 +264,7 @@ body {
     position: absolute;
     right: 15px;
     top: 10px;
+    text-decoration: none;
 }
 
 .close-button:hover {
@@ -457,7 +461,7 @@ body {
                     <div class="day-column">
                         <h3>{{ day }}</h3>
                         {% for timeslot in timeslots %}
-                            <div class="timeslot">
+                            <div class="timeslot"  onclick="showCourseDetails({{ timeslot.course.id }})">
                                 <span class="timeslot-time">{{ timeslot.start_time|time:"H:i" }} - {{ timeslot.end_time|time:"H:i" }} Uhr</span>
                                 <div class="timeslot-course" onclick="showCourseDetails({{ timeslot.course.id }})">{{ timeslot.course.name }}</div>
                                 <div class="timeslot-details">
