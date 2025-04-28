@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'projects.apps.ProjectsConfig',
     'faq.apps.FaqConfig',
     'invitation.apps.InvitationConfig',
+    'dance', # Add the new dance app
     #sitemaps
     'django.contrib.sitemaps',
     #thumbnails

@@ -1,0 +1,627 @@
+{% extends "templates/base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Tanz & Bewegung - Kursverwaltung" %}{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'dance/css/schedule.css' %}">
+    <style>
+        /* Wartungsbereich-Styles */
+        .maintenance-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .maintenance-heading {
+            color: #000;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #d11317;
+            padding-bottom: 10px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .form-section h3 {
+            color: #000;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #d11317;
+            padding-bottom: 5px;
+        }
+
+        .form-row {
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 250px;
+            margin-right: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            height: 100px;
+        }
+
+        .btn-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: #d11317;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #b30f14;
+        }
+
+        .btn-secondary {
+            background-color: #333;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #555;
+        }
+
+        .course-list {
+            margin-top: 20px;
+        }
+
+        .course-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .course-item h4 {
+            margin-top: 0;
+            color: #000;
+        }
+
+        .course-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .timeslot-item {
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .action-btn {
+            background-color: #d11317;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        .delete-btn {
+            background-color: #333;
+        }
+
+        /* Filterbereich */
+        .filter-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            margin-right: 15px;
+            margin-bottom: 10px;
+        }
+
+        .filter-group label {
+            margin-right: 5px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* Pagination */
+        .pagination {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .pagination a {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 0 3px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            color: #d11317;
+            text-decoration: none;
+        }
+
+        .pagination .current {
+            background-color: #d11317;
+            color: white;
+            border: 1px solid #d11317;
+            padding: 5px 10px;
+            margin: 0 3px;
+            border-radius: 3px;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 5px;
+        }
+        
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-modal:hover {
+            color: black;
+        }
+        
+        .modal-title {
+            margin-top: 0;
+            color: #000;
+            border-bottom: 1px solid #d11317;
+            padding-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .form-group {
+                flex: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<div class="maintenance-container">
+    <h1 class="maintenance-heading">{% trans "Tanz & Bewegung - Kursverwaltung" %}</h1>
+    
+    <div class="form-section">
+        <h3>Lehrer verwalten</h3>
+        <div class="course-list">
+            {% for teacher in teachers %}
+            <div class="course-item">
+                <h4>{{ teacher.name }}</h4>
+                <p><strong>Email:</strong> {{ teacher.email }}</p>
+                <div class="course-actions">
+                    <button class="action-btn" onclick="editTeacher({{ teacher.id }})">Bearbeiten</button>
+                    <button class="action-btn delete-btn" onclick="deleteTeacher({{ teacher.id }})">Löschen</button>
+                </div>
+            </div>
+            {% empty %}
+            <p>Keine Lehrer vorhanden.</p>
+            {% endfor %}
+        </div>
+        <div class="btn-container">
+            <button class="btn" onclick="showAddTeacherForm()">Neuen Lehrer hinzufügen</button>
+        </div>
+    </div>
+    
+    <div class="form-section">
+        <h3>Kurse verwalten</h3>
+        <div class="filter-section">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="teacher-filter">Lehrer:</label>
+                    <select id="teacher-filter">
+                        <option value="">Alle</option>
+                        {% for teacher in teachers %}
+                        <option value="{{ teacher.id }}">{{ teacher.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="age-filter">Altersgruppe:</label>
+                    <select id="age-filter">
+                        <option value="">Alle</option>
+                        {% for age_group in age_groups %}
+                        <option value="{{ age_group }}">{{ age_group }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <button class="btn" onclick="filterCourses()">Filtern</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="course-list">
+            {% for course in courses %}
+            <div class="course-item">
+                <h4>{{ course.name }}</h4>
+                <p><strong>Lehrer:</strong> {{ course.teacher.name }}</p>
+                <p><strong>Altersgruppe:</strong> {{ course.age_group }}</p>
+                <p><strong>Beschreibung:</strong> {{ course.description|truncatechars:150 }}</p>
+                
+                <div class="timeslots">
+                    <h5>Zeitfenster:</h5>
+                    {% for timeslot in course.timeslots.all %}
+                    <div class="timeslot-item">
+                        <p>{{ timeslot.get_day_display }}, {{ timeslot.start_time|time:"H:i" }} - {{ timeslot.end_time|time:"H:i" }} Uhr{% if timeslot.studio %}, Studio: {{ timeslot.studio }}{% endif %}</p>
+                        <button class="action-btn" onclick="editTimeslot({{ timeslot.id }})">Bearbeiten</button>
+                        <button class="action-btn delete-btn" onclick="deleteTimeslot({{ timeslot.id }})">Löschen</button>
+                    </div>
+                    {% empty %}
+                    <p>Keine Zeitfenster festgelegt.</p>
+                    {% endfor %}
+                    <button class="action-btn" onclick="addTimeslot({{ course.id }})">Zeitfenster hinzufügen</button>
+                </div>
+                
+                <div class="course-actions">
+                    <button class="action-btn" onclick="editCourse({{ course.id }})">Bearbeiten</button>
+                    <button class="action-btn delete-btn" onclick="deleteCourse({{ course.id }})">Löschen</button>
+                </div>
+            </div>
+            {% empty %}
+            <p>Keine Kurse vorhanden.</p>
+            {% endfor %}
+        </div>
+        
+        <div class="pagination">
+            {% if courses.has_previous %}
+            <a href="?page={{ courses.previous_page_number }}">Zurück</a>
+            {% endif %}
+            
+            <span class="current">
+                Seite {{ courses.number }} von {{ courses.paginator.num_pages }}
+            </span>
+            
+            {% if courses.has_next %}
+            <a href="?page={{ courses.next_page_number }}">Weiter</a>
+            {% endif %}
+        </div>
+        
+        <div class="btn-container">
+            <button class="btn" onclick="showAddCourseForm()">Neuen Kurs hinzufügen</button>
+        </div>
+    </div>
+    
+    <div class="btn-container">
+        <a href="{% url 'dance:schedule' %}"><button class="btn btn-secondary">Zurück zum Stundenplan</button></a>
+    </div>
+</div>
+
+<!-- Modal für Lehrer-Formular -->
+<div id="teacherModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('teacherModal')">&times;</span>
+        <h2 class="modal-title" id="teacherModalTitle">Lehrer hinzufügen</h2>
+        <form id="teacherForm" method="post" action="{% url 'dance:teacher_action' %}">
+            {% csrf_token %}
+            <input type="hidden" id="teacher_id" name="teacher_id" value="">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="teacher_name">Name</label>
+                    <input type="text" id="teacher_name" name="name" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="teacher_email">E-Mail</label>
+                    <input type="email" id="teacher_email" name="email" required>
+                </div>
+            </div>
+            <div class="btn-container">
+                <button type="submit" class="btn">Speichern</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('teacherModal')">Abbrechen</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal für Kurs-Formular -->
+<div id="courseModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('courseModal')">&times;</span>
+        <h2 class="modal-title" id="courseModalTitle">Kurs hinzufügen</h2>
+        <form id="courseForm" method="post" action="{% url 'dance:course_action' %}">
+            {% csrf_token %}
+            <input type="hidden" id="course_id" name="course_id" value="">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="course_name">Kursname</label>
+                    <input type="text" id="course_name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="course_teacher">Lehrer</label>
+                    <select id="course_teacher" name="teacher_id" required>
+                        <option value="">Bitte wählen</option>
+                        {% for teacher in teachers %}
+                        <option value="{{ teacher.id }}">{{ teacher.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="course_age_group">Altersgruppe</label>
+                    <input type="text" id="course_age_group" name="age_group" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="course_description">Beschreibung</label>
+                    <textarea id="course_description" name="description"></textarea>
+                </div>
+            </div>
+            <div class="btn-container">
+                <button type="submit" class="btn">Speichern</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('courseModal')">Abbrechen</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal für Zeitfenster-Formular -->
+<div id="timeslotModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('timeslotModal')">&times;</span>
+        <h2 class="modal-title" id="timeslotModalTitle">Zeitfenster hinzufügen</h2>
+        <form id="timeslotForm" method="post" action="{% url 'dance:timeslot_action' %}">
+            {% csrf_token %}
+            <input type="hidden" id="timeslot_id" name="timeslot_id" value="">
+            <input type="hidden" id="timeslot_course_id" name="course_id" value="">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="timeslot_day">Tag</label>
+                    <select id="timeslot_day" name="day" required>
+                        <option value="">Bitte wählen</option>
+                        {% for day_code, day_name in days_of_week %}
+                        <option value="{{ day_code }}">{{ day_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="timeslot_start_time">Startzeit</label>
+                    <input type="time" id="timeslot_start_time" name="start_time" required>
+                </div>
+                <div class="form-group">
+                    <label for="timeslot_end_time">Endzeit</label>
+                    <input type="time" id="timeslot_end_time" name="end_time" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="timeslot_studio">Studio (optional)</label>
+                    <input type="text" id="timeslot_studio" name="studio">
+                </div>
+            </div>
+            <div class="btn-container">
+                <button type="submit" class="btn">Speichern</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('timeslotModal')">Abbrechen</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Bestätigungsdialog zum Löschen -->
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('confirmationModal')">&times;</span>
+        <h2 class="modal-title">Löschen bestätigen</h2>
+        <p id="confirmationMessage"></p>
+        <form id="deleteForm" method="post">
+            {% csrf_token %}
+            <input type="hidden" id="delete_id" name="id" value="">
+            <input type="hidden" id="delete_type" name="type" value="">
+            <div class="btn-container">
+                <button type="submit" class="btn delete-btn">Löschen</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('confirmationModal')">Abbrechen</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Funktionen für Modals
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
+    }
+    
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+    
+    // Schließen, wenn außerhalb geklickt wird
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = "none";
+        }
+    }
+    
+    // Lehrer-Funktionen
+    function showAddTeacherForm() {
+        document.getElementById('teacherModalTitle').innerText = 'Lehrer hinzufügen';
+        document.getElementById('teacherForm').reset();
+        document.getElementById('teacher_id').value = '';
+        openModal('teacherModal');
+    }
+    
+    function editTeacher(teacherId) {
+        document.getElementById('teacherModalTitle').innerText = 'Lehrer bearbeiten';
+        
+        // Hier würde im echten System ein AJAX-Aufruf kommen,
+        // um die Lehrerdaten zu laden
+        
+        document.getElementById('teacher_id').value = teacherId;
+        // Felder mit Daten füllen
+        openModal('teacherModal');
+    }
+    
+    function deleteTeacher(teacherId) {
+        document.getElementById('confirmationMessage').innerText = 
+            'Sind Sie sicher, dass Sie diesen Lehrer löschen möchten? Alle zugehörigen Kurse werden ebenfalls gelöscht!';
+        document.getElementById('delete_id').value = teacherId;
+        document.getElementById('delete_type').value = 'teacher';
+        document.getElementById('deleteForm').action = "{% url 'dance:delete_action' %}";
+        openModal('confirmationModal');
+    }
+    
+    // Kurs-Funktionen
+    function showAddCourseForm() {
+        document.getElementById('courseModalTitle').innerText = 'Kurs hinzufügen';
+        document.getElementById('courseForm').reset();
+        document.getElementById('course_id').value = '';
+        openModal('courseModal');
+    }
+    
+    function editCourse(courseId) {
+        document.getElementById('courseModalTitle').innerText = 'Kurs bearbeiten';
+        
+        // Hier würde im echten System ein AJAX-Aufruf kommen,
+        // um die Kursdaten zu laden
+        
+        document.getElementById('course_id').value = courseId;
+        // Felder mit Daten füllen
+        openModal('courseModal');
+    }
+    
+    function deleteCourse(courseId) {
+        document.getElementById('confirmationMessage').innerText = 
+            'Sind Sie sicher, dass Sie diesen Kurs löschen möchten? Alle zugehörigen Zeitfenster werden ebenfalls gelöscht!';
+        document.getElementById('delete_id').value = courseId;
+        document.getElementById('delete_type').value = 'course';
+        document.getElementById('deleteForm').action = "{% url 'dance:delete_action' %}";
+        openModal('confirmationModal');
+    }
+    
+    // Zeitfenster-Funktionen
+    function addTimeslot(courseId) {
+        document.getElementById('timeslotModalTitle').innerText = 'Zeitfenster hinzufügen';
+        document.getElementById('timeslotForm').reset();
+        document.getElementById('timeslot_id').value = '';
+        document.getElementById('timeslot_course_id').value = courseId;
+        openModal('timeslotModal');
+    }
+    
+    function editTimeslot(timeslotId) {
+        document.getElementById('timeslotModalTitle').innerText = 'Zeitfenster bearbeiten';
+        
+        // Hier würde im echten System ein AJAX-Aufruf kommen,
+        // um die Zeitfensterdaten zu laden
+        
+        document.getElementById('timeslot_id').value = timeslotId;
+        // Felder mit Daten füllen
+        openModal('timeslotModal');
+    }
+    
+    function deleteTimeslot(timeslotId) {
+        document.getElementById('confirmationMessage').innerText = 
+            'Sind Sie sicher, dass Sie dieses Zeitfenster löschen möchten?';
+        document.getElementById('delete_id').value = timeslotId;
+        document.getElementById('delete_type').value = 'timeslot';
+        document.getElementById('deleteForm').action = "{% url 'dance:delete_action' %}";
+        openModal('confirmationModal');
+    }
+    
+    // Filter-Funktion
+    function filterCourses() {
+        const teacherId = document.getElementById('teacher-filter').value;
+        const ageGroup = document.getElementById('age-filter').value;
+        
+        // URL mit Filterparametern erstellen
+        let url = window.location.pathname + '?';
+        if (teacherId) {
+            url += 'teacher=' + teacherId + '&';
+        }
+        if (ageGroup) {
+            url += 'age_group=' + encodeURIComponent(ageGroup) + '&';
+        }
+        
+        // Zur gefilterten URL navigieren
+        window.location.href = url;
+    }
+</script>
+{% else %}
+<div class="maintenance-container">
+    <h1 class="maintenance-heading">{% trans "Zugriff verweigert" %}</h1>
+    <p style="text-align: center;">Sie müssen angemeldet sein, um auf die Kursverwaltung zugreifen zu können.</p>
+    <div class="btn-container">
+        <a href="{% url 'login' %}"><button class="btn">Anmelden</button></a>
+        <a href="{% url 'dance:schedule' %}"><button class="btn btn-secondary">Zurück zum Stundenplan</button></a>
+    </div>
+</div>
+{% endif %}
+{% endblock body %}

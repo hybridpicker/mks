@@ -53,12 +53,14 @@ urlpatterns = [
     path('', include('contact.urls')),
     path('', include('downloadsection.urls')),
     path('', include('gallery.urls')),
-    path('', include('teaching.urls')),
+    path('lehrende/', include('teaching.urls', namespace='teaching')),
+    # path('standorte/', include('location.urls', namespace='location')), 
+    path('tanz-und-bewegung/', include('dance.urls', namespace='dance')),
+    path('projekte/', include('projects.urls', namespace='projects')),
     path('', include('students.urls')),
     path('', include('faq.urls')),
     path('hexe-rabaukel/', include('invitation.urls')),
 
-    path('', include('projects.urls')),
     re_path(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

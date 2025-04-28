@@ -13,14 +13,14 @@
         <div class="drops">
         <div class="dropdown arrow">
           <button class="dropbtn">
-            <a href="{% url 'teaching_music'%}">Bildungsangebot</a>
+            <a href="{% url 'teaching:teaching_music'%}">Bildungsangebot</a>
           </button>
           <div class="dropdown-content">
-            <a href="{% url 'teaching_music'%}">Musikschule</a>
+            <a href="{% url 'teaching:teaching_music'%}">Musikschule</a>
             <a href="/tanz-und-bewegung">Tanz & Bewegung</a>
-            <a href="{% url 'teaching_art'%}">Musik- und Kunstschule</a>
+            <a href="{% url 'teaching:teaching_art'%}">Musik- und Kunstschule</a>
             <a href="/orgelunterricht">Orgelunterricht</a>
-            <a href="{% url 'teaching_prices'%}">Beiträge & Ermäßigungen</a>
+            <a href="{% url 'teaching:teaching_prices'%}">Beiträge & Ermäßigungen</a>
           </div>
           <div class="dropdown-hover-section">
           </div>
@@ -37,10 +37,10 @@
           </div>
           <div class="dropdown-d arrow">
             <button class="dropbtn-d">
-              <a href="{% url 'all_teachers'%}">Über uns</a>
+              <a href="{% url 'teaching:all_teachers'%}">Über uns</a>
             </button>
             <div class="dropdown-content-d">
-              <a href="{% url 'all_teachers'%}">Team</a>
+              <a href="{% url 'teaching:all_teachers'%}">Team</a>
               <a href="{% url 'history'%}">Geschichte</a>
               <a href="{% url 'blog_summary' %}">Blog</a>
               <!-- TODO: If Projects -->
@@ -85,14 +85,14 @@
         <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
           {% include "templates/svg/nav_bar_cross_burger.html" %}
         </a>
-        <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_music'%}">Bildungsangebot</a>
-        <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_music'%}">Musikschule</a>
-        <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_art'%}">Musik- und Kunstschule</a>
+        <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_music'%}">Bildungsangebot</a>
+        <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_music'%}">Musikschule</a>
+        <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_art'%}">Musik- und Kunstschule</a>
         <a class="categoryHeadingMobileNoCursor" href="/tanz-und-bewegung">Tanz & Bewegung</a>
         <a class="categoryHeadingMobileNoCursor" href="/orgelunterricht">Orgelunterricht</a>
-        <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching_prices'%}">Beiträge & Ermäßigungen</a>
+        <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_prices'%}">Beiträge & Ermäßigungen</a>
         <a class="categoryHeadingMobileNoCursor" href="{% url 'gallery_view'%}">Galerie</a>
-        <a class="categoryHeadingMobileNoCursor" href="{% url 'all_teachers'%}">Über Uns</a>
+        <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:all_teachers'%}">Über Uns</a>
         <a class="categoryHeadingMobileNoCursor" href="{% url 'blog_summary' %}">Blog</a>
         <a class="categoryHeadingMobileNoCursor" href="{% url 'history'%}">Geschichte</a>
         <a class="categoryHeadingMobileNoCursor" href="{% url 'contact_email' %}">Kontakt</a>
