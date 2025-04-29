@@ -21,7 +21,7 @@ def update_categories(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('dance', '9000_add_location_field'),
+        ('dance', '0002_timeslot_location'),
     ]
 
     operations = [
