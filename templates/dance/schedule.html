@@ -666,7 +666,7 @@ body {
                         <option value="">Alle Tanzstile</option>
                         {% for category in available_categories %}
                             <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>
-                                {{ category }} ({{ category_counts|get_item:category }})
+                                {{ category }}
                             </option>
                         {% endfor %}
                     </select>
@@ -681,7 +681,7 @@ body {
                         <option value="">Alle Altersgruppen</option>
                         {% for age_group in unique_age_groups %}
                             <option value="{{ age_group }}" {% if selected_age_group == age_group %}selected{% endif %}>
-                                {{ age_group }} ({{ age_group_counts|get_item:age_group }})
+                                {{ age_group }}
                             </option>
                         {% endfor %}
                     </select>
@@ -696,7 +696,7 @@ body {
                         <option value="">Alle Standorte</option>
                         {% for location in unique_locations %}
                             <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>
-                                {{ location }} ({{ location_counts|get_item:location }})
+                                {{ location }}
                             </option>
                         {% endfor %}
                     </select>

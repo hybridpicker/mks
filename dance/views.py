@@ -29,12 +29,12 @@ def get_course_category(description):
         'traditionellen methoden', 'historischer charaktertanz', 
         'volkstümlichen charaktertänzen', 'ballett', 'klassisch', 'traditionell'
     ]):
-        return 'Klassisches Ballett'
+        return 'Klassischer Tanz'
     
     # Modernen Tanz
     elif any(keyword in description_lower for keyword in [
         'modern', 'zeitgenössischer tanz', 'contemporary', 'zeitgenössisch',
-        'hiphop', 'funky moves', 'ausdruckstanz', 'jazz', 'urban'
+        'hiphop', 'funky moves', 'ausdruckstanz', 'jazz', 'urban', 'improvisation', 'tanztheater'
     ]):
         return 'Moderner Tanz'
     
@@ -89,10 +89,10 @@ def dance_schedule_view(request):
             mapped_age_group = "3-6 Jahre"
         elif any(x in actual_age_group for x in ["6", "7", "8", "9"]) or "grundschule" in actual_age_group:
             mapped_age_group = "6-9 Jahre"
-        elif any(x in actual_age_group for x in ["10", "11", "12", "13", "14", "15", "16"]) or "jugendliche" in actual_age_group:
-            mapped_age_group = "10-16 Jahre"
-        elif any(x in actual_age_group for x in ["16+", "17", "18", "erwachsene"]):
-            mapped_age_group = "16+"
+        elif any(x in actual_age_group for x in ["10", "11", "12", "13", "14"]) or "jugendliche" in actual_age_group:
+            mapped_age_group = "10-14 Jahre"
+        elif any(x in actual_age_group for x in ["15+", "15", "16", "17", "18", "erwachsene"]):
+            mapped_age_group = "15+"
         else:
             # Fallback basierend auf den ersten Zahlen im String
             import re
@@ -103,10 +103,10 @@ def dance_schedule_view(request):
                     mapped_age_group = "3-6 Jahre"
                 elif first_age <= 9:
                     mapped_age_group = "6-9 Jahre"
-                elif first_age <= 16:
-                    mapped_age_group = "10-16 Jahre"
+                elif first_age <= 14:
+                    mapped_age_group = "10-14 Jahre"
                 else:
-                    mapped_age_group = "16+"
+                    mapped_age_group = "15+"
         
         # Speichere die zugeordnete Altersgruppe für die Anzeige
         timeslot.mapped_age_group = mapped_age_group
@@ -141,7 +141,7 @@ def dance_schedule_view(request):
 
     # Verwende feste Altersgruppen statt die aus der Datenbank
     all_courses = Course.objects.all()
-    unique_age_groups = ["3-6 Jahre", "6-9 Jahre", "10-16 Jahre", "16+"]
+    unique_age_groups = ["3-6 Jahre", "6-9 Jahre", "10-14 Jahre", "15+"]
     
     # Generate available categories by actually analyzing the courses
     available_categories = []
@@ -196,10 +196,10 @@ def dance_schedule_view(request):
             age_group_counts["3-6 Jahre"] += 1
         elif any(x in age_text for x in ["6", "7", "8", "9"]) or "grundschule" in age_text:
             age_group_counts["6-9 Jahre"] += 1
-        elif any(x in age_text for x in ["10", "11", "12", "13", "14", "15", "16"]) or "jugendliche" in age_text:
-            age_group_counts["10-16 Jahre"] += 1
-        elif any(x in age_text for x in ["16+", "17", "18", "erwachsene"]):
-            age_group_counts["16+"] += 1
+        elif any(x in age_text for x in ["10", "11", "12", "13", "14"]) or "jugendliche" in age_text:
+            age_group_counts["10-14 Jahre"] += 1
+        elif any(x in age_text for x in ["15+", "15", "16", "17", "18", "erwachsene"]):
+            age_group_counts["15+"] += 1
         else:
             # Fallback basierend auf den ersten Zahlen im String
             import re
@@ -210,10 +210,10 @@ def dance_schedule_view(request):
                     age_group_counts["3-6 Jahre"] += 1
                 elif first_age <= 9:
                     age_group_counts["6-9 Jahre"] += 1
-                elif first_age <= 16:
-                    age_group_counts["10-16 Jahre"] += 1
+                elif first_age <= 14:
+                    age_group_counts["10-14 Jahre"] += 1
                 else:
-                    age_group_counts["16+"] += 1
+                    age_group_counts["15+"] += 1
             else:
                 # Falls keine Altersinformation gefunden wurde, zum Standardwert
                 age_group_counts["3-6 Jahre"] += 1
