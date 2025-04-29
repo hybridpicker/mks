@@ -34,7 +34,9 @@
                     let locationText = 'Keine Information verfügbar';
                     
                     if (data.locations && data.locations.length > 0) {
-                        locationText = data.locations.join(', ');
+                        // Stelle sicher, dass jeder Standort nur einmal vorkommt
+                        const uniqueLocations = [...new Set(data.locations)];
+                        locationText = uniqueLocations.join(', ');
                     }
                     
                     document.getElementById('course-location').textContent = locationText;

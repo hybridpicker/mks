@@ -131,9 +131,13 @@ def dance_schedule_view(request):
     sorted_timeslots_by_day = dict(sorted(timeslots_by_day.items(), key=lambda item: day_order.get(item[0], 99)))
     
     # Get all unique locations for the filter - ensure true uniqueness
-    locations = list(TimeSlot.objects.values_list('location', flat=True))
-    # Remove None/empty values and convert to set to ensure uniqueness
-    unique_locations = sorted(set([loc for loc in locations if loc]))
+    # Verwende ein Set, um Duplikate zu vermeiden
+    unique_locations = set()
+    for location in TimeSlot.objects.values_list('location', flat=True):
+        if location:  # Ignoriere None/leere Werte
+            unique_locations.add(location)
+    # Sortiere die Liste für eine konsistente Anzeige
+    unique_locations = sorted(unique_locations)
 
     # Verwende feste Altersgruppen statt die aus der Datenbank
     all_courses = Course.objects.all()
@@ -397,8 +401,10 @@ def course_detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     
     # Sammle die Standorte aus allen Zeitfenstern des Kurses
-    locations = course.timeslots.values_list('location', flat=True).distinct()
-    locations = [loc for loc in locations if loc]  # Filtere leere Einträge
+    # Verwende set() um sicherzustellen, dass jeder Standort nur einmal vorkommt
+    locations = set([loc for loc in course.timeslots.values_list('location', flat=True) if loc])
+    # Konvertiere zurück zu einer sortierten Liste
+    locations = sorted(list(locations))
     
     data = {
         'id': course.id,
