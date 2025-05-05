@@ -41,18 +41,18 @@ def load_initial_data(sender, **kwargs):
                     cursor.execute("DELETE FROM sqlite_sequence WHERE name='dance_course'")
                     cursor.execute("DELETE FROM sqlite_sequence WHERE name='dance_timeslot'")
             
-            # Prüfe, ob dance_fixture.json existiert
-            fixture_path = os.path.join(settings.BASE_DIR, 'dance_fixture.json')
+            # Prüfe, ob dance_data.json im fixtures Verzeichnis existiert
+            fixture_path = os.path.join(settings.BASE_DIR, 'dance', 'fixtures', 'dance_data.json')
             if os.path.exists(fixture_path):
                 try:
-                    # Führe das Management-Kommando aus, um die Daten aus dance_fixture.json zu laden
-                    call_command('loaddata', 'dance_fixture.json')
-                    print("Tanzdaten aus dance_fixture.json erfolgreich geladen")
+                    # Führe das Management-Kommando aus, um die Daten aus dance_data.json zu laden
+                    call_command('loaddata', 'dance_data')
+                    print("Tanzdaten aus dance/fixtures/dance_data.json erfolgreich geladen")
                 except Exception as e:
-                    print(f"Fehler beim Laden von dance_fixture.json: {str(e)}")
-                    # Fallback auf die Standard-Daten, wenn es ein Problem mit dance_fixture.json gibt
+                    print(f"Fehler beim Laden von dance_data.json: {str(e)}")
+                    # Fallback auf die Standard-Daten, wenn es ein Problem mit dance_data.json gibt
                     call_command('setup_dance_data')
             else:
-                # Führe das Standard-Kommando aus, wenn dance_fixture.json nicht existiert
+                # Führe das Standard-Kommando aus, wenn dance_data.json nicht existiert
                 call_command('setup_dance_data')
-                print("Standard-Tanzdaten wurden geladen (dance_fixture.json nicht gefunden)")
+                print("Standard-Tanzdaten wurden geladen (dance_data.json nicht gefunden)")

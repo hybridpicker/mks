@@ -16,10 +16,10 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        self.stdout.write(self.style.WARNING('Lade Tanzdaten aus dance_fixture.json...'))
+        self.stdout.write(self.style.WARNING('Lade Tanzdaten aus dance/fixtures/dance_data.json...'))
         
         # Prüfe, ob die Fixture-Datei existiert
-        fixture_path = os.path.join(settings.BASE_DIR, 'dance_fixture.json')
+        fixture_path = os.path.join(settings.BASE_DIR, 'dance', 'fixtures', 'dance_data.json')
         
         if not os.path.exists(fixture_path):
             self.stdout.write(self.style.ERROR(f'Fixture-Datei nicht gefunden: {fixture_path}'))
@@ -50,7 +50,7 @@ class Command(BaseCommand):
         
         # Lade das Fixture
         try:
-            call_command('loaddata', 'dance_fixture.json')
+            call_command('loaddata', 'dance_data')
             
             # Zähle die Datensätze
             teacher_count = Teacher.objects.count()

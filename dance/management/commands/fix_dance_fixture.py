@@ -10,8 +10,8 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             '--path',
-            default='dance_fixture.json',
-            help='Pfad zur Fixture-Datei (Standard: dance_fixture.json)',
+            default='dance/fixtures/dance_data.json',
+            help='Pfad zur Fixture-Datei (Standard: dance/fixtures/dance_data.json)',
         )
 
     def handle(self, *args, **options):

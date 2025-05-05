@@ -5,9 +5,9 @@ from django.conf import settings
 from django.core.management import call_command
 
 def update_fixture(apps, schema_editor):
-    """Update the dance_fixture.json file with the current database state."""
+    """Update the dance_data.json file with the current database state."""
     # Path to the fixture file
-    fixture_path = os.path.join(settings.BASE_DIR, 'dance_fixture.json')
+    fixture_path = os.path.join(settings.BASE_DIR, 'dance', 'fixtures', 'dance_data.json')
     
     if os.path.exists(fixture_path):
         try:

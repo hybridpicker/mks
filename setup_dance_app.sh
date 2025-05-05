@@ -26,33 +26,33 @@ if [ ! -f "manage.py" ]; then
     exit 1
 fi
 
-# 1. Prüfe, ob die dance_fixture.json existiert
-echo -e "${YELLOW}Überprüfe die dance_fixture.json...${NC}"
-if [ -f "dance_fixture.json" ]; then
-    echo -e "${GREEN}Die dance_fixture.json existiert.${NC}"
+# 1. Prüfe, ob die dance_data.json im fixtures Verzeichnis existiert
+echo -e "${YELLOW}Überprüfe die dance/fixtures/dance_data.json...${NC}"
+if [ -f "dance/fixtures/dance_data.json" ]; then
+    echo -e "${GREEN}Die dance/fixtures/dance_data.json existiert.${NC}"
     
     # Repariere die Fixture-Datei mit dem Django-Management-Kommando
     echo -e "${YELLOW}Repariere die Fixture-Datei...${NC}"
-    python manage.py fix_dance_fixture --path dance_fixture.json
+    python manage.py fix_dance_fixture --path dance/fixtures/dance_data.json
     
     # Aktualisiere die Standorte in der Fixture-Datei
     echo -e "${YELLOW}Aktualisiere Standorte in der Fixture-Datei...${NC}"
-    python manage.py update_dance_locations --input dance_fixture.json --output dance_fixture.json
+    python manage.py update_dance_locations --input dance/fixtures/dance_data.json --output dance/fixtures/dance_data.json
 else
-    echo -e "${YELLOW}Die dance_fixture.json existiert nicht, verwende die Fixture aus dem dance-App-Ordner...${NC}"
+    echo -e "${YELLOW}Die dance/fixtures/dance_data.json existiert nicht.${NC}"
     
-    # Prüfe, ob die Fixture in dance/fixtures existiert
-    if [ -f "dance/fixtures/dance_data.json" ]; then
-        echo -e "${YELLOW}Kopiere dance/fixtures/dance_data.json nach dance_fixture.json...${NC}"
-        cp dance/fixtures/dance_data.json dance_fixture.json
+    # Prüfe, ob es eine Fixture im Hauptverzeichnis gibt
+    if [ -f "dance_fixture.json" ]; then
+        echo -e "${YELLOW}Migriere dance_fixture.json nach dance/fixtures/dance_data.json...${NC}"
+        mv dance_fixture.json dance/fixtures/dance_data.json
         
         # Repariere die Fixture-Datei mit dem Django-Management-Kommando
         echo -e "${YELLOW}Repariere die Fixture-Datei...${NC}"
-        python manage.py fix_dance_fixture --path dance_fixture.json
+        python manage.py fix_dance_fixture --path dance/fixtures/dance_data.json
         
         # Aktualisiere die Standorte in der Fixture-Datei
         echo -e "${YELLOW}Aktualisiere Standorte in der Fixture-Datei...${NC}"
-        python manage.py update_dance_locations --input dance_fixture.json --output dance_fixture.json
+        python manage.py update_dance_locations --input dance/fixtures/dance_data.json --output dance/fixtures/dance_data.json
     else
         echo -e "${RED}Keine Fixture-Datei gefunden. Die Standard-Daten werden später geladen.${NC}"
     fi
