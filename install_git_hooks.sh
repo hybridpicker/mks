@@ -9,39 +9,65 @@ HOOKS_DIR=".git/hooks"
 cat > $HOOKS_DIR/pre-push << 'EOF'
 #!/bin/bash
 
-echo "Running pre-push hooks..."
+# Define colors for terminal output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
 
-# Aktiviere die virtuelle Umgebung (anpassen an deine lokale Umgebung)
-# Für Conda:
-source ~/opt/anaconda3/envs/mks/bin/activate
-# Für venv:
-# source venv/bin/activate
+echo -e "${YELLOW}Running Django tests before push...${NC}"
 
-# Generiere aktuelles Fixture für die Dance-App
-echo "Generating updated fixture for Dance app..."
-python manage.py dumpdata dance --indent 2 --output dance/fixtures/dance_data.json
-FIXTURE_RESULT=$?
+# Get current branch name
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo -e "Current branch: ${YELLOW}$BRANCH${NC}"
 
-if [ $FIXTURE_RESULT -ne 0 ]; then
-    echo "ERROR: Failed to generate Dance app fixture. Push aborted."
+# Path to python interpreter (adjust if using virtualenv/conda)
+PYTHON_CMD="python"
+if command -v conda &> /dev/null; then
+    # Check if mks conda environment exists and use it
+    if conda env list | grep -q "mks"; then
+        echo -e "${YELLOW}Using conda mks environment${NC}"
+        source "$(conda info --base)/etc/profile.d/conda.sh"
+        conda activate mks
+        PYTHON_CMD="python"
+    fi
+fi
+
+# Save current git stash
+STASH_NAME="pre-push-tests-$(date +%s)"
+git stash push -q --keep-index --include-untracked --message "$STASH_NAME"
+STASH_RESULT=$?
+
+# Function to restore stashed changes
+restore_stash() {
+    if [ $STASH_RESULT -eq 0 ]; then
+        STASH_ID=$(git stash list | grep "$STASH_NAME" | cut -d: -f1)
+        if [ -n "$STASH_ID" ]; then
+            echo -e "${YELLOW}Restoring your working directory changes...${NC}"
+            git stash pop -q "$STASH_ID"
+        fi
+    fi
+}
+
+# Note: Fixture generation has been removed to preserve manual updates
+
+# Execute django tests
+cd "$(git rev-parse --show-toplevel)"
+echo -e "${YELLOW}Running tests...${NC}"
+$PYTHON_CMD manage.py test
+
+TESTS_EXIT_CODE=$?
+
+# Check test results
+if [ $TESTS_EXIT_CODE -ne 0 ]; then
+    echo -e "${RED}Tests failed! Push aborted.${NC}"
+    echo -e "${YELLOW}Please fix the failing tests before pushing.${NC}"
+    restore_stash
     exit 1
 fi
 
-echo "Dance app fixture successfully updated."
-git add dance/fixtures/dance_data.json
-
-# Führe die Tests aus
-echo "Running tests..."
-python manage.py test
-TEST_RESULT=$?
-
-# Überprüfe, ob die Tests erfolgreich waren
-if [ $TEST_RESULT -ne 0 ]; then
-    echo "Tests failed. Push aborted."
-    exit 1
-fi
-
-echo "All pre-push checks passed. Proceeding with push..."
+echo -e "${GREEN}All tests passed. Proceeding with push...${NC}"
+restore_stash
 exit 0
 EOF
 
@@ -49,4 +75,4 @@ EOF
 chmod +x $HOOKS_DIR/pre-push
 
 echo "Git hooks erfolgreich installiert!"
-echo "Der pre-push Hook wurde eingerichtet. Er wird automatisch ein aktuelles Dance-App Fixture generieren, bevor ein Push erfolgt."
+echo "Der pre-push Hook wurde eingerichtet. Er führt die Tests vor dem Push aus, überschreibt aber nicht die Dance-App-Fixtures."
