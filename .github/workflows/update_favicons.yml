@@ -1,0 +1,25 @@
+name: Update Favicons
+
+on:
+  push:
+    branches: [ main, master, devel ]
+    paths:
+      - 'static/favicon/**'
+      - 'templates/templates/favicon.html'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Deploy favicon changes
+        run: |
+          scp -o StrictHostKeyChecking=no -r static/favicon/* ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/static/favicon/
+          scp -o StrictHostKeyChecking=no templates/templates/favicon.html ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/templates/templates/
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "cd ${{ secrets.DEPLOY_PATH }} && python manage.py collectstatic --noinput"
