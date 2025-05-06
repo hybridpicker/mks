@@ -216,6 +216,9 @@ DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
 THUMBNAIL_FORCE_OVERWRITE = True
 
+# Default storage configuration
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
 USER_AGENTS_CACHE = 'default'
 
 APPEND_SLASH = True

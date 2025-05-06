@@ -241,6 +241,69 @@
             border-bottom: 1px solid #d11317;
             padding-bottom: 10px;
         }
+        
+        /* Excel Import/Export Styles */
+        .excel-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .excel-export, .excel-import {
+            flex: 1;
+            min-width: 300px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+        
+        .excel-export p, .excel-import p {
+            margin-bottom: 15px;
+        }
+        
+        .note {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* Excel sheet info styles */
+        .excel-sheet-info {
+            margin-left: 20px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .excel-sheet-info li {
+            margin-bottom: 5px;
+        }
+        
+        /* Message Styles */
+        .messages-container {
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+        
+        .error {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
 
         @media (max-width: 768px) {
             .form-group {
@@ -255,6 +318,47 @@
 {% if user.is_authenticated %}
 <div class="maintenance-container">
     <h1 class="maintenance-heading">{% trans "Tanz & Bewegung - Kursverwaltung" %}</h1>
+
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="form-section">
+        <h3>Excel Import/Export</h3>
+        <div class="excel-controls">
+            <div class="excel-export">
+                <p><strong>Exportieren:</strong> Laden Sie alle aktuellen Tanzklassen als Excel-Datei herunter.</p>
+                <a href="{% url 'dance:excel_export' %}" class="btn">Excel herunterladen</a>
+            </div>
+            
+            <div class="excel-import">
+                <p><strong>Importieren:</strong> Laden Sie eine Excel-Datei hoch, um die Tanzklassen zu aktualisieren.</p>
+                <p class="note">Hinweis: Die Datei muss die folgenden Tabellenblätter enthalten:</p>
+                <ul class="excel-sheet-info">
+                    <li><strong>Teachers:</strong> mit Spalten id, name, email</li>
+                    <li><strong>Courses:</strong> mit Spalten id, name, teacher_id, age_group, description</li>
+                    <li><strong>TimeSlots:</strong> mit Spalten id, course_id, day, start_time, end_time, studio, location</li>
+                </ul>
+                <p class="note">Am einfachsten exportieren Sie zuerst die aktuelle Datenbank, nehmen Änderungen vor und laden die Datei wieder hoch.</p>
+                <form method="post" action="{% url 'dance:excel_import' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="excel_file">Excel-Datei</label>
+                            <input type="file" id="excel_file" name="excel_file" required accept=".xlsx">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Datei importieren</button>
+                </form>
+            </div>
+        </div>
+    </div>
     
     <div class="form-section">
         <h3>Lehrer verwalten</h3>

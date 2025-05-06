@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileResponse
 from django.urls import reverse
+from django.conf import settings
+from django.contrib import messages
 from .models import TimeSlot, Course, Teacher
 from collections import defaultdict
 import locale
+import os
+import tempfile
+from .excel_utils import export_to_excel, parse_excel_file, generate_fixture_from_excel_data, update_database_from_fixture
 
 # Set locale to German for correct day sorting if needed
 try:
@@ -405,3 +410,60 @@ def timeslot_detail_api(request, timeslot_id):
         'location': timeslot.location or ''
     }
     return JsonResponse(data)
+
+@login_required
+def export_excel(request):
+    """Exports all dance classes data as an Excel file."""
+    try:
+        # Create Excel file and get relative path
+        excel_path = export_to_excel()
+        
+        # Create absolute path for the server
+        full_path = os.path.join(settings.BASE_DIR, excel_path)
+        
+        # Create file response for download
+        response = FileResponse(
+            open(full_path, 'rb'),
+            as_attachment=True,
+            filename=os.path.basename(excel_path)
+        )
+        return response
+    except Exception as e:
+        messages.error(request, f"Error exporting: {str(e)}")
+        return redirect('dance:maintenance')
+
+@login_required
+def import_excel(request):
+    """Imports dance classes data from an Excel file."""
+    if request.method == 'POST' and request.FILES.get('excel_file'):
+        try:
+            excel_file = request.FILES['excel_file']
+            
+            # Temporary file for the uploaded Excel file
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.xlsx') as temp_file:
+                for chunk in excel_file.chunks():
+                    temp_file.write(chunk)
+            
+            # Parse Excel file
+            excel_data = parse_excel_file(temp_file.name)
+            
+            # Path to fixture
+            fixture_path = os.path.join(settings.BASE_DIR, 'dance', 'fixtures', 'dance_data.json')
+            
+            # Generate fixture from Excel data
+            generate_fixture_from_excel_data(excel_data, fixture_path)
+            
+            # Update database from fixture
+            update_database_from_fixture(fixture_path)
+            
+            # Delete temporary file
+            os.unlink(temp_file.name)
+            
+            messages.success(request, "Data successfully imported and database updated.")
+        except Exception as e:
+            messages.error(request, f"Error importing: {str(e)}")
+        
+        return redirect('dance:maintenance')
+    
+    # Redirect to maintenance page for GET requests or errors
+    return redirect('dance:maintenance')
