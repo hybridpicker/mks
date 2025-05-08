@@ -43,7 +43,7 @@
     "model": "dance.course",
     "pk": 1,
     "fields": {
-      "name": "Vom Plié zur Pirouette 1 *",
+      "name": "Vom Plié zur Pirouette 1",
       "teacher": 1,
       "age_group": "8-11 Jahre",
       "description": "Erleben Sie die Grundlagen der Vaganova-Methode, die sich durch eine schülerzentrierte Arbeitsweise auszeichnet. Kinder und Jugendliche erlernen nicht nur die Ursprünge des klassischen Balletts, sondern haben auch die Möglichkeit, ihre künstlerische Ausdrucksfähigkeit und Bühnenpräsenz zu entwickeln. Unabhängig davon, ob Anfänger:in oder erfahrene Tänzer:in, wir heißen alle willkommen, die die Schönheit und Disziplin des klassischen Balletts erkunden möchten."
@@ -53,7 +53,7 @@
     "model": "dance.course",
     "pk": 2,
     "fields": {
-      "name": "Vom Plié zur Pirouette 2 *",
+      "name": "Vom Plié zur Pirouette 2",
       "teacher": 1,
       "age_group": "11-14 Jahre",
       "description": "Erleben Sie die Grundlagen der Vaganova-Methode, die sich durch eine schülerzentrierte Arbeitsweise auszeichnet. Kinder und Jugendliche erlernen nicht nur die Ursprünge des klassischen Balletts, sondern haben auch die Möglichkeit, ihre künstlerische Ausdrucksfähigkeit und Bühnenpräsenz zu entwickeln. Unabhängig davon, ob Anfänger:in oder erfahrene Tänzer:in, wir heißen alle willkommen, die die Schönheit und Disziplin des klassischen Balletts erkunden möchten."
@@ -63,7 +63,7 @@
     "model": "dance.course",
     "pk": 3,
     "fields": {
-      "name": "Vom Plié zur Pirouette 3 *",
+      "name": "Vom Plié zur Pirouette 3 ****",
       "teacher": 1,
       "age_group": "15-25 Jahre",
       "description": "Erleben Sie die Grundlagen der Vaganova-Methode, die sich durch eine schülerzentrierte Arbeitsweise auszeichnet. Kinder und Jugendliche erlernen nicht nur die Ursprünge des klassischen Balletts, sondern haben auch die Möglichkeit, ihre künstlerische Ausdrucksfähigkeit und Bühnenpräsenz zu entwickeln. Unabhängig davon, ob Anfänger:in oder erfahrene Tänzer:in, wir heißen alle willkommen, die die Schönheit und Disziplin des klassischen Balletts erkunden möchten."
@@ -93,7 +93,7 @@
     "model": "dance.course",
     "pk": 6,
     "fields": {
-      "name": "Kindertanz 4 *",
+      "name": "Kindertanz 4",
       "teacher": 1,
       "age_group": "7-8 Jahre",
       "description": "In diesem Kurs werden Kinder intensiv auf die Kunst des Tanzes vorbereitet. Bodenübungen stärken den Körper und fördern das Verständnis der Muskelfunktion. Vielfältige Bewegungen im Raum schulen die Koordination und den Rhythmus."
@@ -113,7 +113,7 @@
     "model": "dance.course",
     "pk": 8,
     "fields": {
-      "name": "Kindertanz 4 *",
+      "name": "Kindertanz 4",
       "teacher": 2,
       "age_group": "7-8 Jahre",
       "description": "In diesem Kurs werden Kinder intensiv auf die Kunst des Tanzes vorbereitet. Bodenübungen stärken den Körper und fördern das Verständnis der Muskelfunktion. Vielfältige Bewegungen im Raum schulen die Koordination und den Rhythmus."
@@ -123,7 +123,7 @@
     "model": "dance.course",
     "pk": 9,
     "fields": {
-      "name": "Modern 1 *",
+      "name": "Modern 1 ***",
       "teacher": 2,
       "age_group": "8-10 Jahre",
       "description": "Dieser Kurs umfasst zwei Richtungen des Jazztanzes: klassisch und modern. Kinder lernen, ihren Körper zu koordinieren und zu kontrollieren, sowohl bei langsamer als auch bei schneller Musik. Intensive Stärkung aller Muskeln des Körpers fördert die künstlerische Entwicklung und Wahrnehmung."
@@ -133,7 +133,7 @@
     "model": "dance.course",
     "pk": 10,
     "fields": {
-      "name": "Modern 2 *",
+      "name": "Modern 2 *****",
       "teacher": 2,
       "age_group": "10-14 Jahre",
       "description": "Dieser Kurs konzentriert sich auf moderne Tanzstile und -techniken, darunter Modern Dance. Schüler:innen haben die Möglichkeit, ihre Fähigkeiten in einer Tanzgruppe zu entwickeln und sich kreativ auszudrücken, während sie sich in die Welt des modernen Tanzes vertiefen."
@@ -163,7 +163,7 @@
     "model": "dance.course",
     "pk": 13,
     "fields": {
-      "name": "Kindertanz 3a *",
+      "name": "Kindertanz 3a",
       "teacher": 3,
       "age_group": "6-7 Jahre",
       "description": "Tauchen Sie spielerisch in die Welt des Tanzes ein. Dieser Kurs bietet den 6-7-Jährigen einen erlebnisreichen Einstieg. Von Spannung und Entspannung bis hin zum Rhythmusgefühl legen wir hier den Grundstein für eine lebenslange Liebe zum Tanz. Die Kinder werden nicht nur tanzen, sondern auch die Musik und die Bedeutung hinter jeder Bewegung verstehen lernen."
@@ -173,7 +173,7 @@
     "model": "dance.course",
     "pk": 14,
     "fields": {
-      "name": "Kindertanz 3c *",
+      "name": "Kindertanz 3c",
       "teacher": 3,
       "age_group": "6-7 Jahre",
       "description": "Ein spielerischer Einstieg für die 6-7-Jährigen in die Welt des Tanzes. Von Spannung und Entspannung bis hin zu Rhythmusgefühl legen wir hier den Grundstein für eine lebenslange Liebe zum Tanz. Die Kinder werden nicht nur tanzen, sondern auch die Musik und die Bedeutung hinter jeder Bewegung verstehen lernen."
@@ -183,7 +183,7 @@
     "model": "dance.course",
     "pk": 15,
     "fields": {
-      "name": "Kindertanz 4 *",
+      "name": "Kindertanz 4",
       "teacher": 3,
       "age_group": "7-8 Jahre",
       "description": "In diesem Kurs werden Kinder intensiv auf die Kunst des Tanzes vorbereitet. Bodenübungen stärken den Körper und fördern das Verständnis der Muskelfunktion. Vielfältige Bewegungen im Raum schulen die Koordination und den Rhythmus."
@@ -193,7 +193,7 @@
     "model": "dance.course",
     "pk": 16,
     "fields": {
-      "name": "Tanzkurs *",
+      "name": "Tanzkurs",
       "teacher": 3,
       "age_group": "15-25 Jahre",
       "description": "Jugendliche tauchen in die faszinierende Welt des klassischen Tanzes ein. Basierend auf traditionellen Methoden erlernen sie die Kunst der Bewegung an der Stange, in der Raummitte, beim Drehen und Springen. Der Kurs fördert sowohl die technische Perfektion als auch das künstlerische Ausdrucksvermögen der Teilnehmer:innen."
@@ -283,7 +283,7 @@
     "model": "dance.course",
     "pk": 25,
     "fields": {
-      "name": "Kindertanz 3a",
+      "name": "Kindertanz 3a *",
       "teacher": 3,
       "age_group": "6-7 Jahre",
       "description": "Tauchen Sie spielerisch in die Welt des Tanzes ein. Dieser Kurs bietet den 6-7-Jährigen einen erlebnisreichen Einstieg. Von Spannung und Entspannung bis hin zum Rhythmusgefühl legen wir hier den Grundstein für eine lebenslange Liebe zum Tanz. Die Kinder werden nicht nur tanzen, sondern auch die Musik und die Bedeutung hinter jeder Bewegung verstehen lernen."
@@ -293,7 +293,7 @@
     "model": "dance.course",
     "pk": 26,
     "fields": {
-      "name": "Kindertanz 3c *",
+      "name": "Kindertanz 3c **",
       "teacher": 3,
       "age_group": "6-7 Jahre",
       "description": "Ein spielerischer Einstieg für die 6-7-Jährigen in die Welt des Tanzes. Von Spannung und Entspannung bis hin zu Rhythmusgefühl legen wir hier den Grundstein für eine lebenslange Liebe zum Tanz. Die Kinder werden nicht nur tanzen, sondern auch die Musik und die Bedeutung hinter jeder Bewegung verstehen lernen."
@@ -323,7 +323,7 @@
     "model": "dance.course",
     "pk": 29,
     "fields": {
-      "name": "Modern 4 *",
+      "name": "Modern 4 *****",
       "teacher": 2,
       "age_group": "15-20 Jahre",
       "description": "Ein fortgeschrittener Kurs für moderne Tanzstile und -techniken. Die Teilnehmer:innen arbeiten an komplexen Choreografien und verfeinern ihre Ausdrucksfähigkeit im modernen Tanz auf einem anspruchsvollen Niveau."

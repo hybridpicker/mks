@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'faq.apps.FaqConfig',
     'invitation.apps.InvitationConfig',
     'dance', # Add the new dance app
+    'midi_band', # Add the new midi-band app
     #sitemaps
     'django.contrib.sitemaps',
     #thumbnails

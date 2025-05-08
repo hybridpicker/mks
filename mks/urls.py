@@ -60,6 +60,7 @@ urlpatterns = [
     path('', include('students.urls')),
     path('', include('faq.urls')),
     path('hexe-rabaukel/', include('invitation.urls')),
+    path('midi-band/', include('midi_band.urls')),
 
     re_path(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
