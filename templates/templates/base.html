@@ -7,9 +7,21 @@
   <meta charset="UTF-8">
   {% if name %}
   <title>{{ name }}</title>
+  {% else %}
+  <title>{% block title %}Musikschule St. Pölten{% endblock %}</title>
   {% endif %}
   <!-- Viewport Settings -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  {% block meta_tags %}
+  <meta name="description" content="Musikschule St. Pölten - Musik, Kunst und Kultur für alle Altersgruppen">
+  <meta name="keywords" content="Musikschule, St. Pölten, Musik, Unterricht, Kurse">
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Musikschule St. Pölten">
+  <meta property="og:description" content="Musikschule St. Pölten - Musik, Kunst und Kultur für alle Altersgruppen">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.musikschulen-stpoelten.at/">
+  <meta property="og:image" content="{% static 'banner/slideshow/01.webp' %}">
+  {% endblock %}
   {% include "templates/favicon.html" %}
   <!-- critical CSS -->
   <style>
@@ -23,6 +35,7 @@
   <!-- CSS-->
   <link href="{% static 'css/mks/mks_v2.4.9.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'css/mks/logout_fix.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'css/mks/sticker_overlay.css' %}" rel="stylesheet" type="text/css" />
 
   {% if user.is_authenticated %}
   {% include "templates/user_navbar.html" %}

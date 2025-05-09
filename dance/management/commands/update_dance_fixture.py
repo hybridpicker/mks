@@ -19,24 +19,4 @@ class Command(BaseCommand):
         
         self.stdout.write(self.style.WARNING(f'Exportiere aktuelle Tanzdaten nach {output_path}...'))
         
-        try:
-            # Exportiere die Daten aus der Datenbank
-            call_command(
-                'dumpdata', 
-                'dance.Teacher', 
-                'dance.Course', 
-                'dance.TimeSlot',
-                '--indent=4',
-                '--output=' + output_path
-            )
-            
-            self.stdout.write(self.style.SUCCESS(f'Tanzdaten erfolgreich nach {output_path} exportiert!'))
-            
-            # Prüfe, ob die Datei erstellt wurde
-            if os.path.exists(output_path):
-                filesize = os.path.getsize(output_path)
-                self.stdout.write(self.style.SUCCESS(f'Datei erstellt: {output_path} ({filesize} Bytes)'))
-            else:
-                self.stdout.write(self.style.ERROR(f'Datei wurde nicht erstellt: {output_path}'))
-        except Exception as e:
-            self.stdout.write(self.style.ERROR(f'Fehler beim Exportieren der Daten: {str(e)}'))
+        self.stdout.write(self.style.WARNING('Fixture creation is disabled.'))

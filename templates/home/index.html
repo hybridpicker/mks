@@ -31,6 +31,11 @@
 {% block banner %}
 
 <!-- {% include "templates/slider.html" %} -->
+{% if show_mkm_sticker %}
+<div class="sticker-overlay">
+  <img src="{% static 'banner/sticker/sticker_MKM_2025.png' %}" alt="MKM 2025 Sticker">
+</div>
+{% endif %}
 <img id="homebanner" src="{% static 'banner/home_banner_ak.webp' %}" alt="Banner Musikschule St. Pölten">
 <img id="mbimg" src="{% static 'banner/mobile/home_banner_ak_800.webp' %}" alt="Banner Musik- und Kunstchule St. Pölten Mobile">
 

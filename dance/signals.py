@@ -6,7 +6,8 @@ from django.db import connection
 import os
 from django.conf import settings
 
-@receiver(post_migrate)
+# Signal deaktiviert, um automatische Fixture-Generierung und -Ladung zu vermeiden
+# @receiver(post_migrate)
 def load_initial_data(sender, **kwargs):
     """
     Lädt die initialen Tanzdaten nach der Migration.

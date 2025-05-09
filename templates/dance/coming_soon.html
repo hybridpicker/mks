@@ -4,6 +4,17 @@
 
 {% block title %}{% trans "Tanz & Bewegung - Coming Soon" %}{% endblock %}
 
+{% block meta_tags %}
+<meta name="description" content="Unser Tanzprogramm an der Musikschule St. Pölten ist bald verfügbar! Demnächst bieten wir Tanzkurse für alle Altersgruppen.">
+<meta name="keywords" content="Tanz, Tanzunterricht, St. Pölten, Tanzkurse, Bewegung, Coming Soon">
+<!-- Open Graph Tags -->
+<meta property="og:title" content="Tanz & Bewegung - Demnächst verfügbar">
+<meta property="og:description" content="Unser Tanzprogramm an der Musikschule St. Pölten ist bald verfügbar! Demnächst bieten wir Tanzkurse für alle Altersgruppen.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.musikschulen-stpoelten.at/tanz-und-bewegung/">
+<meta property="og:image" content="{% static 'banner/dance/Tanz und Ballett (6 von 29).jpg' %}">
+{% endblock %}
+
 {% block banner %}
   {% include "dance/slider.html" %}
   <img id="mbimg" src="{% static 'banner/dance/Tanz und Ballett (6 von 29).jpg' %}" alt="Tanz & Bewegung">
