@@ -7,6 +7,8 @@ import teaching.get_students
 from teaching.get_students import get_all_students, get_student
 from teaching.show_teacher_view import show_teacher_view
 
+app_name = 'teaching'
+
 urlpatterns = [
     #path('allstudents', teaching.get_students.get_all_students, name='get_all_students'),
     #path('singlestudent', teaching.get_students.get_student, name='get_student'),

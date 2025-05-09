@@ -1,0 +1,25 @@
+/* Logout Button Fix */
+.dropdown-e .dropbtn-e .logoutLink {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.logoutLink svg {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: inline-block !important;
+    stroke: #333333 !important;
+}
+
+.logoutLink:hover svg {
+    stroke: #D11317 !important;
+}
+
+.dropdown-e .dropbtn-e:hover .logoutLink svg {
+    stroke: #D11317 !important;
+}
+
+.dropdown-e {
+    padding-left: 1rem !important;
+}

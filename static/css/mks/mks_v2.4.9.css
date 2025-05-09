@@ -1,3 +1,4 @@
+
 @import url("https://use.typekit.net/nvs2bby.css");
 body {
   background-color: #FDFDFD;
@@ -261,8 +262,6 @@ li {
   padding-right: 0;
   padding-bottom: 1rem; }
 
-span {
-  text-decoration: underline; }
 
 strong, b {
   font-family: "jaf-bernina-sans-condensed", sans-serif;
@@ -2924,4 +2923,26 @@ slide:nth-child(3) {
   color: white;
   margin-left: 1rem;
   margin-right: 1rem;
+}
+.modal-body span {
+  text-decoration: none !important;
+}
+.timeslot-course {
+  cursor: pointer;
+}
+
+.timeslot {
+  transition: transform 0.2s ease-in-out;
+}
+
+.timeslot:hover {
+  transform: scale(1.02);
+}
+.edit-button {
+  background: url('/static/dance/img/edit_button_bg.svg');
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
 }

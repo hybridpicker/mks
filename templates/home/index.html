@@ -139,7 +139,7 @@
     
     <p style="text-align:center;"><b>{{index_text.lead_paragraph|safe}}<b></p>
     {{index_text.content|safe}}
-    <a href="{% url 'teaching_music'%}">
+    <a href="{% url 'teaching:teaching_music'%}">
       <button>Weiterlesen</button>
     </a>
     {% if material_data %}
@@ -204,7 +204,7 @@
     <section id="banner-video">
       <iframe loading="lazy" src="https://player.vimeo.com/video/671871325?h=93312808d7?autoplay=1&loop=1&autopause=0&muted=1&background=1&muted=1&autoplay=1" width="640" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </section>
-    <a href="{% url 'teaching_music'%}">
+    <a href="{% url 'teaching:teaching_music'%}">
       <button>Unterrichtsangebot</button>
     </a>
   </div>

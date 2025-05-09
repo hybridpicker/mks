@@ -24,3 +24,19 @@ mks loads all data from **fixtures** with the migrate-command:
 ```python
 python manage.py migrate
 ```
+
+### Git Hooks
+
+Das Projekt verwendet Git-Hooks, um bestimmte Aufgaben zu automatisieren:
+
+1. **Installation der Hooks**:
+   ```bash
+   ./install_git_hooks.sh
+   ```
+
+2. **pre-push Hook**:
+   - Generiert automatisch ein aktuelles Fixture für die Dance-App vor jedem Push
+   - Führt Tests aus, bevor ein Push erlaubt wird
+   - Stellt sicher, dass die Dance-App-Daten immer synchronisiert sind
+
+> **Hinweis**: Der pre-push Hook benötigt Zugriff auf die Django-Umgebung. Wenn du eine andere Umgebung als die Standardkonfiguration verwendest, passe die Umgebungspfade in der Datei `.git/hooks/pre-push` an.

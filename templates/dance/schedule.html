@@ -1,0 +1,801 @@
+{% extends "templates/base.html" %}
+{% load static i18n %}
+{% load custom_filters %}
+
+{% block title %}{% trans "Tanz & Bewegung - Stundenplan" %}{% endblock %}
+
+{% block banner %}
+  {% include "dance/slider.html" %}
+  <img id="mbimg" src="{% static 'banner/dance/Tanz und Ballett (6 von 29).jpg' %}" alt="Tanz & Bewegung">
+{% endblock %}
+
+{% block extra_head %}
+    {# Link the CSS file for schedule styling #}
+    <link rel="stylesheet" href="{% static 'dance/css/schedule.css' %}">
+    <script>
+        // Funktion zum Anzeigen der Kursbeschreibung
+        function showCourseDetails(courseId) {
+            // AJAX-Anfrage, um die Kursdaten abzurufen
+            fetch(`/tanz-und-bewegung/kurs/${courseId}/`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Fehler beim Laden der Daten');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Modal mit den Kursdaten befüllen
+                    document.getElementById('course-title').textContent = data.name;
+                    document.getElementById('course-description').textContent = data.description || 'Keine Beschreibung verfügbar';
+                    document.getElementById('course-teacher').textContent = data.teacher;
+                    document.getElementById('course-age').textContent = data.age_group;
+                    
+                    // Standorte aus der API-Antwort auslesen
+                    let locationText = 'Keine Information verfügbar';
+                    
+                    if (data.locations && data.locations.length > 0) {
+                        // Stelle sicher, dass jeder Standort nur einmal vorkommt
+                        const uniqueLocations = [...new Set(data.locations)];
+                        locationText = uniqueLocations.join(', ');
+                    }
+                    
+                    document.getElementById('course-location').textContent = locationText;
+                    
+                    // Modal anzeigen
+                    document.getElementById('course-modal').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Fehler beim Laden der Kursdaten:', error);
+                    alert('Die Kursinformationen konnten nicht geladen werden. Bitte versuchen Sie es später erneut.');
+                });
+        }
+        
+        // Funktion zum Schließen des Modals
+        function closeModal() {
+            document.getElementById('course-modal').style.display = 'none';
+        }
+        
+        // Event-Listener zum Schließen des Modals, wenn außerhalb geklickt wird
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('course-modal');
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Escape-Taste zum Schließen des Modals
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && modal.style.display === 'block') {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+    <style>
+        /* Neues Design mit rot-schwarzem Farbschema */
+
+body {
+    font-family: 'Arial', sans-serif; /* Use a suitable font, adjust if needed */
+    background-color: #fdfdfd; /* Heller Hintergrund */
+    color: #000;
+}
+
+/* Filter Container Styling */
+.filter-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid #ececec;
+}
+
+.filter-heading {
+    color: #d11317;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.3rem;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    flex: 1;
+    max-width: 300px;
+}
+
+.filter-group label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.select-wrapper select {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: white;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.select-wrapper select:hover {
+    border-color: #d11317;
+}
+
+.select-wrapper select:focus {
+    outline: none;
+    border-color: #d11317;
+    box-shadow: 0 0 0 3px rgba(209, 19, 23, 0.1);
+}
+
+.select-arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #d11317;
+    pointer-events: none;
+}
+
+.filter-actions {
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.clear-filters {
+    display: inline-block;
+    padding: 6px 15px;
+    background-color: #f5f5f5;
+    color: #333;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    border: 1px solid #ddd;
+}
+
+.clear-filters:hover {
+    background-color: #e0e0e0;
+    color: #d11317;
+}
+
+/* Responsive Filter Styling */
+@media (max-width: 768px) {
+    .filter-form {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .filter-group {
+        width: 100%;
+        max-width: none;
+    }
+    
+    .filter-heading {
+        font-size: 1.2rem;
+    }
+    
+    .filter-container {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+}
+
+.schedule-page-container {
+    max-width: none; /* Remove max width for full width */
+    margin: 0; /* Remove margin */
+    padding: 20px; /* Add padding */
+    display: block; /* Change display to block */
+}
+
+.intro-text {
+    margin-bottom: 20px;
+    text-align: center; /* Center the text */
+}
+
+.intro-text h1 {
+    color: #000; /* Schwarz für Überschriften */
+    margin-bottom: 10px;
+}
+
+.intro-text h2 {
+    color: #000; /* Schwarz für Überschriften */
+    margin-bottom: 10px;
+}
+
+.intro-text p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    color: #000;
+}
+
+.schedule-container {
+    background-color: #ffffff; /* White background */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%; /* Ensure full width */
+    flex: none; /* Remove flex property */
+}
+
+.schedule-heading {
+    text-align: center;
+    color: #000; /* Schwarz für Überschriften */
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust column min width */
+    gap: 15px; /* Space between day columns */
+}
+
+.day-column {
+    background-color: #f9f9f9; /* Light background for columns */
+    border-radius: 5px; /* Smaller border radius */
+    padding: 10px; /* Smaller padding */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Lighter shadow */
+    border: 1px solid #000; /* Schwarzer Rahmen */
+}
+
+.day-column h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 10px; /* Smaller margin */
+    color: #000; /* Schwarz für Überschriften */
+    border-bottom: 1px solid #d11317; /* Rote Akzentlinie */
+    padding-bottom: 8px; /* Smaller padding */
+    font-size: 1.1em;
+}
+
+.timeslot {
+    background-color: #ffffff; /* White background for timeslots */
+    border: 1px solid #ddd; 
+    border-radius: 4px; /* Smaller border radius */
+    padding: 8px; /* Smaller padding */
+    margin-bottom: 8px; /* Smaller margin */
+    font-size: 0.9em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Even lighter shadow */
+}
+.timeslot:hover{
+    cursor: pointer;
+}
+
+.timeslot-time {
+    font-weight: bold;
+    margin-bottom: 3px; /* Smaller margin */
+    display: block;
+    color: #d11317; /* Rot als Akzentfarbe für Zeiten */
+    text-decoration: none !important;
+}
+
+.timeslot-course {
+    font-weight: bold;
+    margin-bottom: 3px; /* Smaller margin */
+    color: #000; /* Schwarz für Kursnamen */
+    text-decoration: none !important;
+}
+
+.timeslot-details span {
+    display: block;
+    margin-bottom: 2px; /* Smaller margin */
+    color: #000; /* Schwarz für Text */
+    font-size: 0.9em;
+    text-decoration: none !important;
+}
+
+.detail-label {
+    font-weight: bold;
+    margin-right: 4px; /* Smaller margin */
+    color: #000; /* Schwarz für Labels */
+    text-decoration: none !important;
+}
+
+.timeslot-details .studio {
+    font-style: italic;
+    color: #000;
+    text-decoration: none !important;
+}
+
+/* Kursnamen klickbar machen */
+.timeslot-course {
+    font-weight: bold;
+    margin-bottom: 3px;
+    color: #000;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.timeslot-course:hover {
+    color: #d11317;
+}
+
+/* Active Filters Styling */
+.active-filters {
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    border: 1px dashed #d11317;
+}
+
+.active-filters-label {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #333;
+}
+
+.filter-tag {
+    display: inline-block;
+    background-color: #fff;
+    border: 1px solid #d11317;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.filter-type {
+    font-weight: bold;
+    color: #d11317;
+}
+
+/* Keine Unterstriche im gesamten Timetable */
+.schedule-container a,
+.schedule-container span,
+.timeslot span,
+.timeslot-details span,
+.timeslot * {
+    text-decoration: none !important;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 10% auto;
+    padding: 25px;
+    border: 1px solid #000;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideDown 0.4s ease-out;
+    transform-origin: top center;
+}
+
+@keyframes slideDown {
+    from { 
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close-button {
+    color: #d11317;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    text-decoration: none;
+}
+
+.close-button:hover {
+    color: #000;
+    transform: scale(1.1);
+}
+
+.modal-header {
+    border-bottom: 2px solid #d11317;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+    padding-right: 30px; /* Space for close button */
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #000;
+    font-size: 1.8em;
+}
+
+.modal-body {
+    padding: 5px 0;
+}
+
+.modal-body p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    font-size: 1.1em;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #d11317;
+    display: inline-block;
+    width: 100px;
+    vertical-align: top;
+}
+
+/* Responsive modal adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        margin: 20% auto;
+        padding: 15px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.5em;
+    }
+    
+    .modal-body p {
+        font-size: 1em;
+    }
+    
+    .info-label {
+        width: auto;
+        margin-right: 5px;
+        display: block;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .schedule-page-container {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        padding: 0 10px;
+    }
+
+    .schedule-container {
+        flex-basis: auto; /* Remove flex basis */
+        width: 100%; /* Full width */
+        flex: none; /* Remove flex property */
+    }
+
+    .schedule-grid {
+        grid-template-columns: 1fr; /* Single column grid on small screens */
+    }
+
+    .day-column {
+        margin-bottom: 15px; /* Add space between stacked day columns */
+    }
+}
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="schedule-page-container" style="margin-top: 28rem;">
+<style>
+@media only screen and (max-width: 771px) {
+  /* Grundlegende Container-Anpassungen für Mobile */
+  .schedule-page-container {
+    margin-top: 2rem !important;
+    padding: 10px !important;
+  }
+  
+  /* Einführungstext für Mobile optimieren */
+  .intro-text h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .intro-text h2 {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .intro-text p {
+    font-size: 1rem;
+    line-height: 1.4;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+  }
+  
+  /* Filter-Container für Mobile optimieren */
+  .filter-container {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .filter-heading {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+  }
+  
+  .filter-group {
+    margin-bottom: 12px;
+  }
+  
+  .filter-group label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+  
+  .select-wrapper select {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+  }
+  
+  .clear-filters {
+    font-size: 0.85rem;
+    padding: 5px 12px;
+  }
+  
+  /* Zeitplan-Container für Mobile optimieren */
+  .schedule-container {
+    padding: 12px;
+    margin-top: 1rem;
+  }
+  
+  .schedule-heading {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  /* Anpassung des Grid-Layouts für den Zeitplan */
+  .schedule-grid {
+    gap: 10px;
+  }
+  
+  /* Tage-Spalten im Mobile optimieren */
+  .day-column {
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .day-column h3 {
+    font-size: 1.3rem;
+    padding-bottom: 5px;
+  }
+  
+  /* Zeiten-Einträge für Mobile optimieren */
+  .timeslot {
+    padding: 6px;
+    margin-bottom: 6px;
+  }
+  
+  .timeslot-time {
+    font-size: 0.9rem;
+  }
+  
+  .timeslot-course {
+    font-size: 1rem;
+  }
+  
+  .timeslot-details {
+    line-height: 1.3;
+  }
+  
+  .timeslot-details span {
+    font-size: 0.85rem;
+  }
+  
+  .detail-label {
+    font-size: 0.85rem;
+  }
+  
+  /* Verwaltungsbutton für Mobile anpassen */
+  .intro-text a button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+  }
+}
+</style>
+    <div class="intro-text">
+        <h1>Tanz und Bewegung</h1>
+        <p>Erleben Sie die Welt des Tanzes in St. Pölten! Unsere Tanzkurse für Kinder, Jugendliche und junge Erwachsene sind die perfekte Gelegenheit, Bewegung und Kreativität zu kombinieren. Nutzen Sie absofort unsere Schnupperkurse!</p>
+        <h2>Unser Tanzangebot</h2>
+        <p>Die neue Tanzsaison 2024/25 beginnt mit folgendem Angebot:</p>
+        {% if user.is_authenticated %}
+        <a href="/tanz-und-bewegung/wartung/"><button class="edit-button">Kursverwaltung</button></a>
+        {% endif %}
+    </div>
+
+    <div class="filter-container">
+        <h3 class="filter-heading">Kurse filtern</h3>
+        <form method="get" action="{% url 'dance:schedule' %}" class="filter-form">
+            <div class="filter-group">
+                <label for="category-filter">Tanzstil:</label>
+                <div class="select-wrapper">
+                    <select name="category" id="category-filter" onchange="this.form.submit()">
+                        <option value="">Alle Tanzstile</option>
+                        {% for category in available_categories %}
+                            <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>
+                                {{ category }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label for="age-group-filter">Altersgruppe:</label>
+                <div class="select-wrapper">
+                    <select name="age_group" id="age-group-filter" onchange="this.form.submit()">
+                        <option value="">Alle Altersgruppen</option>
+                        {% for age_group in unique_age_groups %}
+                            <option value="{{ age_group }}" {% if selected_age_group == age_group %}selected{% endif %}>
+                                {{ age_group }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <label for="location-filter">Standort:</label>
+                <div class="select-wrapper">
+                    <select name="location" id="location-filter" onchange="this.form.submit()">
+                        <option value="">Alle Standorte</option>
+                        {% for location in unique_locations %}
+                            <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>
+                                {{ location }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+            
+            {% if selected_category or selected_age_group or selected_location %}
+            <div class="filter-actions">
+                <a href="{% url 'dance:schedule' %}" class="clear-filters">Alle Filter zurücksetzen</a>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+
+    <div class="schedule-container">
+        <h1 class="schedule-heading">{% trans "Stundenplan - Tanz & Bewegung" %}</h1>
+        
+        {% if selected_category or selected_age_group or selected_location %}
+        <div class="active-filters">
+            <span class="active-filters-label">Aktive Filter:</span>
+            {% if selected_category %}
+            <span class="filter-tag">
+                <span class="filter-type">Tanzstil:</span> {{ selected_category }}
+            </span>
+            {% endif %}
+            
+            {% if selected_age_group %}
+            <span class="filter-tag">
+                <span class="filter-type">Altersgruppe:</span> {{ selected_age_group }}
+            </span>
+            {% endif %}
+            
+            {% if selected_location %}
+            <span class="filter-tag">
+                <span class="filter-type">Standort:</span> {{ selected_location }}
+            </span>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if timeslots_by_day %}
+            <div class="schedule-grid">
+                {% for day, timeslots in timeslots_by_day.items %}
+                    <div class="day-column">
+                        <h3>{{ day }}</h3>
+                        {% for timeslot in timeslots %}
+                            <div class="timeslot"  onclick="showCourseDetails({{ timeslot.course.id }})">
+                                <span class="timeslot-time">{{ timeslot.start_time|time:"H:i" }} - {{ timeslot.end_time|time:"H:i" }} Uhr</span>
+                                <div class="timeslot-course" onclick="showCourseDetails({{ timeslot.course.id }})">{{ timeslot.course.name }}</div>
+                                <div class="timeslot-details">
+                                    {% if timeslot.course.age_group %}
+                                        <span><span class="detail-label">{% trans "Alter" %}:</span> {{ timeslot.course.age_group }}</span>
+                                    {% endif %}
+                                    {% if timeslot.course.teacher %}
+                                        <span><span class="detail-label">{% trans "Lehrkraft" %}:</span> {{ timeslot.course.teacher.name }}</span>
+                                    {% endif %}
+                                    {% if timeslot.studio %}
+                                        <span><span class="detail-label">{% trans "Studio" %}:</span> {{ timeslot.studio }}</span>
+                                    {% endif %}
+                                    {% if timeslot.location %}
+                                        <span><span class="detail-label">{% trans "Standort" %}:</span> {{ timeslot.location }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p>{% trans "Keine Kurse an diesem Tag." %}</p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>{% trans "Derzeit sind keine Kurse verfügbar." %}</p>
+        {% endif %}
+    </div>
+    
+    <!-- Modal für Kursbeschreibungen -->
+    <div id="course-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()" title="Schließen">&times;</span>
+            <div class="modal-header">
+                <h2 id="course-title"></h2>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <span class="info-label">Beschreibung:</span> 
+                    <span id="course-description" style="display: inline-block; white-space: pre-line;"></span>
+                </p>
+                <p><span class="info-label">Lehrkraft:</span> <span id="course-teacher"></span></p>
+                <p><span class="info-label">Altersgruppe:</span> <span id="course-age"></span></p>
+                <p><span class="info-label">Standort:</span> <span id="course-location">wird geladen...</span></p>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button onclick="closeModal()" style="background-color: #d11317; color: white; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background-color 0.3s;">
+                        Schließen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

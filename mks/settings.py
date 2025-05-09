@@ -63,6 +63,8 @@ INSTALLED_APPS = [
     'projects.apps.ProjectsConfig',
     'faq.apps.FaqConfig',
     'invitation.apps.InvitationConfig',
+    'dance', # Add the new dance app
+    'midi_band', # Add the new midi-band app
     #sitemaps
     'django.contrib.sitemaps',
     #thumbnails
@@ -202,6 +204,10 @@ FIXTURE_DIRS = [
     os.path.join(BASE_DIR, 'fixtures'),
 ]
 
+FIXTURES = [
+    'dance/fixtures/dance_data.json',
+]
+
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -210,6 +216,9 @@ EMAIL_USER_RECEIVER = 'musikschule@st-poelten.gv.at'
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
 THUMBNAIL_FORCE_OVERWRITE = True
+
+# Default storage configuration
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 USER_AGENTS_CACHE = 'default'
 

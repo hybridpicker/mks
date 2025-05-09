@@ -1,0 +1,98 @@
+{% load static %}
+
+<!-- NAV -->
+<header id="UserNav">
+  <div class="nvb">
+    <div class="bnbs">
+      <div class="bls">
+        <a href="{% url 'home_view' %}">
+          {% include "templates/svg/nav_bar_icon.html" %}
+        </a>
+      </div>
+      <div class="bns">
+        <div class="drops">
+          {% if request.user.is_staff %}
+          <div class="dropdown arrow">
+            <button class="dropbtn">
+              <a href="{% url 'get_controlling_students' %}">Schüler:innen</a>
+            </button>
+            <div class="dropdown-hover-section">
+            </div>
+            <div class="dropdown-content">
+              <a href="{% url 'get_controlling_students' %}">Anmeldungen</a>
+            </div>
+          </div>
+          <div class="dropdown-b arrow">
+            <button class="dropbtn-b">
+              <a href="{% url 'event_managing_view' %}">Wartung</a>
+            </button>
+            <div class="dropdown-content-b">
+              <a href="{% url 'event_managing_view' %}">Veranstaltungen</a>
+              <a href="{% url 'invitation:invitation_list' %}">Zusagen</a>
+              <a href="{% url 'show_blogs_editing' %}">Blog</a>
+              <a href="{% url 'get_index_text' %}">Startseite</a>
+              <a href="{% url 'get_all_faqs' %}">FAQ</a>
+              <a href="/tanz-und-bewegung/wartung/">Tanz & Bewegung</a>
+            </div>
+          </div>
+          {% endif %}
+          {% if request.user.coordinator %}
+          <div class="dropbtn">
+            <a href="/team/controlling/coordinator/students?user_id={{ request.user.id }}">Schüler:innen</a>
+          </div>
+          {% endif %}
+          <div class="dropdown-e arrow">
+            <button class="dropbtn-e">
+              <a class="logoutLink" href="{% url 'logout' %}">
+                <!-- SVG für Logout -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span class="tooltiptext">Ausloggen</span>
+              </a>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mks-nav-mobile" class="menu">
+      <div>
+        <span id="menuIcon" onclick="openNav()">
+          {% include "templates/svg/nav_bar_hamburger_mobile.html" %}
+        </span>
+      </div>
+      <div class="">
+      </div>
+      <div id="mobileLogo">
+        <a id="small-mobile-logo" href="{% url 'home_view' %}">
+          {% include "templates/svg/nav_bar_mobile_logo.html" %}
+        </a>
+        <a id="medium-mobile-logo" href="{% url 'home_view' %}">
+          {% include "templates/svg/nav_bar_icon.html" %}
+        </a>
+      </div>
+    </div>
+    <div id="mks-nav-mobile-menu" class="overlay">
+      <div class="overlay-content">
+        <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+          {% include "templates/svg/nav_bar_crossburger.html" %}
+        </a>
+        {% if request.user.is_staff %}
+        <a class="mainHeadingMobile" href="{% url 'event_managing_view' %}">Veranstaltungen</a>
+        <!-- Neuer Link zu den Zusagen in der mobilen Navigation -->
+        <a class="mainHeadingMobile" href="{% url 'invitation:invitation_list' %}">Zusagen</a>
+        <a class="mainHeadingMobile" href="{% url 'get_controlling_students' %}">Schüler:innen</a>
+        <a class="categoryHeadingMobileNoCursor" href="{% url 'get_controlling_students' %}">Anmeldungen</a>
+        <a class="mainHeadingMobile" href="{% url 'get_index_text' %}">Startseite</a>
+        <a class="mainHeadingMobile" href="{% url 'get_all_faqs' %}">FAQ</a>
+        <a class="mainHeadingMobile" href="/tanz-und-bewegung/wartung/">Tanz & Bewegung</a>
+        {% endif %}
+        <a class="mainHeadingMobile" href="{% url 'logout' %}">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>

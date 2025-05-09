@@ -22,6 +22,7 @@ django-compressor==2.4.1
 django-debug-toolbar==3.4.0
 django-extensions==3.1.5
 django-js-asset==2.1.0
+django-import-export
 django-phone-field==1.8.0
 django-user-agents==0.4.0
 entrypoints==0.4
@@ -54,7 +55,9 @@ nest-asyncio==1.5.5
 notebook==6.4.12
 numpy==1.22.3
 oauthlib==3.1.0
+openpyxl
 packaging==21.3
+pandas
 pandocfilters==1.5.0
 parso==0.8.3
 pexpect==4.8.0
