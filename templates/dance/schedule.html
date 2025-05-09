@@ -726,6 +726,10 @@ body {
     <div class="schedule-container">
         <h1 class="schedule-heading">{% trans "Stundenplan - Tanz & Bewegung" %}</h1>
         
+        <div class="schedule-note" style="text-align: center; margin-bottom: 15px; padding: 10px; background-color: #f9f9f9; border-radius: 6px; border: 1px dashed #d11317;">
+            <p style="padding: 0; margin: 0; font-size: 1.1rem; font-weight: 600; color: #333;"><i class="fa fa-info-circle" aria-hidden="true"></i> Hinweis: Alle Kurse mit * finden zweimal in der Woche statt.</p>
+        </div>
+        
         {% if selected_category or selected_age_group or selected_location %}
         <div class="active-filters">
             <span class="active-filters-label">Aktive Filter:</span>
