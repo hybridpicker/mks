@@ -204,9 +204,10 @@ FIXTURE_DIRS = [
     os.path.join(BASE_DIR, 'fixtures'),
 ]
 
-FIXTURES = [
-    'dance/fixtures/dance_data.json',
-]
+# Commented out to prevent automatic loading during tests
+# FIXTURES = [
+#     'dance/fixtures/dance_data.json',
+# ]
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25

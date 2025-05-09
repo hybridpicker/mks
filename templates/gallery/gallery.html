@@ -35,6 +35,14 @@ var photo_data = {{ gallery_json_data|safe }}
 <div class="mbs">
   <div class="container gallery">
     <h1>Galerie</h1>
+    {% if no_categories %}
+    <div style="text-align: center; margin: 50px 0;">
+      <p>Derzeit sind keine Kategorien vorhanden. Bitte erstellen Sie Kategorien im Galerie-Verwaltungsbereich.</p>
+      {% if user.is_authenticated %}
+      <p><a href="{% url 'gallery_admin' %}" style="color: #d11317;">Zur Galerie-Verwaltung</a></p>
+      {% endif %}
+    </div>
+    {% else %}
     <nav class="gallery-nav-bar">
       {% for category in category %}
       {% if category.id == category_id %}
@@ -50,48 +58,67 @@ var photo_data = {{ gallery_json_data|safe }}
     </nav>
     <section class="gallery-show">
       {% for photo in photos %}
-      {% if photo.image.width > photo.image.height %}
-      <picture class="landscape" onclick="showImg({{photo.id}})">
-          {% thumbnail photo.image "500" crop="center" format="WEBP" as im %}
-            <source srcset="{{ im.url }}" type="image/webp">
-            {% endthumbnail %}
-            {% thumbnail photo.image "500" crop="center" format="JPEG" as im %}
-            <source srcset="{{ im.url }}" type="image/jpeg">
-            <img src="{{ im.url }}" 
-            width="{{ im.width }}" 
-            height="{{ im.height }}"
-            alt="{{ blog.image.title }} Beitragsbild">
-            {% endthumbnail %}
-      </picture>
-      {% elif photo.image.width == photo.image.height %}
-      <picture class="square" onclick="showImg({{photo.id}})">
-          {% thumbnail photo.image "500" crop="center" format="WEBP" as im %}
-          <source srcset="{{ im.url }}" type="image/webp">
-            {% endthumbnail %}
-            {% thumbnail photo.image "500" crop="center" format="JPEG" as im %}
-            <source srcset="{{ im.url }}" type="image/jpeg">
-            <img src="{{ im.url }}" 
-            width="{{ im.width }}" 
-            height="{{ im.height }}"
-            alt="{{ blog.image.title }} Beitragsbild">
-            {% endthumbnail %}
-      </picture>
-      {% else %}
-        <picture class="portrait" onclick="showImg({{photo.id}})">
-          {% thumbnail photo.image "400" crop="center" format="WEBP" as im %}
-          <source srcset="{{ im.url }}" type="image/webp">
-            {% endthumbnail %}
-            {% thumbnail photo.image "400" crop="center" format="JPEG" as im %}
-            <source srcset="{{ im.url }}" type="image/jpeg">
-            <img src="{{ im.url }}" 
-            width="{{ im.width }}" 
-            height="{{ im.height }}"
-            alt="{{ blog.image.title }} Beitragsbild">
-            {% endthumbnail %}
-        </picture>
+      {% if photo.image %}
+        {% try %}
+          {% if photo.image.width > photo.image.height %}
+          <picture class="landscape" onclick="showImg({{photo.id}})">
+              {% thumbnail photo.image "500" crop="center" format="WEBP" as im %}
+                <source srcset="{{ im.url }}" type="image/webp">
+                {% endthumbnail %}
+                {% thumbnail photo.image "500" crop="center" format="JPEG" as im %}
+                <source srcset="{{ im.url }}" type="image/jpeg">
+                <img src="{{ im.url }}" 
+                width="{{ im.width }}" 
+                height="{{ im.height }}"
+                alt="{{ photo.title|default:'Gallery Image' }}">
+                {% endthumbnail %}
+          </picture>
+          {% elif photo.image.width == photo.image.height %}
+          <picture class="square" onclick="showImg({{photo.id}})">
+              {% thumbnail photo.image "500" crop="center" format="WEBP" as im %}
+              <source srcset="{{ im.url }}" type="image/webp">
+                {% endthumbnail %}
+                {% thumbnail photo.image "500" crop="center" format="JPEG" as im %}
+                <source srcset="{{ im.url }}" type="image/jpeg">
+                <img src="{{ im.url }}" 
+                width="{{ im.width }}" 
+                height="{{ im.height }}"
+                alt="{{ photo.title|default:'Gallery Image' }}">
+                {% endthumbnail %}
+          </picture>
+          {% else %}
+            <picture class="portrait" onclick="showImg({{photo.id}})">
+              {% thumbnail photo.image "400" crop="center" format="WEBP" as im %}
+              <source srcset="{{ im.url }}" type="image/webp">
+                {% endthumbnail %}
+                {% thumbnail photo.image "400" crop="center" format="JPEG" as im %}
+                <source srcset="{{ im.url }}" type="image/jpeg">
+                <img src="{{ im.url }}" 
+                width="{{ im.width }}" 
+                height="{{ im.height }}"
+                alt="{{ photo.title|default:'Gallery Image' }}">
+                {% endthumbnail %}
+            </picture>
+          {% endif %}
+        {% except %}
+          <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
+          <picture class="landscape" onclick="showImg({{photo.id}})">
+            <img src="{{ photo.image.url }}" 
+                style="width: 100%; height: auto; max-width: 500px;" 
+                alt="{{ photo.title|default:'Gallery Image' }}">
+          </picture>
+        {% endtry %}
       {% endif %}
+      {% empty %}
+      <div style="text-align: center; margin: 50px 0;">
+        <p>Keine Bilder in dieser Kategorie vorhanden.</p>
+        {% if user.is_authenticated %}
+        <p><a href="{% url 'gallery_admin' %}" style="color: #d11317;">Zur Galerie-Verwaltung</a></p>
+        {% endif %}
+      </div>
       {% endfor %}
     </section>
+    {% endif %}
     <section onclick="blockImg()" id="overlay-image-section" class="overlay image">
       <img id="overlay-show-img" src="" alt="">
       <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="blockImg()">

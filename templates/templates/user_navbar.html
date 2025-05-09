@@ -33,6 +33,7 @@
               <a href="{% url 'get_index_text' %}">Startseite</a>
               <a href="{% url 'get_all_faqs' %}">FAQ</a>
               <a href="/tanz-und-bewegung/wartung/">Tanz & Bewegung</a>
+              <a href="{% url 'gallery_admin' %}">Galerie</a>
             </div>
           </div>
           {% endif %}
@@ -93,6 +94,7 @@
         <a class="mainHeadingMobile" href="{% url 'get_index_text' %}">Startseite</a>
         <a class="mainHeadingMobile" href="{% url 'get_all_faqs' %}">FAQ</a>
         <a class="mainHeadingMobile" href="/tanz-und-bewegung/wartung/">Tanz & Bewegung</a>
+        <a class="mainHeadingMobile" href="{% url 'gallery_admin' %}">Galerie</a>
         {% endif %}
         <a class="mainHeadingMobile" href="{% url 'logout' %}">Logout</a>
       </div>

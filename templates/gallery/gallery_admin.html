@@ -1,0 +1,229 @@
+{% extends "templates/base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Galerie - Verwaltung" %}{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery_admin.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="{% static 'gallery/js/gallery_admin.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<div class="gallery-admin-container">
+    <h1 class="gallery-admin-heading">{% trans "Galerie - Verwaltung" %}</h1>
+    
+    <div id="message-container" class="message-container">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    
+    <!-- Category selection -->
+    <div class="category-section">
+        <div class="category-tabs">
+            {% for category in categories %}
+            <div class="category-tab {% if category.id == selected_category_id %}active{% endif %}" data-category-id="{{ category.id }}">
+                {{ category.title }}
+            </div>
+            {% empty %}
+            <div class="category-tab">{% trans "Keine Kategorien vorhanden" %}</div>
+            {% endfor %}
+        </div>
+        
+        <div class="category-actions">
+            <button id="new-category-btn" class="btn btn-sm">{% trans "Neue Kategorie" %}</button>
+            {% if selected_category_id %}
+            <button id="edit-category-btn" class="btn btn-sm">{% trans "Kategorie bearbeiten" %}</button>
+            <button id="delete-category-btn" class="btn btn-sm btn-secondary">{% trans "Kategorie löschen" %}</button>
+            {% endif %}
+        </div>
+    </div>
+    
+    {% if selected_category_id %}
+    <!-- Upload area -->
+    <div id="drop-zone" class="upload-container">
+        <h3>{% trans "Bilder hochladen" %}</h3>
+        <p class="upload-instruction">{% trans "Ziehen Sie ein Bild hierher oder klicken Sie auf den Button unten." %}</p>
+        <p class="upload-size-limit">{% trans "Maximale Dateigröße: 2MB. Erlaubte Formate: JPG, PNG, GIF, WEBP" %}</p>
+        
+        <div id="selected-file" class="selected-file"></div>
+        
+        <form id="upload-form" class="upload-form" action="{% url 'gallery_upload' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="category_id" value="{{ selected_category_id }}">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="title">{% trans "Titel" %}</label>
+                    <input type="text" id="title" name="title" placeholder="{% trans "Titel des Bildes" %}">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="description">{% trans "Beschreibung" %}</label>
+                    <textarea id="description" name="description" placeholder="{% trans "Beschreibung des Bildes" %}"></textarea>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="copyright_by">{% trans "Copyright" %}</label>
+                    <input type="text" id="copyright_by" name="copyright_by" placeholder="{% trans "Copyright-Inhaber (optional)" %}">
+                </div>
+            </div>
+            
+            <input type="file" id="file-input" name="image" accept="image/jpeg,image/png,image/gif,image/webp" style="display: none;">
+            
+            <div class="btn-container">
+                <button type="button" id="select-file-btn" class="btn">{% trans "Bild auswählen" %}</button>
+                <button type="submit" class="btn">{% trans "Hochladen" %}</button>
+            </div>
+        </form>
+        
+        <div id="upload-progress" class="upload-progress">
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div id="progress-text" class="progress-text">0%</div>
+        </div>
+    </div>
+    
+    <!-- Photo grid -->
+    <div id="photo-grid" class="photo-grid">
+        {% for photo in photos %}
+        <div class="photo-item" data-id="{{ photo.id }}">
+            {% if photo.missing_image %}
+            <div style="width: 100%; height: 200px; background-color: #f8d7da; display: flex; justify-content: center; align-items: center; color: #721c24;">
+                <div style="text-align: center; padding: 20px;">
+                    <p><strong>Bild fehlt</strong></p>
+                    <p>Die Bilddatei konnte nicht gefunden werden.</p>
+                </div>
+            </div>
+            {% else %}
+            <img src="{{ photo.image.url }}" alt="{{ photo.title }}">
+            {% endif %}
+            <div class="photo-info">
+                <h3 class="photo-title">{{ photo.title }}</h3>
+                <div class="photo-actions">
+                    <button class="btn btn-sm photo-edit-btn">{% trans "Bearbeiten" %}</button>
+                    <button class="btn btn-sm btn-secondary photo-delete-btn">{% trans "Löschen" %}</button>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>{% trans "Keine Bilder in dieser Kategorie. Laden Sie Bilder hoch, um sie hier anzuzeigen." %}</p>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="upload-container">
+        <h3>{% trans "Keine Kategorie ausgewählt" %}</h3>
+        <p>{% trans "Bitte erstellen Sie zuerst eine Kategorie, um Bilder hochladen zu können." %}</p>
+    </div>
+    {% endif %}
+    
+    <div class="btn-container" style="margin-top: 30px;">
+        <a href="{% url 'gallery_view' %}" class="btn">{% trans "Zur Galerie" %}</a>
+        <a href="/" class="btn btn-secondary">{% trans "Zurück zur Startseite" %}</a>
+    </div>
+</div>
+
+<!-- Edit Photo Modal -->
+<div id="edit-photo-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 class="modal-title">{% trans "Bild bearbeiten" %}</h2>
+        <form id="edit-photo-form">
+            <input type="hidden" id="edit-photo-id">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="edit-photo-title">{% trans "Titel" %}</label>
+                    <input type="text" id="edit-photo-title" placeholder="{% trans "Titel des Bildes" %}">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="edit-photo-description">{% trans "Beschreibung" %}</label>
+                    <textarea id="edit-photo-description" placeholder="{% trans "Beschreibung des Bildes" %}"></textarea>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="edit-photo-copyright">{% trans "Copyright" %}</label>
+                    <input type="text" id="edit-photo-copyright" placeholder="{% trans "Copyright-Inhaber (optional)" %}">
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button type="submit" class="btn">{% trans "Speichern" %}</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('edit-photo-modal')">{% trans "Abbrechen" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- New Category Modal -->
+<div id="new-category-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 class="modal-title">{% trans "Neue Kategorie" %}</h2>
+        <form id="new-category-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="new-category-title">{% trans "Titel" %}</label>
+                    <input type="text" id="new-category-title" placeholder="{% trans "Titel der Kategorie" %}" required>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button type="submit" class="btn">{% trans "Speichern" %}</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('new-category-modal')">{% trans "Abbrechen" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Category Modal -->
+<div id="edit-category-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 class="modal-title">{% trans "Kategorie bearbeiten" %}</h2>
+        <form id="edit-category-form">
+            <input type="hidden" id="edit-category-id">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="edit-category-title">{% trans "Titel" %}</label>
+                    <input type="text" id="edit-category-title" placeholder="{% trans "Titel der Kategorie" %}" required>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button type="submit" class="btn">{% trans "Speichern" %}</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('edit-category-modal')">{% trans "Abbrechen" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% else %}
+<div class="gallery-admin-container">
+    <h1 class="gallery-admin-heading">{% trans "Zugriff verweigert" %}</h1>
+    <p style="text-align: center;">{% trans "Sie müssen angemeldet sein, um auf die Galerie-Verwaltung zugreifen zu können." %}</p>
+    <div class="btn-container">
+        <a href="{% url 'login' %}" class="btn">{% trans "Anmelden" %}</a>
+        <a href="{% url 'gallery_view' %}" class="btn btn-secondary">{% trans "Zurück zur Galerie" %}</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
