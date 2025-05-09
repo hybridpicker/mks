@@ -59,7 +59,6 @@ var photo_data = {{ gallery_json_data|safe }}
     <section class="gallery-show">
       {% for photo in photos %}
       {% if photo.image %}
-        {% try %}
           {% if photo.image.width > photo.image.height %}
           <picture class="landscape" onclick="showImg({{photo.id}})">
               {% thumbnail photo.image "500" crop="center" format="WEBP" as im %}
@@ -100,14 +99,12 @@ var photo_data = {{ gallery_json_data|safe }}
                 {% endthumbnail %}
             </picture>
           {% endif %}
-        {% except %}
           <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
           <picture class="landscape" onclick="showImg({{photo.id}})">
             <img src="{{ photo.image.url }}" 
                 style="width: 100%; height: auto; max-width: 500px;" 
                 alt="{{ photo.title|default:'Gallery Image' }}">
           </picture>
-        {% endtry %}
       {% endif %}
       {% empty %}
       <div style="text-align: center; margin: 50px 0;">
