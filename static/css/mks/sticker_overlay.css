@@ -1,39 +1,33 @@
-/* Sticker Overlay für das Home-Banner */
-.bs {
-  position: relative !important; /* Stellt sicher, dass der Container eine relative Positionierung hat */
-}
-
-.sticker-overlay {
+/* Sticker Overlay */
+#sticker-overlay {
   position: absolute;
-  top: 50%; /* Vertikale Zentrierung */
-  transform: translateY(-50%); /* Perfekt vertikal zentriert */
-  left: 20px; /* Abstand von links */
-  width: auto;
-  height: auto;
-  z-index: 10;
-  display: block;
-  pointer-events: none; /* Damit man durch den Sticker hindurch klicken kann */
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  pointer-events: none;
 }
 
-.sticker-overlay img {
-  max-width: 200px; /* Feste Größe für den Sticker */
+#sticker-overlay img {
+  width: 200px;
   height: auto;
 }
 
-/* Mobile Banner */
+/* Mobile Styles */
 @media only screen and (max-width: 771px) {
-  .sticker-overlay {
+  #sticker-overlay {
     left: 10px;
+    top: 50%;
   }
   
-  .sticker-overlay img {
-    max-width: 120px; /* Kleinere Größe auf mobilen Geräten */
+  #sticker-overlay img {
+    width: 120px;
   }
 }
 
-/* Kleine Bildschirme */
+/* Sehr kleine Bildschirme */
 @media only screen and (max-width: 480px) {
-  .sticker-overlay img {
-    max-width: 80px; /* Noch kleinere Größe auf sehr kleinen Geräten */
+  #sticker-overlay img {
+    width: 80px;
   }
 }
