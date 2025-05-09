@@ -70,6 +70,11 @@ var photo_data = {{ gallery_json_data|safe }}
                 width="{{ im.width }}" 
                 height="{{ im.height }}"
                 alt="{{ photo.title|default:'Gallery Image' }}">
+                {% empty %}
+                <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
+                <img src="{{ photo.image.url }}" 
+                    style="width: 100%; height: auto; max-width: 500px;" 
+                    alt="{{ photo.title|default:'Gallery Image' }}">
                 {% endthumbnail %}
           </picture>
           {% elif photo.image.width == photo.image.height %}
@@ -83,6 +88,11 @@ var photo_data = {{ gallery_json_data|safe }}
                 width="{{ im.width }}" 
                 height="{{ im.height }}"
                 alt="{{ photo.title|default:'Gallery Image' }}">
+                {% empty %}
+                <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
+                <img src="{{ photo.image.url }}" 
+                    style="width: 100%; height: auto; max-width: 500px;" 
+                    alt="{{ photo.title|default:'Gallery Image' }}">
                 {% endthumbnail %}
           </picture>
           {% else %}
@@ -96,15 +106,14 @@ var photo_data = {{ gallery_json_data|safe }}
                 width="{{ im.width }}" 
                 height="{{ im.height }}"
                 alt="{{ photo.title|default:'Gallery Image' }}">
+                {% empty %}
+                <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
+                <img src="{{ photo.image.url }}" 
+                    style="width: 100%; height: auto; max-width: 400px;" 
+                    alt="{{ photo.title|default:'Gallery Image' }}">
                 {% endthumbnail %}
             </picture>
           {% endif %}
-          <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
-          <picture class="landscape" onclick="showImg({{photo.id}})">
-            <img src="{{ photo.image.url }}" 
-                style="width: 100%; height: auto; max-width: 500px;" 
-                alt="{{ photo.title|default:'Gallery Image' }}">
-          </picture>
       {% endif %}
       {% empty %}
       <div style="text-align: center; margin: 50px 0;">

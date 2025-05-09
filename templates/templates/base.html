@@ -19,8 +19,12 @@
   <meta property="og:title" content="Musikschule St. Pölten">
   <meta property="og:description" content="Musikschule St. Pölten - Musik, Kunst und Kultur für alle Altersgruppen">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.musikschulen-stpoelten.at/">
+  <meta property="og:url" content="https://musikschule-stp.at/">
   <meta property="og:image" content="{% static 'banner/slideshow/01.webp' %}">
+  <!-- Hey Meta Tags -->
+  <meta property="hey:title" content="Musikschule St. Pölten">
+  <meta property="hey:description" content="Musikschule St. Pölten - Musik, Kunst und Kultur für alle Altersgruppen">
+  <meta property="hey:image" content="{% static 'banner/slideshow/01.webp' %}">
   {% endblock %}
   {% include "templates/favicon.html" %}
   <!-- critical CSS -->
@@ -35,7 +39,6 @@
   <!-- CSS-->
   <link href="{% static 'css/mks/mks_v2.4.9.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'css/mks/logout_fix.css' %}" rel="stylesheet" type="text/css" />
-  <link href="{% static 'css/mks/sticker_overlay.css' %}" rel="stylesheet" type="text/css" />
 
   {% if user.is_authenticated %}
   {% include "templates/user_navbar.html" %}
