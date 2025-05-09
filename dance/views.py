@@ -25,7 +25,14 @@ except locale.Error:
 from .views_categories import get_course_category
 
 def dance_schedule_view(request):
-    """Displays the dance schedule grouped by day with filtering."""
+    """Displays the dance schedule grouped by day with filtering or the 'coming soon' page if no courses exist."""
+    # Fetch all courses and check if any exist
+    all_courses = Course.objects.all()
+    
+    # If there are no courses, show the coming soon page
+    if not all_courses.exists():
+        return render(request, 'dance/coming_soon.html', {'page_title': 'Tanz & Bewegung - Coming Soon'})
+    
     category_filter = request.GET.get('category')
     age_group_filter = request.GET.get('age_group')
     location_filter = request.GET.get('location')
@@ -91,6 +98,9 @@ def dance_schedule_view(request):
             # Store the computed category for display in template
             timeslot.computed_category = course_category
 
+    # If there are filtered timeslots but no matching courses are found, show regular page with empty results
+    # rather than the coming soon page, since courses do exist but just don't match the filters
+    
     # Group filtered timeslots by day
     timeslots_by_day = defaultdict(list)
     for timeslot in filtered_timeslots:
@@ -110,7 +120,6 @@ def dance_schedule_view(request):
     unique_locations = sorted(unique_locations)
 
     # Verwende feste Altersgruppen statt die aus der Datenbank
-    all_courses = Course.objects.all()
     unique_age_groups = ["3-6 Jahre", "6-9 Jahre", "10-14 Jahre", "15+"]
     
     # Generate available categories by actually analyzing the courses
