@@ -22,6 +22,7 @@
   width: 100%;
   z-index: 1000;
   font-family: jaf-bernina-sans-condensed, sans-serif; /* MKS Schriftart angepasst */
+  display: block; /* Ensure it displays properly */
 }
 
 /* Wir behalten die bestehende .nvb-Struktur bei */
@@ -294,7 +295,7 @@ html:not([data-scroll='0']) .admin-quick-actions {
   background: var(--white);
 }
 
-@media only screen and (max-width: 820px), only screen and (max-height: 375px) {
+@media only screen and (max-width: 820px) {
   #mks-nav-mobile {
     height: 4rem;
     display: flex;
