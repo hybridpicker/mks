@@ -11,8 +11,9 @@ from events.models import Event
 from teaching.models import Teacher
 from gallery.models import Photo
 from blog.models import BlogPost
-from home.models import IndexText, Alert
+from home.models import IndexText, Alert, NewsItem
 from downloadsection.models import IndexDownload
+
 # Create your views here.
 
 def get_random_pic():
@@ -36,7 +37,8 @@ def get_photo_data():
     return photo_data
 
 
-def home (request):
+def home(request):
+    # Basic school information
     school_data = MusicSchool.objects.all().first()
     if school_data:
         name = school_data.school_name
@@ -44,16 +46,33 @@ def home (request):
     else:
         name = None
         logo = None
-    events = Event.objects.all()
+    
+    # Get latest events and sort by date
+    events = Event.objects.filter(
+        date__gte=datetime.now().date()
+    ).order_by('date')[:6]
+    
+    # Teacher information
     teachers = Teacher.objects.all()
-    blog = BlogPost.objects.all().exclude(category__category__name="Kunstschule")[0:6]
-    index_text = IndexText.objects.all().first()
     teacher_counter = len(teachers)
+    
+    # Get news items instead of blog posts
+    news_items = NewsItem.objects.filter(is_active=True)[:5]
+    
+    # Keep blog posts as fallback if there are no news items
+    if not news_items:
+        blog = BlogPost.objects.all().exclude(category__category__name="Kunstschule")[:6]
+    else:
+        blog = None
+    
+    # Other content
+    index_text = IndexText.objects.all().first()
     middle_pic = get_random_pic()
     photos = get_photo_data()
     material_data = IndexDownload.objects.all()
-    # Den aktiven Alert abrufen
-    active_alert = Alert.objects.filter(is_active=True).first()  # Nur den ersten aktiven Alert anzeigen
+    
+    # Active alert
+    active_alert = Alert.objects.filter(is_active=True).first()
     
     # Sticker Banner MKM_2025 aktivieren (9.5. - 10.5.2025)
     # ACHTUNG: Temporär auf True gesetzt für den Zeitraum 9.5. - 10.5.2025
@@ -65,6 +84,7 @@ def home (request):
     context = {
         'index_text': index_text,
         'blog': blog,
+        'news_items': news_items,
         'events': events,
         'material_data': material_data,
         'name': name,
@@ -77,17 +97,17 @@ def home (request):
         'alert_title': active_alert.title if active_alert else None,
         # Sticker Banner
         'show_mkm_sticker': show_sticker,
-        }
+    }
     return render(request, 'home/index.html', context)
 
-def impressum (request):
-    return render (request, 'home/impressum.html')
+def impressum(request):
+    return render(request, 'home/impressum.html')
 
-def history (request):
-    return render (request, 'home/history.html')
+def history(request):
+    return render(request, 'home/history.html')
 
-def logo (request):
-    return render (request, 'home/logo.html')
+def logo(request):
+    return render(request, 'home/logo.html')
 
 def view_404(request, *args, **kwargs):
     return redirect('home_view')

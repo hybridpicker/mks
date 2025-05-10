@@ -7,90 +7,574 @@
 {% block extra_head %}
 <meta name="robots" content="noindex">
 
-<style media="screen">
-  #user-event-container a:hover .cross_st0{
-    stroke: black;
+<style>
+  /* Event-Manager Style */
+  .event-manager-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+  
+  .event-manager-header {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e60000;
+    padding-bottom: 1rem;
+  }
+  
+  .event-manager-header h1 {
+    font-size: 2.2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .event-manager-header p {
+    color: #666;
+    max-width: 700px;
+  }
+  
+  /* Event List Styles */
+  .events-list {
+    margin-bottom: 3rem;
+  }
+  
+  .events-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .events-list-header h2 {
+    font-size: 1.6rem;
+    color: #333;
+    position: relative;
+    padding-left: 15px;
+  }
+  
+  .events-list-header h2:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10%;
+    height: 80%;
+    width: 5px;
+    background-color: #e60000;
+  }
+  
+  .empty-events-message {
+    background-color: #f5f5f5;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 4px;
+    color: #666;
+  }
+  
+  /* Event Card Styles */
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .event-card {
+    position: relative;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+  }
+  
+  .event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: #e60000;
+  }
+  
+  .event-card-image {
+    height: 160px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+  }
+  
+  .event-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .event-card:hover .event-card-image img {
+    transform: scale(1.05);
+  }
+  
+  .event-card-date {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #e60000;
+    color: white;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  
+  .event-card-content {
+    padding: 1.2rem;
+  }
+  
+  .event-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+    color: #333;
+    line-height: 1.4;
+  }
+  
+  .event-card-details {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .event-card-details p {
+    margin: 0.3rem 0;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .event-card-details .event-time:before {
+    content: "⏱";
+    color: #e60000;
+    margin-right: 8px;
+  }
+  
+  .event-card-details .event-venue:before {
+    content: "📍";
+    color: #e60000;
+    margin-right: 8px;
+  }
+  
+  .event-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .edit-btn {
+    background-color: transparent;
+    color: #666;
+    border: 1px solid #ddd;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .edit-btn:hover {
+    background-color: #e8f4fd;
+    border-color: #0d6efd;
+    color: #0d6efd;
+  }
+  
+  .delete-btn {
+    background-color: transparent;
+    color: #666;
+    border: 1px solid #ddd;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .delete-btn:hover {
+    background-color: #f8d7da;
+    border-color: #e60000;
+    color: #e60000;
+  }
+  
+  /* Event Form Styles */
+  .event-form-section {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 4px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-top: 3px solid #e60000;
+  }
+  
+  .event-form-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .event-form-header h2 {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .event-form-header p {
+    color: #666;
+  }
+  
+  .event-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    .event-form {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .form-group label .required {
+    color: #e60000;
+    margin-left: 0.2rem;
+  }
+  
+  .form-group .hint {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.3rem;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+  
+  .form-control:focus {
+    border-color: #e60000;
+    outline: none;
+  }
+  
+  .form-control.date,
+  .form-control.time {
+    cursor: pointer;
+  }
+  
+  .form-image-guidelines {
+    grid-column: span 2;
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-left: 4px solid #e60000;
+    border-radius: 0 4px 4px 0;
+  }
+  
+  @media (max-width: 768px) {
+    .form-image-guidelines {
+      grid-column: span 1;
+    }
+  }
+  
+  .form-image-guidelines h4 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  .form-image-guidelines ul {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+  }
+  
+  .form-image-guidelines li {
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+  }
+  
+  .form-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .btn {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .btn-primary {
+    background-color: #e60000;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: #cc0000;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    display: inline-block;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268;
+    text-decoration: none;
+    color: white;
+  }
+  
+  .current-image-preview {
+    margin-bottom: 1rem;
+  }
+  
+  .current-image-preview img {
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  /* Flash Messages */
+  .messages {
+    margin: 1rem 0 2rem;
+    padding: 1rem;
+    border-radius: 4px;
+  }
+  
+  .success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+  }
+  
+  .error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 992px) {
+    .events-grid {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .events-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .event-manager-header h1 {
+      font-size: 1.8rem;
+    }
+    
+    .events-list-header h2 {
+      font-size: 1.4rem;
+    }
+    
+    .event-form-section {
+      padding: 1.5rem;
+    }
   }
 </style>
 {% endblock %}
-
 
 {% block navbar %}
 {% endblock %}
 
 {% block banner %}
-<img src="/static/banner/events_banner.jpg" alt="">
-<img id="mbimg" src="/static/banner/mobile/events_banner.jpg" alt="">
-
+<img src="/static/banner/events_banner.jpg" alt="Event Management Banner">
+<img id="mbimg" src="/static/banner/mobile/events_banner.jpg" alt="Event Management Banner Mobile">
 {% endblock %}
 
 {% block body %}
-
 <div class="mbs">
-  <div class="container">
-  {% if user.is_authenticated %}
-  <h1>Veranstaltungen</h1>
-  {% for event in events %}
-  <div id="user-event-container" class="event-container">
-    <div id="user-event-cross-burger" class="event-cross-burger">
-      <a href="?id={{ event.id }}" onclick="return confirm('Wollen Sie wirklich dieses Event löschen?');">
-        {% include "templates/svg/nav_bar_crossburger.html" %}
-      </a>
-      <span class="tooltiptext">Veranstaltung löschen</span>
+  <div class="event-manager-container container">
+    {% if user.is_authenticated %}
+    
+    <!-- Event Manager Header -->
+    <div class="event-manager-header">
+      <h1>Veranstaltungen verwalten</h1>
+      <p>Hier können Sie Veranstaltungen erstellen und bestehende verwalten. Alle Veranstaltungen werden auf der Startseite angezeigt.</p>
     </div>
-    <div class="mks-event-date">
-      <h3>{{ event.get_date_presentation }}</h3>
+    
+    <!-- Flash Messages -->
+    {% if messages %}
+    <div class="messages success">
+      {% for message in messages %}
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+      {% endfor %}
     </div>
-    <div class="mks-event-title">
-      <h3>{{ event.name }}</h3>
+    {% endif %}
+    
+    <!-- Events List -->
+    <section class="events-list">
+      <div class="events-list-header">
+        <h2>Bestehende Veranstaltungen</h2>
+      </div>
+      
+      {% if events %}
+      <div class="events-grid">
+        {% for event in events %}
+        <div class="event-card">
+          <div class="event-card-image">
+            <img src="{{ event.get_image_url }}" alt="{{ event.name }}">
+          </div>
+          <div class="event-card-date">
+            {{ event.date|date:"d.m.Y" }}
+          </div>
+          <div class="event-card-content">
+            <h3 class="event-card-title">{{ event.name }}</h3>
+            <div class="event-card-details">
+              <p class="event-time">{{ event.get_time_presentation }}</p>
+              <p class="event-venue">{{ event.venue }}</p>
+            </div>
+            <div class="event-card-actions">
+              <a href="?edit_id={{ event.id }}" class="edit-btn">
+                <span>Bearbeiten</span>
+              </a>
+              <a href="?delete_id={{ event.id }}" class="delete-btn" onclick="return confirm('Wollen Sie wirklich diese Veranstaltung löschen?');">
+                <span>Löschen</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-events-message">
+        <p>Keine Veranstaltungen vorhanden. Erstellen Sie unten Ihre erste Veranstaltung.</p>
+      </div>
+      {% endif %}
+    </section>
+    
+    <!-- Event Creation/Edit Form -->
+    <section class="event-form-section">
+      <div class="event-form-header">
+        {% if edit_event %}
+          <h2>Veranstaltung bearbeiten</h2>
+          <p>Bearbeiten Sie die Informationen für "{{ edit_event.name }}"</p>
+        {% else %}
+          <h2>Neue Veranstaltung erstellen</h2>
+          <p>Füllen Sie das folgende Formular aus, um eine neue Veranstaltung zu erstellen.</p>
+        {% endif %}
+      </div>
+      
+      <form id="event_form_post" method="post" enctype="multipart/form-data" class="event-form">
+        {% csrf_token %}
+        
+        {% if edit_event %}
+        <input type="hidden" name="event_id" value="{{ edit_event.id }}">
+        {% endif %}
+        
+        <div class="form-group">
+          <label for="id_name">Veranstaltungsname <span class="required">*</span></label>
+          <input type="text" name="name" maxlength="100" required id="id_name" class="form-control" value="{{ edit_event.name|default:'' }}">
+          <div class="hint">(max. 100 Zeichen)</div>
+          {{ form.name.errors }}
+        </div>
+        
+        <div class="form-group">
+          <label for="id_venue">Veranstaltungsort</label>
+          <input type="text" name="venue" maxlength="80" id="id_venue" class="form-control" value="{{ edit_event.venue|default:'' }}">
+          <div class="hint">(max. 80 Zeichen)</div>
+          {{ form.venue.errors }}
+        </div>
+        
+        <div class="form-group">
+          <label for="id_date">Datum <span class="required">*</span></label>
+          <input id="id_date" type="date" name="date" required class="form-control date" placeholder="TT.MM.JJJJ" value="{% if edit_event %}{{ edit_event.date|date:'Y-m-d' }}{% endif %}">
+          {{ form.date.errors }}
+        </div>
+        
+        <div class="form-group">
+          <label for="id_time">Beginnzeit <span class="required">*</span></label>
+          <input id="id_time" type="time" name="time" required class="form-control time" placeholder="HH:MM" value="{% if edit_event %}{{ edit_event.time|time:'H:i' }}{% endif %}">
+          {{ form.time.errors }}
+        </div>
+        
+        <div class="form-group">
+          <label for="id_image">
+            Bild {% if not edit_event %}<span class="required">*</span>{% else %}<span>(Optional: Nur hochladen, wenn das Bild geändert werden soll)</span>{% endif %}
+          </label>
+          
+          {% if edit_event %}
+          <div class="current-image-preview">
+            <img src="{{ edit_event.get_image_url }}" alt="{{ edit_event.name }}" style="max-width: 300px; max-height: 200px; margin-bottom: 10px; border: 1px solid #ddd;">
+            <p class="hint">{% if edit_event.image %}Aktuelles Bild{% else %}Standard-Platzhalterbild{% endif %}</p>
+          </div>
+          <input type="file" name="image" id="id_image" class="form-control">
+          {% else %}
+          <input type="file" name="image" required id="id_image" class="form-control">
+          {% endif %}
+          
+          {{ form.image.errors }}
+        </div>
+        
+        <div class="form-image-guidelines">
+          <h4>Bildrichtlinien:</h4>
+          <ul>
+            <li><strong>Erforderlich:</strong> Jede Veranstaltung muss ein Bild haben</li>
+            <li><strong>Optimale Größe:</strong> 800 × 600 Pixel</li>
+            <li><strong>Format:</strong> JPG oder WEBP (empfohlen)</li>
+            <li><strong>Maximale Dateigröße:</strong> 2MB</li>
+            <li><strong>Seitenverhältnis:</strong> 4:3 (Querformat)</li>
+          </ul>
+        </div>
+        
+        <div class="form-actions">
+          {% if edit_event %}
+          <a href="{% url 'event_managing_view' %}" class="btn btn-secondary" style="margin-right: 10px;">Abbrechen</a>
+          <button type="submit" class="btn btn-primary">Änderungen speichern</button>
+          {% else %}
+          <button type="submit" class="btn btn-primary">Veranstaltung speichern</button>
+          {% endif %}
+        </div>
+      </form>
+    </section>
+    
+    {% else %}
+    <div style="text-align: center; padding: 3rem 0;">
+      <h2>Sie sind nicht angemeldet</h2>
+      <p style="margin: 1rem 0;">Bitte melden Sie sich an, um Veranstaltungen zu verwalten.</p>
+      <div style="margin-top: 2rem;">
+        <a href="{% url 'account_login' %}" style="display: inline-block; background-color: #e60000; color: white; padding: 0.7rem 1.5rem; text-decoration: none; border-radius: 4px; margin-right: 1rem;">Anmelden</a>
+        <a href="{% url 'account_signup' %}" style="display: inline-block; border: 1px solid #e60000; color: #e60000; padding: 0.7rem 1.5rem; text-decoration: none; border-radius: 4px;">Registrieren</a>
+      </div>
     </div>
-    <div class="mks-event-time">
-      <p>{{ event.get_time_presentation }}</p>
-    </div>
-    <div class="mks-event-venue">
-      <p>{{ event.venue }}</p>
-    </div>
+    {% endif %}
   </div>
-  {% endfor %}
-  <h2>Veranstaltung erstellen</h2>
-
-  <form id="event_form_post" method="post">
-    {% csrf_token %}
-    <p>Eventname*</p>
-    <p>{{ form.name }}</p>
-    {{ form.name.errors }}
-    <p style="font-size: 18px;margin-bottom: 24px;">(max. 100 Zeichen)</p>
-    <p>Ort</p>
-    <p>{{ form.venue }}</p>
-    {{ form.venue.errors }}
-    <p style="font-size: 18px;margin-bottom: 24px;">(max. 80 Zeichen)</p>
-    <p>Datum*</p>
-    <p>
-      <input id="id_date" type="date" name="date" required="" class="datepicker" placeholder="yyyy-mm-dd"></input>
-    </p>
-    {{ form.date.errors }}
-    <p>Beginnzeit*</p>
-    <p>
-      <input id="id_time" type="time" name="time" required="" class="timepicker" placeholder="hh:mm"></input>
-    </p>
-    {{ form.time.errors }}
-  </div>
-  <div class="form-actions">
-    <a href="#">
-      <button type="submit">Speichern</button>
-    </a>
-  </div>
-</form>
-
-  {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'account_login' %}">Log In</a> |
-  <a href="{% url 'account_signup' %}">Sign Up</a>
-  {% endif %}
 </div>
-
 {% endblock %}
-
 
 {% block footer %}
 {% endblock %}

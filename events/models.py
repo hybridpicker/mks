@@ -16,7 +16,9 @@ class Event(models.Model):
     name = models.CharField(_(u'Name of Event'), max_length=100)
     image = models.ImageField(
         upload_to='events/images/',
-        default='event_default.jpg', blank=True)
+        null=True,
+        blank=True,
+        help_text='Bild für die Veranstaltung. Optimal: 800x600px, max. 2MB.')
     venue = models.CharField(_(u'Venue'), max_length=80, blank=True)
     date = models.DateField(
         _("date for event"),
@@ -35,6 +37,20 @@ class Event(models.Model):
             blank=True, null=True)
     def __str__(self):
         return '%s: %s' % (self.name, self.date)
+        
+    def get_image_url(self):
+        '''
+        Returns the URL of the image if it exists and is not the default media image,
+        otherwise returns the default static image URL.
+        '''
+        # Define the possible names for the default image in the media directory
+        default_media_image_names = ['event_default.jpg', 'events/images/event_default.jpg']
+
+        # Check if an image is uploaded AND its name is not one of the default media image names
+        if self.image and hasattr(self.image, 'url') and self.image.name not in default_media_image_names:
+            return self.image.url
+        # Otherwise, return the static default image URL
+        return '/static/events/event_default.jpg'
 
     def get_date_presentation(self):
         tp = self.date

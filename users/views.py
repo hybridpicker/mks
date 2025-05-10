@@ -48,28 +48,89 @@ class HomePageView(TemplateView):
 
 @login_required(login_url='/team/login/')
 def eventView(request):
-    events = Event.objects.all()
+    events = Event.objects.all().order_by('-date')
+    edit_event = None
+    
+    # Löschen einer Veranstaltung
     try:
-        event_id = request.GET['id']
-        Event.objects.filter(id=event_id).delete()
-    except MultiValueDictKeyError:
-        pass
+        if 'delete_id' in request.GET:
+            event_id = request.GET['delete_id']
+            Event.objects.filter(id=event_id).delete()
+            messages.success(request, 'Veranstaltung erfolgreich gelöscht!')
+            return redirect('event_managing_view')
+    except Exception as e:
+        messages.error(request, f'Fehler beim Löschen der Veranstaltung: {str(e)}')
+    
+    # Bearbeiten einer Veranstaltung - Event zum Bearbeiten laden
+    if 'edit_id' in request.GET:
+        try:
+            edit_id = request.GET['edit_id']
+            edit_event = Event.objects.get(id=edit_id)
+        except Event.DoesNotExist:
+            messages.error(request, 'Die gewählte Veranstaltung existiert nicht.')
+            return redirect('event_managing_view')
+    
+    # Formular verarbeiten (entweder neues Event erstellen oder bestehendes aktualisieren)
     if request.method == 'POST':
-        form = EventForm(request.POST)
-        if form.is_valid():
-            name = request.POST['name']
-            venue = request.POST['venue']
-            date = request.POST['date']
-            time = request.POST['time']
-            new_event = Event(name=name,
-                              venue=venue,
-                              date=date,
-                              time=time)
-            new_event.save()
+        # Event aktualisieren
+        if 'event_id' in request.POST and request.POST['event_id']:
+            try:
+                event_id = request.POST['event_id']
+                event = Event.objects.get(id=event_id)
+                
+                # Formularfelder aktualisieren
+                event.name = request.POST['name']
+                event.venue = request.POST['venue']
+                event.date = request.POST['date']
+                event.time = request.POST['time']
+                
+                # Prüfen, ob ein neues Bild hochgeladen wurde
+                if 'image' in request.FILES:
+                    event.image = request.FILES['image']
+                
+                event.save()
+                messages.success(request, 'Veranstaltung erfolgreich aktualisiert!')
+                return redirect('event_managing_view')
+            except Exception as e:
+                messages.error(request, f'Fehler beim Aktualisieren der Veranstaltung: {str(e)}')
+        
+        # Neues Event erstellen
+        else:
+            form = EventForm(request.POST, request.FILES)
+            if form.is_valid():
+                name = request.POST['name']
+                venue = request.POST['venue']
+                date = request.POST['date']
+                time = request.POST['time']
+                
+                # Prüfen, ob ein Bild hochgeladen wurde
+                if 'image' not in request.FILES:
+                    messages.error(request, 'Bitte laden Sie ein Bild für diese Veranstaltung hoch.')
+                    context = {
+                        'events': events,
+                        'form': form,
+                        'edit_event': edit_event,
+                    }
+                    return render(request, 'users/events.html', context)
+                    
+                image = request.FILES['image']
+                
+                new_event = Event(
+                    name=name,
+                    venue=venue,
+                    date=date,
+                    time=time,
+                    image=image
+                )
+                new_event.save()
+                messages.success(request, 'Veranstaltung erfolgreich erstellt!')
+                return redirect('event_managing_view')
     else:
         form = EventForm()
+    
     context = {
         'events': events,
         'form': form,
-        }
+        'edit_event': edit_event,
+    }
     return render(request, 'users/events.html', context)
