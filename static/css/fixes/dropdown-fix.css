@@ -1,0 +1,56 @@
+/* Fix für Dropdown-Menü - mit korrekter Hover-Funktionalität */
+
+/* Wichtige Hover-Funktionalität wiederherstellen */
+.dropdown:hover .dropdown-hover-section {
+  display: block !important;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block !important;
+}
+
+/* Sicherstellen dass das Hover-Element richtig positioniert ist */
+.dropdown-hover-section {
+  position: absolute;
+  display: none;
+  width: auto;
+  height: 0.25rem;
+  border-bottom: 0.3rem solid #d11317;
+  border-left: 0.25rem solid transparent;
+  z-index: 5;
+  left: 0;
+  top: 100%;
+}
+
+/* Korrekter Stil für das Dropdown-Content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fdfdfd;
+  min-width: 8.5rem;
+  box-shadow: 3px 3px 2px rgba(15, 38, 43, 0.2);
+  z-index: 10;
+  margin-top: 0.3rem;
+  left: 0;
+  top: 100%;
+}
+
+/* Korrekte Positionierung für alle Links */
+.dropdown-content a {
+  color: #333;
+  padding: 0.8rem;
+  text-decoration: none;
+  display: block;
+  line-height: 34px;
+}
+
+/* Spezifischere Regel für den Schüler:innen-Dropdown */
+.dropdown.arrow .dropdown-content {
+  background-color: #fdfdfd;
+}
+
+/* Sicherstellen, dass der Dropdown selbst korrekt positioniert ist */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
