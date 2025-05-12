@@ -6,198 +6,643 @@
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
-<style media="screen">
-  section {
-    padding-left: 5%;
-    padding-right: 5%;
+<style>
+  :root {
+    --accent-color: #dc3545;
+    --accent-hover: #c82333;
+    --accent-light: #f8d7da;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --background-white: #ffffff;
+    --background-light: #fafafa;
+    --border-color: #e0e0e0;
+    --hover-bg: #f8f8f8;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
-  .heading-teaching {
-    text-align: center;
+
+  /* Reset & Base */
+  .mbs {
+    background-color: var(--background-white);
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
-  @media only screen and (max-width: 1387px) {
-  section > iframe {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
-    padding-bottom: 20px;
+  
+  /* Box-sizing nur für spezifische Elemente */
+  .mbs *,
+  .mbs *::before,
+  .mbs *::after {
+    box-sizing: border-box;
   }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
   }
-  @media only screen and (max-width: 677px) {
-  section > iframe {
-    width: 100% !important;
-    height: 200px !important;
+
+  /* Typography */
+  h1 {
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--text-primary);
+    margin-bottom: 3rem;
+    letter-spacing: -0.5px;
+    position: relative;
+    padding-bottom: 1rem;
   }
+
+  h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
   }
-  @media only screen and (max-width: 400px) {
-  section > iframe {
-    width: 100% !important;
-    height: 180px !important;
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin: 3rem 0 1.5rem;
+    letter-spacing: -0.3px;
   }
+
+  p {
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
   }
-  @media only screen and (max-width: 370px) {
-  section > iframe {
-    width: 100% !important;
-    height: 150px !important;
+
+  /* Course Sections */
+  .section-header {
+    cursor: pointer;
+    padding: 1.5rem 0;
+    margin: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
+
+  .section-header:hover {
+    border-bottom-color: var(--accent-color);
+  }
+
+  .section-header.active {
+    border-bottom-color: var(--accent-color);
+  }
+
+  .section-header h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+  }
+
+  .section-header:hover h2 {
+    color: var(--accent-color);
+  }
+
+  .section-header.active h2 {
+    color: var(--accent-color);
+  }
+
+  .section-header .arrow {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .section-header:hover .arrow,
+  .section-header.active .arrow {
+    color: var(--accent-color);
+  }
+
+  .section-header.active .arrow {
+    transform: rotate(90deg);
+  }
+
+  /* Content Areas */
+  .content-section {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+  }
+
+  .content-section.active {
+    height: auto;
+    padding: 2rem 0;
+  }
+
+  .content-inner {
+    padding: 0 1rem;
+  }
+
+  /* Video Layout */
+  .video-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .video-frame {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    background-color: var(--background-light);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: border-color 0.2s ease;
+  }
+
+  .video-frame:hover {
+    border-color: var(--accent-color);
+  }
+
+  .video-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.875rem;
+    color: var(--accent-color);
+  }
+
+  /* Cooperation List */
+  .cooperation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .cooperation-item {
+    padding: 1.5rem;
+    background-color: var(--background-light);
+    border-radius: 4px;
+    border-left: 4px solid var(--accent-color);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cooperation-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: var(--accent-light);
+    transition: width 0.3s ease;
+    z-index: 0;
+  }
+
+  .cooperation-item:hover::before {
+    width: 100%;
+  }
+
+  .cooperation-item:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .cooperation-item .title {
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cooperation-item .subtitle {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Links */
+  a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  /* Tags */
+  strong {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .container {
+      padding: 2rem 1rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-header {
+      padding: 1.25rem 0;
+    }
+
+    .video-container {
+      grid-template-columns: 1fr;
+    }
+
+    .cooperation-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .section-header h2 {
+      font-size: 1rem;
+    }
+
+    .content-inner {
+      padding: 0;
+    }
+
+    .cooperation-item {
+      padding: 1rem;
+    }
+  }
+
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
   }
 </style>
-
 {% endblock %}
 
 {% block navbar %}
 {% endblock %}
 
 {% block banner %}
-<img src="/static/banner/msmusic_banner.webp" alt="">
-<img id="mbimg" src="/static/banner/mobile/msmusic_banner.webp" alt="">
+<img src="/static/banner/msmusic_banner.webp" alt="Musikschule Banner">
+<img id="mbimg" src="/static/banner/mobile/msmusic_banner.webp" alt="Musikschule Mobile Banner">
 {% endblock %}
 
 {% block body %}
 <div class="mbs">
   <div class="container">
     <h1>Bildungsangebot Musikschule</h1>
+    
     <p>Dass die St. Pöltner Musikschule als größte ihrer Art in Niederösterreich auch das umfassendste Angebot präsentiert, liegt auf der Hand. Gut ein Fünftel der rund 1.700 Schüler lernen Klavier, und selbst die Zahl der Streicher liegt noch im dreistelligen Bereich. Aber auch am anderen Ende der Beliebtheitsskala muss die Schule nicht passen, und manche Exoten von einst erfahren dank langjähriger Aufbauarbeit in der Gegenwart einen regelrechten Boom.</p>
+    
     <h2>Unterrichtsfächer</h2>
-    <p>Die Musikschule St. Pölten bietet ein breites Fächerangebot. Von Tasten-, Saiten-, und Streichinstrumenten, über Holz- und Blechblasinstrumente, elektronische Instrumente, Stimmbildung, Chor, dem Tanz, alter Musik, Elementarer Musikerziehung und Musikalischer Grundausbildung, der Blasmusik, dem symphonischen Orchester, zahlreichen Ensembles und Bands, bis hin zu Kooperationen mit Kindergärten, allgemein bildenden Pflichtschulen und höheren Schulen wird an der Musikschule beinahe jedes „Wunschinstrument“ unterrichtet.</p>
-       <p>Informationsblätter finden Sie unter: <a href="{% url 'pdf_forms_view' %}">Formulare</a></p>
-       <a id="show_brass" onclick="showSection('brass')"><h2 class="heading-teaching"
-       data-aos="fade-right"
-       data-aos-duration="1000">Blasinstrumente</h2></a>
-
-       <section id="brass" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
-       <p>Holzblasinstrumente: Blockflöte (Sopranino bis Subbass), Fagott, Klarinette, Oboe, Flöte (Querflöte), Saxofon</p> <p>Blechblasinstrumente: Flügelhorn, Horn, Kornett, Posaune, Tenorhorn, Trompete, Tuba</p>
-       <section>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/aOCC8U4ldBI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/HeTdrvqdkzg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/AkXkj-1mOgg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/GP04_HEJwvM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/mYLesCKiU8E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-       </section>
-       </section>
-       <a id="show_eme" onclick="showSection('eme')"><h2 class="heading-teaching"
-       data-aos="fade-right"
-       data-aos-duration="1000">Elementare Musikerziehung</h2></a>
-
-       <section id="eme" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
-       <p>Elementarer Musikunterricht für Eltern-Kind-Gruppen (für Kinder von 2 bis 4 Jahren)<br /> wöchentlich 50 Minuten</p> <p>Elementarer Musikunterricht für Kinder von 2 bis 4 Jahren (ohne Eltern)<br /> wöchentlich 50 Minuten</p> <p>Elementarer Musikunterricht für Kinder von 4 bis 6 Jahren<br /> im 1. Jahr wöchentlich 50 Minuten</p> <p>Elementarer Musikunterricht für Kinder von 4 bis 6 Jahren<br /> im 2. Jahr wöchentlich 75 min (mit Kennenlernen der Instrumente, die an der Musikschule unterrichtet werden)</p>
-       </section>
-       <a id="show_theory" onclick="showSection('theory')"><h2 class="heading-teaching"
-       data-aos="fade-right"
-       data-aos-duration="1000">Musikkunde</h2></a>
-
-       <section id="theory" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
-       <p>Elementar, Unterstufe, Mittelstufe, Oberstufe</p>
-       </section>
-
-       <a id="show_drums" onclick="showSection('drums')"><h2 class="heading-teaching"
-       data-aos="fade-right"
-       data-aos-duration="1000">Schlaginstrumente</h2></a>
-
-       <section id="drums" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
-       <p>Drumset (Schlagzeug), Jazz Mallets, Orchestermodul, Percussion, Stabspiele</p>
-       <section>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/w8yg-ZHYYAA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-       </section>
-      </section>
-
-
-       <a id="show_vocal" onclick="showSection('vocal')"><h2 class="heading-teaching"
-       data-aos="fade-right"
-       data-aos-duration="1000">Stimmbildung</h2></a>
-
-       <section id="vocal" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
-       <p>Klassischer Gesang, Rock/Pop-Gesang, Jazz-Gesang, Chöre (Kinder- und Jugendchor)</p>
-       <section>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/ESVykNyE3tY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/64DIUyJyXeM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </section>
-       </section>
-
-       <a id="show_strings" onclick="showSection('strings')"><h2 class="heading-teaching"
-       data-aos="fade-right"
-       data-aos-duration="1000">Streichinstrumente</h2></a>
-
-       <section id="strings" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
-       <p>Kontrabass, Viola, Violine, Violoncello, Musikalische Grundausbildung mit Schwerpunkt Violine</p>
-       <section>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/rVTWes-vLL4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/cI4jhzFOBoQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-       </section>
-       </section>
-
-       <a id="show_keys" onclick="showSection('keys')"><h2 class="heading-teaching"
-       data-aos="fade-right"
-       data-aos-duration="1000">Tasteninstrumente</h2></a>
-
-       <section id="keys" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
-       <p>Akkordeon, Cembalo, elektronische Tasteninstrumente, Jazzklavier, Klavier, Pfeifenorgel, Steirische Harmonika</p>
-       <section>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/fi8ZGiB-lSc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/NaTwXuR4VwM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/Wh-uAzNYsLU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/XhqeetX6NFo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-       </section>
-       </section>
-
-       <a id="show_dance" onclick="showSection('dance')"><h2 class="heading-teaching"
-       data-aos="fade-right"
-       data-aos-duration="1000">Tanz</h2></a>
-
-       <section id="dance" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
-       <p>Das neue Tanz & Bewegungs Unterrichtsprogramm finden sie unter: <a href="/tanz-und-bewegung">musikschule-stp.at/tanz-und-bewegung</a> <br /> </p>
-       </section>
-
-       <a id="show_picked" onclick="showSection('picked')"><h2 class="heading-teaching"
-       data-aos="fade-right"
-       data-aos-duration="1000">Zupfinstrumente</h2></a>
-
-       <section id="picked" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
-       <p>E-Gitarre, E-Bass, E-Zither, Gitarre, Hackbrett, Harfe, Zither</p>
-       <section>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/v30Zs04SwTU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/CO9peHPN-_Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/jQUk2C51T5c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/2kBBFfEORmw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-       </section>
-       </section>
-
-     <h2>Orchester und Ensembles der Musikschule</h2> <p>Ergänzend zum Hauptfach werden &#8211; ganz ohne Extra-Kosten &#8211; Nebenfächer (Pflicht- und Ergänzungsfächer) unterrichtet. Das ist neben Musikkunde und Werkkunde vor allem das Ensemblespiel, teilweise in Altersgruppen gebündelt (z.B. das Streicher Elementarensemble, Midi Strings, Junior Strings, Mini-Winds, Midi-Winds), in denen die Schülerinnen und Schüler das Verbindende der Musik hautnah erfahren. Diese Formationen stehen im Blickpunkt der Öffentlichkeit, so das überaus erfolgreiche Blasorchester, das &#8222;Guitar Kids Orchestra&#8220;, die NÖ BlockflötenBigBand oder das mehrfach ausgezeichnete &#8222;Benigna Quartett&#8220;, um nur einige zu nennen.</p>
-     <h2>Kooperationen</h2>
-     <p>Spezielle Ausrichtungen der Musikschule liegen in der Zusammenarbeit mit folgenden Schulen:</p>
-     <ul id="art">
-      <li>Musikvolksschule (Daniel-Gran-Volksschule I mit musikalischem Schwerpunkt)</li>
-      <li>Kreativklasse (Volksschule Grillparzer I)</li>
-      <li>Bläserklasse (Volksschule Otto Glöckel)</li>
-      <li>Sing.Klasse (Volksschule Franz Jonas, Volksschule Grillparzer I und Volksschule Grillparzer II)</li>
-      <li>Gitarrenklasse (Volksschule Stattersdorf)</li>
-      <li>Musikmittelschule St. Pölten</li>
-      <li>Musikschwerpunkt-AHS (BRG/BORG St. Pölten)</li>
-      <li>Tagesstätte St. Pölten</li>
-      <li>Europaballett</li>
-     </ul>
-     <br>
+    <p>Die Musikschule St. Pölten bietet ein breites Fächerangebot. Von Tasten-, Saiten-, und Streichinstrumenten, über Holz- und Blechblasinstrumente, elektronische Instrumente, Stimmbildung, Chor, dem Tanz, alter Musik, Elementarer Musikerziehung und Musikalischer Grundausbildung, der Blasmusik, dem symphonischen Orchester, zahlreichen Ensembles und Bands, bis hin zu Kooperationen mit Kindergärten, allgemein bildenden Pflichtschulen und höheren Schulen wird an der Musikschule beinahe jedes „Wunschinstrument" unterrichtet.</p>
+    
+    <p>Informationsblätter finden Sie unter: <a href="{% url 'pdf_forms_view' %}">Formulare</a></p>
+    
+    <!-- Blasinstrumente -->
+    <div class="section-header" onclick="toggleSection('brass')">
+      <h2>Blasinstrumente</h2>
+      <span class="arrow">→</span>
+    </div>
+    
+    <div id="brass" class="content-section">
+      <div class="content-inner">
+        <p><strong>Holzblasinstrumente:</strong> Blockflöte (Sopranino bis Subbass), Fagott, Klarinette, Oboe, Flöte (Querflöte), Saxofon</p>
+        <p><strong>Blechblasinstrumente:</strong> Flügelhorn, Horn, Kornett, Posaune, Tenorhorn, Trompete, Tuba</p>
+        
+        <div class="video-container">
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/aOCC8U4ldBI" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/HeTdrvqdkzg" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/AkXkj-1mOgg" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/GP04_HEJwvM" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/mYLesCKiU8E" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Elementare Musikerziehung -->
+    <div class="section-header" onclick="toggleSection('eme')">
+      <h2>Elementare Musikerziehung</h2>
+      <span class="arrow">→</span>
+    </div>
+    
+    <div id="eme" class="content-section">
+      <div class="content-inner">
+        <p><strong>Elementarer Musikunterricht für Eltern-Kind-Gruppen</strong> (für Kinder von 2 bis 4 Jahren)<br>
+        wöchentlich 50 Minuten</p>
+        
+        <p><strong>Elementarer Musikunterricht für Kinder von 2 bis 4 Jahren</strong> (ohne Eltern)<br>
+        wöchentlich 50 Minuten</p>
+        
+        <p><strong>Elementarer Musikunterricht für Kinder von 4 bis 6 Jahren</strong><br>
+        im 1. Jahr wöchentlich 50 Minuten</p>
+        
+        <p><strong>Elementarer Musikunterricht für Kinder von 4 bis 6 Jahren</strong><br>
+        im 2. Jahr wöchentlich 75 min (mit Kennenlernen der Instrumente, die an der Musikschule unterrichtet werden)</p>
+      </div>
+    </div>
+    
+    <!-- Musikkunde -->
+    <div class="section-header" onclick="toggleSection('theory')">
+      <h2>Musikkunde</h2>
+      <span class="arrow">→</span>
+    </div>
+    
+    <div id="theory" class="content-section">
+      <div class="content-inner">
+        <p>Elementar, Unterstufe, Mittelstufe, Oberstufe</p>
+      </div>
+    </div>
+    
+    <!-- Schlaginstrumente -->
+    <div class="section-header" onclick="toggleSection('drums')">
+      <h2>Schlaginstrumente</h2>
+      <span class="arrow">→</span>
+    </div>
+    
+    <div id="drums" class="content-section">
+      <div class="content-inner">
+        <p>Drumset (Schlagzeug), Jazz Mallets, Orchestermodul, Percussion, Stabspiele</p>
+        
+        <div class="video-container">
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/w8yg-ZHYYAA" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Stimmbildung -->
+    <div class="section-header" onclick="toggleSection('vocal')">
+      <h2>Stimmbildung</h2>
+      <span class="arrow">→</span>
+    </div>
+    
+    <div id="vocal" class="content-section">
+      <div class="content-inner">
+        <p>Klassischer Gesang, Rock/Pop-Gesang, Jazz-Gesang, Chöre (Kinder- und Jugendchor)</p>
+        
+        <div class="video-container">
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/ESVykNyE3tY" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/64DIUyJyXeM" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Streichinstrumente -->
+    <div class="section-header" onclick="toggleSection('strings')">
+      <h2>Streichinstrumente</h2>
+      <span class="arrow">→</span>
+    </div>
+    
+    <div id="strings" class="content-section">
+      <div class="content-inner">
+        <p>Kontrabass, Viola, Violine, Violoncello, Musikalische Grundausbildung mit Schwerpunkt Violine</p>
+        
+        <div class="video-container">
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/rVTWes-vLL4" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/cI4jhzFOBoQ" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tasteninstrumente -->
+    <div class="section-header" onclick="toggleSection('keys')">
+      <h2>Tasteninstrumente</h2>
+      <span class="arrow">→</span>
+    </div>
+    
+    <div id="keys" class="content-section">
+      <div class="content-inner">
+        <p>Akkordeon, Cembalo, elektronische Tasteninstrumente, Jazzklavier, Klavier, Pfeifenorgel, Steirische Harmonika</p>
+        
+        <div class="video-container">
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/fi8ZGiB-lSc" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/NaTwXuR4VwM" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/Wh-uAzNYsLU" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/XhqeetX6NFo" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tanz -->
+    <div class="section-header" onclick="toggleSection('dance')">
+      <h2>Tanz</h2>
+      <span class="arrow">→</span>
+    </div>
+    
+    <div id="dance" class="content-section">
+      <div class="content-inner">
+        <p>Das neue Tanz & Bewegungs Unterrichtsprogramm finden sie unter: 
+        <a href="/tanz-und-bewegung">musikschule-stp.at/tanz-und-bewegung</a></p>
+      </div>
+    </div>
+    
+    <!-- Zupfinstrumente -->
+    <div class="section-header" onclick="toggleSection('picked')">
+      <h2>Zupfinstrumente</h2>
+      <span class="arrow">→</span>
+    </div>
+    
+    <div id="picked" class="content-section">
+      <div class="content-inner">
+        <p>E-Gitarre, E-Bass, E-Zither, Gitarre, Hackbrett, Harfe, Zither</p>
+        
+        <div class="video-container">
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/v30Zs04SwTU" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/CO9peHPN-_Q" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/jQUk2C51T5c" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-frame">
+            <div class="video-loader">Lädt...</div>
+            <iframe data-src="https://www.youtube.com/embed/2kBBFfEORmw" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <h2>Orchester und Ensembles der Musikschule</h2>
+    <p>Ergänzend zum Hauptfach werden – ganz ohne Extra-Kosten – Nebenfächer (Pflicht- und Ergänzungsfächer) unterrichtet. Das ist neben Musikkunde und Werkkunde vor allem das Ensemblespiel, teilweise in Altersgruppen gebündelt (z.B. das Streicher Elementarensemble, Midi Strings, Junior Strings, Mini-Winds, Midi-Winds), in denen die Schülerinnen und Schüler das Verbindende der Musik hautnah erfahren. Diese Formationen stehen im Blickpunkt der Öffentlichkeit, so das überaus erfolgreiche Blasorchester, das „Guitar Kids Orchestra", die NÖ BlockflötenBigBand oder das mehrfach ausgezeichnete „Benigna Quartett", um nur einige zu nennen.</p>
+    
+    <h2>Kooperationen</h2>
+    <p>Spezielle Ausrichtungen der Musikschule liegen in der Zusammenarbeit mit folgenden Schulen:</p>
+    
+    <div class="cooperation-grid">
+      <div class="cooperation-item">
+        <div class="title">Musikvolksschule</div>
+        <div class="subtitle">Daniel-Gran-Volksschule I mit musikalischem Schwerpunkt</div>
+      </div>
+      
+      <div class="cooperation-item">
+        <div class="title">Kreativklasse</div>
+        <div class="subtitle">Volksschule Grillparzer I</div>
+      </div>
+      
+      <div class="cooperation-item">
+        <div class="title">Bläserklasse</div>
+        <div class="subtitle">Volksschule Otto Glöckel</div>
+      </div>
+      
+      <div class="cooperation-item">
+        <div class="title">Sing.Klasse</div>
+        <div class="subtitle">Volksschule Franz Jonas, Volksschule Grillparzer I und Volksschule Grillparzer II</div>
+      </div>
+      
+      <div class="cooperation-item">
+        <div class="title">Gitarrenklasse</div>
+        <div class="subtitle">Volksschule Stattersdorf</div>
+      </div>
+      
+      <div class="cooperation-item">
+        <div class="title">Musikmittelschule</div>
+        <div class="subtitle">St. Pölten</div>
+      </div>
+      
+      <div class="cooperation-item">
+        <div class="title">Musikschwerpunkt-AHS</div>
+        <div class="subtitle">BRG/BORG St. Pölten</div>
+      </div>
+      
+      <div class="cooperation-item">
+        <div class="title">Tagesstätte</div>
+        <div class="subtitle">St. Pölten</div>
+      </div>
+      
+      <div class="cooperation-item">
+        <div class="title">Step by STP</div>
+        <div class="subtitle">Festspielhaus St. Pölten</div>
+      </div>
+    </div>
   </div>
 </div>
-
-</div>
-</div>
-
-
 {% endblock %}
 
 {% block footer %}
-<script type="text/javascript">
-function showSection(id) {
-  document.getElementById(id).style.display = "contents";
-  document.getElementById("show_" + id).setAttribute("onclick","closeSection('" + id + "')");
-  document.getElementById("show_" + id).setAttribute("class", "active");
-  setTimeout(function(){ document.getElementById(id).style.opacity = "1"; }, 100);
+<script>
+// Minimalistic toggle functionality
+function toggleSection(id) {
+  const section = document.getElementById(id);
+  const header = section.previousElementSibling;
+  const arrow = header.querySelector('.arrow');
+  
+  const isOpen = section.classList.contains('active');
+  
+  if (isOpen) {
+    section.classList.remove('active');
+    header.classList.remove('active');
+  } else {
+    section.classList.add('active');
+    header.classList.add('active');
+    loadVideos(section);
+  }
 }
-function closeSection(id) {
-  document.getElementById(id).style.opacity = "0";
-  document.getElementById(id).style.display = "none";
-  document.getElementById("show_" + id).setAttribute("onclick","showSection('" + id + "')");
-  document.getElementById("show_" + id).removeAttribute("class", "active");
+
+// Load videos when section opens
+function loadVideos(section) {
+  const videos = section.querySelectorAll('iframe[data-src]');
+  
+  videos.forEach(video => {
+    if (video.getAttribute('data-src')) {
+      const src = video.getAttribute('data-src');
+      video.setAttribute('src', src);
+      video.removeAttribute('data-src');
+      
+      // Hide loader when video loads
+      video.onload = function() {
+        const loader = video.parentElement.querySelector('.video-loader');
+        if (loader) {
+          loader.style.display = 'none';
+        }
+      };
+    }
+  });
 }
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  // Add smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+});
 </script>
 {% endblock %}
