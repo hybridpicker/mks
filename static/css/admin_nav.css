@@ -104,7 +104,6 @@ html:not([data-scroll='0']) .admin-quick-actions {
   font-size: 1.6rem;
   font-family: jaf-bernina-sans-condensed, sans-serif;
   border: none;
-  background: transparent;
   width: auto;
   font-weight: 600;
   color: var(--secondary);
@@ -154,7 +153,6 @@ html:not([data-scroll='0']) .admin-quick-actions {
 
 /* Hover Effects */
 .dropdown:hover .dropbtn, .dropdown-b:hover .dropbtn-b, .dropdown:hover .dropdown-content {
-  background-color: transparent;
   transform: none;
 }
 

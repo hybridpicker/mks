@@ -819,12 +819,10 @@ canvas {
   left: 0.15rem; }
 
 #UserNav .dropdown-content {
-  left: 0rem;
-  top: 3rem; }
+  left: 2rem; }
 
 #UserNav .dropdown-content-b {
-  left: 1.3rem;
-  top: 3rem; }
+  left: 1.3rem; }
 
 #UserNav .dropdown-content-c {
   left: 0.25rem;
