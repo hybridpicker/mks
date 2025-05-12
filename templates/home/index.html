@@ -23,39 +23,7 @@
 
 <!-- Custom Styles -->
 <style>
-/* Sticker für das zeitlich begrenzte Event */
-.temp-sticker {
-  position: fixed;
-  top: 110px; /* Unterhalb der Navigationsleiste */
-  left: 20px;
-  z-index: 1000;
-  pointer-events: none;
-}
-@media only screen and (max-width: 1200px) {
-  .temp-sticker {
-    top: 90px;
-  }
-  .temp-sticker img {
-    width: 150px;
-  }
-}
-@media only screen and (max-width: 771px) {
-  .temp-sticker {
-    top: 80px;
-  }
-  .temp-sticker img {
-    width: 100px;
-  }
-}
-@media only screen and (max-width: 480px) {
-  .temp-sticker {
-    top: 70px;
-    left: 10px;
-  }
-  .temp-sticker img {
-    width: 80px;
-  }
-}
+
 
 /* Improved Layout Styles */
 .highlights-container {
@@ -534,7 +502,7 @@
         <img src="{{ event.get_image_url }}" alt="{{ event.name }}">
       </div>
       <div class="event-date">
-        {{ event.date|date:"d.m.Y" }}
+        {{ event.date|date:"D, d.m.Y" }}
       </div>
       <div class="event-info">
         <h3>{{ event.name }}</h3>
