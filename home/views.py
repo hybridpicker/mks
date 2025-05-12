@@ -74,12 +74,7 @@ def home(request):
     # Active alert
     active_alert = Alert.objects.filter(is_active=True).first()
     
-    # Sticker Banner MKM_2025 aktivieren (9.5. - 10.5.2025)
-    # ACHTUNG: Temporär auf True gesetzt für den Zeitraum 9.5. - 10.5.2025
-    # Am 11.5.2025 auf folgenden Code umstellen:
-    # today = datetime.now().date()
-    # show_sticker = today.year == 2025 and today.month == 5 and (today.day == 9 or today.day == 10)
-    show_sticker = True
+
 
     context = {
         'index_text': index_text,
@@ -95,8 +90,6 @@ def home(request):
         # Alert Mode
         'alert_message': active_alert.message if active_alert else None,
         'alert_title': active_alert.title if active_alert else None,
-        # Sticker Banner
-        'show_mkm_sticker': show_sticker,
     }
     return render(request, 'home/index.html', context)
 
