@@ -1,0 +1,515 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% load i18n static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+<meta name="title" content="Unsere Pädagoginenn | Musikschule St. Pölten">
+<meta name="description" content="Hier finden Sie eine kleine Vorstellung unserer Lehrer:innen.">
+
+<!-- Social Media Meta --->
+<meta property="og:title" content="Unsere Pädagog*innen | Musikschule St. Pölten">
+<meta property="og:description" content="Hier finden Sie eine kleine Vorstellung unserer Lehrer:innen.">
+<meta property="og:image" content="static/thumbnail/facebook/home.jpg">
+<meta property="og:url" content="https://musikschule-stp.at/unsere-paedagoginnen">
+
+<meta name="twitter:title" content="Unsere Pädagog*innen | Musikschule St. Pölten">
+<meta name="twitter:description" content="Hier finden Sie eine kleine Vorstellung unserer Lehrer:innen.">
+<meta name="twitter:image" content="static/thumbnail/twitter/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- lazyload -->
+<script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+
+
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+{% if group_photo %}
+
+<img id="homebanner" src="{{ group_photo.image.url }}" alt="">
+{% if group_photo.mobile_image %}
+<img id="mbimg" src="{{ group_photo.mobile_image.url }}" alt="">
+{% else %}
+<img id="mbimg" src="{{ group_photo.image.url }}" alt="">
+{% endif %}
+
+{% endif %}
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h1>Lehrkräfte</h1>
+    <p>Hier finden Sie eine kleine Vorstellung unserer Lehrer:innen gegliedert in Instrumentengruppen.</p>
+    <a id="show_director" onclick="showSection('director')"><h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Direktion</h2></a>
+
+    <section id="director" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
+      {% for teacher in director %}
+      <div class="tnmc">
+        <div class="tnmhl">
+          <section class="teaching-name">
+            <h3>{{teacher.first_name}}</h3>
+            <h3>{{teacher.last_name}}</h3>
+          </section>
+        </div>
+        <div class="tpfcf">
+          <div class="tpcfptr">
+            <div class="icc-tpcfptr">
+              {% if teacher.image.height <= teacher.image.width %}
+              <img class="teacher_img square lazyload" src="{{ teacher.lazy_image.url }}"
+              data-src="{{ teacher.image.url }}"
+              alt="{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+              {% else %}
+              <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+              data-src="{{ teacher.image.url }}"
+              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="tbt">
+          <div class="info-text">
+            <p>{% for subject in teacher.subject.all %}
+              {% if forloop.last %}
+              {{ subject }}
+              {% else %}
+              {{ subject }},
+              {% endif %}
+              {% endfor %}
+            </p>
+            <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+
+    <a id="show_brass" onclick="showSection('brass')"><h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Blechblasinstrumente</h2></a>
+    <section  id="brass" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
+      {% for teacher in teacher_brass %}
+      <div class="tnmc">
+        <div class="tnmhl">
+          <section class="teaching-name">
+            <h3>{{teacher.first_name}}</h3>
+            <h3>{{teacher.last_name}}</h3>
+          </section>
+        </div>
+        <div class="tpfcf">
+          <div class="tpcfptr">
+            <div class="icc-tpcfptr">
+              {% if teacher.image.height <= teacher.image.width %}
+              <img class="teacher_img square lazyload"
+              alt="{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+              {% else %}
+              <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+              data-src="{{ teacher.image.url }}"
+              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="tbt">
+          <div class="info-text">
+            <p>{% for subject in teacher.subject.all %}
+              {% if forloop.last %}
+              {{ subject }}
+              {% else %}
+              {{ subject }},
+              {% endif %}
+              {% endfor %}</p>
+              <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </section>
+    <a id="show_elementary" onclick="showSection('elementary')"><h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Elementare Musikerziehung</h2></a>
+    <section  id="elementary" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
+      {% for teacher in elementary_teaching %}
+      <div class="tnmc">
+        <div class="tnmhl">
+          <section class="teaching-name">
+            <h3>{{teacher.first_name}}</h3>
+            <h3>{{teacher.last_name}}</h3>
+          </section>
+        </div>
+        <div class="tpfcf">
+          <div class="tpcfptr">
+            <div class="icc-tpcfptr">
+              {% if teacher.image.height <= teacher.image.width %}
+              <img class="teacher_img square lazyload"
+              alt="{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+              {% else %}
+              <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+              data-src="{{ teacher.image.url }}"
+              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="tbt">
+          <div class="info-text">
+            <p>{% for subject in teacher.subject.all %}
+              {% if forloop.last %}
+              {{ subject }}
+              {% else %}
+              {{ subject }},
+              {% endif %}
+              {% endfor %}</p>
+              <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </section>
+
+    <a id="show_vocal" onclick="showSection('vocal')"><h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Gesang</h2></a>
+    <section id="vocal" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
+        {% for teacher in teacher_vocal %}
+        <div class="tnmc">
+          <div class="tnmhl">
+            <section class="teaching-name">
+              <h3>{{teacher.first_name}}</h3>
+              <h3>{{teacher.last_name}}</h3>
+            </section>
+          </div>
+          <div class="tpfcf">
+            <div class="tpcfptr">
+              <div class="icc-tpcfptr">
+                {% if teacher.image.height <= teacher.image.width %}
+                <img class="teacher_img square lazyload" src="{{ teacher.lazy_image.url }}"
+                data-src="{{ teacher.image.url }}"
+                alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                {% else %}
+                <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+                data-src="{{ teacher.image.url }}"
+                alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="tbt">
+            <div class="info-text">
+              <p>{% for subject in teacher.subject.all %}
+                {% if forloop.last %}
+                {{ subject }}
+                {% else %}
+                {{ subject }},
+                {% endif %}
+                {% endfor %}</p>
+                <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+    </section>
+
+    <a id="show_woodwinds" onclick="showSection('woodwinds')"><h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Holzblasinstrumente</h2></a>
+    <section id="woodwinds" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
+          {% for teacher in teacher_wood %}
+          <div class="tnmc">
+            <div class="tnmhl">
+              <section class="teaching-name">
+                <h3>{{teacher.first_name}}</h3>
+                <h3>{{teacher.last_name}}</h3>
+              </section>
+            </div>
+            <div class="tpfcf">
+              <div class="tpcfptr">
+                <div class="icc-tpcfptr">
+                  <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+                  data-src="{{ teacher.image.url }}" alt="">
+                </div>
+              </div>
+            </div>
+            <div class="tbt">
+              <div class="info-text">
+                <p>{% for subject in teacher.subject.all %}
+                  {% if forloop.last %}
+                  {{ subject }}
+                  {% else %}
+                  {{ subject }},
+                  {% endif %}
+                  {% endfor %}</p>
+                  <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+    </section>
+
+
+    <a id="show_drums" onclick="showSection('drums')"><h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Schlagwerk</h2></a>
+    <section id="drums" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
+              {% for teacher in teacher_drums %}
+              <div class="tnmc">
+                <div class="tnmhl">
+                  <section class="teaching-name">
+                    <h3>{{teacher.first_name}}</h3>
+                    <h3>{{teacher.last_name}}</h3>
+                  </section>
+                </div>
+                <div class="tpfcf">
+                  <div class="tpcfptr">
+                    <div class="icc-tpcfptr">
+                      {% if teacher.image.height <= teacher.image.width %}
+                      <img class="teacher_img square lazyload" src="{{ teacher.lazy_image.url }}"
+                      data-src="{{ teacher.image.url }}"
+                      alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                      {% else %}
+                      <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+                      data-src="{{ teacher.image.url }}"
+                      alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <div class="tbt">
+                  <div class="info-text">
+                    <p>{% for subject in teacher.subject.all %}
+                      {% if forloop.last %}
+                      {{ subject }}
+                      {% else %}
+                      {{ subject }},
+                      {% endif %}
+                      {% endfor %}</p>
+                      <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+    </section>
+
+    <a id="show_strings" onclick="showSection('strings')"><h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Streichinstrumente</h2></a>
+    <section id="strings" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
+                {% for teacher in teacher_strings %}
+                <div class="tnmc">
+                  <div class="tnmhl">
+                    <section class="teaching-name">
+                      <h3>{{teacher.first_name}}</h3>
+                      <h3>{{teacher.last_name}}</h3>
+                    </section>
+                  </div>
+                  <div class="tpfcf">
+                    <div class="tpcfptr">
+                      <div class="icc-tpcfptr">
+                        {% if teacher.image.height <= teacher.image.width %}
+                        <img class="teacher_img square lazyload" src="{{ teacher.lazy_image.url }}"
+                        data-src="{{ teacher.image.url }}"
+                        alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                        {% else %}
+                        <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+                        data-src="{{ teacher.image.url }}"
+                        alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tbt">
+                    <div class="info-text">
+                      <p>  {% if teacher.last_name == "Kagerer" %}
+                        Kontrabass, E-Bass, E-Gitarre, Gitarre
+                        {% elif teacher.last_name == "Rappitsch" %}
+                        Violine, Bratsche, Orchester
+                        {% elif teacher.last_name == "Nill" %}
+                        Violine, Musikalische Früherziehung,
+                        {% else %}
+                        {% for subject in teacher.subject.all %}
+                        {% if forloop.last %}
+                        {{ subject }}
+                        {% else %}
+                        {{ subject }},
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}</p>
+                        <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </section>
+
+    <a id="show_dance" onclick="showSection('dance')"><h2 class="heading-teaching"
+                data-aos="fade-right"
+                data-aos-duration="1000">Tanz</h2></a>
+    <section id="dance" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
+                  {% for teacher in teacher_dance %}
+                  <div class="tnmc">
+                    <div class="tnmhl">
+                      <section class="teaching-name">
+                        <h3>{{teacher.first_name}}</h3>
+                        <h3>{{teacher.last_name}}</h3>
+                      </section>
+                    </div>
+                    <div class="tpfcf">
+                      <div class="tpcfptr">
+                        <div class="icc-tpcfptr">
+                          {% if teacher.image.height <= teacher.image.width %}
+                          <img class="teacher_img square lazyload" src="{{ teacher.lazy_image.url }}"
+                          data-src="{{ teacher.image.url }}"
+                          alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                          {% else %}
+                          <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+                          data-src="{{ teacher.image.url }}"
+                          alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tbt">
+                      <div class="info-text">
+                        <p>{% for subject in teacher.subject.all %}
+                          {% if forloop.last %}
+                          {{ subject }}
+                          {% else %}
+                          {{ subject }},
+                          {% endif %}
+                          {% endfor %}</p>
+                          <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+    </section>
+
+    <a id="show_keys" onclick="showSection('keys')"><h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Tasteninstrumente</h2></a>
+    <section id="keys" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
+                    {% for teacher in teacher_keys %}
+                    <div class="tnmc">
+                      <div class="tnmhl">
+                        <section class="teaching-name">
+                          <h3>{{teacher.first_name}}</h3>
+                          <h3>{{teacher.last_name}}</h3>
+                        </section>
+                      </div>
+                      <div class="tpfcf">
+                        <div class="tpcfptr">
+                          <div class="icc-tpcfptr">
+                            {% if teacher.image.height <= teacher.image.width %}
+                            <img class="teacher_img square lazyload" src="{{ teacher.lazy_image.url }}"
+                            data-src="{{ teacher.image.url }}"
+                            alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                            {% else %}
+                            <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+                            data-src="{{ teacher.image.url }}"
+                            alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tbt">
+                        <div class="info-text">
+                          <p>{% for subject in teacher.subject.all %}
+                            {% if forloop.last %}
+                            {{ subject }}
+                            {% else %}
+                            {{ subject }},
+                            {% endif %}
+                            {% endfor %}</p>
+                            <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+    </section>
+
+
+    <a id="show_picked" onclick="showSection('picked')"><h2 class="heading-teaching"
+    data-aos="fade-right"
+    data-aos-duration="1000">Zupfinstrumente</h2></a>
+
+    <section id="picked" class="grtnmc" data-aos="fade-left" data-aos-duration="1000">
+                      {% for teacher in teacher_picked %}
+                      <div class="tnmc">
+                        <div class="tnmhl">
+                          <section class="teaching-name">
+                            <h3>{{teacher.first_name}}</h3>
+                            <h3>{{teacher.last_name}}</h3>
+                          </section>
+                        </div>
+                        <div class="tpfcf">
+                          <div class="tpcfptr">
+                            <div class="icc-tpcfptr">
+                              {% if teacher.image.height <= teacher.image.width %}
+                              <img class="teacher_img square lazyload" src="{{ teacher.lazy_image.url }}"
+                              data-src="{{ teacher.image.url }}"
+                              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                              {% else %}
+                              <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+                              data-src="{{ teacher.image.url }}"
+                              alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="tbt">
+                          <div class="info-text">
+                            <p>
+                              {% if teacher.last_name == "Kagerer" %}
+                              Kontrabass, E-Bass, E-Gitarre, Gitarre
+                              {% else %}
+                              {% for subject in teacher.subject.all %}
+                              {% if forloop.last %}
+                              {{ subject }}
+                              {% else %}
+                              {{ subject }},
+                              {% endif %}
+                              {% endfor %}
+                              {% endif %}</p>
+                              <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+    </section>
+
+    </div>
+  </div>
+
+                  </div>
+                </div>
+
+
+{% endblock %}
+
+{% block footer %}
+<script>
+lazyload();
+</script>
+<script type="text/javascript">
+function showSection(id) {
+  document.getElementById(id).style.display = "grid";
+  document.getElementById("show_" + id).setAttribute("onclick","closeSection('" + id + "')");
+  document.getElementById("show_" + id).setAttribute("class", "active");
+  setTimeout(function(){ document.getElementById(id).style.opacity = "1"; }, 100);
+}
+function closeSection(id) {
+  document.getElementById(id).style.opacity = "0";
+  document.getElementById(id).style.display = "none";
+  document.getElementById("show_" + id).setAttribute("onclick","showSection('" + id + "')");
+  document.getElementById("show_" + id).removeAttribute("class", "active");
+}
+</script>
+{% endblock %}

@@ -1,0 +1,349 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% load i18n static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+<style>
+:root {
+  --accent-color: #dc3545;
+  --accent-hover: #c82333;
+  --accent-light: #f8d7da;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --background-white: #ffffff;
+  --background-light: #fafafa;
+  --border-color: #e0e0e0;
+  --hover-bg: #f8f8f8;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.mbs {
+  background-color: var(--background-white);
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  margin-bottom: 3rem;
+  letter-spacing: -0.5px;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--accent-color);
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.section p {
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.teachers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.teacher-card {
+  background: var(--background-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.teacher-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.teacher-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.teacher-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.teacher-subjects {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.instruments-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.instrument-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.instrument-item span {
+  text-decoration: none;
+}
+
+.instrument-item:hover {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.instrument-bullet {
+  color: var(--accent-color);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.instrument-name {
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.cta-section {
+  margin-top: 4rem;
+  margin-bottom: 3rem;
+}
+
+.cta-box {
+  background: var(--accent-color);
+  color: white;
+  padding: 3rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+.cta-box h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.cta-box p {
+  font-size: 1.1rem;
+  color: white;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  display: inline-block;
+  background: white;
+  color: var(--accent-color);
+  padding: 0.875rem 2.5rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background: var(--background-light);
+}
+
+.youtube-videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+  background: #000;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .teachers-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  
+  .instruments-list {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .instrument-item {
+    padding: 0.4rem 0;
+  }
+  
+  .youtube-videos-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .cta-box {
+    padding: 2rem;
+  }
+  
+  .cta-box h2 {
+    font-size: 1.5rem;
+  }
+  
+  .cta-button {
+    padding: 0.75rem 2rem;
+  }
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+<img src="/static/banner/msmusic_banner.webp" alt="Musikschule Banner">
+<img id="mbimg" src="/static/banner/mobile/msmusic_banner.webp" alt="Musikschule Mobile Banner">
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h1>{{ category_name }}</h1>
+    
+    <!-- Infotext -->
+    <div class="section">
+      {% block intro_content %}
+      <p>{{ intro_text|default:"" }}</p>
+      {% endblock %}
+    </div>
+
+    <!-- Angebotene Instrumente minimalistisch -->
+    {% if subjects %}
+    <div class="section">
+      <h2>Angebotene Instrumente</h2>
+      <div class="instruments-list">
+        {% for subject in subjects %}
+        <div class="instrument-item">
+          <span class="instrument-bullet">•</span>
+          <span class="instrument-name">{{ subject.subject }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Lehrende -->
+    {% if teachers %}
+    <div class="section">
+      <h2>Unsere Lehrenden</h2>
+      <div class="teachers-grid">
+        {% for teacher in teachers %}
+        <div class="teacher-card">
+          {% if teacher.image %}
+          <img src="{{ teacher.image.url }}" alt="{{ teacher.first_name }} {{ teacher.last_name }}" class="teacher-image" loading="lazy">
+          {% else %}
+          <img src="/static/teachers/teacher_image_default.svg" alt="{{ teacher.first_name }} {{ teacher.last_name }}" class="teacher-image">
+          {% endif %}
+          <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
+          <p class="teacher-subjects">
+            {% for subject in teacher.subject.all %}
+              {% if subject.category == category %}
+                {{ subject.subject }}{% if not forloop.last %}, {% endif %}
+              {% endif %}
+            {% endfor %}
+          </p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- YouTube Videos Section -->
+    {% if youtube_videos %}
+    <div class="section">
+      <h2>Videos</h2>
+      <div class="youtube-videos-grid">
+        {% for video_id in youtube_videos %}
+        <div class="video-wrapper">
+          <iframe width="560" height="315" 
+                  src="https://www.youtube.com/embed/{{ video_id }}" 
+                  frameborder="0" 
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen></iframe>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Call-to-Action: Schnupperstunde -->
+    <div class="cta-section">
+      <div class="cta-box">
+        <h2>Schnupperstunde jetzt vereinbaren</h2>
+        <p>Interessiert? Vereinbaren Sie eine kostenlose Schnupperstunde und lernen Sie unsere Lehrer und Instrumente kennen.</p>
+        <a href="/anmeldung/" class="cta-button">Jetzt anfragen</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

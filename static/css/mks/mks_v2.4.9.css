@@ -150,6 +150,9 @@ a:hover {
 #mks-nav-mobile-menu #cross-burger-gallery{
   margin:unset;
 }
+#mks-nav-mobile-menu > .overlay-content{
+  top: 0;
+}
 #cross-burger-students {
   width: 2rem;
   margin-top: 1rem; }
