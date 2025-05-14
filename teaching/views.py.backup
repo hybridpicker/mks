@@ -111,7 +111,7 @@ def teaching_brass_view (request):
     context['category_name'] = 'Blasinstrumente'
     context['subjects'] = subjects
     context['teachers'] = teachers.distinct()
-    context['intro_text'] = 'Die Fachgruppe der Blasinstrumente umfasst ein breites Spektrum, von Holzblasinstrumenten wie Querflöte, Klarinette und Saxophon bis hin zu Blechblasinstrumenten wie Trompete, Posaune und Horn. Der Unterricht, konzipiert nach dem in Österreich gültigen KOMU-Lehrplan (Konferenz der österreichischen Musikschulwerke) gemäß unseres vom Ministerium für Bildung genehmigten Organisationsstatuts, vermittelt den Studierenden eine solide technische Basis, einschließlich korrekter Atemführung, Tonbildung und musikalischer Gestaltung. Das Repertoire erstreckt sich von klassischen Werken über Jazzstandards bis hin zu zeitgenössischer Musik. Ziel ist die Entwicklung sowohl solistischer Fähigkeiten als auch der Kompetenz im Ensemblespiel, um eine aktive Teilnahme am vielfältigen Musikleben zu ermöglichen.'
+    context['intro_text'] = 'Die Abteilung für Blasinstrumente bietet Unterricht in Holz- und Blechblasinstrumenten. Von der Flöte bis zur Tuba können Sie bei uns alle klassischen Orchesterinstrumente erlernen.'
     context['youtube_videos'] = ['aOCC8U4ldBI', 'HeTdrvqdkzg', 'AkXkj-1mOgg', 'GP04_HEJwvM', 'mYLesCKiU8E']
     
     return render (request, 'teaching/fachgruppen/base_fachgruppe.html', context)
@@ -146,7 +146,7 @@ def teaching_eme_view (request):
     context['category_name'] = 'Elementare Musikerziehung'
     context['subjects'] = subjects
     context['teachers'] = teachers.distinct()
-    context['intro_text'] = 'Die Elementare Musikerziehung (EMP) bildet die Basis für eine nachhaltige musikalische Entwicklung im Kindesalter, entsprechend den pädagogischen Richtlinien des in Österreich gültigen KOMU-Lehrplans (Konferenz der österreichischen Musikschulwerke) gemäß unseres vom Ministerium für Bildung genehmigten Organisationsstatuts. Im Zentrum steht die spielerische Annäherung an Musik durch Singen, rhythmische Bewegung, Tanz und den Umgang mit dem Orff-Instrumentarium. Dieses Fach fördert grundlegende musikalische Fertigkeiten, stimuliert die Kreativität und unterstützt die Entwicklung sozialer Kompetenzen. Die EMP verfolgt einen ganzheitlichen Ansatz, der die natürliche Musikalität der Kinder fördert und eine optimale Vorbereitung auf den weiterführenden Instrumental- oder Vokalunterricht darstellt.'
+    context['intro_text'] = 'Die Elementare Musikerziehung bietet einen spielerischen Zugang zur Musik für Kinder. In Gruppen werden musikalische Grundlagen vermittelt und die Freude an der Musik geweckt.'
     
     return render (request, 'teaching/fachgruppen/base_fachgruppe.html', context)
 
@@ -180,7 +180,7 @@ def teaching_theory_view (request):
     context['category_name'] = 'Musikkunde'
     context['subjects'] = subjects
     context['teachers'] = teachers.distinct()
-    context['intro_text'] = 'Das Fach Musikkunde bietet eine umfassende Einführung in die Grundlagen der Musiktheorie und Gehörbildung, orientiert am in Österreich gültigen KOMU-Lehrplan (Konferenz der österreichischen Musikschulwerke) gemäß unseres vom Ministerium für Bildung genehmigten Organisationsstatuts. Die Lerninhalte umfassen Notationskunde, Rhythmusschulung, Harmonielehre sowie die Analyse musikalischer Formen und Strukturen. Darüber hinaus werden Einblicke in die Musikgeschichte und verschiedene Stilrichtungen vermittelt. Ziel des Musikkundeunterrichts ist es, das praktische Musizieren durch theoretisches Wissen zu ergänzen, das Hörvermögen zu schulen und ein tiefergehendes Verständnis für musikalische Zusammenhänge zu entwickeln, was für eine umfassende musikalische Bildung unerlässlich ist.'
+    context['intro_text'] = 'Die Musikkunde vermittelt die theoretischen Grundlagen der Musik. Von der Notenlehre bis zur Harmonielehre werden alle wichtigen Bereiche der Musiktheorie behandelt.'
     
     return render (request, 'teaching/fachgruppen/base_fachgruppe.html', context)
 
@@ -214,7 +214,7 @@ def teaching_drums_view (request):
     context['category_name'] = 'Schlaginstrumente'
     context['subjects'] = subjects
     context['teachers'] = teachers.distinct()
-    context['intro_text'] = 'Die Ausbildung an Schlaginstrumenten, basierend auf dem in Österreich gültigen KOMU-Lehrplan (Konferenz der österreichischen Musikschulwerke) gemäß unseres vom Ministerium für Bildung genehmigten Organisationsstatuts, umfasst ein vielseitiges Instrumentarium, darunter das klassische Orchester-Schlagwerk (z.B. Pauken, kleine Trommel), Mallet-Instrumente (Xylophon, Marimbaphon, Vibraphon) und das Drumset für Popularmusik und Jazz. Der Unterricht fokussiert auf die Entwicklung rhythmischer Präzision, technischer Fertigkeiten, koordinativer Fähigkeiten und musikalischer Ausdruckskraft. Die Studierenden werden auf das solistische Spiel sowie auf das Mitwirken in diversen Ensembles und Orchestern vorbereitet, wobei ein breites stilistisches Spektrum abgedeckt wird.'
+    context['intro_text'] = 'Die Abteilung für Schlaginstrumente umfasst klassische Percussion, Drumset, Stabspiele und weitere rhythmische Instrumente. Der Unterricht reicht von klassischer Percussion bis zu modernen Stilrichtungen.'
     context['youtube_videos'] = ['w8yg-ZHYYAA']
     
     return render (request, 'teaching/fachgruppen/base_fachgruppe.html', context)
@@ -249,32 +249,27 @@ def teaching_vocal_view (request):
     context['category_name'] = 'Stimmbildung'
     context['subjects'] = subjects
     context['teachers'] = teachers.distinct()
-    context['intro_text'] = 'Das Fach Stimmbildung und Gesang zielt auf die Kultivierung der Stimme als persönliches Musikinstrument ab, im Einklang mit den gesangspädagogischen Prinzipien gemäß dem in Österreich gültigen KOMU-Lehrplan (Konferenz der österreichischen Musikschulwerke) und unserem vom Ministerium für Bildung genehmigten Organisationsstatut. Im Vordergrund stehen die Erarbeitung einer gesunden Gesangstechnik durch Schulung von Atmung, Körperhaltung, Stütze, Artikulation und Resonanz. Das Repertoire umfasst verschiedene Epochen und Stilrichtungen. Der Unterricht fördert die Erweiterung des stimmlichen Umfangs, die Verbesserung der Intonation und die Entwicklung der interpretatorischen Fähigkeiten, um sowohl solistischen als auch chorischen Anforderungen gerecht zu werden.'
+    context['intro_text'] = 'Die Gesangsabteilung bietet Unterricht in verschiedenen Stilrichtungen an. Von klassischem Gesang über Musical bis zu Pop und Jazz können Sie Ihre Stimme professionell ausbilden lassen.'
     context['youtube_videos'] = ['ESVykNyE3tY', '64DIUyJyXeM']
     
     return render (request, 'teaching/fachgruppen/base_fachgruppe.html', context)
 
 def teaching_strings_view (request):
     context = get_fachgruppe_context('Streichinstrumente')
-    context['intro_text'] = 'Die Streichinstrumente – Violine, Viola, Violoncello und Kontrabass – bilden eine zentrale Säule der abendländischen Musiktradition. Der Unterricht, ausgerichtet an den Standards des in Österreich gültigen KOMU-Lehrplans (Konferenz der österreichischen Musikschulwerke) gemäß unserem vom Ministerium für Bildung genehmigten Organisationsstatut, legt Wert auf eine fundierte technische Ausbildung, die Aspekte wie Haltung, Bogenführung, Intonation und Klanggestaltung umfasst. Die Studierenden erarbeiten ein breit gefächertes Repertoire, das solistische Literatur ebenso wie Kammermusik und Orchesterpartien einschließt. Ziel ist die Heranbildung versierter Instrumentalisten, die zur aktiven Teilnahme am Musikleben befähigt sind.'
+    context['intro_text'] = 'Die Streicherabteilung unterrichtet alle klassischen Streichinstrumente. Vom Kontrabass bis zur Violine bieten wir professionellen Unterricht für Anfänger und Fortgeschrittene.'
     context['youtube_videos'] = ['rVTWes-vLL4', 'cI4jhzFOBoQ']
     return render (request, 'teaching/fachgruppen/base_fachgruppe.html', context)
 
 def teaching_keys_view (request):
     context = get_fachgruppe_context('Tasteninstrumente')
-    context['intro_text'] = 'Die Fachgruppe der Tasteninstrumente, zu der Klavier, Orgel, Cembalo, Akkordeon und elektronische Tasteninstrumente zählen, eröffnet den Zugang zu einem umfangreichen musikalischen Repertoire. Gemäß dem in Österreich gültigen KOMU-Lehrplan (Konferenz der österreichischen Musikschulwerke) und unserem vom Ministerium für Bildung genehmigten Organisationsstatut werden im Unterricht fundierte spieltechnische Fertigkeiten, musiktheoretisches Wissen sowie Kenntnisse in verschiedenen Stilrichtungen von der Alten Musik bis zur Moderne vermittelt. Die Ausbildung zielt darauf ab, die Studierenden sowohl zu solistischen Leistungen als auch zur kompetenten Liedbegleitung und zum Ensemblespiel zu befähigen.'
+    context['intro_text'] = 'Die Abteilung für Tasteninstrumente ist die größte Abteilung unserer Musikschule. Neben dem beliebten Klavier unterrichten wir auch Akkordeon, Cembalo und Kirchenorgel.'
     context['youtube_videos'] = ['fi8ZGiB-lSc', 'NaTwXuR4VwM', 'Wh-uAzNYsLU', 'XhqeetX6NFo']
     return render (request, 'teaching/fachgruppen/base_fachgruppe.html', context)
 
 def teaching_picked_view (request):
     context = get_fachgruppe_context('Zupfinstrumente')
-    context['intro_text'] = 'Die Fachgruppe der Zupfinstrumente umfasst Instrumente wie Gitarre, E-Gitarre, Harfe, Hackbrett und Zither, die sich durch eine charakteristische Tonerzeugung und klangliche Vielfalt auszeichnen. Der Unterricht, orientiert am in Österreich gültigen KOMU-Lehrplan (Konferenz der österreichischen Musikschulwerke) gemäß unserem vom Ministerium für Bildung genehmigten Organisationsstatut, vermittelt die instrumentenspezifischen Spieltechniken und führt in ein breites musikalisches Spektrum ein, das von Volksmusik über Klassik bis hin zu Jazz und Pop reicht. Die Ausbildung fördert die musikalische Ausdrucksfähigkeit, die interpretatorische Kompetenz und die Vorbereitung auf solistische Darbietungen sowie das Musizieren in verschiedenen Ensembleformen.'
+    context['intro_text'] = 'Die Zupfinstrumente umfassen Gitarre, E-Gitarre, E-Bass, Harfe und Zither. Ob klassische Gitarre oder moderne E-Gitarre - bei uns finden Sie den passenden Unterricht.'
     context['youtube_videos'] = ['v30Zs04SwTU', 'CO9peHPN-_Q', 'jQUk2C51T5c', '2kBBFfEORmw']
-    return render (request, 'teaching/fachgruppen/base_fachgruppe.html', context)
-
-def teaching_dance_view (request):
-    context = get_fachgruppe_context('Tanz und Bewegung')
-    context['intro_text'] = 'Der Fachbereich Tanz & Bewegung bietet eine systematische Einführung in die Grundlagen des künstlerischen Tanzes und der Bewegungsschulung, basierend auf den pädagogischen Konzepten des in Österreich gültigen KOMU-Lehrplans (Konferenz der österreichischen Musikschulwerke) gemäß unserem vom Ministerium für Bildung genehmigten Organisationsstatut. Der Unterricht fördert die Entwicklung von Körperwahrnehmung, Koordination, Rhythmusgefühl und räumlichem Bewusstsein. Die Studierenden setzen sich mit verschiedenen Tanztechniken und Ausdrucksformen auseinander, wobei sowohl die individuelle Kreativität als auch das gemeinschaftliche Erarbeiten von Choreografien im Mittelpunkt stehen. Das Fach leistet einen wichtigen Beitrag zur Persönlichkeitsentwicklung und zur ästhetischen Bildung.'
     return render (request, 'teaching/fachgruppen/base_fachgruppe.html', context)
 
 def teaching_art_view (request):

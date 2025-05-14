@@ -20,6 +20,7 @@ urlpatterns = [
     path('bildungsangebot-musikschule/streichinstrumente', teaching.views.teaching_strings_view, name="teaching_strings"),
     path('bildungsangebot-musikschule/tasteninstrumente', teaching.views.teaching_keys_view, name="teaching_keys"),
     path('bildungsangebot-musikschule/zupfinstrumente', teaching.views.teaching_picked_view, name="teaching_picked"),
+    path('bildungsangebot-musikschule/tanz-und-bewegung', teaching.views.teaching_dance_view, name="teaching_dance"),
     path('bildungsangebot-kunstschule', teaching.views.teaching_art_view, name="teaching_art"),
     path('beitraege-ermaessigungen', teaching.views.teaching_prices_view, name="teaching_prices"),
 ]
