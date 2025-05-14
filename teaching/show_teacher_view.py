@@ -6,9 +6,17 @@ from teaching.subject import SubjectCategory, Subject
 
 def get_teachers_from_category(subject_name):
     i = 1
+    y = None  # Initialisiere y
     from django.core.exceptions import ObjectDoesNotExist
     try:
-        for x in SubjectCategory.objects.get(name=subject_name).subject_set.all():
+        category = SubjectCategory.objects.get(name=subject_name)
+        subjects = category.subject_set.all()
+        
+        if not subjects.exists():  # Wenn keine Subjects vorhanden sind
+            from django.db.models import QuerySet
+            return Teacher.objects.none()  # Leeres QuerySet zurückgeben
+        
+        for x in subjects:
             ''''
             y = new query set
             '''
@@ -18,9 +26,9 @@ def get_teachers_from_category(subject_name):
             else:
                 y = z
             i += 1
-        return y.distinct()
+        return y.distinct() if y is not None else Teacher.objects.none()
     except ObjectDoesNotExist:
-        return None
+        return Teacher.objects.none()  # Statt None ein leeres QuerySet zurückgeben
         
 def show_teacher_view(request):
     group_photo = GroupPhoto.objects.all().first()
