@@ -389,10 +389,17 @@ html {
         {% for teacher in director %}
         <article class="teacher-card">
           <div class="teacher-image-container">
+            {% if teacher.image %}
             <img class="teacher-image" 
                  src="{{ teacher.image.url }}"
                  alt="{{ teacher.first_name }} {{ teacher.last_name }}"
                  loading="lazy">
+            {% else %}
+            <img class="teacher-image" 
+                 src="{% static 'teachers/teacher_image_default.svg' %}"
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}"
+                 loading="lazy">
+            {% endif %}
           </div>
           <div class="teacher-info">
             <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
@@ -419,10 +426,17 @@ html {
         {% for teacher in teacher_brass %}
         <article class="teacher-card">
           <div class="teacher-image-container">
+            {% if teacher.image %}
             <img class="teacher-image" 
                  src="{{ teacher.image.url }}"
                  alt="{{ teacher.first_name }} {{ teacher.last_name }}"
                  loading="lazy">
+            {% else %}
+            <img class="teacher-image" 
+                 src="{% static 'teachers/teacher_image_default.svg' %}"
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}"
+                 loading="lazy">
+            {% endif %}
           </div>
           <div class="teacher-info">
             <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
@@ -449,10 +463,17 @@ html {
         {% for teacher in elementary_teaching %}
         <article class="teacher-card">
           <div class="teacher-image-container">
+            {% if teacher.image %}
             <img class="teacher-image" 
                  src="{{ teacher.image.url }}"
                  alt="{{ teacher.first_name }} {{ teacher.last_name }}"
                  loading="lazy">
+            {% else %}
+            <img class="teacher-image" 
+                 src="{% static 'teachers/teacher_image_default.svg' %}"
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}"
+                 loading="lazy">
+            {% endif %}
           </div>
           <div class="teacher-info">
             <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
@@ -479,10 +500,17 @@ html {
         {% for teacher in teacher_vocal %}
         <article class="teacher-card">
           <div class="teacher-image-container">
+            {% if teacher.image %}
             <img class="teacher-image" 
                  src="{{ teacher.image.url }}"
                  alt="{{ teacher.first_name }} {{ teacher.last_name }}"
                  loading="lazy">
+            {% else %}
+            <img class="teacher-image" 
+                 src="{% static 'teachers/teacher_image_default.svg' %}"
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}"
+                 loading="lazy">
+            {% endif %}
           </div>
           <div class="teacher-info">
             <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
@@ -509,10 +537,17 @@ html {
         {% for teacher in teacher_wood %}
         <article class="teacher-card">
           <div class="teacher-image-container">
+            {% if teacher.image %}
             <img class="teacher-image" 
                  src="{{ teacher.image.url }}"
                  alt="{{ teacher.first_name }} {{ teacher.last_name }}"
                  loading="lazy">
+            {% else %}
+            <img class="teacher-image" 
+                 src="{% static 'teachers/teacher_image_default.svg' %}"
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}"
+                 loading="lazy">
+            {% endif %}
           </div>
           <div class="teacher-info">
             <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
@@ -539,10 +574,17 @@ html {
         {% for teacher in teacher_drums %}
         <article class="teacher-card">
           <div class="teacher-image-container">
+            {% if teacher.image %}
             <img class="teacher-image" 
                  src="{{ teacher.image.url }}"
                  alt="{{ teacher.first_name }} {{ teacher.last_name }}"
                  loading="lazy">
+            {% else %}
+            <img class="teacher-image" 
+                 src="{% static 'teachers/teacher_image_default.svg' %}"
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}"
+                 loading="lazy">
+            {% endif %}
           </div>
           <div class="teacher-info">
             <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
@@ -569,10 +611,17 @@ html {
         {% for teacher in teacher_strings %}
         <article class="teacher-card">
           <div class="teacher-image-container">
+            {% if teacher.image %}
             <img class="teacher-image" 
                  src="{{ teacher.image.url }}"
                  alt="{{ teacher.first_name }} {{ teacher.last_name }}"
                  loading="lazy">
+            {% else %}
+            <img class="teacher-image" 
+                 src="{% static 'teachers/teacher_image_default.svg' %}"
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}"
+                 loading="lazy">
+            {% endif %}
           </div>
           <div class="teacher-info">
             <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
@@ -607,10 +656,17 @@ html {
         {% for teacher in teacher_dance %}
         <article class="teacher-card">
           <div class="teacher-image-container">
+            {% if teacher.image %}
             <img class="teacher-image" 
                  src="{{ teacher.image.url }}"
                  alt="{{ teacher.first_name }} {{ teacher.last_name }}"
                  loading="lazy">
+            {% else %}
+            <img class="teacher-image" 
+                 src="{% static 'teachers/teacher_image_default.svg' %}"
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}"
+                 loading="lazy">
+            {% endif %}
           </div>
           <div class="teacher-info">
             <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
@@ -637,10 +693,17 @@ html {
         {% for teacher in teacher_keys %}
         <article class="teacher-card">
           <div class="teacher-image-container">
+            {% if teacher.image %}
             <img class="teacher-image" 
                  src="{{ teacher.image.url }}"
                  alt="{{ teacher.first_name }} {{ teacher.last_name }}"
                  loading="lazy">
+            {% else %}
+            <img class="teacher-image" 
+                 src="{% static 'teachers/teacher_image_default.svg' %}"
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}"
+                 loading="lazy">
+            {% endif %}
           </div>
           <div class="teacher-info">
             <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
@@ -667,10 +730,17 @@ html {
         {% for teacher in teacher_picked %}
         <article class="teacher-card">
           <div class="teacher-image-container">
+            {% if teacher.image %}
             <img class="teacher-image" 
                  src="{{ teacher.image.url }}"
                  alt="{{ teacher.first_name }} {{ teacher.last_name }}"
                  loading="lazy">
+            {% else %}
+            <img class="teacher-image" 
+                 src="{% static 'teachers/teacher_image_default.svg' %}"
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}"
+                 loading="lazy">
+            {% endif %}
           </div>
           <div class="teacher-info">
             <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>

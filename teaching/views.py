@@ -66,8 +66,12 @@ def get_fachgruppe_context(category_name):
     except SubjectCategory.DoesNotExist:
         return {'category_name': category_name, 'subjects': [], 'teachers': []}
     
-    # Hole alle Fächer dieser Kategorie
-    subjects = Subject.objects.filter(category=category, hidden_subject=False)
+    # Hole alle Fächer dieser Kategorie - filtere hidden und complementary subjects heraus
+    subjects = Subject.objects.filter(
+        category=category, 
+        hidden_subject=False,
+        complementary_subject=False
+    )
     
     # Hole alle Lehrer dieser Kategorie mit der gleichen Funktion wie bei ueber-uns
     teachers = get_teachers_from_category(category_name)
@@ -96,14 +100,22 @@ def teaching_brass_view (request):
     subjects = []
     try:
         brass_cat = SubjectCategory.objects.get(name="Blechblasinstrumente")
-        brass_subjects = Subject.objects.filter(category=brass_cat, hidden_subject=False)
+        brass_subjects = Subject.objects.filter(
+            category=brass_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )
         subjects.extend(list(brass_subjects))
     except SubjectCategory.DoesNotExist:
         pass
     
     try:
         wood_cat = SubjectCategory.objects.get(name="Holzblasinstrumente")
-        wood_subjects = Subject.objects.filter(category=wood_cat, hidden_subject=False)
+        wood_subjects = Subject.objects.filter(
+            category=wood_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )
         subjects.extend(list(wood_subjects))
     except SubjectCategory.DoesNotExist:
         pass
@@ -131,14 +143,22 @@ def teaching_eme_view (request):
     subjects = []
     try:
         eme_cat = SubjectCategory.objects.get(name="Elementare Musikerziehung")
-        eme_subjects = Subject.objects.filter(category=eme_cat, hidden_subject=False)
+        eme_subjects = Subject.objects.filter(
+            category=eme_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )
         subjects.extend(list(eme_subjects))
     except SubjectCategory.DoesNotExist:
         pass
     
     try:
         mfe_cat = SubjectCategory.objects.get(name="Musikalische Früherziehung")
-        mfe_subjects = Subject.objects.filter(category=mfe_cat, hidden_subject=False)
+        mfe_subjects = Subject.objects.filter(
+            category=mfe_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )
         subjects.extend(list(mfe_subjects))
     except SubjectCategory.DoesNotExist:
         pass
@@ -165,14 +185,22 @@ def teaching_theory_view (request):
     subjects = []
     try:
         musikkunde_cat = SubjectCategory.objects.get(name="Musikkunde")
-        musikkunde_subjects = Subject.objects.filter(category=musikkunde_cat, hidden_subject=False)
+        musikkunde_subjects = Subject.objects.filter(
+            category=musikkunde_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )
         subjects.extend(list(musikkunde_subjects))
     except SubjectCategory.DoesNotExist:
         pass
     
     try:
         theorie_cat = SubjectCategory.objects.get(name="Theorie")
-        theorie_subjects = Subject.objects.filter(category=theorie_cat, hidden_subject=False)
+        theorie_subjects = Subject.objects.filter(
+            category=theorie_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )
         subjects.extend(list(theorie_subjects))
     except SubjectCategory.DoesNotExist:
         pass
@@ -199,14 +227,22 @@ def teaching_drums_view (request):
     subjects = []
     try:
         schlag_cat = SubjectCategory.objects.get(name="Schlaginstrumente")
-        schlag_subjects = Subject.objects.filter(category=schlag_cat, hidden_subject=False)
+        schlag_subjects = Subject.objects.filter(
+            category=schlag_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )
         subjects.extend(list(schlag_subjects))
     except SubjectCategory.DoesNotExist:
         pass
     
     try:
         schlagwerk_cat = SubjectCategory.objects.get(name="Schlagwerk")
-        schlagwerk_subjects = Subject.objects.filter(category=schlagwerk_cat, hidden_subject=False)
+        schlagwerk_subjects = Subject.objects.filter(
+            category=schlagwerk_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )
         subjects.extend(list(schlagwerk_subjects))
     except SubjectCategory.DoesNotExist:
         pass
@@ -234,14 +270,22 @@ def teaching_vocal_view (request):
     subjects = []
     try:
         stimm_cat = SubjectCategory.objects.get(name="Stimmbildung")
-        stimm_subjects = Subject.objects.filter(category=stimm_cat, hidden_subject=False)
+        stimm_subjects = Subject.objects.filter(
+            category=stimm_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )
         subjects.extend(list(stimm_subjects))
     except SubjectCategory.DoesNotExist:
         pass
     
     try:
         gesang_cat = SubjectCategory.objects.get(name="Gesang")
-        gesang_subjects = Subject.objects.filter(category=gesang_cat, hidden_subject=False)
+        gesang_subjects = Subject.objects.filter(
+            category=gesang_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )
         subjects.extend(list(gesang_subjects))
     except SubjectCategory.DoesNotExist:
         pass

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Price Toggle</title>
+    <style>
+        .location-toggle {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+            padding: 0.5rem;
+            background-color: #f8f8f8;
+            border-radius: 50px;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .location-toggle a {
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            color: #666;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .location-toggle a.active {
+            background-color: #D11317;
+            color: white;
+        }
+
+        .prices-table-container {
+            display: none;
+            padding: 20px;
+            background: #f5f5f5;
+            margin: 10px;
+        }
+
+        .prices-table-container.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="location-toggle">
+        <a href="javascript:void(0)" id="toggle-in" class="active">St. Pölten</a>
+        <a href="javascript:void(0)" id="toggle-out">Außerhalb St. Pölten</a>
+    </div>
+    
+    <div id="prices-in" class="prices-table-container active">
+        <h3>Prices Inside</h3>
+        <p>This is the table for St. Pölten</p>
+    </div>
+    
+    <div id="prices-out" class="prices-table-container">
+        <h3>Prices Outside</h3>
+        <p>This is the table for Außerhalb St. Pölten</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleIn = document.getElementById('toggle-in');
+            const toggleOut = document.getElementById('toggle-out');
+            const pricesIn = document.getElementById('prices-in');
+            const pricesOut = document.getElementById('prices-out');
+            
+            console.log('Elements found:', {
+                toggleIn: toggleIn,
+                toggleOut: toggleOut,
+                pricesIn: pricesIn,
+                pricesOut: pricesOut
+            });
+            
+            toggleIn.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('In clicked');
+                toggleIn.classList.add('active');
+                toggleOut.classList.remove('active');
+                pricesIn.classList.add('active');
+                pricesOut.classList.remove('active');
+            });
+            
+            toggleOut.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('Out clicked');
+                toggleOut.classList.add('active');
+                toggleIn.classList.remove('active');
+                pricesOut.classList.add('active');
+                pricesIn.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
