@@ -2,56 +2,1012 @@
 
 {% load static %}
 {% block extra_head %}
-<style media="screen">
-  .django-ckeditor-widget, #cke_id_content{
-      width:100% !important;
+<style>
+  :root {
+    --primary-color: #2563eb;
+    --secondary-color: #64748b;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --border-color: #e5e7eb;
+    --background-color: #f9fafb;
+    --text-color: #111827;
+    --text-muted: #6b7280;
   }
-  p{
-    padding:0;
+
+  /* Scoped box-sizing to blog editor only */
+  .blog-editor *, 
+  .blog-editor *::before, 
+  .blog-editor *::after {
+    box-sizing: border-box;
   }
-  #id_title{
-    width: 97%;
+
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
   }
-  #id_lead_paragraph{
-    width:100%;
+
+  .blog-editor {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .editor-header {
+    margin-bottom: 40px;
+  }
+
+  .editor-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  .form-section {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border-color);
+  }
+
+  .form-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+    color: var(--text-color);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-section label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 8px;
+  }
+
+  .form-control {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    background-color: white;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  input[type="text"].form-control,
+  input[type="email"].form-control,
+  input[type="url"].form-control,
+  input[type="password"].form-control,
+  input[type="date"].form-control,
+  input[type="time"].form-control,
+  input[type="number"].form-control {
+    height: 44px;
+    line-height: 1.5;
+  }
+
+  textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+  }
+
+  select.form-control {
+    height: 44px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 12px;
+    padding-right: 40px;
+  }
+
+  /* Prevent input overflow on small screens */
+  @media (max-width: 480px) {
+    .form-control {
+      font-size: 16px; /* Prevents zoom on iOS */
+    }
+  }
+
+  .help-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .error-message {
+    color: var(--danger-color);
+    font-size: 0.75rem;
+    margin-top: 4px;
+  }
+
+  .form-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0;
+  }
+
+  .form-check-input {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  .form-check label {
+    cursor: pointer;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .form-actions-left {
+    display: flex;
+    gap: 12px;
+  }
+
+  .form-actions-right {
+    display: flex;
+    gap: 12px;
+  }
+
+  .blog-editor .btn,
+  .blog-editor form button,
+  .blog-editor a.btn,
+  .blog-editor button.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    color: inherit;
+    /* Override the global button styles */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
+    width: auto !important;
+    height: auto !important;
+    background-image: none !important;
+  }
+
+  .blog-editor .btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.3s;
+  }
+
+  .blog-editor .btn:hover:before {
+    left: 100%;
+  }
+
+  .blog-editor .btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .blog-editor .btn-primary,
+  .blog-editor form button.btn-primary,
+  .blog-editor a.btn-primary,
+  .blog-editor button.btn-primary {
+    background: unset !important;
+    background-color: var(--primary-color) !important;
+    background-image: none !important;
+    color: white !important;
+  }
+
+  .blog-editor .btn-primary:hover {
+    background-color: #1d4ed8 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  }
+
+  .blog-editor .btn-secondary,
+  .blog-editor form button.btn-secondary,
+  .blog-editor a.btn-secondary,
+  .blog-editor button.btn-secondary {
+    background: white !important;
+    background-image: none !important;
+    color: var(--secondary-color) !important;
+    border: 1px solid var(--border-color) !important;
+  }
+
+  .blog-editor .btn-secondary:hover {
+    background-color: var(--background-color) !important;
+    border-color: var(--secondary-color) !important;
+  }
+
+  .blog-editor .btn-success,
+  .blog-editor form button.btn-success,
+  .blog-editor a.btn-success,
+  .blog-editor button.btn-success {
+    background: unset !important;
+    background-color: var(--success-color) !important;
+    background-image: none !important;
+    color: white !important;
+  }
+
+  .blog-editor .btn-success:hover {
+    background-color: #059669 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  }
+
+  .blog-editor .btn-danger,
+  .blog-editor form button.btn-danger,
+  .blog-editor a.btn-danger,
+  .blog-editor button.btn-danger {
+    background: white !important;
+    background-image: none !important;
+    color: var(--danger-color) !important;
+    border: 1px solid var(--danger-color) !important;
+  }
+
+  .blog-editor .btn-danger:hover {
+    background-color: var(--danger-color) !important;
+    color: white !important;
+    transform: translateY(-1px);
+  }
+
+  .blog-editor .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  .image-preview {
+    margin-top: 16px;
+    max-width: 400px;
+  }
+
+  .image-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+  }
+
+  .image-preview p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .char-counter {
+    text-align: right;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin-top: 4px;
+  }
+
+  .char-counter.warning {
+    color: var(--danger-color);
+  }
+
+  .editor-status-bar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+    z-index: 100;
+  }
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+  }
+
+  .status-indicator .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--text-muted);
+  }
+
+  .status-indicator.saved .dot {
+    background-color: var(--success-color);
+  }
+
+  .status-indicator.saving .dot {
+    background-color: var(--warning-color);
+    animation: pulse 1s infinite;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+  .editor-quick-actions {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .quick-action-btn,
+  .editor-quick-actions button.quick-action-btn {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50%;
+    background: white !important;
+    background-image: none !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    padding: 0 !important;
+  }
+
+  .quick-action-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .quick-action-btn svg {
+    width: 24px;
+    height: 24px;
+    color: var(--secondary-color);
+  }
+
+  .quick-action-btn.primary,
+  .editor-quick-actions button.quick-action-btn.primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+  }
+
+  .quick-action-btn.primary svg {
+    color: white;
+  }
+
+  /* Minimal TinyMCE styling */
+  .tox-tinymce {
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .tox .tox-edit-area {
+    border-top: 1px solid var(--border-color) !important;
+  }
+
+  .tox .tox-edit-area__iframe {
+    background: white !important;
+  }
+
+  /* Hide TinyMCE promotion link */
+  .tox-promotion-link,
+  .tox-statusbar__branding,
+  .tox .tox-statusbar__upgrade {
+    display: none !important;
+  }
+
+  .mce-content-body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    padding: 16px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure TinyMCE toolbar wraps properly */
+  .tox .tox-toolbar__primary {
+    flex-wrap: wrap !important;
+  }
+
+  /* Image upload area */
+  .file-upload-area {
+    position: relative;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.2s;
+    background-color: var(--background-color);
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  .file-upload-area:hover {
+    border-color: var(--primary-color);
+    background-color: #f0f9ff;
+  }
+
+  .file-upload-area input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .file-upload-text {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    pointer-events: none;
+  }
+
+  .file-upload-icon {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 12px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .blog-editor {
+      padding: 20px 15px;
+    }
+    
+    .form-section {
+      padding: 16px;
+    }
+    
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .form-actions-left,
+    .form-actions-right {
+      width: 100%;
+      flex-direction: column;
+    }
+    
+    .blog-editor .btn {
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .editor-status-bar {
+      top: auto;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+    }
+    
+    .editor-quick-actions {
+      display: none;
+    }
+  }
+
+  /* Container overflow prevention */
+  .blog-editor, 
+  .form-section,
+  .form-group {
+    overflow-x: hidden;
+  }
+
+  /* Ensure all content stays within bounds */
+  .blog-editor * {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Prevent horizontal scrolling */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Loading state */
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    display: none;
+  }
+
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 </style>
+{{ form.media }}
 {% endblock %}
 
 {% block navbar %}
 {% endblock %}
+
 {% block banner %}
-
 {% endblock %}
+
 {% block body %}
-<div class="mbs">
-  <div class="container">
-    <div class="blogpost">
-      <h1>Blogeintrag</h1>
-      <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.media }}
-      <div class="form-title">
-        <p>Titel*: {{ form.title }}</p>
-      </div>
-      <div class="form-lead">
-        <p>Lead*: {{ form.lead_paragraph }}</p>
-      </div>
-      <div class="form-content">
-        <p>Text*:</p>
-        {{ form.content }}
-      </div>
-      <div class="form-image">
-        <p>Beitragsbild*: {{ form.image }}</p>
-      </div>
-      <a>
-      <button type="submit" name="form-save" onclick="return confirm('Wollen Sie wirklich diesen Eintrag abspeichern?');">Speichern</button>
-      </a>
-      </form>
+<div class="blog-editor">
+  <!-- Status Bar -->
+  <div class="editor-status-bar">
+    <div class="status-indicator" id="save-status">
+      <span class="dot"></span>
+      <span class="status-text">Ready</span>
     </div>
+    {% if form.instance.pk %}
+    <div class="status-indicator">
+      {% if form.instance.published %}
+      <span class="dot" style="background-color: var(--success-color);"></span>
+      <span>Published</span>
+      {% else %}
+      <span class="dot" style="background-color: var(--warning-color);"></span>
+      <span>Draft</span>
+      {% endif %}
+    </div>
+    {% endif %}
   </div>
-</div>
-{% endblock %}
-{% block footer %}
 
+  <div class="editor-header">
+    <h1>
+      {% if form.instance.pk %}
+        Edit Blog Post
+      {% else %}
+        Create New Blog Post
+      {% endif %}
+    </h1>
+  </div>
+  
+  <form method="post" enctype="multipart/form-data" id="blog-form">
+    {% csrf_token %}
+    
+    <!-- Basic Information -->
+    <div class="form-section">
+      <h2>Basic Information</h2>
+      
+      <div class="form-group">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+        {% if form.title.errors %}
+          <div class="error-message">{{ form.title.errors }}</div>
+        {% endif %}
+      </div>
+      
+      <div class="form-group">
+        {{ form.lead_paragraph.label_tag }}
+        {{ form.lead_paragraph }}
+        {% if form.lead_paragraph.help_text %}
+          <div class="help-text">{{ form.lead_paragraph.help_text }}</div>
+        {% endif %}
+        {% if form.lead_paragraph.errors %}
+          <div class="error-message">{{ form.lead_paragraph.errors }}</div>
+        {% endif %}
+      </div>
+    </div>
+    
+    <!-- Content -->
+    <div class="form-section">
+      <h2>Content</h2>
+      {{ form.content.label_tag }}
+      {{ form.content }}
+      {% if form.content.errors %}
+        <div class="error-message">{{ form.content.errors }}</div>
+      {% endif %}
+    </div>
+    
+    <!-- Media -->
+    <div class="form-section">
+      <h2>Media</h2>
+      
+      <div class="form-row">
+        <div class="form-group">
+          {{ form.image.label_tag }}
+          <div class="file-upload-area">
+            <svg class="file-upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+            </svg>
+            <p class="file-upload-text">Click to upload or drag and drop</p>
+            <p class="file-upload-text" style="font-size: 0.75rem;">PNG, JPG, GIF up to 10MB</p>
+            {{ form.image }}
+          </div>
+          {% if form.image.errors %}
+            <div class="error-message">{{ form.image.errors }}</div>
+          {% endif %}
+          {% if form.instance.image %}
+            <div class="image-preview">
+              <p>Current image:</p>
+              <img src="{{ form.instance.image.url }}" alt="{{ form.instance.image_alt_text }}">
+            </div>
+          {% endif %}
+        </div>
+        
+        <div class="form-group">
+          {{ form.image_alt_text.label_tag }}
+          {{ form.image_alt_text }}
+          {% if form.image_alt_text.help_text %}
+            <div class="help-text">{{ form.image_alt_text.help_text }}</div>
+          {% endif %}
+          {% if form.image_alt_text.errors %}
+            <div class="error-message">{{ form.image_alt_text.errors }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Organization -->
+    <div class="form-section">
+      <h2>Organization</h2>
+      
+      <div class="form-row">
+        <div class="form-group">
+          {{ form.category.label_tag }}
+          {{ form.category }}
+          {% if form.category.errors %}
+            <div class="error-message">{{ form.category.errors }}</div>
+          {% endif %}
+        </div>
+        
+        <div class="form-group">
+          {{ form.author.label_tag }}
+          {{ form.author }}
+          {% if form.author.errors %}
+            <div class="error-message">{{ form.author.errors }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <!-- SEO -->
+    <div class="form-section">
+      <h2>SEO Settings</h2>
+      
+      <div class="form-group">
+        {{ form.slug.label_tag }}
+        {{ form.slug }}
+        {% if form.slug.help_text %}
+          <div class="help-text">{{ form.slug.help_text }}</div>
+        {% endif %}
+        {% if form.slug.errors %}
+          <div class="error-message">{{ form.slug.errors }}</div>
+        {% endif %}
+      </div>
+      
+      <div class="form-group">
+        {{ form.meta_title.label_tag }}
+        {{ form.meta_title }}
+        {% if form.meta_title.help_text %}
+          <div class="help-text">{{ form.meta_title.help_text }}</div>
+        {% endif %}
+        <div class="char-counter" id="meta-title-counter"></div>
+        {% if form.meta_title.errors %}
+          <div class="error-message">{{ form.meta_title.errors }}</div>
+        {% endif %}
+      </div>
+      
+      <div class="form-group">
+        {{ form.meta_description.label_tag }}
+        {{ form.meta_description }}
+        {% if form.meta_description.help_text %}
+          <div class="help-text">{{ form.meta_description.help_text }}</div>
+        {% endif %}
+        <div class="char-counter" id="meta-desc-counter"></div>
+        {% if form.meta_description.errors %}
+          <div class="error-message">{{ form.meta_description.errors }}</div>
+        {% endif %}
+      </div>
+    </div>
+    
+    <!-- Publishing -->
+    <div class="form-section">
+      <h2>Publishing</h2>
+      
+      <div class="form-check">
+        {{ form.published }}
+        {{ form.published.label_tag }}
+        {% if form.published.help_text %}
+          <div class="help-text">{{ form.published.help_text }}</div>
+        {% endif %}
+      </div>
+    </div>
+    
+    <!-- Actions -->
+    <div class="form-actions">
+      <div class="form-actions-left">
+        {% if form.instance.pk %}
+        <button type="button" class="btn btn-danger" onclick="if(confirm('Are you sure you want to delete this post?')) { window.location.href='{% url 'delete_blog_post' form.instance.pk %}'; }">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+          </svg>
+          Delete
+        </button>
+        {% endif %}
+      </div>
+      
+      <div class="form-actions-right">
+        <a href="{% url 'show_blogs_editing' %}" class="btn btn-secondary">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+          Cancel
+        </a>
+        <button type="submit" name="save-draft" class="btn btn-primary">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+          </svg>
+          Save Draft
+        </button>
+        <button type="submit" name="save-publish" class="btn btn-success">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Save & Publish
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Quick Actions -->
+<div class="editor-quick-actions">
+  <button type="button" class="quick-action-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+  </button>
+  {% if form.instance.pk %}
+  <a href="/blog/{{form.instance.published_year}}/{{ form.instance.slug }}" target="_blank" class="quick-action-btn" title="Preview">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+    </svg>
+  </a>
+  {% endif %}
+  <button type="button" class="quick-action-btn primary" onclick="document.getElementById('blog-form').submit()" title="Quick save">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+    </svg>
+  </button>
+</div>
+
+<div class="loading-overlay" id="loading-overlay">
+  <div class="loading-spinner"></div>
+</div>
+
+<script>
+// Auto-save functionality
+let autoSaveTimer;
+const form = document.getElementById('blog-form');
+const loadingOverlay = document.getElementById('loading-overlay');
+const saveStatus = document.getElementById('save-status');
+
+function updateSaveStatus(status, text) {
+  const statusDot = saveStatus.querySelector('.dot');
+  const statusText = saveStatus.querySelector('.status-text');
+  
+  statusText.textContent = text;
+  
+  switch(status) {
+    case 'saving':
+      saveStatus.classList.remove('saved');
+      saveStatus.classList.add('saving');
+      break;
+    case 'saved':
+      saveStatus.classList.remove('saving');
+      saveStatus.classList.add('saved');
+      break;
+    default:
+      saveStatus.classList.remove('saving', 'saved');
+  }
+}
+
+function showLoading() {
+  loadingOverlay.style.display = 'flex';
+}
+
+function hideLoading() {
+  loadingOverlay.style.display = 'none';
+}
+
+function autoSave() {
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => {
+    updateSaveStatus('saving', 'Saving...');
+    const formData = new FormData(form);
+    formData.append('auto-save', 'true');
+    
+    fetch(window.location.href, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        updateSaveStatus('saved', 'Saved');
+        setTimeout(() => updateSaveStatus('', 'Ready'), 3000);
+      } else {
+        updateSaveStatus('', 'Error saving');
+      }
+    })
+    .catch(error => {
+      console.error('Auto-save error:', error);
+      updateSaveStatus('', 'Error saving');
+    });
+  }, 3000); // Auto-save after 3 seconds of inactivity
+}
+
+// Add auto-save listeners to form inputs
+form.addEventListener('input', autoSave);
+form.addEventListener('change', autoSave);
+
+// Status display
+function showStatus(message) {
+  const status = document.createElement('div');
+  status.className = 'editor-status';
+  status.textContent = message;
+  document.body.appendChild(status);
+  
+  setTimeout(() => {
+    status.remove();
+  }, 3000);
+}
+
+// Slug generation from title
+const titleInput = document.querySelector('input[name="title"]');
+const slugInput = document.querySelector('input[name="slug"]');
+
+if (titleInput && slugInput) {
+  titleInput.addEventListener('blur', function() {
+    if (!slugInput.value) {
+      const slug = this.value
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/--+/g, '-')
+        .trim();
+      slugInput.value = slug;
+    }
+  });
+}
+
+// Character counter for SEO fields
+function addCharCounter(input, counterId, maxLength) {
+  const counter = document.getElementById(counterId);
+  
+  function updateCounter() {
+    const remaining = maxLength - input.value.length;
+    counter.textContent = `${remaining} characters remaining`;
+    counter.classList.toggle('warning', remaining < 10);
+  }
+  
+  input.addEventListener('input', updateCounter);
+  updateCounter();
+}
+
+const metaTitleInput = document.querySelector('input[name="meta_title"]');
+const metaDescInput = document.querySelector('textarea[name="meta_description"]');
+
+if (metaTitleInput) addCharCounter(metaTitleInput, 'meta-title-counter', 60);
+if (metaDescInput) addCharCounter(metaDescInput, 'meta-desc-counter', 160);
+
+// Form submission with loading state
+form.addEventListener('submit', function(e) {
+  showLoading();
+});
+
+// File upload preview
+const fileInput = document.querySelector('input[type="file"]');
+const fileUploadArea = document.querySelector('.file-upload-area');
+
+if (fileInput && fileUploadArea) {
+  fileInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const fileName = file.name;
+      const fileSize = (file.size / 1024 / 1024).toFixed(2);
+      fileUploadArea.querySelector('.file-upload-text').textContent = `${fileName} (${fileSize}MB)`;
+    }
+  });
+}
+
+// Prevent accidental navigation
+let formChanged = false;
+
+form.addEventListener('change', () => {
+  formChanged = true;
+});
+
+window.addEventListener('beforeunload', (e) => {
+  if (formChanged) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+// Reset formChanged on successful save
+form.addEventListener('submit', () => {
+  formChanged = false;
+});
+</script>
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

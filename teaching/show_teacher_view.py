@@ -46,10 +46,10 @@ def show_teacher_view(request):
     director_qs = get_teachers_from_category("Direktion")
     
     # Annotate each teacher with a flag 'is_director'
+    # Check if any subject has the name "Direktor"
     director = director_qs.annotate(
         is_director=Case(
-            # Use the correct field name: 'subject__subject'
-            When(subject__subject="Direktion", then=Value(0)),
+            When(subject__subject="Direktor", then=Value(0)),
             default=Value(1),
             output_field=IntegerField()
         )
