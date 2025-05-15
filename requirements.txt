@@ -24,6 +24,7 @@ django-extensions==3.1.5
 django-js-asset==2.1.0
 django-import-export
 django-phone-field==1.8.0
+django-tinymce==4.1.0
 django-user-agents==0.4.0
 entrypoints==0.4
 executing==1.0.0

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'home',
     'ckeditor',
     'ckeditor_uploader',
+    'tinymce',  # Added TinyMCE
     'blog.apps.BlogConfig',
     'school.apps.SchoolConfig',
     'instruments.apps.InstrumentsConfig',
@@ -181,6 +182,50 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 CKEDITOR_UPLOAD_PATH = "/media/blog_uploads/"
+
+# TinyMCE Configuration
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': '''
+            powerpaste casechange searchreplace autolink directionality
+            advcode visualblocks visualchars image link media mediaembed codesample table
+            charmap pagebreak nonbreaking anchor advlist lists wordcount help formatpainter
+            permanentpen checklist export linkchecker tinymcespellchecker
+            tinydrive mentions tinycomments footnotes mergetags advtable export
+            ''',
+    'toolbar': '''
+            undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize |
+            bold italic underline forecolor backcolor | link image media | alignleft aligncenter
+            alignright alignjustify | outdent indent | removeformat | code | table |
+            lists numlist bullist checklist | charmap emoticons |
+            fullscreen preview | save export searchreplace
+            ''',
+    'height': 500,
+    'width': '100%',
+    'menubar': True,
+    'statusbar': True,
+    'relative_urls': False,
+    'remove_script_host': False,
+    'convert_urls': True,
+    'valid_elements': '*[*]',
+    'valid_children': '+body[style]',
+    'custom_elements': 'style,~style',
+    'extended_valid_elements': '''
+            style[type],
+            script[type|src],
+            iframe[src|style|width|height|scrolling|marginwidth|marginheight|frameborder],
+            img[class|src|border|alt|title|hspace|vspace|width|height|align|name],
+            a[class|name|href|target|title|rel],
+            span[class|style],
+            div[class|style],
+            p[class|style]
+            ''',
+    'content_css': 'default',
+    'browser_spellcheck': True,
+    'contextmenu': 'link image table',
+    'branding': False,  # Disable TinyMCE branding
+    'promotion': False,  # Disable promotion messages
+    'resize': 'both',  # Allow resizing
+}
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

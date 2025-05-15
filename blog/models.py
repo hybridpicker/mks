@@ -1,5 +1,5 @@
 from django.db import models
-from ckeditor.fields import RichTextField
+from tinymce.models import HTMLField
 from django.template.defaultfilters import slugify
 from teaching.subject import Subject
 from django.utils.translation import gettext_lazy as _
@@ -38,8 +38,9 @@ class BlogPost(models.Model):
         on_delete=models.SET_NULL,  # Verhindert das Löschen von Blogposts, wenn die Kategorie entfernt wird
         blank=True, null=True
     )
-    content = RichTextField()
+    content = HTMLField()  # Changed from RichTextField to HTMLField for TinyMCE
     image = models.ImageField(upload_to='blog/posts/images/', blank=True, null=True)  # Bild optional
+    image_alt_text = models.CharField(max_length=255, blank=True)  # Added for SEO/accessibility
     author = models.ForeignKey(
         Author,
         on_delete=models.SET_NULL,  # Optionaler Autor
@@ -47,15 +48,20 @@ class BlogPost(models.Model):
     )
     date = models.DateField(_("Blog Post Date"), default=timezone.now, blank=True)
     meta_title = models.CharField(max_length=60)
-    meta_description = models.TextField()
+    meta_description = models.TextField(max_length=160)  # Added max_length for SEO best practices
     slug = models.SlugField(_("slug"), max_length=200, unique=True)
     ordering = models.IntegerField(null=True, blank=True)
+    published = models.BooleanField(default=False)  # Added for draft/publish functionality
+    updated_at = models.DateTimeField(auto_now=True)  # Added for tracking updates
+    created_at = models.DateTimeField(auto_now_add=True)  # Added for tracking creation
+    
+    @property
+    def published_year(self):
+        return self.date.year
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
-        if not self.published_year:
-            self.published_year = current_year()  # Standardwert setzen
         super().save(*args, **kwargs)
 
     def __str__(self):

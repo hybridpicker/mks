@@ -1,9 +1,11 @@
 from django.views.generic import View
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from urllib.parse import urlparse
+import json
 
 from blog.models import BlogPost
 from blog.forms import ArticleForm
@@ -13,7 +15,7 @@ from slugify import slugify
 # Create your views here.
 
 def blog_summary(request):
-    all_blogs = BlogPost.objects.all().exclude(category__category__name="Kunstschule")
+    all_blogs = BlogPost.objects.filter(published=True).exclude(category__category__name="Kunstschule")
     context = {
         'all_blogs': all_blogs
         }
@@ -69,40 +71,47 @@ def create_slug_text(title):
 def create_blog(request):
     form = ArticleForm(request.POST)
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
+        # Auto-save request
+        if request.POST.get('auto-save'):
+            form = ArticleForm(request.POST, request.FILES)
+            if form.is_valid():
+                blog_post = form.save(commit=False)
+                if not blog_post.slug:
+                    blog_post.slug = create_slug_text(blog_post.title)
+                blog_post.save()
+                return JsonResponse({'success': True, 'id': blog_post.id})
+            return JsonResponse({'success': False, 'errors': form.errors})
+        
+        # Normal save
         form = ArticleForm(request.POST, request.FILES)
-        # check whether it's valid:
         if form.is_valid():
-            title = form.cleaned_data['title']
-            lead_paragraph = form.cleaned_data['lead_paragraph']
-            content = form.cleaned_data['content']
-            title = request.POST['title']
-            lead_paragraph = request.POST['lead_paragraph']
-            image = request.FILES['image']
-            content = request.POST['content']
-            #create slug from title-input
-            slug = create_slug_text(title)
-            new_article = BlogPost(title=title,
-                                   lead_paragraph=lead_paragraph,
-                                   image=image,
-                                   slug=slug,
-                                   meta_title=title,
-                                   meta_description=lead_paragraph,
-                                   content=content)
-            new_article.save()
-            # redirect to a blog_post_url:
+            blog_post = form.save(commit=False)
+            if not blog_post.slug:
+                blog_post.slug = create_slug_text(blog_post.title)
+            
+            # Handle save & publish
+            if 'save-publish' in request.POST:
+                blog_post.published = True
+            elif 'save-draft' in request.POST:
+                blog_post.published = False
+                
+            blog_post.save()
             return redirect('blog_thanks')
-            # if a GET (or any other method) we'll create a blank form
-        else:
-            form = ArticleForm()
+    else:
+        form = ArticleForm()
+    
     context = {
         'form': form
-        }
+    }
     return render(request, "blog/edit/form.html", context)
 
 class BlogPostView(View):
     def get(self, request, *args, **kwargs):
-        blog_post = get_object_or_404(BlogPost, slug=kwargs['slug'], published_year=kwargs['published_year'])
+        blog_post = get_object_or_404(BlogPost, slug=kwargs['slug'], date__year=kwargs['published_year'])
+        # If not published and user is not authenticated, return 404
+        if not blog_post.published and not request.user.is_authenticated:
+            raise Http404("Blog post not found")
+            
         youtube = check_youtube_link(blog_post.content)
         if youtube:
             context = {'blog_post': blog_post, 'youtube':youtube}
@@ -114,11 +123,33 @@ class BlogPostView(View):
 def post_edit(request, pk):
     post = get_object_or_404(BlogPost, pk=pk)
     if request.method == "POST":
-        form = ArticleForm(request.POST, instance=post)
+        # Auto-save request
+        if request.POST.get('auto-save'):
+            form = ArticleForm(request.POST, request.FILES, instance=post)
+            if form.is_valid():
+                form.save()
+                return JsonResponse({'success': True})
+            return JsonResponse({'success': False, 'errors': form.errors})
+        
+        # Normal save
+        form = ArticleForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.save()
-        return redirect('show_blogs_editing')
+            blog_post = form.save(commit=False)
+            
+            # Handle save & publish
+            if 'save-publish' in request.POST:
+                blog_post.published = True
+            elif 'save-draft' in request.POST:
+                blog_post.published = False
+                
+            blog_post.save()
+            return redirect('show_blogs_editing')
     else:
         form = ArticleForm(instance=post)
     return render(request, 'blog/edit/form.html', {'form': form})
+
+@login_required(login_url='/team/login/')
+def delete_blog_post(request, pk):
+    post = get_object_or_404(BlogPost, pk=pk)
+    post.delete()
+    return redirect('show_blogs_editing')
