@@ -21,8 +21,88 @@
 <script type="text/javascript">
 var photo_data = {{ gallery_json_data|safe }}
 </script>
-<!-- lazyload -->
-<script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+<!-- Modern Gallery styles -->
+<link rel="stylesheet" href="{% static 'gallery/css/modern/gallery.3.0.0.css' %}">
+<style>
+/* Wichtige direkte Stilüberschreibungen */
+body .gallery-header {
+  display: block !important;
+  margin-bottom: 2rem !important;
+  text-align: center !important;
+  position: relative !important;
+  width: 100% !important;
+  visibility: visible !important;
+}
+
+body .gallery-header h1 {
+  display: block !important;
+  font-size: 1.8rem !important;
+  font-weight: 500 !important;
+  color: #333 !important;
+  margin-bottom: 1rem !important;
+  visibility: visible !important;
+}
+
+body .gallery-show {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+  grid-auto-rows: 220px !important;
+  grid-gap: 12px !important;
+}
+
+/* Minimalistischer Stil ohne Rahmen */
+body .gallery-item {
+  position: relative !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+
+body .gallery-item:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+body .gallery-item img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  transition: transform 0.3s ease !important;
+}
+
+body .gallery-item:hover img {
+  transform: scale(1.02) !important;
+}
+
+/* Verbesserter Close-Button */
+body #closebtn-gallery {
+  background: transparent !important;
+  border-radius: 0 !important;
+  transition: opacity 0.2s ease !important;
+  opacity: 0.7 !important;
+}
+
+body #closebtn-gallery:hover {
+  background: transparent !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 768px) {
+  body .gallery-show .portrait, 
+  body .gallery-show .landscape {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+}
+</style>
 {% endblock %}
 
 {% block navbar %}
@@ -34,143 +114,186 @@ var photo_data = {{ gallery_json_data|safe }}
 
 <div class="mbs">
   <div class="container gallery">
-    <h1>Galerie</h1>
-    {% if no_categories %}
-    <div style="text-align: center; margin: 50px 0;">
-      <p>Derzeit sind keine Kategorien vorhanden. Bitte erstellen Sie Kategorien im Galerie-Verwaltungsbereich.</p>
-      {% if user.is_authenticated %}
-      <p><a href="{% url 'gallery_admin' %}" style="color: #d11317;">Zur Galerie-Verwaltung</a></p>
-      {% endif %}
+    <div class="gallery-header" style="display: block !important; visibility: visible !important; margin-bottom: 2rem !important;">
+      <h1 style="display: block !important; visibility: visible !important; font-size: 1.8rem !important;">Galerie</h1>
     </div>
-    {% else %}
-    <nav class="gallery-nav-bar">
-      {% for category in category %}
-      {% if category.id == category_id %}
-      <h2>
-      <a class="active" href="?category={{category.id}}">{{category}}</a>
-      </h2>
-      {% else %}
-      <h2>
-      <a href="?category={{category.id}}">{{category}}</a>
-      </h2>
-      {% endif %}
-      {% endfor %}
-    </nav>
+    
+    {% if photos %}
     <section class="gallery-show">
       {% for photo in photos %}
       {% if photo.image %}
           {% if photo.image.width > photo.image.height %}
-          <picture class="landscape" onclick="showImg({{photo.id}})">
-              {% thumbnail photo.image "500" crop="center" format="WEBP" as im %}
-                <source srcset="{{ im.url }}" type="image/webp">
-                {% endthumbnail %}
-                {% thumbnail photo.image "500" crop="center" format="JPEG" as im %}
-                <source srcset="{{ im.url }}" type="image/jpeg">
-                <img src="{{ im.url }}" 
-                width="{{ im.width }}" 
-                height="{{ im.height }}"
-                alt="{{ photo.title|default:'Gallery Image' }}">
-                {% empty %}
-                <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
-                <img src="{{ photo.image.url }}" 
-                    style="width: 100%; height: auto; max-width: 500px;" 
-                    alt="{{ photo.title|default:'Gallery Image' }}">
-                {% endthumbnail %}
-          </picture>
+          <div class="landscape gallery-item" onclick="showImg({{photo.id}})" style="display: block; position: relative; width: 100%; height: 100%; overflow: hidden; background-color: transparent; box-shadow: none; border-radius: 0;">
+              <img src="{{ photo.image.url }}" 
+                alt="{{ photo.title|default:'Gallery Image' }}"
+                style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
           {% elif photo.image.width == photo.image.height %}
-          <picture class="square" onclick="showImg({{photo.id}})">
-              {% thumbnail photo.image "500" crop="center" format="WEBP" as im %}
-              <source srcset="{{ im.url }}" type="image/webp">
-                {% endthumbnail %}
-                {% thumbnail photo.image "500" crop="center" format="JPEG" as im %}
-                <source srcset="{{ im.url }}" type="image/jpeg">
-                <img src="{{ im.url }}" 
-                width="{{ im.width }}" 
-                height="{{ im.height }}"
-                alt="{{ photo.title|default:'Gallery Image' }}">
-                {% empty %}
-                <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
-                <img src="{{ photo.image.url }}" 
-                    style="width: 100%; height: auto; max-width: 500px;" 
-                    alt="{{ photo.title|default:'Gallery Image' }}">
-                {% endthumbnail %}
-          </picture>
+          <div class="square gallery-item" onclick="showImg({{photo.id}})" style="display: block; position: relative; width: 100%; height: 100%; overflow: hidden; background-color: transparent; box-shadow: none; border-radius: 0;">
+              <img src="{{ photo.image.url }}" 
+                alt="{{ photo.title|default:'Gallery Image' }}"
+                style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
           {% else %}
-            <picture class="portrait" onclick="showImg({{photo.id}})">
-              {% thumbnail photo.image "400" crop="center" format="WEBP" as im %}
-              <source srcset="{{ im.url }}" type="image/webp">
-                {% endthumbnail %}
-                {% thumbnail photo.image "400" crop="center" format="JPEG" as im %}
-                <source srcset="{{ im.url }}" type="image/jpeg">
-                <img src="{{ im.url }}" 
-                width="{{ im.width }}" 
-                height="{{ im.height }}"
-                alt="{{ photo.title|default:'Gallery Image' }}">
-                {% empty %}
-                <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
-                <img src="{{ photo.image.url }}" 
-                    style="width: 100%; height: auto; max-width: 400px;" 
-                    alt="{{ photo.title|default:'Gallery Image' }}">
-                {% endthumbnail %}
-            </picture>
+          <div class="portrait gallery-item" onclick="showImg({{photo.id}})" style="display: block; position: relative; width: 100%; height: 100%; overflow: hidden; background-color: transparent; box-shadow: none; border-radius: 0;">
+              <img src="{{ photo.image.url }}" 
+                alt="{{ photo.title|default:'Gallery Image' }}"
+                style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
           {% endif %}
       {% endif %}
       {% empty %}
-      <div style="text-align: center; margin: 50px 0;">
-        <p>Keine Bilder in dieser Kategorie vorhanden.</p>
+      <div class="empty-gallery-message">
+        <p>Keine Bilder vorhanden.</p>
         {% if user.is_authenticated %}
-        <p><a href="{% url 'gallery_admin' %}" style="color: #d11317;">Zur Galerie-Verwaltung</a></p>
+        <p><a href="{% url 'gallery_admin' %}">Zur Galerie-Verwaltung</a></p>
         {% endif %}
       </div>
       {% endfor %}
     </section>
+    {% else %}
+    <div class="empty-gallery-message">
+      <p>Keine Bilder vorhanden.</p>
+      {% if user.is_authenticated %}
+      <p><a href="{% url 'gallery_admin' %}">Zur Galerie-Verwaltung</a></p>
+      {% endif %}
+    </div>
     {% endif %}
     <section onclick="blockImg()" id="overlay-image-section" class="overlay image">
-      <img id="overlay-show-img" src="" alt="">
-      <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="blockImg()">
+      <img id="overlay-show-img" src="" alt="" style="box-shadow: none !important; border-radius: 0 !important;">
+      <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="blockImg()" 
+         style="background: transparent !important; border-radius: 0 !important; opacity: 0.7 !important; transition: opacity 0.2s !important;">
         {% include "templates/svg/nav_bar_crossburger_gallery.html" %}
-    </a>
-    <p id="gallery-text-overlay"></p>
-  </section>
+      </a>
+      <p id="gallery-text-overlay"></p>
+    </section>
+  </div>
 </div>
 
 
 {% endblock %}
 {% block footer %}
-<script type="text/javascript">
-  function showImg(id){
-    src = photo_data[id]["image"]
-    document.getElementById("overlay-show-img").src = src
-    document.getElementById("overlay-image-section").style.display = "block";
-    document.querySelector("header").style.zIndex = "0"
-    
-    if (photo_data[id]["copyright_by"]) {
-      if (photo_data[id]["description"]){
-        var descr = photo_data[id]["description"] + " | © " + photo_data[id]["copyright_by"]
-      }
-      else {
-        var descr = "© " + photo_data[id]["copyright_by"]
-      }
-      console.log("copyright")
-    }  
-    else {
-      var descr = photo_data[id]["description"]
-    }
-    var overlayImage = document.querySelector("#overlay-image-section > p")
-    overlayImage.innerHTML = descr;
-  }
-  function blockImg(){
-    document.getElementById("overlay-image-section").style.display = "none";
-    document.querySelector("header").style.zIndex = "99"
-  }
-  document.onkeydown = function(evt) {
-      evt = evt || window.event;
-      if (evt.keyCode == 27) {
-          blockImg()
-      }
-  };
-</script>
+<!-- Modern Gallery JavaScript -->
 <script>
-  lazyload();
+// Fixes für die Galerie beim Laden
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("DOM geladen - Galerie-Fixes aktiviert");
+  
+  // Fix für doppelte Header
+  const headerContainers = document.querySelectorAll('.gallery-header');
+  if (headerContainers.length > 1) {
+    for (let i = 1; i < headerContainers.length; i++) {
+      headerContainers[i].parentNode && headerContainers[i].parentNode.removeChild(headerContainers[i]);
+    }
+  }
+
+  // Sicherstellen, dass alle Bilder korrekt angezeigt werden
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  galleryItems.forEach(item => {
+    item.style.display = "block";
+    item.style.overflow = "hidden";
+    item.style.width = "100%";
+    item.style.height = "100%";
+    item.style.backgroundColor = "transparent";
+    item.style.boxShadow = "none";
+    item.style.borderRadius = "0";
+    
+    const img = item.querySelector('img');
+    if (img) {
+      img.style.display = "block";
+      img.style.width = "100%";
+      img.style.height = "100%";
+      img.style.objectFit = "cover";
+    }
+  });
+  
+  // X-Button im Overlay verbessern
+  const closeBtn = document.getElementById('closebtn-gallery');
+  if (closeBtn) {
+    closeBtn.style.background = "transparent";
+    closeBtn.style.borderRadius = "0";
+    closeBtn.style.opacity = "0.7";
+    closeBtn.style.transition = "opacity 0.2s";
+    
+    // Hover-Effekt über JavaScript statt CSS
+    closeBtn.addEventListener('mouseover', function() {
+      this.style.opacity = "1";
+      this.style.transform = "none";
+      this.style.background = "transparent";
+    });
+    
+    closeBtn.addEventListener('mouseout', function() {
+      this.style.opacity = "0.7";
+      this.style.transform = "none";
+      this.style.background = "transparent";
+    });
+  }
+  
+  // Overlay-Bild ohne Schatten und Rahmen
+  const overlayImg = document.getElementById('overlay-show-img');
+  if (overlayImg) {
+    overlayImg.style.boxShadow = "none";
+    overlayImg.style.borderRadius = "0";
+  }
+});
+
+// Überschreibung der Galerie-Funktionen
+function showImg(id) {
+  console.log("Bild zeigen:", id);
+  if (!photo_data || !photo_data[id]) {
+    console.error("Keine Bilddaten für ID:", id);
+    return;
+  }
+  
+  const overlay = document.getElementById('overlay-image-section');
+  const overlayImg = document.getElementById('overlay-show-img');
+  
+  // Bild setzen
+  overlayImg.src = photo_data[id].image;
+  
+  // Caption setzen
+  let caption = '';
+  if (photo_data[id].description) {
+    caption = photo_data[id].description;
+  }
+  if (photo_data[id].copyright_by) {
+    if (caption) {
+      caption += ' | © ' + photo_data[id].copyright_by;
+    } else {
+      caption = '© ' + photo_data[id].copyright_by;
+    }
+  }
+  if (document.getElementById('gallery-text-overlay')) {
+    document.getElementById('gallery-text-overlay').innerHTML = caption;
+  }
+  
+  // Overlay anzeigen
+  overlay.style.display = 'flex';
+  overlay.style.opacity = '1';
+  overlay.style.visibility = 'visible';
+  overlay.classList.add('active');
+  
+  // Header verbergen
+  if (document.querySelector('header')) {
+    document.querySelector('header').style.zIndex = '0';
+  }
+}
+
+function blockImg() {
+  console.log("Overlay schließen");
+  const overlay = document.getElementById('overlay-image-section');
+  
+  overlay.style.opacity = '0';
+  overlay.style.visibility = 'hidden';
+  overlay.classList.remove('active');
+  
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    
+    if (document.querySelector('header')) {
+      document.querySelector('header').style.zIndex = '99';
+    }
+  }, 300);
+}
 </script>
 {% endblock %}

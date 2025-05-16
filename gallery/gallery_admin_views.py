@@ -9,8 +9,10 @@ import os
 from django.conf import settings
 from .models import Photo, PhotoCategory
 
-# Size limit for uploads (2MB)
-MAX_FILE_SIZE = 2 * 1024 * 1024
+# Size limit for uploads (3MB)
+MAX_FILE_SIZE = 3 * 1024 * 1024
+# Maximum number of files per upload
+MAX_FILES = 100
 
 @login_required
 def gallery_admin_view(request):
@@ -53,66 +55,163 @@ def gallery_admin_view(request):
 def upload_photo(request):
     """
     AJAX endpoint for uploading photos with drag and drop.
+    Supports multiple file uploads.
     """
     if request.method != 'POST':
         return JsonResponse({'status': 'error', 'message': 'Method not allowed'}, status=405)
     
     try:
-        # Check if a file was uploaded
-        if 'image' not in request.FILES:
-            return JsonResponse({'status': 'error', 'message': 'No image provided'}, status=400)
+        # Check if single or multiple upload
+        is_multiple = request.POST.get('is_multiple') == 'true'
         
-        uploaded_file = request.FILES['image']
-        
-        # Check file size (2MB limit)
-        if uploaded_file.size > MAX_FILE_SIZE:
-            return JsonResponse({
-                'status': 'error', 
-                'message': f'Die Datei ist zu groß (max. 2MB). Ihre Datei ist {(uploaded_file.size / 1024 / 1024):.2f}MB.'
-            }, status=400)
-        
-        # Get other form data
-        title = request.POST.get('title', '')
-        description = request.POST.get('description', '')
-        copyright_by = request.POST.get('copyright_by', '')
-        category_id = request.POST.get('category_id')
-        
-        # Validate category
-        try:
-            category = PhotoCategory.objects.get(id=category_id)
-        except PhotoCategory.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Invalid category'}, status=400)
-        
-        # Determine ordering (put new photos at the top)
-        max_ordering = Photo.objects.filter(category=category).order_by('-ordering').first()
-        ordering = (max_ordering.ordering + 1) if max_ordering else 1
-        
-        # Create new photo
-        photo = Photo(
-            title=title,
-            image=uploaded_file,
-            description=description,
-            copyright_by=copyright_by,
-            category=category,
-            ordering=ordering
-        )
-        photo.save()
-        
+        if is_multiple:
+            return handle_multiple_uploads(request)
+        else:
+            return handle_single_upload(request)
+            
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+def handle_single_upload(request):
+    """
+    Handle a single file upload
+    """
+    # Check if a file was uploaded
+    if 'image' not in request.FILES:
+        return JsonResponse({'status': 'error', 'message': 'No image provided'}, status=400)
+    
+    uploaded_file = request.FILES['image']
+    
+    # Check file size (3MB limit)
+    if uploaded_file.size > MAX_FILE_SIZE:
         return JsonResponse({
-            'status': 'success',
-            'message': 'Photo uploaded successfully',
-            'photo': {
+            'status': 'error', 
+            'message': f'Die Datei ist zu groß (max. 3MB). Ihre Datei ist {(uploaded_file.size / 1024 / 1024):.2f}MB.'
+        }, status=400)
+    
+    # Get other form data
+    title = request.POST.get('title', '')
+    description = request.POST.get('description', '')
+    copyright_by = request.POST.get('copyright_by', '')
+    category_id = request.POST.get('category_id')
+    
+    # Validate category
+    try:
+        category = PhotoCategory.objects.get(id=category_id)
+    except PhotoCategory.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Invalid category'}, status=400)
+    
+    # Determine ordering (put new photos at the top)
+    max_ordering = Photo.objects.filter(category=category).aggregate(Max('ordering'))['ordering__max']
+    ordering = (max_ordering + 1) if max_ordering else 1
+    
+    # Create new photo
+    photo = Photo(
+        title=title,
+        image=uploaded_file,
+        description=description,
+        copyright_by=copyright_by,
+        category=category,
+        ordering=ordering
+    )
+    photo.save()
+    
+    return JsonResponse({
+        'status': 'success',
+        'message': 'Photo uploaded successfully',
+        'photo': {
+            'id': photo.id,
+            'title': photo.title,
+            'image_url': photo.image.url,
+            'description': photo.description,
+            'copyright_by': photo.copyright_by,
+            'ordering': photo.ordering
+        }
+    })
+
+def handle_multiple_uploads(request):
+    """
+    Handle multiple file uploads
+    """
+    # Get files from request
+    files = request.FILES.getlist('images')
+    
+    # Debug log
+    print(f"Multiple upload received: {len(files)} files")
+    
+    # Check if any files were uploaded
+    if not files:
+        return JsonResponse({'status': 'error', 'message': 'No images provided'}, status=400)
+    
+    # Check number of files
+    if len(files) > MAX_FILES:
+        return JsonResponse({
+            'status': 'error', 
+            'message': f'Zu viele Dateien. Maximal {MAX_FILES} Bilder pro Upload erlaubt.'
+        }, status=400)
+    
+    # Get category
+    category_id = request.POST.get('category_id')
+    try:
+        category = PhotoCategory.objects.get(id=category_id)
+    except PhotoCategory.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Invalid category'}, status=400)
+    
+    # Process each file
+    uploaded_photos = []
+    errors = []
+    
+    # Get max ordering to start from
+    max_ordering = Photo.objects.filter(category=category).aggregate(Max('ordering'))['ordering__max'] or 0
+    
+    for i, uploaded_file in enumerate(files):
+        try:
+            # Check file size
+            if uploaded_file.size > MAX_FILE_SIZE:
+                errors.append(f'{uploaded_file.name}: Zu groß (max. 3MB). Datei ist {(uploaded_file.size / 1024 / 1024):.2f}MB.')
+                continue
+            
+            # Extract filename as title (without extension)
+            filename = os.path.splitext(uploaded_file.name)[0]
+            title = filename[:50]  # Limit to model field length
+            
+            # Create photo with incremented ordering
+            ordering = max_ordering + i + 1
+            photo = Photo(
+                title=title,
+                image=uploaded_file,
+                description='',  # Can be updated later
+                copyright_by='',  # Can be updated later
+                category=category,
+                ordering=ordering
+            )
+            photo.save()
+            
+            uploaded_photos.append({
                 'id': photo.id,
                 'title': photo.title,
                 'image_url': photo.image.url,
-                'description': photo.description,
-                'copyright_by': photo.copyright_by,
                 'ordering': photo.ordering
-            }
+            })
+            
+        except Exception as e:
+            errors.append(f'{uploaded_file.name}: {str(e)}')
+    
+    # Return response
+    if uploaded_photos:
+        return JsonResponse({
+            'status': 'success',
+            'message': f'{len(uploaded_photos)} Bilder erfolgreich hochgeladen' + 
+                       (f' ({len(errors)} Fehler)' if errors else ''),
+            'photos': uploaded_photos,
+            'errors': errors
         })
-        
-    except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    else:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Keine Bilder konnten hochgeladen werden',
+            'errors': errors
+        }, status=400)
 
 @login_required
 def delete_photo(request, photo_id):

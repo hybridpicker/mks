@@ -6,9 +6,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from urllib.parse import urlparse
 import json
+from django.db import transaction
 
-from blog.models import BlogPost
-from blog.forms import ArticleForm
+from blog.models import BlogPost, GalleryImage
+from blog.forms import ArticleForm, GalleryImageFormSet
 
 from slugify import slugify
 
@@ -70,6 +71,8 @@ def create_slug_text(title):
 @login_required(login_url='/team/login/')
 def create_blog(request):
     form = ArticleForm(request.POST)
+    gallery_formset = GalleryImageFormSet()
+    
     if request.method == 'POST':
         # Auto-save request
         if request.POST.get('auto-save'):
@@ -84,24 +87,35 @@ def create_blog(request):
         
         # Normal save
         form = ArticleForm(request.POST, request.FILES)
+        gallery_formset = GalleryImageFormSet(request.POST, request.FILES)
+        
         if form.is_valid():
-            blog_post = form.save(commit=False)
-            if not blog_post.slug:
-                blog_post.slug = create_slug_text(blog_post.title)
-            
-            # Handle save & publish
-            if 'save-publish' in request.POST:
-                blog_post.published = True
-            elif 'save-draft' in request.POST:
-                blog_post.published = False
+            with transaction.atomic():
+                blog_post = form.save(commit=False)
+                if not blog_post.slug:
+                    blog_post.slug = create_slug_text(blog_post.title)
                 
-            blog_post.save()
+                # Handle save & publish
+                if 'save-publish' in request.POST:
+                    blog_post.published = True
+                elif 'save-draft' in request.POST:
+                    blog_post.published = False
+                    
+                blog_post.save()
+                
+                # Process gallery formset
+                if gallery_formset.is_valid():
+                    gallery_formset.instance = blog_post
+                    gallery_formset.save()
+                
             return redirect('blog_thanks')
     else:
         form = ArticleForm()
+        gallery_formset = GalleryImageFormSet()
     
     context = {
-        'form': form
+        'form': form,
+        'gallery_formset': gallery_formset
     }
     return render(request, "blog/edit/form.html", context)
 
@@ -111,6 +125,9 @@ class BlogPostView(View):
         # If not published and user is not authenticated, return 404
         if not blog_post.published and not request.user.is_authenticated:
             raise Http404("Blog post not found")
+            
+        # Prefetch gallery images to optimize queries
+        blog_post.gallery_images.all()
             
         youtube = check_youtube_link(blog_post.content)
         if youtube:
@@ -122,6 +139,7 @@ class BlogPostView(View):
 @login_required(login_url='/team/login/')
 def post_edit(request, pk):
     post = get_object_or_404(BlogPost, pk=pk)
+    
     if request.method == "POST":
         # Auto-save request
         if request.POST.get('auto-save'):
@@ -133,20 +151,33 @@ def post_edit(request, pk):
         
         # Normal save
         form = ArticleForm(request.POST, request.FILES, instance=post)
+        gallery_formset = GalleryImageFormSet(request.POST, request.FILES, instance=post)
+        
         if form.is_valid():
-            blog_post = form.save(commit=False)
-            
-            # Handle save & publish
-            if 'save-publish' in request.POST:
-                blog_post.published = True
-            elif 'save-draft' in request.POST:
-                blog_post.published = False
+            with transaction.atomic():
+                blog_post = form.save(commit=False)
                 
-            blog_post.save()
+                # Handle save & publish
+                if 'save-publish' in request.POST:
+                    blog_post.published = True
+                elif 'save-draft' in request.POST:
+                    blog_post.published = False
+                    
+                blog_post.save()
+                
+                # Process gallery formset
+                if gallery_formset.is_valid():
+                    gallery_formset.save()
+                
             return redirect('show_blogs_editing')
     else:
         form = ArticleForm(instance=post)
-    return render(request, 'blog/edit/form.html', {'form': form})
+        gallery_formset = GalleryImageFormSet(instance=post)
+        
+    return render(request, 'blog/edit/form.html', {
+        'form': form,
+        'gallery_formset': gallery_formset
+    })
 
 @login_required(login_url='/team/login/')
 def delete_blog_post(request, pk):

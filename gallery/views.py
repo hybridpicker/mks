@@ -10,42 +10,8 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 def gallery_view(request):
-    # Try to get category from URL parameter
-    category_id = request.GET.get('category')
-    
-    # Check if categories exist
-    categories = PhotoCategory.objects.all().exclude(title="E-Learning")
-    
-    if not categories.exists():
-        # No categories exist, show empty gallery
-        return render(request, 'gallery/gallery.html', {
-            'gallery_json_data': json.dumps({}),
-            'category': [],
-            'photos': [],
-            'category_id': None,
-            'no_categories': True
-        })
-    
-    if category_id:
-        # Use provided category ID
-        try:
-            category_id = int(category_id)
-            # Verify this category exists
-            if not PhotoCategory.objects.filter(id=category_id).exists():
-                category_id = None
-        except (ValueError, TypeError):
-            category_id = None
-    
-    if not category_id:
-        # If no valid category ID is provided, try to use category with ID 1 first
-        if PhotoCategory.objects.filter(id=1).exists():
-            category_id = 1
-        else:
-            # Otherwise use the first category ordered by 'ordering'
-            category_id = categories.order_by('ordering').first().id
-    
-    # Get photos for the selected category
-    all_photos = Photo.objects.filter(category_id=category_id)
+    # Alle Fotos aus allen Kategorien laden (außer von E-Learning)
+    all_photos = Photo.objects.exclude(category__title="E-Learning").order_by('-ordering')
     
     # Filterung der Fotos, um sicherzustellen, dass die Bilddateien existieren
     photos = []
@@ -72,8 +38,7 @@ def gallery_view(request):
 
     context = {
         'gallery_json_data': gallery_json_data,
-        'category': categories,
         'photos': photos,
-        'category_id': category_id,
+        'show_all_mode': True,  # Neue Flag für "Alle Bilder" Modus
     }
     return render(request, 'gallery/gallery.html', context)
