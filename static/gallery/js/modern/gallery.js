@@ -7,9 +7,70 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize the gallery
     initGallery();
     
-    // Setup lazy loading
-    setupLazyLoading();
+    // Fix für doppelte Header, falls vorhanden
+    fixDuplicateHeaders();
+    
+    // Bilder sofort anzeigen statt lazy laden
+    immediatelyLoadImages();
 });
+
+/**
+ * Fix für doppelte Header
+ */
+function fixDuplicateHeaders() {
+    const headerContainers = document.querySelectorAll('.gallery-header');
+    if (headerContainers.length > 1) {
+        // Falls geschachtelte Header gefunden wurden, behalte nur den äußersten
+        const outerHeader = headerContainers[0];
+        for (let i = 1; i < headerContainers.length; i++) {
+            const innerHeader = headerContainers[i];
+            const childNodes = Array.from(innerHeader.childNodes);
+            
+            childNodes.forEach(node => {
+                outerHeader.appendChild(node.cloneNode(true));
+            });
+            
+            if (innerHeader.parentNode) {
+                innerHeader.parentNode.removeChild(innerHeader);
+            }
+        }
+    }
+}
+
+/**
+ * Sofort alle Bilder laden anstatt lazy loading zu verwenden
+ */
+function immediatelyLoadImages() {
+    const lazyImages = document.querySelectorAll('img.lazy');
+    
+    lazyImages.forEach(img => {
+        // Falls data-src vorhanden ist, verwende diesen Wert
+        if (img.dataset.src) {
+            img.src = img.dataset.src;
+        }
+        
+        // Style anpassen und Klassen hinzufügen
+        img.style.opacity = '1';
+        img.classList.add('loaded');
+        img.classList.remove('lazy');
+        
+        // Falls keine src gefunden, prüfe ob Thumbnail in source-Tags vorhanden ist
+        if (!img.src || img.src === window.location.href) {
+            const sourceTags = img.parentNode.querySelectorAll('source');
+            if (sourceTags.length > 0) {
+                img.src = sourceTags[0].srcset;
+            }
+        }
+    });
+    
+    // Falls Bilder immer noch nicht sichtbar sind, Parent-Container sichtbar machen
+    const pictures = document.querySelectorAll('.gallery-show picture');
+    pictures.forEach(picture => {
+        picture.style.opacity = '1';
+        picture.style.visibility = 'visible';
+        picture.style.animation = 'none';
+    });
+}
 
 /**
  * Initialize gallery functionality
@@ -37,7 +98,7 @@ function modernizeGalleryLayout() {
     
     // Add header class
     const galleryHeader = document.querySelector('.gallery h1');
-    if (galleryHeader) {
+    if (galleryHeader && !galleryHeader.parentNode.classList.contains('gallery-header')) {
         const headerDiv = document.createElement('div');
         headerDiv.className = 'gallery-header';
         galleryHeader.parentNode.insertBefore(headerDiv, galleryHeader);
@@ -217,7 +278,7 @@ function setupKeyboardNavigation() {
         const overlay = document.getElementById('overlay-image-section');
         
         // Only process if overlay is active
-        if (overlay && overlay.style.display === 'block') {
+        if (overlay && overlay.classList.contains('active')) {
             if (e.key === 'Escape') {
                 hideOverlay();
             } else if (e.key === 'ArrowRight') {
@@ -254,59 +315,6 @@ function navigateGallery(direction) {
     
     // Show the target image
     showImage(photoIds[targetIndex]);
-}
-
-/**
- * Setup lazy loading for images
- */
-function setupLazyLoading() {
-    if ('IntersectionObserver' in window) {
-        const lazyImages = document.querySelectorAll('img.lazy');
-        
-        const imageObserver = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    const lazyImage = entry.target;
-                    lazyImage.src = lazyImage.dataset.src;
-                    
-                    lazyImage.addEventListener('load', () => {
-                        lazyImage.classList.add('loaded');
-                    });
-                    
-                    imageObserver.unobserve(lazyImage);
-                }
-            });
-        });
-        
-        lazyImages.forEach(function(lazyImage) {
-            imageObserver.observe(lazyImage);
-        });
-    } else {
-        // Fallback for browsers without IntersectionObserver
-        const lazyLoad = function() {
-            const lazyImages = document.querySelectorAll('img.lazy');
-            
-            lazyImages.forEach(function(lazyImage) {
-                if (isInViewport(lazyImage)) {
-                    lazyImage.src = lazyImage.dataset.src;
-                    lazyImage.classList.remove('lazy');
-                }
-            });
-        };
-        
-        // Initial load
-        lazyLoad();
-        
-        // Add scroll event
-        let lazyLoadThrottleTimeout;
-        window.addEventListener('scroll', function() {
-            if (lazyLoadThrottleTimeout) {
-                clearTimeout(lazyLoadThrottleTimeout);
-            }
-            
-            lazyLoadThrottleTimeout = setTimeout(lazyLoad, 200);
-        });
-    }
 }
 
 /**
