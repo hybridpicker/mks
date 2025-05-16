@@ -54,7 +54,163 @@ def get_title(student, new_count):
     return title
 
 def teaching_music_view (request):
-    return render (request, 'teaching/teaching_music.html')
+    # Lade alle Fachgruppen-Kategorien
+    categories = {}
+    
+    # Blasinstrumente (kombiniere Holz- und Blechblasinstrumente)
+    brass_subjects = []
+    try:
+        brass_cat = SubjectCategory.objects.get(name="Blechblasinstrumente")
+        brass_subjects.extend(list(Subject.objects.filter(
+            category=brass_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )))
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    try:
+        wood_cat = SubjectCategory.objects.get(name="Holzblasinstrumente")
+        brass_subjects.extend(list(Subject.objects.filter(
+            category=wood_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )))
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    if brass_subjects:
+        categories['blasinstrumente'] = brass_subjects
+    
+    # Elementare Musikerziehung
+    try:
+        eme_cat = SubjectCategory.objects.get(name="Elementare Musikerziehung")
+        eme_subjects = list(Subject.objects.filter(
+            category=eme_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        ))
+        if eme_subjects:
+            categories['elementare_musikerziehung'] = eme_subjects
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    # Musikkunde
+    try:
+        theory_cat = SubjectCategory.objects.get(name="Musikkunde")
+        theory_subjects = list(Subject.objects.filter(
+            category=theory_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        ))
+        if theory_subjects:
+            categories['musikkunde'] = theory_subjects
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    # Schlaginstrumente
+    schlag_subjects = []
+    try:
+        schlag_cat = SubjectCategory.objects.get(name="Schlaginstrumente")
+        schlag_subjects.extend(list(Subject.objects.filter(
+            category=schlag_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )))
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    try:
+        schlagwerk_cat = SubjectCategory.objects.get(name="Schlagwerk")
+        schlag_subjects.extend(list(Subject.objects.filter(
+            category=schlagwerk_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )))
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    if schlag_subjects:
+        categories['schlaginstrumente'] = schlag_subjects
+    
+    # Stimmbildung
+    stimm_subjects = []
+    try:
+        stimm_cat = SubjectCategory.objects.get(name="Stimmbildung")
+        stimm_subjects.extend(list(Subject.objects.filter(
+            category=stimm_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )))
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    try:
+        gesang_cat = SubjectCategory.objects.get(name="Gesang")
+        stimm_subjects.extend(list(Subject.objects.filter(
+            category=gesang_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        )))
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    if stimm_subjects:
+        categories['stimmbildung'] = stimm_subjects
+    
+    # Streichinstrumente
+    try:
+        string_cat = SubjectCategory.objects.get(name="Streichinstrumente")
+        string_subjects = list(Subject.objects.filter(
+            category=string_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        ))
+        if string_subjects:
+            categories['streichinstrumente'] = string_subjects
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    # Tanz und Bewegung
+    try:
+        dance_cat = SubjectCategory.objects.get(name="Tanz und Bewegung")
+        dance_subjects = list(Subject.objects.filter(
+            category=dance_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        ))
+        if dance_subjects:
+            categories['tanz_und_bewegung'] = dance_subjects
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    # Tasteninstrumente
+    try:
+        keys_cat = SubjectCategory.objects.get(name="Tasteninstrumente")
+        keys_subjects = list(Subject.objects.filter(
+            category=keys_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        ))
+        if keys_subjects:
+            categories['tasteninstrumente'] = keys_subjects
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    # Zupfinstrumente
+    try:
+        picked_cat = SubjectCategory.objects.get(name="Zupfinstrumente")
+        picked_subjects = list(Subject.objects.filter(
+            category=picked_cat, 
+            hidden_subject=False,
+            complementary_subject=False
+        ))
+        if picked_subjects:
+            categories['zupfinstrumente'] = picked_subjects
+    except SubjectCategory.DoesNotExist:
+        pass
+    
+    return render(request, 'teaching/teaching_music.html', {'categories': categories})
 
 def get_fachgruppe_context(category_name):
     """
@@ -290,7 +446,7 @@ def teaching_vocal_view (request):
     except SubjectCategory.DoesNotExist:
         pass
     
-    context['category_name'] = 'Stimmbildung'
+    context['category_name'] = 'Gesang'
     context['subjects'] = subjects
     context['teachers'] = teachers.distinct()
     context['intro_text'] = 'Das Fach Stimmbildung und Gesang zielt auf die Kultivierung der Stimme als persönliches Musikinstrument ab, im Einklang mit den gesangspädagogischen Prinzipien gemäß dem in Österreich gültigen KOMU-Lehrplan (Konferenz der österreichischen Musikschulwerke) und unserem vom Ministerium für Bildung genehmigten Organisationsstatut. Im Vordergrund stehen die Erarbeitung einer gesunden Gesangstechnik durch Schulung von Atmung, Körperhaltung, Stütze, Artikulation und Resonanz. Das Repertoire umfasst verschiedene Epochen und Stilrichtungen. Der Unterricht fördert die Erweiterung des stimmlichen Umfangs, die Verbesserung der Intonation und die Entwicklung der interpretatorischen Fähigkeiten, um sowohl solistischen als auch chorischen Anforderungen gerecht zu werden.'
@@ -317,9 +473,8 @@ def teaching_picked_view (request):
     return render (request, 'teaching/fachgruppen/base_fachgruppe.html', context)
 
 def teaching_dance_view (request):
-    context = get_fachgruppe_context('Tanz und Bewegung')
-    context['intro_text'] = 'Der Fachbereich Tanz & Bewegung bietet eine systematische Einführung in die Grundlagen des künstlerischen Tanzes und der Bewegungsschulung, basierend auf den pädagogischen Konzepten des in Österreich gültigen KOMU-Lehrplans (Konferenz der österreichischen Musikschulwerke) gemäß unserem vom Ministerium für Bildung genehmigten Organisationsstatut. Der Unterricht fördert die Entwicklung von Körperwahrnehmung, Koordination, Rhythmusgefühl und räumlichem Bewusstsein. Die Studierenden setzen sich mit verschiedenen Tanztechniken und Ausdrucksformen auseinander, wobei sowohl die individuelle Kreativität als auch das gemeinschaftliche Erarbeiten von Choreografien im Mittelpunkt stehen. Das Fach leistet einen wichtigen Beitrag zur Persönlichkeitsentwicklung und zur ästhetischen Bildung.'
-    return render (request, 'teaching/fachgruppen/base_fachgruppe.html', context)
+    # Automatische Weiterleitung zur Tanz-und-Bewegung Hauptseite
+    return redirect('/tanz-und-bewegung/')
 
 def teaching_art_view (request):
     blog = BlogPost.objects.filter(category__category__name="Kunstschule")[0:6]
