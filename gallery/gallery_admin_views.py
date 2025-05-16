@@ -9,8 +9,8 @@ import os
 from django.conf import settings
 from .models import Photo, PhotoCategory
 
-# Size limit for uploads (2MB)
-MAX_FILE_SIZE = 2 * 1024 * 1024
+# Size limit for uploads (3MB)
+MAX_FILE_SIZE = 3 * 1024 * 1024
 # Maximum number of files per upload
 MAX_FILES = 100
 
@@ -82,11 +82,11 @@ def handle_single_upload(request):
     
     uploaded_file = request.FILES['image']
     
-    # Check file size (2MB limit)
+    # Check file size (3MB limit)
     if uploaded_file.size > MAX_FILE_SIZE:
         return JsonResponse({
             'status': 'error', 
-            'message': f'Die Datei ist zu groß (max. 2MB). Ihre Datei ist {(uploaded_file.size / 1024 / 1024):.2f}MB.'
+            'message': f'Die Datei ist zu groß (max. 3MB). Ihre Datei ist {(uploaded_file.size / 1024 / 1024):.2f}MB.'
         }, status=400)
     
     # Get other form data
@@ -168,7 +168,7 @@ def handle_multiple_uploads(request):
         try:
             # Check file size
             if uploaded_file.size > MAX_FILE_SIZE:
-                errors.append(f'{uploaded_file.name}: Zu groß (max. 2MB). Datei ist {(uploaded_file.size / 1024 / 1024):.2f}MB.')
+                errors.append(f'{uploaded_file.name}: Zu groß (max. 3MB). Datei ist {(uploaded_file.size / 1024 / 1024):.2f}MB.')
                 continue
             
             # Extract filename as title (without extension)

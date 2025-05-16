@@ -4,9 +4,10 @@
  */
 
 // Configuration
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB (erhöht von 2MB)
 const MAX_FILES = 100; // Maximum files per upload
-const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
 
 // State management
 let selectedFiles = [];
@@ -126,41 +127,102 @@ function handleSingleFile(file) {
     const fileInput = document.getElementById('file-input');
     const selectedFileInfo = document.getElementById('selected-file');
     
-    // Validate file type
-    if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+    // Get file extension
+    const fileExt = '.' + file.name.split('.').pop().toLowerCase();
+    
+    // Check file type by MIME type OR extension (more permissive)
+    const validMimeType = ALLOWED_MIME_TYPES.includes(file.type);
+    const validExtension = ALLOWED_EXTENSIONS.includes(fileExt);
+    
+    console.log(`Checking file ${file.name} - type: ${file.type}, extension: ${fileExt}`);
+    console.log(`Valid MIME: ${validMimeType}, Valid extension: ${validExtension}`);
+    
+    if (!validMimeType && !validExtension) {
         showMessage('error', 'Ungültiger Dateityp. Erlaubte Typen: JPG, PNG, GIF, WEBP');
         return;
     }
     
-    // Validate file size
-    if (file.size > MAX_FILE_SIZE) {
-        showMessage('error', `Die Datei ist zu groß (max. 2MB). Ihre Datei ist ${(file.size / 1024 / 1024).toFixed(2)}MB.`);
-        return;
-    }
-    
-    // Create new file list
-    const dataTransfer = new DataTransfer();
-    dataTransfer.items.add(file);
-    fileInput.files = dataTransfer.files;
-    
-    // Update UI
+    // Zeigen Sie eine Ladeanzeige an, während das Bild komprimiert wird
     selectedFileInfo.innerHTML = `
-        <div class="selected-file-preview">
-            <img src="${URL.createObjectURL(file)}" alt="${file.name}">
+        <div class="compression-indicator">
+            <div class="spinner"></div>
+            <p>Bild wird für Upload optimiert...</p>
         </div>
-        <div class="selected-file-info">
-            <div class="selected-file-name">${file.name}</div>
-            <div class="selected-file-size">${formatFileSize(file.size)}</div>
-        </div>
-        <button type="button" class="remove-file-btn" onclick="clearSelectedFile()">×</button>
     `;
     selectedFileInfo.style.display = 'flex';
     
-    // Extract file name for title if empty
-    const titleInput = document.getElementById('title');
-    if (titleInput && titleInput.value === '') {
-        const fileName = file.name.substring(0, file.name.lastIndexOf('.'));
-        titleInput.value = fileName.substring(0, 50); // Limit to 50 chars
+    // Überprüfen Sie die Dateigröße und komprimieren Sie bei Bedarf
+    if (file.size > MAX_FILE_SIZE) {
+        console.log(`Komprimiere großes Bild: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
+        
+        // Komprimierungsoptionen
+        const options = {
+            maxWidth: 1920,
+            maxHeight: 1080,
+            quality: 0.7,
+            maxSizeMB: MAX_FILE_SIZE / (1024 * 1024)
+        };
+        
+        // Komprimieren Sie das Bild
+        compressImage(file, options)
+            .then(compressedFile => {
+                console.log(`Komprimierung abgeschlossen: ${file.name}`);
+                console.log(`Original: ${(file.size / 1024 / 1024).toFixed(2)}MB → Komprimiert: ${(compressedFile.size / 1024 / 1024).toFixed(2)}MB`);
+                
+                // Aktualisieren Sie das Datei-Input mit der komprimierten Datei
+                updateFileInput(compressedFile);
+                
+                // Zeigen Sie die komprimierte Dateiinformation an
+                showFileInfo(compressedFile, true);
+                
+                // Zeigen Sie eine Erfolgsmeldung an
+                showMessage('success', `Bild wurde für Upload optimiert (${(file.size / 1024 / 1024).toFixed(2)}MB → ${(compressedFile.size / 1024 / 1024).toFixed(2)}MB)`);
+            })
+            .catch(error => {
+                console.error('Fehler bei der Komprimierung:', error);
+                
+                // Wenn die Komprimierung fehlschlägt, versuchen Sie es mit der Originaldatei
+                if (file.size <= MAX_FILE_SIZE) {
+                    updateFileInput(file);
+                    showFileInfo(file);
+                } else {
+                    showMessage('error', `Die Datei ist zu groß und konnte nicht komprimiert werden. Maximale Größe: ${(MAX_FILE_SIZE / 1024 / 1024).toFixed(0)}MB`);
+                    selectedFileInfo.style.display = 'none';
+                }
+            });
+    } else {
+        // Datei ist bereits klein genug
+        updateFileInput(file);
+        showFileInfo(file);
+    }
+    
+    // Funktion zum Aktualisieren des Datei-Inputs
+    function updateFileInput(newFile) {
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(newFile);
+        fileInput.files = dataTransfer.files;
+        
+        // Extrahieren Sie den Dateinamen für den Titel, wenn er leer ist
+        const titleInput = document.getElementById('title');
+        if (titleInput && titleInput.value === '') {
+            const fileName = newFile.name.substring(0, newFile.name.lastIndexOf('.'));
+            titleInput.value = fileName.substring(0, 50); // Limit to 50 chars
+        }
+    }
+    
+    // Funktion zum Anzeigen der Dateiinformationen
+    function showFileInfo(newFile, wasCompressed = false) {
+        selectedFileInfo.innerHTML = `
+            <div class="selected-file-preview">
+                <img src="${URL.createObjectURL(newFile)}" alt="${newFile.name}">
+                ${wasCompressed ? '<span class="compressed-badge">Optimiert</span>' : ''}
+            </div>
+            <div class="selected-file-info">
+                <div class="selected-file-name">${newFile.name}</div>
+                <div class="selected-file-size">${formatFileSize(newFile.size)}</div>
+            </div>
+            <button type="button" class="remove-file-btn" onclick="clearSelectedFile()">×</button>
+        `;
     }
 }
 
@@ -376,6 +438,9 @@ function handleMultipleFiles(files) {
     // Convert FileList to Array
     const fileArray = Array.from(files);
     
+    // Log all files and their types for debugging
+    console.log('Files to process:', fileArray.map(f => ({ name: f.name, type: f.type, size: f.size })));
+    
     // Check if too many files
     if (fileArray.length > MAX_FILES) {
         showMessage('error', `Zu viele Dateien ausgewählt. Maximal ${MAX_FILES} Bilder erlaubt.`);
@@ -387,24 +452,26 @@ function handleMultipleFiles(files) {
     let invalidFiles = [];
     
     fileArray.forEach(file => {
-        // Check file type
-        if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+        // Get file extension
+        const fileExt = '.' + file.name.split('.').pop().toLowerCase();
+        
+        // Check file type by MIME type OR extension (more permissive)
+        const validMimeType = ALLOWED_MIME_TYPES.includes(file.type);
+        const validExtension = ALLOWED_EXTENSIONS.includes(fileExt);
+        
+        if (!validMimeType && !validExtension) {
+            console.log(`Rejected file ${file.name} - type: ${file.type}, extension: ${fileExt}`);
             invalidFiles.push({
                 file: file,
-                error: 'Ungültiger Dateityp'
+                error: `Ungültiger Dateityp: ${file.type || 'unbekannt'} (nur JPG, PNG, GIF, WEBP erlaubt)`
             });
             return;
         }
         
-        // Check file size
-        if (file.size > MAX_FILE_SIZE) {
-            invalidFiles.push({
-                file: file,
-                error: `Dateigröße überschreitet 2MB (${(file.size / 1024 / 1024).toFixed(2)}MB)`
-            });
-            return;
-        }
+        // Dateigrößenprüfung erfolgt später, da wir große Dateien komprimieren werden
         
+        // File is valid by type
+        console.log(`Valid file type: ${file.name} - type: ${file.type}, extension: ${fileExt}, size: ${(file.size / 1024 / 1024).toFixed(2)}MB`);
         validFiles.push(file);
     });
     
@@ -438,34 +505,99 @@ function handleMultipleFiles(files) {
         return;
     }
     
-    // Merge with existing selection (optional)
-    const mergeWithExisting = true;
-    if (mergeWithExisting && selectedFiles.length > 0) {
-        // Check for duplicates by filename
-        const existingFileNames = selectedFiles.map(f => f.name);
-        validFiles = validFiles.filter(file => !existingFileNames.includes(file.name));
-        
-        // Add to existing selection
-        selectedFiles = [...selectedFiles, ...validFiles];
-    } else {
-        // Replace existing selection
-        selectedFiles = validFiles;
-    }
+    // Komprimieren Sie große Dateien
+    const selectedFilesContainer = document.querySelector('.selected-files-container');
+    const selectedFilesList = document.getElementById('selected-files-list');
+    const selectedFilesCount = document.getElementById('selected-files-count');
     
-    // Update UI
-    updateSelectedFilesUI();
+    // Zeigen Sie eine Ladeanimation während der Komprimierung an
+    selectedFilesContainer.style.display = 'block';
+    selectedFilesCount.textContent = `Optimiere ${validFiles.length} Bilder...`;
+    selectedFilesList.innerHTML = `
+        <div class="compression-indicator">
+            <div class="spinner"></div>
+            <p>Bilder werden für Upload optimiert...</p>
+        </div>
+    `;
     
-    // Enable upload button if we have files
-    const uploadFilesBtn = document.getElementById('upload-files-btn');
-    if (uploadFilesBtn) {
-        uploadFilesBtn.disabled = selectedFiles.length === 0;
-    }
+    // Komprimierungsoptionen
+    const compressOptions = {
+        maxWidth: 1920,
+        maxHeight: 1080,
+        quality: 0.7,
+        maxSizeMB: MAX_FILE_SIZE / (1024 * 1024)
+    };
+    
+    // Komprimieren Sie die Dateien
+    compressImageFiles(validFiles, compressOptions)
+        .then(compressedFiles => {
+            console.log(`Komprimierung abgeschlossen: ${compressedFiles.length} Dateien`);
+            
+            // Ersetzen Sie die ausgewählten Dateien durch die komprimierten
+            selectedFiles = compressedFiles;
+            
+            // Aktualisieren Sie die UI
+            updateSelectedFilesUI(compressedFiles.some(f => f.wasCompressed));
+            
+            // Enable upload button if we have files
+            const uploadFilesBtn = document.getElementById('upload-files-btn');
+            if (uploadFilesBtn) {
+                uploadFilesBtn.disabled = selectedFiles.length === 0;
+            }
+            
+            // Zeigen Sie eine Erfolgsmeldung an, wenn Dateien komprimiert wurden
+            const compressedCount = compressedFiles.filter(f => f.wasCompressed).length;
+            if (compressedCount > 0) {
+                showMessage('success', `${compressedCount} von ${compressedFiles.length} Bildern wurden für den Upload optimiert.`);
+            }
+        })
+        .catch(error => {
+            console.error('Fehler bei der Komprimierung:', error);
+            
+            // Falls die Komprimierung fehlschlägt, versuchen Sie es mit den Originaldateien
+            // aber filtern Sie zu große Dateien heraus
+            const filteredFiles = validFiles.filter(file => file.size <= MAX_FILE_SIZE);
+            const tooLargeFiles = validFiles.filter(file => file.size > MAX_FILE_SIZE);
+            
+            if (tooLargeFiles.length > 0) {
+                showMessage('error', `${tooLargeFiles.length} Dateien sind zu groß und konnten nicht komprimiert werden.`);
+            }
+            
+            if (filteredFiles.length === 0) {
+                selectedFilesContainer.style.display = 'none';
+                showMessage('error', 'Keine gültigen Bilder zum Hochladen.');
+                return;
+            }
+            
+            // Merge with existing selection (optional)
+            const mergeWithExisting = true;
+            if (mergeWithExisting && selectedFiles.length > 0) {
+                // Check for duplicates by filename
+                const existingFileNames = selectedFiles.map(f => f.name);
+                const newFiles = filteredFiles.filter(file => !existingFileNames.includes(file.name));
+                
+                // Add to existing selection
+                selectedFiles = [...selectedFiles, ...newFiles];
+            } else {
+                // Replace existing selection
+                selectedFiles = filteredFiles;
+            }
+            
+            // Aktualisieren Sie die UI
+            updateSelectedFilesUI();
+            
+            // Enable upload button if we have files
+            const uploadFilesBtn = document.getElementById('upload-files-btn');
+            if (uploadFilesBtn) {
+                uploadFilesBtn.disabled = selectedFiles.length === 0;
+            }
+        });
 }
 
 /**
  * Update the UI to show selected files
  */
-function updateSelectedFilesUI() {
+function updateSelectedFilesUI(hasCompressedFiles = false) {
     const selectedFilesContainer = document.querySelector('.selected-files-container');
     const selectedFilesList = document.getElementById('selected-files-list');
     const selectedFilesCount = document.getElementById('selected-files-count');
@@ -473,7 +605,7 @@ function updateSelectedFilesUI() {
     if (!selectedFilesContainer || !selectedFilesList || !selectedFilesCount) return;
     
     // Update count
-    selectedFilesCount.textContent = `${selectedFiles.length} Bilder ausgewählt`;
+    selectedFilesCount.textContent = `${selectedFiles.length} Bilder ausgewählt${hasCompressedFiles ? ' (optimiert)' : ''}`;
     
     // Clear list
     selectedFilesList.innerHTML = '';
@@ -487,11 +619,24 @@ function updateSelectedFilesUI() {
         // Create file preview
         const reader = new FileReader();
         reader.onload = function(e) {
+            const previewContainer = document.createElement('div');
+            previewContainer.className = 'selected-file-preview-container';
+            
             const preview = document.createElement('img');
             preview.src = e.target.result;
             preview.className = 'selected-file-preview';
             preview.alt = file.name;
-            fileItem.prepend(preview);
+            previewContainer.appendChild(preview);
+            
+            // Add compression badge if this file was compressed
+            if (file.wasCompressed) {
+                const badge = document.createElement('span');
+                badge.className = 'compressed-badge';
+                badge.textContent = 'Optimiert';
+                previewContainer.appendChild(badge);
+            }
+            
+            fileItem.prepend(previewContainer);
         };
         reader.readAsDataURL(file);
         
@@ -506,6 +651,15 @@ function updateSelectedFilesUI() {
         const fileSize = document.createElement('div');
         fileSize.className = 'selected-file-size';
         fileSize.textContent = formatFileSize(file.size);
+        
+        // If we have the original size, show the comparison
+        if (file.originalSize) {
+            const sizeDiff = document.createElement('div');
+            sizeDiff.className = 'selected-file-size-diff';
+            const savingsPercent = Math.round(100 - (file.size / file.originalSize * 100));
+            sizeDiff.textContent = `${savingsPercent}% kleiner`;
+            fileInfo.appendChild(sizeDiff);
+        }
         
         fileInfo.appendChild(fileName);
         fileInfo.appendChild(fileSize);

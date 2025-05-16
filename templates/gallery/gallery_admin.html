@@ -5,8 +5,10 @@
 
 {% block extra_head %}
     <link rel="stylesheet" href="{% static 'gallery/css/modern/gallery_admin.css' %}">
+    <link rel="stylesheet" href="{% static 'gallery/css/modern/icons.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="{% static 'gallery/js/image-compressor.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -59,7 +61,7 @@
         <!-- Single Image Upload Form -->
         <div id="single-upload" class="upload-tab-content active">
             <p class="upload-instruction">{% trans "Ziehen Sie ein Bild hierher oder klicken Sie auf den Button unten." %}</p>
-            <p class="upload-size-limit">{% trans "Maximale Dateigröße: 2MB. Erlaubte Formate: JPG, PNG, GIF, WEBP" %}</p>
+            <p class="upload-size-limit">{% trans "Maximale Dateigröße: 3MB. Erlaubte Formate: JPG, PNG, GIF, WEBP" %}</p>
             
             <div id="selected-file" class="selected-file"></div>
             
@@ -103,7 +105,7 @@
             <div id="multi-drop-zone" class="multi-drop-zone">
                 <div class="drop-icon"></div>
                 <p class="upload-instruction">{% trans "Ziehen Sie mehrere Bilder hierher oder klicken Sie, um Dateien auszuwählen" %}</p>
-                <p class="upload-size-limit">{% trans "Maximale Dateigröße pro Bild: 2MB. Maximale Anzahl: 100 Bilder." %}</p>
+                <p class="upload-size-limit">{% trans "Maximale Dateigröße pro Bild: 3MB. Maximale Anzahl: 100 Bilder." %}</p>
                 <p class="upload-size-limit">{% trans "Erlaubte Formate: JPG, PNG, GIF, WEBP" %}</p>
             </div>
             

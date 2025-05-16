@@ -22,7 +22,7 @@
 var photo_data = {{ gallery_json_data|safe }}
 </script>
 <!-- Modern Gallery styles -->
-<link rel="stylesheet" href="{% static 'gallery/css/modern/gallery.css' %}">
+<link rel="stylesheet" href="{% static 'gallery/css/modern/gallery.3.0.0.css' %}">
 {% endblock %}
 
 {% block navbar %}
@@ -38,27 +38,7 @@ var photo_data = {{ gallery_json_data|safe }}
       <h1>Galerie</h1>
     </div>
     
-    {% if no_categories %}
-    <div class="no-categories-message">
-      <p>Derzeit sind keine Kategorien vorhanden. Bitte erstellen Sie Kategorien im Galerie-Verwaltungsbereich.</p>
-      {% if user.is_authenticated %}
-      <p><a href="{% url 'gallery_admin' %}" class="btn">Zur Galerie-Verwaltung</a></p>
-      {% endif %}
-    </div>
-    {% else %}
-    <nav class="gallery-nav-bar">
-      {% for category in category %}
-      {% if category.id == category_id %}
-      <h2>
-      <a class="active" href="?category={{category.id}}">{{category}}</a>
-      </h2>
-      {% else %}
-      <h2>
-      <a href="?category={{category.id}}">{{category}}</a>
-      </h2>
-      {% endif %}
-      {% endfor %}
-    </nav>
+    {% if photos %}
     <section class="gallery-show">
       {% for photo in photos %}
       {% if photo.image %}
@@ -132,13 +112,20 @@ var photo_data = {{ gallery_json_data|safe }}
       {% endif %}
       {% empty %}
       <div class="empty-gallery-message">
-        <p>Keine Bilder in dieser Kategorie vorhanden.</p>
+        <p>Keine Bilder vorhanden.</p>
         {% if user.is_authenticated %}
         <p><a href="{% url 'gallery_admin' %}">Zur Galerie-Verwaltung</a></p>
         {% endif %}
       </div>
       {% endfor %}
     </section>
+    {% else %}
+    <div class="empty-gallery-message">
+      <p>Keine Bilder vorhanden.</p>
+      {% if user.is_authenticated %}
+      <p><a href="{% url 'gallery_admin' %}">Zur Galerie-Verwaltung</a></p>
+      {% endif %}
+    </div>
     {% endif %}
     <section onclick="blockImg()" id="overlay-image-section" class="overlay image">
       <img id="overlay-show-img" src="" alt="">
