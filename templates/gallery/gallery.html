@@ -21,8 +21,8 @@
 <script type="text/javascript">
 var photo_data = {{ gallery_json_data|safe }}
 </script>
-<!-- lazyload -->
-<script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+<!-- Modern Gallery styles -->
+<link rel="stylesheet" href="{% static 'gallery/css/modern/gallery.css' %}">
 {% endblock %}
 
 {% block navbar %}
@@ -34,12 +34,15 @@ var photo_data = {{ gallery_json_data|safe }}
 
 <div class="mbs">
   <div class="container gallery">
-    <h1>Galerie</h1>
+    <div class="gallery-header">
+      <h1>Galerie</h1>
+    </div>
+    
     {% if no_categories %}
-    <div style="text-align: center; margin: 50px 0;">
+    <div class="no-categories-message">
       <p>Derzeit sind keine Kategorien vorhanden. Bitte erstellen Sie Kategorien im Galerie-Verwaltungsbereich.</p>
       {% if user.is_authenticated %}
-      <p><a href="{% url 'gallery_admin' %}" style="color: #d11317;">Zur Galerie-Verwaltung</a></p>
+      <p><a href="{% url 'gallery_admin' %}" class="btn">Zur Galerie-Verwaltung</a></p>
       {% endif %}
     </div>
     {% else %}
@@ -69,12 +72,16 @@ var photo_data = {{ gallery_json_data|safe }}
                 <img src="{{ im.url }}" 
                 width="{{ im.width }}" 
                 height="{{ im.height }}"
-                alt="{{ photo.title|default:'Gallery Image' }}">
+                alt="{{ photo.title|default:'Gallery Image' }}"
+                loading="lazy"
+                class="lazy">
                 {% empty %}
                 <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
                 <img src="{{ photo.image.url }}" 
                     style="width: 100%; height: auto; max-width: 500px;" 
-                    alt="{{ photo.title|default:'Gallery Image' }}">
+                    alt="{{ photo.title|default:'Gallery Image' }}"
+                    loading="lazy"
+                    class="lazy">
                 {% endthumbnail %}
           </picture>
           {% elif photo.image.width == photo.image.height %}
@@ -87,12 +94,16 @@ var photo_data = {{ gallery_json_data|safe }}
                 <img src="{{ im.url }}" 
                 width="{{ im.width }}" 
                 height="{{ im.height }}"
-                alt="{{ photo.title|default:'Gallery Image' }}">
+                alt="{{ photo.title|default:'Gallery Image' }}"
+                loading="lazy"
+                class="lazy">
                 {% empty %}
                 <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
                 <img src="{{ photo.image.url }}" 
                     style="width: 100%; height: auto; max-width: 500px;" 
-                    alt="{{ photo.title|default:'Gallery Image' }}">
+                    alt="{{ photo.title|default:'Gallery Image' }}"
+                    loading="lazy"
+                    class="lazy">
                 {% endthumbnail %}
           </picture>
           {% else %}
@@ -105,21 +116,25 @@ var photo_data = {{ gallery_json_data|safe }}
                 <img src="{{ im.url }}" 
                 width="{{ im.width }}" 
                 height="{{ im.height }}"
-                alt="{{ photo.title|default:'Gallery Image' }}">
+                alt="{{ photo.title|default:'Gallery Image' }}"
+                loading="lazy"
+                class="lazy">
                 {% empty %}
                 <!-- Fallback für Bilder, die Probleme mit Thumbnails haben -->
                 <img src="{{ photo.image.url }}" 
                     style="width: 100%; height: auto; max-width: 400px;" 
-                    alt="{{ photo.title|default:'Gallery Image' }}">
+                    alt="{{ photo.title|default:'Gallery Image' }}"
+                    loading="lazy"
+                    class="lazy">
                 {% endthumbnail %}
             </picture>
           {% endif %}
       {% endif %}
       {% empty %}
-      <div style="text-align: center; margin: 50px 0;">
+      <div class="empty-gallery-message">
         <p>Keine Bilder in dieser Kategorie vorhanden.</p>
         {% if user.is_authenticated %}
-        <p><a href="{% url 'gallery_admin' %}" style="color: #d11317;">Zur Galerie-Verwaltung</a></p>
+        <p><a href="{% url 'gallery_admin' %}">Zur Galerie-Verwaltung</a></p>
         {% endif %}
       </div>
       {% endfor %}
@@ -129,48 +144,15 @@ var photo_data = {{ gallery_json_data|safe }}
       <img id="overlay-show-img" src="" alt="">
       <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="blockImg()">
         {% include "templates/svg/nav_bar_crossburger_gallery.html" %}
-    </a>
-    <p id="gallery-text-overlay"></p>
-  </section>
+      </a>
+      <p id="gallery-text-overlay"></p>
+    </section>
+  </div>
 </div>
 
 
 {% endblock %}
 {% block footer %}
-<script type="text/javascript">
-  function showImg(id){
-    src = photo_data[id]["image"]
-    document.getElementById("overlay-show-img").src = src
-    document.getElementById("overlay-image-section").style.display = "block";
-    document.querySelector("header").style.zIndex = "0"
-    
-    if (photo_data[id]["copyright_by"]) {
-      if (photo_data[id]["description"]){
-        var descr = photo_data[id]["description"] + " | © " + photo_data[id]["copyright_by"]
-      }
-      else {
-        var descr = "© " + photo_data[id]["copyright_by"]
-      }
-      console.log("copyright")
-    }  
-    else {
-      var descr = photo_data[id]["description"]
-    }
-    var overlayImage = document.querySelector("#overlay-image-section > p")
-    overlayImage.innerHTML = descr;
-  }
-  function blockImg(){
-    document.getElementById("overlay-image-section").style.display = "none";
-    document.querySelector("header").style.zIndex = "99"
-  }
-  document.onkeydown = function(evt) {
-      evt = evt || window.event;
-      if (evt.keyCode == 27) {
-          blockImg()
-      }
-  };
-</script>
-<script>
-  lazyload();
-</script>
+<!-- Modern Gallery JavaScript -->
+<script src="{% static 'gallery/js/modern/gallery.js' %}"></script>
 {% endblock %}
