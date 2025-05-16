@@ -19,6 +19,8 @@
   --hover-bg: #f8f8f8;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
 }
 
 .mbs {
@@ -72,43 +74,64 @@ h1::after {
 
 .teachers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
   margin-top: 2rem;
 }
 
 .teacher-card {
-  background: var(--background-light);
+  background: var(--background-white);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 1.5rem;
-  text-align: center;
+  border-radius: 12px;
+  overflow: hidden;
   transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
 }
 
 .teacher-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-md);
+  border-color: var(--accent-color);
+}
+
+.teacher-image-container {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--background-light);
+  position: relative;
+  width: 100%;
 }
 
 .teacher-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  margin-bottom: 1rem;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.teacher-card:hover .teacher-image {
+  transform: scale(1.05);
+}
+
+.teacher-info {
+  padding: 1.25rem;
 }
 
 .teacher-name {
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1.25rem;
+  font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
+  line-height: 1.3;
 }
 
 .teacher-subjects {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
+  line-height: 1.5;
 }
 
 .instruments-list {
@@ -226,6 +249,7 @@ h1::after {
 @media (max-width: 768px) {
   .teachers-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
   }
   
   .instruments-list {
@@ -253,6 +277,20 @@ h1::after {
   .cta-button {
     padding: 0.75rem 2rem;
   }
+  
+  .teacher-name {
+    font-size: 1.125rem;
+  }
+  
+  .teacher-subjects {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .teacher-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 {% endblock %}
@@ -261,8 +299,17 @@ h1::after {
 {% endblock %}
 
 {% block banner %}
-<img src="/static/banner/msmusic_banner.webp" alt="Musikschule Banner">
-<img id="mbimg" src="/static/banner/mobile/msmusic_banner.webp" alt="Musikschule Mobile Banner">
+{% with banner_name=category_name|lower|slugify %}
+  {% if banner_name == 'blasinstrumente' or banner_name == 'schlaginstrumente' or banner_name == 'streichinstrumente' or banner_name == 'tasteninstrumente' or banner_name == 'zupfinstrumente' or banner_name == 'gesang' %}
+    <img src="/static/banner/fachgruppen/{{ banner_name }}.jpg" alt="{{ category_name }} Banner">
+    {% comment %}Da es keine mobilen Banner für Fachgruppen gibt, verwenden wir dasselbe Banner für mobile{% endcomment %}
+    <img id="mbimg" src="/static/banner/fachgruppen/{{ banner_name }}.jpg" alt="{{ category_name }} Mobile Banner">
+  {% else %}
+    {% comment %}Für Fachgruppen ohne spezifisches Banner verwenden wir das Standard-Musikschul-Banner{% endcomment %}
+    <img src="/static/banner/msmusic_banner.webp" alt="Musikschule Banner">
+    <img id="mbimg" src="/static/banner/mobile/msmusic_banner.webp" alt="Musikschule Mobile Banner">
+  {% endif %}
+{% endwith %}
 {% endblock %}
 
 {% block body %}
@@ -298,21 +345,31 @@ h1::after {
       <h2>Unsere Lehrenden</h2>
       <div class="teachers-grid">
         {% for teacher in teachers %}
-        <div class="teacher-card">
-          {% if teacher.image %}
-          <img src="{{ teacher.image.url }}" alt="{{ teacher.first_name }} {{ teacher.last_name }}" class="teacher-image" loading="lazy">
-          {% else %}
-          <img src="/static/teachers/teacher_image_default.svg" alt="{{ teacher.first_name }} {{ teacher.last_name }}" class="teacher-image">
-          {% endif %}
-          <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
-          <p class="teacher-subjects">
-            {% for subject in teacher.subject.all %}
-              {% if subject.category == category %}
-                {{ subject.subject }}{% if not forloop.last %}, {% endif %}
-              {% endif %}
-            {% endfor %}
-          </p>
-        </div>
+        <article class="teacher-card">
+          <div class="teacher-image-container">
+            {% if teacher.image %}
+            <img class="teacher-image" 
+                 src="{{ teacher.image.url }}" 
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}" 
+                 loading="lazy">
+            {% else %}
+            <img class="teacher-image" 
+                 src="/static/teachers/teacher_image_default.svg" 
+                 alt="{{ teacher.first_name }} {{ teacher.last_name }}" 
+                 loading="lazy">
+            {% endif %}
+          </div>
+          <div class="teacher-info">
+            <h3 class="teacher-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
+            <p class="teacher-subjects">
+              {% for subject in teacher.subject.all %}
+                {% if subject.category == category %}
+                  {{ subject.subject }}{% if not forloop.last %}, {% endif %}
+                {% endif %}
+              {% endfor %}
+            </p>
+          </div>
+        </article>
         {% endfor %}
       </div>
     </div>
