@@ -5,6 +5,7 @@
 
 // Constants
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const MAX_FILES = 100; // Maximum number of files allowed
 const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
 // DOM elements
@@ -17,6 +18,21 @@ let progressText;
 let messageContainer;
 let photoGrid;
 let selectedFileInfo;
+
+// Multiple upload elements
+let multiDropZone;
+let multiFileInput;
+let multiUploadForm;
+let multiProgressBar;
+let multiProgressContainer;
+let multiProgressText;
+let selectedFilesContainer;
+let selectedFilesList;
+let selectedFilesCount;
+let uploadFilesBtn;
+
+// File list for multiple uploads
+let selectedFiles = [];
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
@@ -31,14 +47,38 @@ document.addEventListener('DOMContentLoaded', function() {
     photoGrid = document.getElementById('photo-grid');
     selectedFileInfo = document.getElementById('selected-file');
     
-    // Setup drag and drop if elements exist
+    // Multiple upload elements
+    multiDropZone = document.getElementById('multi-drop-zone');
+    multiFileInput = document.getElementById('multi-file-input');
+    multiUploadForm = document.getElementById('multi-upload-form');
+    multiProgressBar = document.getElementById('multi-progress-bar');
+    multiProgressContainer = document.getElementById('multi-upload-progress');
+    multiProgressText = document.getElementById('multi-progress-text');
+    selectedFilesContainer = document.querySelector('.selected-files-container');
+    selectedFilesList = document.getElementById('selected-files-list');
+    selectedFilesCount = document.getElementById('selected-files-count');
+    uploadFilesBtn = document.getElementById('upload-files-btn');
+    
+    // Setup upload tabs
+    setupUploadTabs();
+    
+    // Setup drag and drop for single uploads
     if (dropZone && fileInput) {
         setupDragAndDrop();
     }
     
-    // Setup form submission
+    // Setup drag and drop for multiple uploads
+    if (multiDropZone && multiFileInput) {
+        setupMultiDragAndDrop();
+    }
+    
+    // Setup form submissions
     if (uploadForm) {
         uploadForm.addEventListener('submit', handleFormSubmit);
+    }
+    
+    if (multiUploadForm) {
+        multiUploadForm.addEventListener('submit', handleMultiFormSubmit);
     }
     
     // Setup sortable functionality
@@ -56,6 +96,352 @@ document.addEventListener('DOMContentLoaded', function() {
     // Setup category action handlers
     setupCategoryActions();
 });
+
+/**
+ * Setup upload tabs
+ */
+function setupUploadTabs() {
+    const tabs = document.querySelectorAll('.upload-tab');
+    const tabContents = document.querySelectorAll('.upload-tab-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const tabId = this.dataset.tab;
+            
+            // Set active tab
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Show active content
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === tabId) {
+                    content.classList.add('active');
+                }
+            });
+        });
+    });
+}
+
+/**
+ * Setup multiple files drag and drop
+ */
+function setupMultiDragAndDrop() {
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        multiDropZone.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    // Highlight drop zone when items are dragged over it
+    ['dragenter', 'dragover'].forEach(eventName => {
+        multiDropZone.addEventListener(eventName, function() {
+            multiDropZone.classList.add('dragover');
+        }, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        multiDropZone.addEventListener(eventName, function() {
+            multiDropZone.classList.remove('dragover');
+        }, false);
+    });
+    
+    // Handle dropped files
+    multiDropZone.addEventListener('drop', handleMultiDrop, false);
+    
+    // Handle file input change
+    multiFileInput.addEventListener('change', handleMultiFilesSelected);
+    
+    // Handle the click to trigger file input
+    document.getElementById('select-files-btn').addEventListener('click', function() {
+        multiFileInput.click();
+    });
+    
+    // Handle click on drop zone
+    multiDropZone.addEventListener('click', function() {
+        multiFileInput.click();
+    });
+}
+
+/**
+ * Handle drop for multiple files
+ */
+function handleMultiDrop(e) {
+    const dt = e.dataTransfer;
+    const files = dt.files;
+    
+    console.log(`Drag and drop detected ${files.length} files`);
+    
+    // Ensure we handle multiple files
+    if (files.length > 0) {
+        handleMultipleFiles(files);
+    }
+}
+
+/**
+ * Handle multiple files selection
+ */
+function handleMultiFilesSelected(e) {
+    if (e.target.files.length > 0) {
+        handleMultipleFiles(e.target.files);
+    }
+}
+
+/**
+ * Process multiple files for upload
+ */
+function handleMultipleFiles(files) {
+    // Convert FileList to Array
+    const fileArray = Array.from(files);
+    
+    console.log(`Processing ${fileArray.length} files for upload`);
+    
+    // Check if too many files
+    if (fileArray.length > MAX_FILES) {
+        showMessage('error', `Zu viele Dateien ausgewählt. Maximal ${MAX_FILES} Bilder erlaubt.`);
+        return;
+    }
+    
+    // Filter valid files
+    let validFiles = [];
+    let invalidFilesCount = 0;
+    
+    fileArray.forEach(file => {
+        // Check file type
+        if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+            showMessage('error', `"${file.name}" hat einen ungültigen Dateityp.`);
+            invalidFilesCount++;
+            return;
+        }
+        
+        // Check file size
+        if (file.size > MAX_FILE_SIZE) {
+            showMessage('error', `"${file.name}" ist zu groß (${(file.size / 1024 / 1024).toFixed(2)}MB). Maximale Größe ist 2MB.`);
+            invalidFilesCount++;
+            return;
+        }
+        
+        validFiles.push(file);
+    });
+    
+    console.log(`Found ${validFiles.length} valid files and ${invalidFilesCount} invalid files`);
+    
+    if (validFiles.length === 0) {
+        showMessage('error', 'Keine gültigen Bilder ausgewählt.');
+        return;
+    }
+    
+    // Add files to the list
+    selectedFiles = validFiles;
+    
+    // Display selected files
+    showSelectedFiles();
+    
+    // Create a DataTransfer object to update the file input
+    // Note: This might not work in all browsers, but is used as a backup
+    try {
+        const dataTransfer = new DataTransfer();
+        selectedFiles.forEach(file => {
+            dataTransfer.items.add(file);
+        });
+        
+        // Update file input
+        multiFileInput.files = dataTransfer.files;
+    } catch (e) {
+        console.error('Error updating file input:', e);
+        // We can still proceed without this, as we store the files in selectedFiles
+    }
+    
+    // Enable upload button
+    uploadFilesBtn.disabled = selectedFiles.length === 0;
+}
+
+/**
+ * Display selected files in the UI
+ */
+function showSelectedFiles() {
+    // Update count
+    selectedFilesCount.textContent = `${selectedFiles.length} Bilder ausgewählt`;
+    
+    // Clear list
+    selectedFilesList.innerHTML = '';
+    
+    // Create preview for each file
+    selectedFiles.forEach((file, index) => {
+        const fileItem = document.createElement('div');
+        fileItem.className = 'selected-file-item';
+        fileItem.dataset.index = index;
+        
+        // Create file preview if possible
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.createElement('img');
+            preview.src = e.target.result;
+            preview.className = 'selected-file-preview';
+            preview.alt = file.name;
+            fileItem.prepend(preview);
+        };
+        reader.readAsDataURL(file);
+        
+        // File info
+        const fileInfo = document.createElement('div');
+        fileInfo.className = 'selected-file-info';
+        
+        const fileName = document.createElement('div');
+        fileName.className = 'selected-file-name';
+        fileName.textContent = file.name;
+        
+        const fileSize = document.createElement('div');
+        fileSize.className = 'selected-file-size';
+        fileSize.textContent = formatFileSize(file.size);
+        
+        fileInfo.appendChild(fileName);
+        fileInfo.appendChild(fileSize);
+        
+        // Remove button
+        const removeButton = document.createElement('div');
+        removeButton.className = 'remove-file';
+        removeButton.textContent = '×';
+        removeButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            removeFile(index);
+        });
+        
+        fileItem.appendChild(fileInfo);
+        fileItem.appendChild(removeButton);
+        
+        selectedFilesList.appendChild(fileItem);
+    });
+    
+    // Show container if we have files
+    if (selectedFiles.length > 0) {
+        selectedFilesContainer.style.display = 'block';
+    } else {
+        selectedFilesContainer.style.display = 'none';
+    }
+}
+
+/**
+ * Remove a file from the selection
+ */
+function removeFile(index) {
+    selectedFiles.splice(index, 1);
+    
+    // Create a DataTransfer object to update the file input
+    const dataTransfer = new DataTransfer();
+    selectedFiles.forEach(file => {
+        dataTransfer.items.add(file);
+    });
+    
+    // Update file input
+    multiFileInput.files = dataTransfer.files;
+    
+    // Update UI
+    showSelectedFiles();
+    
+    // Enable/disable upload button
+    uploadFilesBtn.disabled = selectedFiles.length === 0;
+}
+
+/**
+ * Handle form submission for multiple photos
+ */
+function handleMultiFormSubmit(e) {
+    e.preventDefault();
+    
+    if (selectedFiles.length === 0) {
+        showMessage('error', 'Bitte wählen Sie mindestens ein Bild aus.');
+        return;
+    }
+    
+    console.log(`Submitting ${selectedFiles.length} files for upload`);
+    
+    // Create FormData
+    const formData = new FormData(multiUploadForm);
+    
+    // Remove any existing 'images' fields
+    formData.delete('images');
+    
+    // Add all files
+    for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append('images', selectedFiles[i]);
+    }
+    
+    // Show progress container
+    multiProgressContainer.style.display = 'block';
+    multiProgressBar.style.width = '0%';
+    multiProgressText.textContent = '0%';
+    
+    // Submit using AJAX
+    const xhr = new XMLHttpRequest();
+    
+    // Handle progress
+    xhr.upload.addEventListener('progress', e => {
+        if (e.lengthComputable) {
+            const percent = Math.round((e.loaded / e.total) * 100);
+            multiProgressBar.style.width = percent + '%';
+            multiProgressText.textContent = percent + '%';
+        }
+    });
+    
+    // Handle completion
+    xhr.addEventListener('load', function() {
+        try {
+            const response = JSON.parse(xhr.responseText);
+            
+            if (xhr.status === 200 && response.status === 'success') {
+                const fileCount = selectedFiles.length;
+                showMessage('success', `${response.photos.length} von ${fileCount} Bildern erfolgreich hochgeladen.`);
+                
+                // Add the photos to the grid
+                if (response.photos && response.photos.length > 0) {
+                    response.photos.forEach(photo => {
+                        addPhotoToGrid(photo);
+                    });
+                }
+                
+                // Show errors if any
+                if (response.errors && response.errors.length > 0) {
+                    response.errors.forEach(error => {
+                        showMessage('error', error);
+                    });
+                }
+                
+                // Reset form
+                multiUploadForm.reset();
+                selectedFiles = [];
+                selectedFilesContainer.style.display = 'none';
+                uploadFilesBtn.disabled = true;
+            } else {
+                showMessage('error', response.message || 'Fehler beim Hochladen der Bilder.');
+                
+                // Show errors if any
+                if (response.errors && response.errors.length > 0) {
+                    response.errors.forEach(error => {
+                        showMessage('error', error);
+                    });
+                }
+            }
+        } catch (e) {
+            console.error('Error parsing response:', e);
+            showMessage('error', 'Fehler beim Verarbeiten der Serverantwort.');
+        }
+        
+        // Hide progress after a delay
+        setTimeout(() => {
+            multiProgressContainer.style.display = 'none';
+        }, 1000);
+    });
+    
+    // Handle errors
+    xhr.addEventListener('error', function() {
+        showMessage('error', 'Netzwerkfehler beim Hochladen der Bilder.');
+        multiProgressContainer.style.display = 'none';
+    });
+    
+    // Send request
+    xhr.open('POST', multiUploadForm.action, true);
+    xhr.send(formData);
+}
 
 /**
  * Sets up drag and drop functionality for the upload zone
@@ -85,40 +471,6 @@ function setupDragAndDrop() {
     document.getElementById('select-file-btn').addEventListener('click', function() {
         fileInput.click();
     });
-}
-
-/**
- * Prevents default events
- */
-function preventDefaults(e) {
-    e.preventDefault();
-    e.stopPropagation();
-}
-
-/**
- * Adds highlight class to drop zone
- */
-function highlight() {
-    dropZone.classList.add('dragover');
-}
-
-/**
- * Removes highlight class from drop zone
- */
-function unhighlight() {
-    dropZone.classList.remove('dragover');
-}
-
-/**
- * Handles dropped files
- */
-function handleDrop(e) {
-    const dt = e.dataTransfer;
-    const files = dt.files;
-    
-    if (files.length > 0) {
-        handleFiles(files);
-    }
 }
 
 /**

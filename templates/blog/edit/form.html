@@ -58,6 +58,180 @@
     margin: 0 0 20px 0;
     color: var(--text-color);
   }
+  
+  /* Gallery Styles */
+  .gallery-formset {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  
+  .gallery-item {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+    background-color: var(--background-color);
+  }
+  
+  .gallery-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .gallery-item-title {
+    font-weight: 500;
+    font-size: 1rem;
+  }
+  
+  .gallery-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .gallery-preview {
+    max-width: 150px;
+    max-height: 150px;
+    margin-top: 8px;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+  
+  .gallery-delete-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: white;
+    border: 1px solid var(--danger-color);
+    color: var(--danger-color);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    font-size: 14px;
+  }
+  
+  .gallery-delete-btn:hover {
+    background-color: var(--danger-color);
+    color: white;
+  }
+  
+  .gallery-add-btn {
+    margin-top: 16px;
+    background-color: white;
+    border: 1px dashed var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 8px;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .gallery-add-btn:hover {
+    background-color: var(--background-color);
+  }
+  
+  .gallery-add-btn svg {
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .empty-gallery-message {
+    text-align: center;
+    padding: 32px;
+    background-color: var(--background-color);
+    border-radius: 8px;
+    border: 1px dashed var(--border-color);
+    color: var(--text-muted);
+  }
+  
+  .empty-gallery-message svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+  
+  /* Gallery dropzone styles */
+  .gallery-dropzone {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s;
+    background-color: var(--background-color);
+    margin-bottom: 24px;
+    cursor: pointer;
+  }
+  
+  .gallery-dropzone.dragover {
+    background-color: #f0f9ff;
+    border-color: var(--primary-color);
+    transform: scale(1.02);
+  }
+  
+  .dropzone-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 16px;
+    opacity: 0.5;
+    color: var(--primary-color);
+  }
+  
+  .dropzone-text {
+    color: var(--text-color);
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  
+  /* Upload progress */
+  .upload-progress {
+    margin-top: 20px;
+    display: none;
+  }
+  
+  .progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: var(--primary-color);
+    width: 0;
+    transition: width 0.3s;
+  }
+  
+  .progress-text {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    .gallery-form-row {
+      grid-template-columns: 1fr;
+    }
+  }
 
   .form-group {
     margin-bottom: 20px;
@@ -710,6 +884,85 @@
       </div>
     </div>
     
+    <!-- Gallery -->
+    <div class="form-section">
+      <h2>Image Gallery</h2>
+      <div class="help-text" style="margin-bottom: 20px;">Add multiple images that will appear as a gallery after the blog content.</div>
+      
+      <!-- Multi-upload drag and drop area -->
+      <div id="gallery-dropzone" class="gallery-dropzone">
+        <svg class="dropzone-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+        </svg>
+        <p class="dropzone-text">Drag and drop multiple images here</p>
+        <p class="dropzone-text" style="font-size: 0.75rem;">Or click to select files</p>
+        <input type="file" id="multi-upload-input" accept="image/*" multiple style="display: none;">
+      </div>
+      
+      <div class="gallery-formset" id="gallery-container">
+        {{ gallery_formset.management_form }}
+        
+        {% if gallery_formset.forms %}
+          {% for gallery_form in gallery_formset.forms %}
+            <div class="gallery-item" id="gallery-item-{{ forloop.counter0 }}">
+              <div class="gallery-item-header">
+                <span class="gallery-item-title">Image {{ forloop.counter }}</span>
+                <div class="gallery-delete-container">
+                  {{ gallery_form.DELETE }}
+                  <label for="{{ gallery_form.DELETE.id_for_label }}" class="gallery-delete-btn" title="Remove this image">×</label>
+                </div>
+              </div>
+              
+              {{ gallery_form.id }}
+              
+              <div class="gallery-form-row">
+                <div class="form-group">
+                  {{ gallery_form.image.label_tag }}
+                  {{ gallery_form.image }}
+                  {% if gallery_form.image.errors %}
+                    <div class="error-message">{{ gallery_form.image.errors }}</div>
+                  {% endif %}
+                  
+                  {% if gallery_form.instance.image %}
+                    <img src="{{ gallery_form.instance.image.url }}" alt="{{ gallery_form.instance.alt_text }}" class="gallery-preview">
+                  {% endif %}
+                </div>
+                
+                <div class="form-group">
+                  {{ gallery_form.caption.label_tag }}
+                  {{ gallery_form.caption }}
+                  {% if gallery_form.caption.errors %}
+                    <div class="error-message">{{ gallery_form.caption.errors }}</div>
+                  {% endif %}
+                  
+                  {{ gallery_form.alt_text.label_tag }}
+                  {{ gallery_form.alt_text }}
+                  {% if gallery_form.alt_text.errors %}
+                    <div class="error-message">{{ gallery_form.alt_text.errors }}</div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-gallery-message" id="empty-gallery-message">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <p>No gallery images yet</p>
+            <p style="font-size: 0.875rem;">Drag and drop images above or click "Add Image" below</p>
+          </div>
+        {% endif %}
+        
+        <button type="button" class="gallery-add-btn" id="add-gallery-image">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          Add Image
+        </button>
+      </div>
+    </div>
+    
     <!-- Organization -->
     <div class="form-section">
       <h2>Organization</h2>
@@ -1006,6 +1259,291 @@ window.addEventListener('beforeunload', (e) => {
 form.addEventListener('submit', () => {
   formChanged = false;
 });
+
+// Gallery formset management
+const addGalleryBtn = document.getElementById('add-gallery-image');
+const galleryContainer = document.getElementById('gallery-container');
+const totalFormsInput = document.querySelector('#id_gallery_images-TOTAL_FORMS');
+const maxFormsInput = document.querySelector('#id_gallery_images-MAX_NUM_FORMS');
+const galleryDropzone = document.getElementById('gallery-dropzone');
+const multiUploadInput = document.getElementById('multi-upload-input');
+const emptyGalleryMessage = document.getElementById('empty-gallery-message');
+
+// Set max files from Django formset configuration
+const maxFiles = parseInt(maxFormsInput ? maxFormsInput.value : 10);
+
+// Drag and drop functionality
+if (galleryDropzone) {
+  const events = ['dragenter', 'dragover', 'dragleave', 'drop'];
+  
+  // Prevent default behavior for these events
+  events.forEach(eventName => {
+    galleryDropzone.addEventListener(eventName, preventDefaults, false);
+  });
+  
+  function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  
+  // Highlight drop area when item is dragged over it
+  ['dragenter', 'dragover'].forEach(eventName => {
+    galleryDropzone.addEventListener(eventName, highlight, false);
+  });
+  
+  ['dragleave', 'drop'].forEach(eventName => {
+    galleryDropzone.addEventListener(eventName, unhighlight, false);
+  });
+  
+  function highlight() {
+    galleryDropzone.classList.add('dragover');
+  }
+  
+  function unhighlight() {
+    galleryDropzone.classList.remove('dragover');
+  }
+  
+  // Handle dropped files
+  galleryDropzone.addEventListener('drop', handleDrop, false);
+  
+  function handleDrop(e) {
+    const dt = e.dataTransfer;
+    const files = dt.files;
+    handleFiles(files);
+  }
+  
+  // Handle click to select files
+  galleryDropzone.addEventListener('click', () => {
+    multiUploadInput.click();
+  });
+  
+  multiUploadInput.addEventListener('change', function() {
+    handleFiles(this.files);
+  });
+  
+  // Process multiple files
+  function handleFiles(files) {
+    const currentCount = parseInt(totalFormsInput.value);
+    const remainingSlots = maxFiles - currentCount;
+    
+    if (files.length > remainingSlots) {
+      alert(`You can only add ${remainingSlots} more image${remainingSlots === 1 ? '' : 's'}. Maximum gallery size is ${maxFiles} images.`);
+      files = Array.from(files).slice(0, remainingSlots);
+    }
+    
+    if (files.length === 0) return;
+    
+    // Remove empty gallery message if present
+    if (emptyGalleryMessage) {
+      emptyGalleryMessage.remove();
+    }
+    
+    // Process each file
+    Array.from(files).forEach((file, index) => {
+      if (!file.type.match('image.*')) {
+        alert(`File '${file.name}' is not an image. Only images are allowed.`);
+        return;
+      }
+      
+      // Create new form for this image
+      createImageForm(file, currentCount + index);
+    });
+  }
+  
+  // Create a new form for an image
+  function createImageForm(file, index) {
+    // Create new gallery item
+    const newForm = document.createElement('div');
+    newForm.className = 'gallery-item';
+    newForm.id = `gallery-item-${index}`;
+    
+    // Format file size
+    const fileSize = (file.size / 1024 / 1024).toFixed(2);
+    
+    newForm.innerHTML = `
+      <div class="gallery-item-header">
+        <span class="gallery-item-title">Image ${index + 1}</span>
+        <div class="gallery-delete-container">
+          <input type="checkbox" name="gallery_images-${index}-DELETE" id="id_gallery_images-${index}-DELETE">
+          <label for="id_gallery_images-${index}-DELETE" class="gallery-delete-btn" title="Remove this image">×</label>
+        </div>
+      </div>
+      
+      <input type="hidden" name="gallery_images-${index}-id" id="id_gallery_images-${index}-id">
+      
+      <div class="gallery-form-row">
+        <div class="form-group">
+          <label for="id_gallery_images-${index}-image">Image</label>
+          <p class="file-name">${file.name} (${fileSize}MB)</p>
+          <input type="file" name="gallery_images-${index}-image" class="form-control gallery-image-input" accept="image/*" id="id_gallery_images-${index}-image" style="display: none;">
+          <div class="gallery-preview-container"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="id_gallery_images-${index}-caption">Caption</label>
+          <input type="text" name="gallery_images-${index}-caption" class="form-control" placeholder="Caption (optional)" id="id_gallery_images-${index}-caption">
+          
+          <label for="id_gallery_images-${index}-alt_text">Alt text</label>
+          <input type="text" name="gallery_images-${index}-alt_text" class="form-control" placeholder="Alt text for accessibility (optional)" id="id_gallery_images-${index}-alt_text">
+        </div>
+      </div>
+    `;
+    
+    // Insert before the add button
+    galleryContainer.insertBefore(newForm, addGalleryBtn);
+    
+    // Update total forms
+    totalFormsInput.value = parseInt(totalFormsInput.value) + 1;
+    
+    // Set file to input field
+    const fileInput = document.getElementById(`id_gallery_images-${index}-image`);
+    
+    // Use DataTransfer to create a valid FileList object
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    fileInput.files = dataTransfer.files;
+    
+    // Show image preview
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const previewContainer = newForm.querySelector('.gallery-preview-container');
+      const previewImg = document.createElement('img');
+      previewImg.className = 'gallery-preview';
+      previewImg.src = e.target.result;
+      previewContainer.appendChild(previewImg);
+    };
+    reader.readAsDataURL(file);
+    
+    formChanged = true;
+  }
+}
+
+if (addGalleryBtn && totalFormsInput) {
+  addGalleryBtn.addEventListener('click', () => {
+    const currentForms = parseInt(totalFormsInput.value);
+    const maxForms = parseInt(maxFormsInput.value);
+    
+    if (currentForms >= maxForms) {
+      alert(`Maximum of ${maxForms} images allowed.`);
+      return;
+    }
+    
+    // Remove empty gallery message if present
+    const emptyMessage = document.querySelector('.empty-gallery-message');
+    if (emptyMessage) {
+      emptyMessage.remove();
+    }
+    
+    // Get the template form
+    const templateForm = document.querySelector('.gallery-item');
+    let newForm;
+    
+    if (templateForm) {
+      // Clone existing form
+      newForm = templateForm.cloneNode(true);
+      
+      // Update form index
+      const formRegex = new RegExp(`gallery_images-(\\d+)-`, 'g');
+      const newFormHtml = newForm.innerHTML.replace(formRegex, `gallery_images-${currentForms}-`);
+      newForm.innerHTML = newFormHtml;
+      
+      // Update form ID and title
+      newForm.id = `gallery-item-${currentForms}`;
+      const titleElement = newForm.querySelector('.gallery-item-title');
+      if (titleElement) {
+        titleElement.textContent = `Image ${currentForms + 1}`;
+      }
+      
+      // Clear input values
+      const inputs = newForm.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"])');
+      inputs.forEach(input => {
+        input.value = '';
+      });
+      
+      // Clear preview image if exists
+      const previewImg = newForm.querySelector('.gallery-preview');
+      if (previewImg) {
+        previewImg.remove();
+      }
+    } else {
+      // Create new form from scratch if no template exists
+      newForm = document.createElement('div');
+      newForm.className = 'gallery-item';
+      newForm.id = `gallery-item-${currentForms}`;
+      newForm.innerHTML = `
+        <div class="gallery-item-header">
+          <span class="gallery-item-title">Image ${currentForms + 1}</span>
+          <div class="gallery-delete-container">
+            <input type="checkbox" name="gallery_images-${currentForms}-DELETE" id="id_gallery_images-${currentForms}-DELETE">
+            <label for="id_gallery_images-${currentForms}-DELETE" class="gallery-delete-btn" title="Remove this image">×</label>
+          </div>
+        </div>
+        
+        <input type="hidden" name="gallery_images-${currentForms}-id" id="id_gallery_images-${currentForms}-id">
+        
+        <div class="gallery-form-row">
+          <div class="form-group">
+            <label for="id_gallery_images-${currentForms}-image">Image</label>
+            <input type="file" name="gallery_images-${currentForms}-image" class="form-control gallery-image-input" accept="image/*" id="id_gallery_images-${currentForms}-image">
+          </div>
+          
+          <div class="form-group">
+            <label for="id_gallery_images-${currentForms}-caption">Caption</label>
+            <input type="text" name="gallery_images-${currentForms}-caption" class="form-control" placeholder="Caption (optional)" id="id_gallery_images-${currentForms}-caption">
+            
+            <label for="id_gallery_images-${currentForms}-alt_text">Alt text</label>
+            <input type="text" name="gallery_images-${currentForms}-alt_text" class="form-control" placeholder="Alt text for accessibility (optional)" id="id_gallery_images-${currentForms}-alt_text">
+          </div>
+        </div>
+      `;
+    }
+    
+    // Insert before the add button
+    galleryContainer.insertBefore(newForm, addGalleryBtn);
+    
+    // Update total forms
+    totalFormsInput.value = currentForms + 1;
+    
+    // Add image preview listener
+    const newImageInput = newForm.querySelector('input[type="file"]');
+    if (newImageInput) {
+      addImagePreviewListener(newImageInput);
+    }
+    
+    formChanged = true;
+  });
+  
+  // Image preview function
+  function addImagePreviewListener(fileInput) {
+    fileInput.addEventListener('change', function() {
+      const parentGroup = this.closest('.form-group');
+      let previewImg = parentGroup.querySelector('.gallery-preview');
+      
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          if (!previewImg) {
+            previewImg = document.createElement('img');
+            previewImg.className = 'gallery-preview';
+            parentGroup.appendChild(previewImg);
+          }
+          previewImg.src = e.target.result;
+        }
+        
+        reader.readAsDataURL(this.files[0]);
+      } else if (previewImg) {
+        previewImg.remove();
+      }
+    });
+  }
+  
+  // Add preview listeners to existing file inputs
+  const fileInputs = document.querySelectorAll('.gallery-image-input');
+  fileInputs.forEach(input => {
+    addImagePreviewListener(input);
+  });
+}
 </script>
 {% endblock %}
 

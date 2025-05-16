@@ -50,43 +50,90 @@
     <!-- Upload area -->
     <div id="drop-zone" class="upload-container">
         <h3>{% trans "Bilder hochladen" %}</h3>
-        <p class="upload-instruction">{% trans "Ziehen Sie ein Bild hierher oder klicken Sie auf den Button unten." %}</p>
-        <p class="upload-size-limit">{% trans "Maximale Dateigröße: 2MB. Erlaubte Formate: JPG, PNG, GIF, WEBP" %}</p>
         
-        <div id="selected-file" class="selected-file"></div>
+        <!-- Single Image Upload -->
+        <div class="upload-tabs">
+            <div class="upload-tab active" data-tab="single-upload">{% trans "Einzelnes Bild" %}</div>
+            <div class="upload-tab" data-tab="multi-upload">{% trans "Mehrere Bilder" %}</div>
+        </div>
         
-        <form id="upload-form" class="upload-form" action="{% url 'gallery_upload' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="hidden" name="category_id" value="{{ selected_category_id }}">
+        <!-- Single Image Upload Form -->
+        <div id="single-upload" class="upload-tab-content active">
+            <p class="upload-instruction">{% trans "Ziehen Sie ein Bild hierher oder klicken Sie auf den Button unten." %}</p>
+            <p class="upload-size-limit">{% trans "Maximale Dateigröße: 2MB. Erlaubte Formate: JPG, PNG, GIF, WEBP" %}</p>
             
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="title">{% trans "Titel" %}</label>
-                    <input type="text" id="title" name="title" placeholder="{% trans "Titel des Bildes" %}">
+            <div id="selected-file" class="selected-file"></div>
+            
+            <form id="upload-form" class="upload-form" action="{% url 'gallery_upload' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="category_id" value="{{ selected_category_id }}">
+                <input type="hidden" name="is_multiple" value="false">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="title">{% trans "Titel" %}</label>
+                        <input type="text" id="title" name="title" placeholder="{% trans "Titel des Bildes" %}">
+                    </div>
                 </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="description">{% trans "Beschreibung" %}</label>
-                    <textarea id="description" name="description" placeholder="{% trans "Beschreibung des Bildes" %}"></textarea>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="description">{% trans "Beschreibung" %}</label>
+                        <textarea id="description" name="description" placeholder="{% trans "Beschreibung des Bildes" %}"></textarea>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="copyright_by">{% trans "Copyright" %}</label>
-                    <input type="text" id="copyright_by" name="copyright_by" placeholder="{% trans "Copyright-Inhaber (optional)" %}">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="copyright_by">{% trans "Copyright" %}</label>
+                        <input type="text" id="copyright_by" name="copyright_by" placeholder="{% trans "Copyright-Inhaber (optional)" %}">
+                    </div>
                 </div>
+                
+                <input type="file" id="file-input" name="image" accept="image/jpeg,image/png,image/gif,image/webp" style="display: none;">
+                
+                <div class="btn-container">
+                    <button type="button" id="select-file-btn" class="btn">{% trans "Bild auswählen" %}</button>
+                    <button type="submit" class="btn">{% trans "Hochladen" %}</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Multiple Images Upload Form -->
+        <div id="multi-upload" class="upload-tab-content">
+            <div id="multi-drop-zone" class="multi-drop-zone">
+                <div class="drop-icon">
+                    <i class="fa fa-cloud-upload"></i>
+                </div>
+                <p class="upload-instruction">{% trans "Ziehen Sie mehrere Bilder hierher oder klicken Sie, um Dateien auszuwählen" %}</p>
+                <p class="upload-size-limit">{% trans "Maximale Dateigröße pro Bild: 2MB. Maximale Anzahl: 100 Bilder." %}</p>
+                <p class="upload-size-limit">{% trans "Erlaubte Formate: JPG, PNG, GIF, WEBP" %}</p>
             </div>
             
-            <input type="file" id="file-input" name="image" accept="image/jpeg,image/png,image/gif,image/webp" style="display: none;">
+            <form id="multi-upload-form" action="{% url 'gallery_upload' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="category_id" value="{{ selected_category_id }}">
+                <input type="hidden" name="is_multiple" value="true">
+                <input type="file" id="multi-file-input" name="images" accept="image/jpeg,image/png,image/gif,image/webp" multiple style="display: none;">
+                
+                <div class="selected-files-container">
+                    <div id="selected-files-count" class="selected-files-count"></div>
+                    <div id="selected-files-list" class="selected-files-list"></div>
+                </div>
+                
+                <div class="btn-container" style="margin-top: 15px;">
+                    <button type="button" id="select-files-btn" class="btn">{% trans "Bilder auswählen" %}</button>
+                    <button type="submit" id="upload-files-btn" class="btn" disabled>{% trans "Alle hochladen" %}</button>
+                </div>
+            </form>
             
-            <div class="btn-container">
-                <button type="button" id="select-file-btn" class="btn">{% trans "Bild auswählen" %}</button>
-                <button type="submit" class="btn">{% trans "Hochladen" %}</button>
+            <div id="multi-upload-progress" class="upload-progress">
+                <div class="progress-bar-container">
+                    <div id="multi-progress-bar" class="progress-bar"></div>
+                </div>
+                <div id="multi-progress-text" class="progress-text">0%</div>
             </div>
-        </form>
+        </div>
         
         <div id="upload-progress" class="upload-progress">
             <div class="progress-bar-container">

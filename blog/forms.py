@@ -2,7 +2,7 @@ from tinymce.widgets import TinyMCE
 from django.utils.translation import gettext as _
 from django import forms
 from django.utils.text import slugify  # Hinzugefügt
-from .models import Author, BlogPost
+from .models import Author, BlogPost, GalleryImage
 from teaching.subject import Subject
 
 class ArticleForm(forms.ModelForm):
@@ -135,3 +135,31 @@ class ArticleForm(forms.ModelForm):
         if not meta_description:
             meta_description = self.cleaned_data.get('lead_paragraph', '')
         return meta_description[:160]  # Ensure it's not too long
+        
+class GalleryImageForm(forms.ModelForm):
+    class Meta:
+        model = GalleryImage
+        fields = ['image', 'caption', 'alt_text']
+        widgets = {
+            'image': forms.FileInput(attrs={
+                'class': 'form-control gallery-image-input',
+                'accept': 'image/*'
+            }),
+            'caption': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': _('Caption (optional)')
+            }),
+            'alt_text': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': _('Alt text for accessibility (optional)')
+            })
+        }
+        
+GalleryImageFormSet = forms.inlineformset_factory(
+    BlogPost, 
+    GalleryImage, 
+    form=GalleryImageForm,
+    extra=3,
+    can_delete=True,
+    max_num=10
+)

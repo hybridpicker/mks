@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 import datetime
 from sorl.thumbnail import ImageField
+from django.core.validators import FileExtensionValidator
 
 class Author(models.Model):
     first_name = models.CharField(max_length=60)
@@ -71,3 +72,21 @@ class BlogPost(models.Model):
         ordering = ('category', '-date', 'ordering')
         verbose_name = "Blog Post"
         verbose_name_plural = "Blog Posts"
+
+class GalleryImage(models.Model):
+    blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='gallery_images')
+    image = models.ImageField(
+        upload_to='blog/gallery/images/', 
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif'])]
+    )
+    caption = models.CharField(max_length=255, blank=True)
+    alt_text = models.CharField(max_length=255, blank=True)
+    order = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Gallery Image"
+        verbose_name_plural = "Gallery Images"
+    
+    def __str__(self):
+        return f"{self.blog_post.title} - Image {self.order}"
