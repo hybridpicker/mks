@@ -6,6 +6,7 @@ from django.forms import DateTimeField
 from django.core.exceptions import ValidationError
 from django.contrib.admin.widgets import AdminDateWidget
 from .models import Event
+from projects.models import Project
 
 class EventForm(forms.Form):
     INPUT_FORMATS = ['%Y-%m-%d %H:%M']
@@ -15,6 +16,8 @@ class EventForm(forms.Form):
     venue = forms.CharField(max_length=80, required=False)
     date = forms.DateField(widget=forms.TextInput(attrs={'class':'datepicker'}))
     time = forms.TimeField(input_formats=INPUT_FORMATS_TIME, widget=forms.DateTimeInput())
+    link = forms.URLField(max_length=128, required=False)
+    project = forms.ModelChoiceField(queryset=Project.objects.all(), required=False)
     image = forms.ImageField(
         required=True,
         help_text="Bild für die Veranstaltung. Optimal: 800x600px, max. 2MB."
@@ -38,7 +41,7 @@ class EventModelForm(forms.ModelForm):
     """
     class Meta:
         model = Event
-        fields = ['name', 'venue', 'date', 'time', 'image', 'link']
+        fields = ['name', 'venue', 'date', 'time', 'image', 'link', 'project']
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date', 'class': 'datepicker'}),
             'time': forms.TimeInput(attrs={'type': 'time', 'class': 'timepicker'}),
@@ -46,6 +49,7 @@ class EventModelForm(forms.ModelForm):
         help_texts = {
             'image': 'Bild für die Veranstaltung. Optimal: 800x600px, max. 2MB.',
             'link': 'Optional: Link zu weiteren Informationen über die Veranstaltung.',
+            'project': 'Optional: Ordnen Sie die Veranstaltung einem Projekt zu.',
         }
     
     def clean_image(self):
