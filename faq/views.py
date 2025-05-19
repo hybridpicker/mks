@@ -31,6 +31,23 @@ def get_faq(request):
     return render(request, 'faq/faq_form.html', context)
 
 @login_required(login_url='/team/login/')
+def create_faq(request):
+    if request.method == "POST":
+        form = FaqForm(request.POST)
+        if form.is_valid():
+            faq = form.save(commit=False)
+            faq.save()
+            return redirect('get_all_faqs')
+    else:
+        form = FaqForm()
+    # Model data
+    context = {
+        'form': form,
+        'is_new': True,
+        }
+    return render(request, 'faq/faq_form.html', context)
+
+@login_required(login_url='/team/login/')
 def get_all_faqs(request):
     faqs = FAQ.objects.all()
     context ={

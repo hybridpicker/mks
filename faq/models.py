@@ -1,9 +1,10 @@
 from django.db import models
+from tinymce.models import HTMLField
 
 # Create your models here.
 class FAQ(models.Model):
     question = models.CharField(max_length=500)
-    answer = models.TextField(blank=True)
+    answer = HTMLField(blank=True)  # TinyMCE field like in Blog
     ordering = models.IntegerField(null=True, blank=True)
 
     class Meta:

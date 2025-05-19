@@ -1,0 +1,381 @@
+{% load static %}
+
+<!-- Enhanced Admin Dashboard Navigation -->
+<header id="UserNav">
+  <div class="mks-navbar-manage-container">
+    <!-- Logo Area -->
+    <div class="mks-navbar-manage-logo">
+      <a href="{% url 'home_view' %}" aria-label="Zur Startseite">
+        {% include "templates/svg/nav_bar_icon.html" %}
+      </a>
+    </div>
+    
+    <!-- Navigation Area -->
+    <div class="mks-navbar-manage-nav">
+      <div class="mks-navbar-manage-actions">
+        
+        <!-- Management Mega-Dropdown -->
+        <div class="mks-navbar-manage-dropdown">
+          <button class="mks-navbar-manage-trigger" aria-haspopup="true" aria-expanded="false">
+            <svg class="mks-navbar-manage-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
+            <span>Verwaltung</span>
+            <svg class="mks-navbar-manage-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          
+          <!-- Mega Dropdown Content -->
+          <div class="mks-navbar-manage-mega">
+            <div class="mks-navbar-manage-grid">
+              
+              <!-- Content Management Column -->
+              <div class="mks-navbar-manage-section">
+                <h3>Inhalte verwalten</h3>
+                <div class="mks-navbar-manage-items">
+                  <a href="{% url 'show_blogs_editing' %}" class="mks-navbar-manage-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 20h9"></path>
+                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                    <span>Blog verwalten</span>
+                  </a>
+                  <a href="{% url 'get_all_faqs' %}" class="mks-navbar-manage-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    <span>FAQ bearbeiten</span>
+                  </a>
+                  <a href="{% url 'get_index_text' %}" class="mks-navbar-manage-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Startseite</span>
+                  </a>
+                </div>
+              </div>
+              
+              <!-- User Management Column -->
+              {% if request.user.is_staff %}
+              <div class="mks-navbar-manage-section">
+                <h3>Benutzer & Anmeldungen</h3>
+                <div class="mks-navbar-manage-items">
+                  <a href="{% url 'get_controlling_students' %}" class="mks-navbar-manage-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Schüler:innen</span>
+                  </a>
+                  <a href="{% url 'invitation:invitation_list' %}" class="mks-navbar-manage-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="9 11 12 14 22 4"></polyline>
+                      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    <span>Zusagen verwalten</span>
+                  </a>
+                </div>
+              </div>
+              {% endif %}
+              
+              {% if request.user.coordinator %}
+              <div class="mks-navbar-manage-section">
+                <h3>Koordinator-Bereich</h3>
+                <div class="mks-navbar-manage-items">
+                  <a href="/team/controlling/coordinator/students?user_id={{ request.user.id }}" class="mks-navbar-manage-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Meine Schüler:innen</span>
+                  </a>
+                </div>
+              </div>
+              {% endif %}
+              
+              <!-- System & Events Column -->
+              {% if request.user.is_staff %}
+              <div class="mks-navbar-manage-section">
+                <h3>System & Events</h3>
+                <div class="mks-navbar-manage-items">
+                  <a href="{% url 'event_managing_view' %}" class="mks-navbar-manage-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Veranstaltungen</span>
+                  </a>
+                  <a href="{% url 'gallery_admin' %}" class="mks-navbar-manage-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    <span>Galerie verwalten</span>
+                  </a>
+                  <a href="/tanz-und-bewegung/wartung/" class="mks-navbar-manage-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 18V5l12-2v13"></path>
+                      <circle cx="6" cy="18" r="3"></circle>
+                      <circle cx="18" cy="16" r="3"></circle>
+                    </svg>
+                    <span>Tanz & Bewegung</span>
+                  </a>
+                </div>
+              </div>
+              {% endif %}
+              
+              <!-- Quick Actions Column -->
+              <div class="mks-navbar-manage-section">
+                <h3>Schnellzugriff</h3>
+                <div class="mks-navbar-manage-items">
+                  <a href="{% url 'create_blog_post' %}" class="mks-navbar-manage-item mks-navbar-manage-highlight">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 5l0 14"></path>
+                      <path d="M5 12l14 0"></path>
+                    </svg>
+                    <span>Neuer Blog-Post</span>
+                  </a>
+                  <a href="{% url 'event_managing_view' %}" class="mks-navbar-manage-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 5l0 14"></path>
+                      <path d="M5 12l14 0"></path>
+                    </svg>
+                    <span>Neue Veranstaltung</span>
+                  </a>
+                  <button class="mks-navbar-manage-item mks-navbar-manage-system-status" id="system-status-check">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    <span>System-Status</span>
+                    <span class="mks-navbar-manage-status-indicator"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- User Profile Dropdown -->
+        <div class="mks-navbar-manage-user">
+          <button class="mks-navbar-manage-user-trigger">
+            <span class="mks-navbar-manage-user-name">{{ request.user.get_full_name|default:request.user.username }}</span>
+            <span class="mks-navbar-manage-user-role">
+              {% if request.user.is_staff %}Administrator{% elif request.user.coordinator %}Koordinator{% else %}Benutzer{% endif %}
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          
+          <div class="mks-navbar-manage-user-menu">
+            <div class="mks-navbar-manage-user-info">
+              <strong>{{ request.user.get_full_name|default:request.user.username }}</strong>
+              <span>{{ request.user.email }}</span>
+            </div>
+            <div class="mks-navbar-manage-user-actions">
+              <a href="#" class="mks-navbar-manage-user-action">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Profil bearbeiten
+              </a>
+              <a href="#" class="mks-navbar-manage-user-action">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                Einstellungen
+              </a>
+            </div>
+            <div class="mks-navbar-manage-user-logout">
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="mks-navbar-manage-logout-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  Ausloggen
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <div id="mks-nav-mobile" class="menu">
+    <div class="mks-navbar-manage-mobile-header">
+      <span id="menuIcon" onclick="openMksNavMenu()" aria-label="Menü öffnen">
+        {% include "templates/svg/nav_bar_hamburger_mobile.html" %}
+      </span>
+    </div>
+    <div class="mks-navbar-manage-mobile-logo">
+      <a href="{% url 'home_view' %}" aria-label="Zur Startseite">
+        {% include "templates/svg/nav_bar_icon.html" %}
+      </a>
+    </div>
+    <div class="mks-navbar-manage-mobile-indicator">
+      {% if request.user.is_staff %}
+      <span class="mks-navbar-manage-badge">Admin</span>
+      {% elif request.user.coordinator %}
+      <span class="mks-navbar-manage-badge">Koordinator</span>
+      {% endif %}
+    </div>
+  </div>
+  
+  <!-- Mobile Menu Overlay -->
+  <div id="mks-nav-mobile-menu" class="mks-navbar-manage-overlay">
+    <div class="mks-navbar-manage-overlay-content">
+      <!-- Close Button -->
+      <a id="closeMobileMenu" href="javascript:void(0)" class="mks-navbar-manage-closebtn" onclick="closeMksNavMenu()" aria-label="Menü schließen">
+        {% include "templates/svg/nav_bar_crossburger.html" %}
+      </a>
+      
+      <!-- User Info -->
+      <div class="mks-navbar-manage-mobile-user">
+        <div class="mks-navbar-manage-mobile-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <div class="mks-navbar-manage-mobile-user-info">
+          <span class="mks-navbar-manage-mobile-name">{{ request.user.get_full_name|default:request.user.username }}</span>
+          <span class="mks-navbar-manage-mobile-role">
+            {% if request.user.is_staff %}Administrator{% elif request.user.coordinator %}Koordinator{% else %}Benutzer{% endif %}
+          </span>
+        </div>
+      </div>
+      
+      <!-- Navigation Groups -->
+      <div class="mks-navbar-manage-mobile-nav">
+        
+        <!-- Content Management Group -->
+        <div class="mks-navbar-manage-mobile-group">
+          <div class="mks-navbar-manage-mobile-group-header" data-toggle="content-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+            <span>Inhalte verwalten</span>
+            <svg class="mks-navbar-manage-expand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="mks-navbar-manage-mobile-items" id="content-group" style="display: none;">
+            <a href="{% url 'show_blogs_editing' %}">Blog verwalten</a>
+            <a href="{% url 'get_all_faqs' %}">FAQ bearbeiten</a>
+            <a href="{% url 'get_index_text' %}">Startseite bearbeiten</a>
+          </div>
+        </div>
+        
+        <!-- User Management Group -->
+        {% if request.user.is_staff %}
+        <div class="mks-navbar-manage-mobile-group">
+          <div class="mks-navbar-manage-mobile-group-header" data-toggle="user-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Benutzer & Anmeldungen</span>
+            <svg class="mks-navbar-manage-expand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="mks-navbar-manage-mobile-items" id="user-group" style="display: none;">
+            <a href="{% url 'get_controlling_students' %}">Schüler:innen verwalten</a>
+            <a href="{% url 'invitation:invitation_list' %}">Zusagen verwalten</a>
+          </div>
+        </div>
+        {% endif %}
+        
+        <!-- Coordinator Group -->
+        {% if request.user.coordinator %}
+        <div class="mks-navbar-manage-mobile-group">
+          <a href="/team/controlling/coordinator/students?user_id={{ request.user.id }}" class="mks-navbar-manage-mobile-single">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+            </svg>
+            <span>Meine Schüler:innen</span>
+          </a>
+        </div>
+        {% endif %}
+        
+        <!-- System Group -->
+        {% if request.user.is_staff %}
+        <div class="mks-navbar-manage-mobile-group">
+          <div class="mks-navbar-manage-mobile-group-header" data-toggle="system-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>System & Events</span>
+            <svg class="mks-navbar-manage-expand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="mks-navbar-manage-mobile-items" id="system-group" style="display: none;">
+            <a href="{% url 'event_managing_view' %}">Veranstaltungen</a>
+            <a href="{% url 'gallery_admin' %}">Galerie verwalten</a>
+            <a href="/tanz-und-bewegung/wartung/">Tanz & Bewegung</a>
+          </div>
+        </div>
+        {% endif %}
+        
+        <!-- Quick Actions Group -->
+        <div class="mks-navbar-manage-mobile-group">
+          <div class="mks-navbar-manage-mobile-group-header" data-toggle="quick-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Schnellzugriff</span>
+            <svg class="mks-navbar-manage-expand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="mks-navbar-manage-mobile-items" id="quick-group" style="display: none;">
+            <a href="{% url 'create_blog_post' %}">Neuer Blog-Post</a>
+            <a href="{% url 'event_managing_view' %}">Neue Veranstaltung</a>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Mobile Footer -->
+      <div class="mks-navbar-manage-mobile-footer">
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="mks-navbar-manage-mobile-logout">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1-2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            Ausloggen
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>

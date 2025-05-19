@@ -83,6 +83,14 @@ def eventView(request):
                 event.venue = request.POST['venue']
                 event.date = request.POST['date']
                 event.time = request.POST['time']
+                event.link = request.POST.get('link', '')
+                
+                # Projekt-Zuordnung
+                project_id = request.POST.get('project')
+                if project_id:
+                    event.project_id = project_id
+                else:
+                    event.project = None
                 
                 # Prüfen, ob ein neues Bild hochgeladen wurde
                 if 'image' in request.FILES:
@@ -102,6 +110,17 @@ def eventView(request):
                 venue = request.POST['venue']
                 date = request.POST['date']
                 time = request.POST['time']
+                link = request.POST.get('link', '')
+                
+                # Projekt-Zuordnung
+                project_id = request.POST.get('project')
+                project = None
+                if project_id:
+                    try:
+                        from projects.models import Project
+                        project = Project.objects.get(id=project_id)
+                    except Project.DoesNotExist:
+                        pass
                 
                 # Prüfen, ob ein Bild hochgeladen wurde
                 if 'image' not in request.FILES:
@@ -120,6 +139,8 @@ def eventView(request):
                     venue=venue,
                     date=date,
                     time=time,
+                    link=link,
+                    project=project,
                     image=image
                 )
                 new_event.save()
@@ -128,9 +149,17 @@ def eventView(request):
     else:
         form = EventForm()
     
+    # Projekte für Dropdown laden
+    try:
+        from projects.models import Project
+        projects = Project.objects.all()
+    except:
+        projects = []
+    
     context = {
         'events': events,
         'form': form,
         'edit_event': edit_event,
+        'projects': projects,
     }
     return render(request, 'users/events.html', context)
