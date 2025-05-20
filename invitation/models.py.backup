@@ -11,11 +11,10 @@ class Invitation(models.Model):
     # Event-Beziehung - neue Implementierung
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
     
-    # Alte Felder für Rückwärtskompatibilität (KEEP EXISTING DATABASE STRUCTURE)
-    # WICHTIG: Diese Felder behalten ihre ursprünglichen Definitionen aus Migration 0003!
+    # Alte Felder für Rückwärtskompatibilität (deprecated)
     event_name = models.CharField(max_length=255, default="", blank=True)
     event_date = models.DateTimeField(null=True, blank=True)
-    location = models.TextField(default="Grillparzercampus Orchestersaal, Grillparzerstraße 17, 3100 St. Pölten", null=True, blank=True)
+    location = models.TextField(default="", null=True, blank=True)
 
     # Begleitpersonen
     number_of_guests = models.PositiveIntegerField(default=0, verbose_name="Anzahl der Begleitpersonen", null=True, blank=True)
@@ -45,3 +44,4 @@ class Invitation(models.Model):
         if hasattr(self, 'event') and self.event:
             return self.event.venue or "Ort noch nicht bekannt"
         return self.location or "Ort noch nicht bekannt"
+
