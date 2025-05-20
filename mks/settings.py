@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'mks.apps.MksConfig',  # Must be first to setup allauth compatibility
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
