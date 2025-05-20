@@ -30,7 +30,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'mks.apps.MksConfig',  # Must be first to setup allauth compatibility
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -85,7 +84,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',  # Smart compatibility middleware for allauth (works with all versions)
+    'mks.middleware.allauth_compatibility.AccountMiddleware',  # Dummy middleware for allauth 0.50.0 compatibility
 ]
 
 ROOT_URLCONF = 'mks.urls'

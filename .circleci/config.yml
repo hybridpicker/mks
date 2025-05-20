@@ -7,7 +7,6 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-
       - image: circleci/python:3.9
       - image: cimg/postgres:11.12
         environment:
@@ -19,7 +18,6 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/postgres:9.4
-
 
     working_directory: ~/repo
 
@@ -55,6 +53,9 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
+            # Set environment variables for better compatibility
+            export DJANGO_SETTINGS_MODULE=mks.settings
+            # Run tests
             python manage.py test
 
       - store_artifacts:
