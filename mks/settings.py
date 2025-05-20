@@ -84,7 +84,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'mks.middleware.allauth_compatibility.AccountMiddleware',  # Dummy middleware for allauth 0.50.0 compatibility
+    'allauth.account.middleware.AccountMiddleware',  # Required middleware for allauth
 ]
 
 ROOT_URLCONF = 'mks.urls'
