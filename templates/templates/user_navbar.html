@@ -30,11 +30,15 @@
   <div id="mks-nav-mobile" class="menu" role="navigation" aria-label="Mobile Navigation">
     <div class="mks-navbar-manage-mobile-header">
       <button id="menuIcon" 
-              onclick="openMksNavMenu()" 
+              onclick="toggleMobileMenu()" 
               aria-label="Mobile Menü öffnen"
               aria-expanded="false"
               aria-controls="mks-nav-mobile-menu">
-        {% include "templates/svg/nav_bar_hamburger_mobile.html" %}
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
       </button>
     </div>
     
@@ -70,13 +74,15 @@
     
     <div class="mks-navbar-manage-overlay-content">
       
-      <!-- Close Button -->
+      <!-- REMOVED Close Button - Hamburger now transforms -->
+      <!-- 
       <button id="closeMobileMenu" 
               class="mks-navbar-manage-closebtn" 
               onclick="closeMksNavMenu()" 
               aria-label="Mobile Menü schließen">
         {% include "templates/svg/nav_bar_crossburger.html" %}
       </button>
+      -->
       
       <h2 id="mobile-menu-title" class="sr-only">Mobile Navigation</h2>
       
@@ -242,49 +248,44 @@
 <!-- Enhanced Mobile Navigation JavaScript -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Mobile Navigation Functions
-  window.openMksNavMenu = function() {
-    const overlay = document.getElementById('mks-nav-mobile-menu');
-    const trigger = document.getElementById('menuIcon');
-    
-    if (overlay) {
-      overlay.style.width = '100vw';
-      overlay.style.height = '100vh';
-      overlay.setAttribute('aria-hidden', 'false');
-      trigger.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
-      
-      // Focus management
-      const closeBtn = document.getElementById('closeMobileMenu');
-      if (closeBtn) {
-        setTimeout(() => closeBtn.focus(), 100);
-      }
-    }
-  };
 
-  window.closeMksNavMenu = function() {
-    const overlay = document.getElementById('mks-nav-mobile-menu');
-    const trigger = document.getElementById('menuIcon');
-    
-    if (overlay) {
-      overlay.style.width = '0';
-      overlay.style.height = '0';
-      overlay.setAttribute('aria-hidden', 'true');
-      trigger.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-      
-      // Return focus
-      trigger.focus();
-    }
-  };
+  // Combined function to toggle mobile menu and hamburger icon state
+  function toggleMobileMenu() {
+    const menuButton = document.getElementById('menuIcon');
+    const mobileMenuOverlay = document.getElementById('mks-nav-mobile-menu');
 
-  // Legacy compatibility
+    // Toggle the 'is-active' class on the button
+    const isActive = menuButton.classList.toggle('is-active');
+
+    if (isActive) {
+        // Open the menu
+        mobileMenuOverlay.style.width = "100%"; 
+        mobileMenuOverlay.setAttribute('aria-hidden', 'false');
+        menuButton.setAttribute('aria-expanded', 'true');
+        menuButton.setAttribute('aria-label', 'Mobile Menü schließen');
+        // Optional: Trap focus within the menu
+    } else {
+        // Close the menu
+        mobileMenuOverlay.style.width = "0";
+        mobileMenuOverlay.setAttribute('aria-hidden', 'true');
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', 'Mobile Menü öffnen');
+        // Optional: Return focus to the menu button
+    }
+  }
+
+  // Make the function globally accessible if needed by onclick attributes directly
+  // (though it's better if event listeners are attached in JS, for this setup it's fine)
+  window.toggleMobileMenu = toggleMobileMenu; 
+
+  /* Legacy compatibility - commented out as openMksNavMenu/closeMksNavMenu are removed
   window.openNav = window.openMksNavMenu;
   window.closeNav = window.closeMksNavMenu;
+  */
 
-  // Mobile Navigation Groups Toggle
-  const mobileGroupHeaders = document.querySelectorAll('.mks-navbar-manage-mobile-group-header[data-toggle]');
-  mobileGroupHeaders.forEach(header => {
+  // Accordion functionality for mobile menu groups
+  const groupHeaders = document.querySelectorAll('.mks-navbar-manage-mobile-group-header');
+  groupHeaders.forEach(header => {
     const toggleId = header.getAttribute('data-toggle');
     const targetGroup = document.getElementById(toggleId);
     const expandIcon = header.querySelector('.mks-navbar-manage-expand-icon');
@@ -313,8 +314,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       const overlay = document.getElementById('mks-nav-mobile-menu');
-      if (overlay && overlay.style.width === '100vw') {
-        closeMksNavMenu();
+      if (overlay && overlay.style.width === '100%') {
+        toggleMobileMenu();
       }
     }
   });
