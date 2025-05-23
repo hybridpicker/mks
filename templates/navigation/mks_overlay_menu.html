@@ -55,7 +55,7 @@
     
     <!-- Header -->
     <header class="mks-overlay-header">
-      <h2 id="overlay-title">MKS Verwaltung</h2>
+      <h2 id="overlay-title">Verwaltung</h2>
       <button class="mks-overlay-close" 
               type="button"
               aria-label="Verwaltungsmenü schließen">
@@ -133,7 +133,7 @@
             </h3>
             
             <nav class="mks-overlay-nav-items">
-              <a href="{% url 'get_index_text' %}" class="mks-overlay-nav-item">
+              <a href="{% url 'controlling:get_index_text' %}" class="mks-overlay-nav-item">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M3 3h21v18H3z"></path>
                   <path d="M8 12h8"></path>
@@ -169,16 +169,24 @@
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                 <circle cx="9" cy="7" r="4"></circle>
               </svg>
-              Voranmeldungen
+              Personal & Anmeldungen
             </h3>
             
             <nav class="mks-overlay-nav-items">
-              <a href="{% url 'get_controlling_students' %}" class="mks-overlay-nav-item">
+              <a href="{% url 'controlling:get_controlling_students' %}" class="mks-overlay-nav-item">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                   <circle cx="9" cy="7" r="4"></circle>
                 </svg>
                 <span>Schüler:innen</span>
+              </a>
+              
+              <a href="{% url 'controlling:get_controlling_teachers' %}" class="mks-overlay-nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>Lehrer:innen</span>
               </a>
             </nav>
           </section>
@@ -325,6 +333,14 @@
           <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
         </svg>
         <span>Neue Anmeldung</span>
+      </a>
+      
+      <a href="{% url 'controlling:get_controlling_teachers' %}" class="mks-overlay-quick-action mks-overlay-action-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Lehrer:innen verwalten</span>
       </a>
       
       <div class="mks-overlay-quick-actions-spacer"></div>

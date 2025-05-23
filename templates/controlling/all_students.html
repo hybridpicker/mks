@@ -769,7 +769,7 @@
                             </div>
                             
                             <!-- Export Button -->
-                            <a href="{% url 'export_students_xls' %}{% if request.GET.category %}?id={{ request.GET.category }}{% endif %}" 
+                            <a href="{% url 'controlling:export_students_xls' %}{% if request.GET.category %}?id={{ request.GET.category }}{% endif %}" 
                                class="mks-btn mks-btn-secondary mks-btn-sm">
                                 <span class="btn-text">📊 Exportieren</span>
                                 <span class="btn-icon mobile-only">📊</span>
