@@ -71,6 +71,50 @@
   font-family: var(--mks-font-family);
 }
 
+/* Minimalistic Logout Button */
+.mks-minimal-logout-form {
+  margin: 0;
+  padding: 0;
+}
+
+.mks-minimal-logout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  
+  background: var(--mks-white);
+  border: 1px solid var(--mks-gray-300);
+  border-radius: var(--mks-radius-md);
+  
+  color: var(--mks-gray-600);
+  cursor: pointer;
+  transition: var(--mks-transition);
+  box-shadow: var(--mks-shadow-sm);
+}
+
+.mks-minimal-logout-btn:hover {
+  background: var(--mks-primary-light);
+  border-color: var(--mks-primary);
+  color: var(--mks-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--mks-shadow-md);
+}
+
+.mks-minimal-logout-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--mks-shadow-sm);
+}
+
+.mks-minimal-logout-btn svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  stroke-width: 2;
+}
+
 .mks-overlay-trigger {
   display: inline-flex;
   align-items: center;

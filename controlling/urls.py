@@ -10,6 +10,7 @@ app_name = 'controlling'
 
 urlpatterns = [
     # Student URLs
+        path('', views.controlling_dashboard, name='controlling_dashboard'),
     path('students', views.get_all_students, name='get_controlling_students'),
     path('coordinator/students', views.get_all_students_coordinator, name='get_controlling_students_coordinator'),
     path('single_student', views.get_student, name='get_controlling_single_student'),
@@ -22,6 +23,7 @@ urlpatterns = [
     
     # Teacher Management URLs
     path('teachers', teacher_views.get_all_teachers, name='get_controlling_teachers'),
+    path('teachers/new', teacher_views.teacher_create, name='teacher_create'),
     path('teacher/<int:teacher_id>', teacher_views.get_teacher_detail, name='teacher_detail'),
     path('teacher/<int:teacher_id>/edit', teacher_views.teacher_quick_edit, name='teacher_quick_edit'),
     path('teacher/<int:teacher_id>/full-edit', teacher_views.teacher_full_edit, name='teacher_full_edit'),

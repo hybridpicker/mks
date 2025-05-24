@@ -15,6 +15,43 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 # Create your views here.
 @login_required(login_url='/team/login/')
+@staff_member_required  
+def controlling_dashboard(request):
+    """Controlling Dashboard with statistics and navigation"""
+    from students.models import Student
+    from teaching.models import Teacher, Subject
+    from django.db.models import Count
+    
+    # Calculate statistics
+    total_students = Student.objects.count()
+    total_teachers = Teacher.objects.count()
+    total_subjects = Subject.objects.count()
+    
+    # Recent students
+    recent_students = Student.objects.all().order_by('-start_date')[:5]
+    
+    # Students by category
+    from teaching.models import SubjectCategory
+    categories = SubjectCategory.objects.all().exclude(hidden=True)
+    category_stats = []
+    for category in categories:
+        student_count = Student.objects.filter(subject__category=category).count()
+        category_stats.append({
+            'category': category,
+            'count': student_count
+        })
+    
+    context = {
+        'total_students': total_students,
+        'total_teachers': total_teachers,
+        'total_subjects': total_subjects,
+        'recent_students': recent_students,
+        'category_stats': category_stats,
+        'categories': categories,
+    }
+    return render(request, 'controlling/dashboard.html', context)
+
+@login_required(login_url='/team/login/')
 @staff_member_required
 def get_all_students(request):
     students = Student.objects.all().order_by('-start_date')

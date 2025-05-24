@@ -1,12 +1,160 @@
 {% extends "templates/base.html" %}
-
 {% load static %}
 
-{% block tab_id %}id="home_tab"{% endblock %}
+{% block tab_id %}id="login_tab"{% endblock %}
 
 {% block extra_head %}
 <meta name="robots" content="noindex">
+<style>
+.login-container {
+  padding: 4rem 0;
+  margin-top: 2rem;
+}
 
+.login-form-wrapper {
+  max-width: 450px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  padding: 3rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.login-header h1 {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 2rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.login-header p {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  color: #666;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-group input {
+  width: 80%;
+  padding: 1rem;
+  border: 2px solid #f1f1f1;
+  border-radius: 4px;
+  background: #fdfdfd;
+  font-size: 1rem;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #D11317;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(209, 19, 23, 0.1);
+}
+
+.login-btn {
+  width: 80%;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1.05rem;
+  padding: 1rem;
+  background: #D11317;
+  color: #fdfdfd;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.login-btn:hover {
+  background: #b10e13;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(209, 19, 23, 0.3);
+}
+
+.forgot-password {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.forgot-password a {
+  color: #D11317;
+  text-decoration: none;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.alert {
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.95rem;
+}
+
+.alert-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #dc2626;
+}
+
+.errorlist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.errorlist li {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #dc2626;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 480px) {
+  .login-form-wrapper {
+    margin: 1rem;
+    padding: 1.6rem;
+  }
+  
+  .login-header h1 {
+    font-size: 2rem;
+  }
+}
+</style>
 {% endblock %}
 
 {% block navbar %}
@@ -15,52 +163,74 @@
 {% block banner %}
 <img src="/static/banner/team_banner.jpg" alt="">
 <img id="mbimg" src="/static/banner/mobile/team_banner.jpg" alt="">
-
 {% endblock %}
-
-{% block title %}Login{% endblock %}
 
 {% block body %}
 <div class="mbs">
-  <div class="container">
-    <h2>Login</h2>
-    <form method="post"id="login-mks-form">
-      {% csrf_token %}
-      <div class="user-text">
-        <p>Benutzername:</p>
+  <div class="container login-container">
+    <div class="login-form-wrapper">
+      <div class="login-header">
+        <h1>Musikschule St. Pölten</h1>
+        <p>Willkommen zurück</p>
       </div>
-      <div class="user-input">
-        {{ form.username }}
-      </div>
-      <div class="password-text">
-        <p>Passwort:</p>
-      </div>
-      <div class="password-input">
-        {{ form.password }}
-      </div>
-      <div class="user-login">
-        <button id="button-login" type="submit">Einloggen</button>
-      </div>
-    </form>
-    {% if form.errors %}
-      {% for field in form %}
+      
+      <form method="post" id="login-mks-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="id_username">Benutzername:</label>
+          {{ form.username }}
+        </div>
+        
+        <div class="form-group">
+          <label for="id_password">Passwort:</label>
+          {{ form.password }}
+        </div>
+        
+        <button type="submit" class="login-btn" id="button-login">
+          Anmelden
+        </button>
+      </form>
+      
+      <!-- Error handling -->
+      {% if form.errors %}
+        {% for field in form %}
           {% for error in field.errors %}
-              <div class="alert alert-error">
-                  <strong>Fehler: {{ error|escape }}</strong>
-              </div>
+            <div class="alert alert-error">
+              <strong>Fehler: {{ error|escape }}</strong>
+            </div>
           {% endfor %}
-      {% endfor %}
-      {% for error in form.non_field_errors %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
           <div class="alert alert-error">
-              <p><strong>Fehler: </strong>{{ error|escape }}</p>
+            <strong>Fehler: {{ error|escape }}</strong>
           </div>
-      {% endfor %}
-    {% endif %}
-    <p><a href="/team/password_reset">Passwort vergessen?</a></p>
+        {% endfor %}
+      {% endif %}
+      
+      <div class="forgot-password">
+        <a href="/team/password_reset">Passwort vergessen?</a>
+      </div>
+    </div>
   </div>
 </div>
-{% endblock %}
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Set placeholders for the form fields
+  const usernameField = document.querySelector('input[name="username"]');
+  const passwordField = document.querySelector('input[name="password"]');
+  
+  if (usernameField) {
+    usernameField.placeholder = 'Benutzername eingeben';
+  }
+  
+  if (passwordField) {
+    passwordField.placeholder = 'Passwort eingeben';
+    passwordField.type = 'password';
+  }
+});
+</script>
+{% endblock %}
 
 {% block footer %}
 {% endblock %}

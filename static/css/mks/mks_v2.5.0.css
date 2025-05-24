@@ -2793,6 +2793,9 @@ slide:nth-child(3) {
 .modal-body span {
   text-decoration: none !important;
 }
+span {
+  text-decoration: none !important;
+}
 .timeslot-course {
   cursor: pointer;
 }

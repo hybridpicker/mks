@@ -82,6 +82,100 @@ def get_all_teachers(request):
 
 
 @login_required
+def teacher_create(request):
+    """
+    Neuen Lehrer erstellen
+    """
+    if request.method == 'POST':
+        # Get form data
+        first_name = request.POST.get('first_name', '').strip()
+        last_name = request.POST.get('last_name', '').strip()
+        email = request.POST.get('email', '').strip()
+        phone = request.POST.get('phone', '').strip()
+        gender_id = request.POST.get('gender')
+        
+        # Validation
+        errors = []
+        
+        if not first_name:
+            errors.append('Vorname ist erforderlich.')
+        
+        if not last_name:
+            errors.append('Nachname ist erforderlich.')
+        
+        if not gender_id:
+            errors.append('Geschlecht ist erforderlich.')
+        
+        if email and '@' not in email:
+            errors.append('Bitte geben Sie eine gültige E-Mail-Adresse ein.')
+        
+        # Check for duplicate email
+        if email and Teacher.objects.filter(email=email).exists():
+            errors.append('Diese E-Mail-Adresse wird bereits verwendet.')
+        
+        if errors:
+            for error in errors:
+                messages.error(request, error)
+        else:
+            try:
+                # Create new teacher
+                teacher = Teacher(
+                    first_name=first_name,
+                    last_name=last_name,
+                    email=email if email else '',
+                    phone=phone if phone else '',
+                    gender_id=gender_id
+                )
+                
+                # Optional fields
+                academic_title_id = request.POST.get('academic_title')
+                if academic_title_id:
+                    teacher.academic_title_id = academic_title_id
+                    
+                bio = request.POST.get('bio', '').strip()
+                if bio:
+                    teacher.bio = bio
+                    
+                homepage = request.POST.get('homepage', '').strip()
+                if homepage:
+                    teacher.homepage = homepage
+                
+                teacher.save()
+                
+                # Handle subjects (many-to-many) - can only be set after saving
+                subject_ids = request.POST.getlist('subjects')
+                if subject_ids:
+                    subjects = Subject.objects.filter(id__in=subject_ids)
+                    teacher.subject.set(subjects)
+                
+                # Handle subject coordinators
+                coordinator_ids = request.POST.getlist('subject_coordinators')
+                if coordinator_ids:
+                    coordinators = SubjectCategory.objects.filter(id__in=coordinator_ids)
+                    teacher.subject_coordinator.set(coordinators)
+                
+                messages.success(
+                    request, 
+                    f'Lehrer {teacher.first_name} {teacher.last_name} wurde erfolgreich erstellt.'
+                )
+                return redirect('controlling:teacher_detail', teacher_id=teacher.id)
+                
+            except Exception as e:
+                messages.error(request, f'Fehler beim Erstellen: {str(e)}')
+    
+    # Get form choices
+    context = {
+        'academic_titles': AcademicTitle.objects.all(),
+        'genders': Gender.objects.all(),
+        'countries': Country.objects.all(),
+        'all_subjects': Subject.objects.all().order_by('subject'),
+        'subject_categories': SubjectCategory.objects.all().order_by('name'),
+    }
+    
+    return render(request, 'controlling/teacher_create.html', context)
+
+
+@login_required
 def get_teacher_detail(request, teacher_id):
     """
     Einzelnen Lehrer anzeigen mit erweiterten Informationen

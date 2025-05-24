@@ -1,0 +1,385 @@
+{% extends "templates/base.html" %}
+{% load static %}
+
+{% block tab_id %}id="team_tab"{% endblock %}
+
+{% block extra_head %}
+<meta name="robots" content="noindex">
+<style>
+/* Hide banner container completely for team page */
+.bs {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  visibility: hidden !important;
+}
+
+.team-container {
+  padding: 1.6rem 0;
+  margin-top: 2rem;
+}
+
+.team-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.team-header h1 {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 2.4rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.team-header p {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1.4rem;
+  color: #666;
+  text-align: center;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.team-nav {
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.team-nav a {
+  color: #D11317;
+  text-decoration: none;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.team-nav a:hover, .team-nav a.active {
+  background: #D11317;
+  color: white;
+  text-decoration: none;
+}
+
+.stats-section {
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  padding: 1.6rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  text-align: center;
+}
+
+.stat-item {
+  padding: 1rem;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #D11317;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: #666;
+  font-weight: 500;
+  font-size: 0.95rem;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.team-card {
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  padding: 1.6rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.team-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+.member-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #D11317;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.member-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.member-info h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+}
+
+.member-role {
+  color: #D11317;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+}
+
+.member-description {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.95rem;
+  text-align: justify;
+  padding: 0;
+}
+
+.member-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.skill-tag {
+  background: #D11317;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+}
+
+.member-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.contact-btn {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  background: #D11317;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.contact-btn:hover {
+  background: #b10e13;
+  text-decoration: none;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.contact-btn[style*="10b981"] {
+  background: #10b981 !important;
+}
+
+.contact-btn[style*="10b981"]:hover {
+  background: #059669 !important;
+}
+
+.contact-btn[style*="f59e0b"] {
+  background: #f59e0b !important;
+}
+
+.contact-btn[style*="f59e0b"]:hover {
+  background: #d97706 !important;
+}
+
+@media (max-width: 768px) {
+  .team-header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .team-nav a {
+    display: block;
+    margin: 0.5rem 0;
+  }
+  
+  .member-contact {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .contact-btn {
+    text-align: center;
+  }
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container team-container">
+    
+    <div class="team-nav">
+      <a href="/team/">Dashboard</a>
+      <a href="/team/team/" class="active">Team</a>
+      <a href="/team/events">Events</a>
+      <a href="/controlling/">Controlling</a>
+      <a href="/team/logout/">Abmelden</a>
+    </div>
+
+    <div class="team-header">
+      <h1>Unser Team</h1>
+      <p>Lernen Sie unsere talentierten Lehrkräfte und das Team kennen, das die Musikschule St. Pölten zu einem besonderen Ort macht.</p>
+    </div>
+
+    <div class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-number">{{ stats.teachers }}</span>
+          <div class="stat-label">Lehrkräfte</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ stats.instruments }}</span>
+          <div class="stat-label">Instrumente</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ stats.students }}</span>
+          <div class="stat-label">Schüler</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="team-grid">
+      {% for member in team_members %}
+      <div class="team-card">
+        <div class="member-avatar">
+          {% if member.image %}
+            <img src="{{ member.image }}" alt="{{ member.name }}">
+          {% else %}
+            {{ member.initials }}
+          {% endif %}
+        </div>
+        <div class="member-info">
+          <h3>{{ member.name }}</h3>
+          <div class="member-role">{{ member.role }}</div>
+          <div class="member-description">
+            {{ member.description }}
+          </div>
+          <div class="member-skills">
+            {% for skill in member.skills %}
+            <span class="skill-tag">{{ skill }}</span>
+            {% endfor %}
+          </div>
+          <div class="member-contact">
+            <a href="mailto:{{ member.email }}" class="contact-btn">E-Mail</a>
+            {% if member.phone %}
+            <a href="tel:{{ member.phone }}" class="contact-btn" style="background: #10b981;">Anrufen</a>
+            {% endif %}
+            {% if member.homepage %}
+            <a href="{{ member.homepage }}" target="_blank" class="contact-btn" style="background: #f59e0b;">Website</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Counter animation for stats
+  function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target;
+          const target = parseInt(counter.textContent.replace(/\D/g, '')) || 0;
+          const suffix = counter.textContent.replace(/\d/g, '');
+          let current = 0;
+          const increment = target / 30;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              counter.textContent = target + suffix;
+              clearInterval(timer);
+            } else {
+              counter.textContent = Math.ceil(current) + suffix;
+            }
+          }, 50);
+          observer.unobserve(counter);
+        }
+      });
+    });
+    
+    counters.forEach(counter => observer.observe(counter));
+  }
+
+  animateCounters();
+});
+</script>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

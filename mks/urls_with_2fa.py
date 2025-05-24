@@ -20,6 +20,9 @@ from django.conf.urls import handler404, handler500
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Import custom 2FA login view
+from users.twofa_views import CustomLoginView
+
 import home.views
 import teaching.views
 
@@ -45,13 +48,15 @@ urlpatterns = [
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     re_path(r'^tinymce/', include('tinymce.urls')),  # Added TinyMCE URLs
 
+    # Custom login with 2FA support
+    path('accounts/login/', CustomLoginView.as_view(), name='login'),
+
 #    re_path(r'^instruments/', include('instruments.urls')),
     path('', home.views.home, name='home_view'),
     path('impressum/', home.views.impressum, name='impressum'),
     path('geschichte/', home.views.history, name='history'),
     path('logo/', home.views.logo, name='logo'),
-    path('team/', include('users.urls', namespace='users')),
-    path('controlling/', include('controlling.urls', namespace='controlling')),
+    path('team/', include('users.urls')),
     path('', include('contact.urls')),
     path('', include('downloadsection.urls')),
     path('', include('gallery.urls')),

@@ -193,7 +193,7 @@
             </svg>
           </button>
           <div class="mks-navbar-manage-mobile-items" id="system-group" style="display: none;">
-            <a href="{% url 'event_managing_view' %}">Veranstaltungen</a>
+            <a href="{% url 'users:event_managing_view' %}">Veranstaltungen</a>
             <a href="{% url 'gallery_admin' %}">Galerie verwalten</a>
             <a href="/tanz-und-bewegung/wartung/">Tanz & Bewegung</a>
           </div>
@@ -218,7 +218,7 @@
           <div class="mks-navbar-manage-mobile-items" id="quick-group" style="display: none;">
             <a href="{% url 'create_blog_post' %}">Neuer Blog-Post</a>
             {% if request.user.is_staff %}
-            <a href="{% url 'event_managing_view' %}">Neue Veranstaltung</a>
+            <a href="{% url 'users:event_managing_view' %}">Neue Veranstaltung</a>
             {% endif %}
           </div>
         </div>
@@ -226,7 +226,7 @@
       
       <!-- Mobile Footer with Logout -->
       <div class="mks-navbar-manage-mobile-footer">
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'users:logout' %}">
           {% csrf_token %}
           <button type="submit" 
                   class="mks-navbar-manage-mobile-logout"
