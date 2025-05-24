@@ -689,13 +689,206 @@
                     </div>
                 </div>
                 
+                <!-- Event Form -->
+                <div class="mks-card" id="event-form">
+                    <div class="mks-card-header">
+                        <h2 class="mks-card-title">
+                            {% if edit_event %}
+                                ✏️ Veranstaltung bearbeiten
+                            {% else %}
+                                <svg style="width: 1.2em; height: 1.2em; margin-right: 0.5rem; vertical-align: middle;" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>Neue Veranstaltung erstellen
+                            {% endif %}
+                        </h2>
+                        {% if edit_event %}
+                        <a href="{% url 'event_managing_view' %}" class="mks-btn mks-btn-secondary mks-btn-sm">
+                            ❌ Abbrechen
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="mks-card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            {% if edit_event %}
+                            <input type="hidden" name="event_id" value="{{ edit_event.id }}">
+                            {% endif %}
+                            
+                            <div class="mks-form-grid">
+                                <!-- Event Name -->
+                                <div class="mks-form-group">
+                                    <label for="id_name" class="mks-form-label">
+                                        Veranstaltungsname <span class="required">*</span>
+                                    </label>
+                                    <input type="text" name="name" id="id_name" class="mks-form-control" 
+                                           maxlength="100" required 
+                                           value="{% if edit_event %}{{ edit_event.name }}{% endif %}"
+                                           placeholder="z.B. Frühlingskonzert 2025">
+                                    <div class="mks-form-help">Maximal 100 Zeichen</div>
+                                    {% if form.name.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.name.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Venue -->
+                                <div class="mks-form-group">
+                                    <label for="id_venue" class="mks-form-label">
+                                        Veranstaltungsort
+                                    </label>
+                                    <input type="text" name="venue" id="id_venue" class="mks-form-control" 
+                                           maxlength="80" 
+                                           value="{% if edit_event %}{{ edit_event.venue }}{% endif %}"
+                                           placeholder="z.B. Hauptsaal der Musikschule">
+                                    <div class="mks-form-help">Maximal 80 Zeichen</div>
+                                    {% if form.venue.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.venue.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Date -->
+                                <div class="mks-form-group">
+                                    <label for="id_date" class="mks-form-label">
+                                        Datum <span class="required">*</span>
+                                    </label>
+                                    <input type="date" name="date" id="id_date" class="mks-form-control" required
+                                           value="{% if edit_event %}{{ edit_event.date|date:'Y-m-d' }}{% endif %}">
+                                    {% if form.date.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.date.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Time -->
+                                <div class="mks-form-group">
+                                    <label for="id_time" class="mks-form-label">
+                                        Beginnzeit <span class="required">*</span>
+                                    </label>
+                                    <input type="time" name="time" id="id_time" class="mks-form-control" required
+                                           value="{% if edit_event %}{{ edit_event.time|time:'H:i' }}{% endif %}">
+                                    {% if form.time.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.time.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Link -->
+                                <div class="mks-form-group">
+                                    <label for="id_link" class="mks-form-label">
+                                        Link zu weiteren Informationen
+                                    </label>
+                                    <input type="url" name="link" id="id_link" class="mks-form-control" 
+                                           value="{% if edit_event %}{{ edit_event.link }}{% endif %}"
+                                           placeholder="https://...">
+                                    <div class="mks-form-help">Optional: Link zu Website oder weiteren Details</div>
+                                    {% if form.link.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.link.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Project -->
+                                <div class="mks-form-group">
+                                    <label for="id_project" class="mks-form-label">
+                                        Projekt-Zuordnung
+                                    </label>
+                                    <select name="project" id="id_project" class="mks-form-control">
+                                        <option value="">-- Kein Projekt --</option>
+                                        {% for project in projects %}
+                                        <option value="{{ project.id }}" 
+                                                {% if edit_event and edit_event.project.id == project.id %}selected{% endif %}>
+                                            {{ project.name }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="mks-form-help">Optional: Ordnen Sie die Veranstaltung einem Projekt zu</div>
+                                    {% if form.project.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.project.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Image Upload -->
+                                <div class="mks-form-group full-width">
+                                    <label for="id_image" class="mks-form-label">
+                                        Veranstaltungsbild 
+                                        {% if not edit_event %}<span class="required">*</span>{% endif %}
+                                    </label>
+                                    
+                                    {% if edit_event and edit_event.image %}
+                                    <div class="mks-current-image">
+                                        <img src="{{ edit_event.get_image_url }}" alt="Aktuelles Bild" 
+                                             style="max-width: 200px; height: auto; border-radius: 4px; margin-bottom: 1rem;">
+                                        <div class="mks-form-help">Aktuelles Bild - Neues Bild auswählen zum Ersetzen</div>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <div class="mks-file-upload">
+                                        <input type="file" name="image" id="id_image" accept="image/*" 
+                                               {% if not edit_event %}required{% endif %}>
+                                        <label for="id_image" class="mks-file-upload-label">
+                                            <span class="mks-file-upload-icon">📁</span>
+                                            <span>
+                                                {% if edit_event %}
+                                                    Neues Bild auswählen (optional)
+                                                {% else %}
+                                                    Klicken Sie hier oder ziehen Sie ein Bild hinein
+                                                {% endif %}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    {% if form.image.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.image.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Guidelines -->
+                                <div class="mks-form-group full-width">
+                                    <div class="mks-guidelines-box">
+                                        <h4>📋 Bildrichtlinien für Veranstaltungen</h4>
+                                        <ul>
+                                            <li><strong>Erforderlich:</strong> Jede Veranstaltung muss ein Bild haben</li>
+                                            <li><strong>Optimale Größe:</strong> 800 × 600 Pixel (4:3 Querformat)</li>
+                                            <li><strong>Dateiformate:</strong> JPG, PNG oder WEBP</li>
+                                            <li><strong>Maximale Dateigröße:</strong> 2MB</li>
+                                            <li><strong>Verwendung:</strong> Wird auf der Startseite und in der Übersicht angezeigt</li>
+                                            <li><strong>Tipp:</strong> Verwenden Sie <a href="https://tinypng.com/" target="_blank">TinyPNG</a> oder <a href="https://squoosh.app/" target="_blank">Squoosh</a> zur Komprimierung</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Form Actions -->
+                            <div style="text-align: right; margin-top: 2rem;">
+                                {% if edit_event %}
+                                <button type="submit" class="mks-btn mks-btn-primary">
+                                    ✅ Änderungen speichern
+                                </button>
+                                {% else %}
+                                <button type="submit" class="mks-btn mks-btn-primary">
+                                    ✅ Veranstaltung erstellen
+                                </button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
                 <!-- Events List -->
                 <div class="mks-card">
                     <div class="mks-card-header">
                         <h2 class="mks-card-title">📅 Alle Veranstaltungen</h2>
-                        <a href="#event-form" class="mks-btn mks-btn-secondary mks-btn-sm">
-                            ➕ Neue Veranstaltung
-                        </a>
                     </div>
                     <div class="mks-card-body">
                         {% if events %}
@@ -747,7 +940,7 @@
                             <div class="mks-empty-icon">📅</div>
                             <h3 class="mks-empty-title">Keine Veranstaltungen vorhanden</h3>
                             <p class="mks-empty-text">
-                                Erstellen Sie Ihre erste Veranstaltung mit dem Formular unten.
+                                Erstellen Sie Ihre erste Veranstaltung mit dem Formular oben.
                             </p>
                         </div>
                         {% endif %}
@@ -761,7 +954,10 @@
                             {% if edit_event %}
                                 ✏️ Veranstaltung bearbeiten
                             {% else %}
-                                ➕ Neue Veranstaltung erstellen
+                                <svg style="width: 1.2em; height: 1.2em; margin-right: 0.5rem; vertical-align: middle;" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>Neue Veranstaltung erstellen
                             {% endif %}
                         </h2>
                         {% if edit_event %}

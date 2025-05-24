@@ -71,6 +71,50 @@
   font-family: var(--mks-font-family);
 }
 
+/* Minimalistic Logout Button */
+.mks-minimal-logout-form {
+  margin: 0;
+  padding: 0;
+}
+
+.mks-minimal-logout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  
+  background: var(--mks-white);
+  border: 1px solid var(--mks-gray-300);
+  border-radius: var(--mks-radius-md);
+  
+  color: var(--mks-gray-600);
+  cursor: pointer;
+  transition: var(--mks-transition);
+  box-shadow: var(--mks-shadow-sm);
+}
+
+.mks-minimal-logout-btn:hover {
+  background: var(--mks-primary-light);
+  border-color: var(--mks-primary);
+  color: var(--mks-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--mks-shadow-md);
+}
+
+.mks-minimal-logout-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--mks-shadow-sm);
+}
+
+.mks-minimal-logout-btn svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  stroke-width: 2;
+}
+
 .mks-overlay-trigger {
   display: inline-flex;
   align-items: center;
@@ -775,6 +819,273 @@
   .mks-overlay-logout-form {
     width: 100%;
   }
+}
+
+/* =============================================================================
+   MOBILE NAVIGATION BAR & UPDATED OVERLAY STYLES (MKS)
+   ============================================================================= */
+
+/* Variables (assuming these are defined at :root or inherited) */
+/* --mks-primary: #d11317; */
+/* --mks-white: #ffffff; */
+/* --mks-gray-50: #f9fafb; */
+/* --mks-gray-100: #f3f4f6; */
+/* --mks-gray-200: #e5e7eb; */
+/* --mks-gray-600: #4b5563; */
+/* --mks-gray-700: #374151; */
+/* --mks-gray-800: #1f2937; */
+/* --mks-font-condensed: "jaf-bernina-sans-condensed", sans-serif; */
+
+/* Hide desktop navigation elements on mobile and ensure mobile nav bar is visible */
+@media only screen and (max-width: 820px) { /* Or your preferred mobile breakpoint */
+  /* Hide elements from the desktop/main navigation */
+  .mks-navbar-manage-container .mks-navbar-manage-logo, /* Desktop logo */
+  .mks-navbar-manage-container .mks-navbar-manage-nav,  /* Desktop nav links */
+  .mks-navbar-manage-container .mks-overlay-navigation, /* Desktop overlay trigger */
+  .section.main-nav .mks-navbar-manage-container > *:not(#mks-nav-mobile):not(#mks-nav-mobile-menu) {
+    display: none !important;
+  }
+
+  header#UserNav #mks-nav-mobile {
+    display: flex !important; /* Ensure mobile nav bar is shown */
+  }
+}
+
+/* Styles for the mobile navigation bar itself (#mks-nav-mobile) */
+header#UserNav #mks-nav-mobile {
+  display: none; /* Hidden by default, shown by media query */
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem; /* Reduced left/right padding to move hamburger left */
+  background-color: var(--mks-white, #ffffff);
+  border-bottom: 1px solid var(--mks-gray-200, #e5e7eb);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 60px; /* Fixed height for the bar */
+  z-index: 1090; /* Ensure it's above other content, adjust if needed. Original .section.main-nav was 111 */
+  box-sizing: border-box;
+}
+
+/* Mobile Hamburger Button (#menuIcon) */
+header#UserNav #mks-nav-mobile #menuIcon {
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem; /* 8px for touch area */
+  margin: 0; /* Reset margin */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Fill height of parent */
+  color: var(--mks-gray-700, #374151); /* For the SVG stroke */
+  transition: background-color 0.3s ease;
+  z-index: 1120; /* Ensure hamburger is above overlay backdrop but below overlay content when open */
+}
+
+header#UserNav #mks-nav-mobile #menuIcon:hover {
+  background-color: var(--mks-gray-100, #f3f4f6);
+}
+
+header#UserNav #mks-nav-mobile #menuIcon svg {
+  width: 28px;
+  height: 28px;
+  stroke: currentColor; /* Inherits color from button */
+  overflow: visible; /* Important for some transform animations */
+}
+
+header#UserNav #mks-nav-mobile #menuIcon svg line {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  stroke-linecap: round; 
+}
+
+/* Set transform-origin to the geometric center of each line within the SVG's 24x24 viewBox */
+header#UserNav #mks-nav-mobile #menuIcon svg line:nth-of-type(1) { /* Middle line (y=12) */
+  transform-origin: 12px 12px;
+}
+
+header#UserNav #mks-nav-mobile #menuIcon svg line:nth-of-type(2) { /* Top line (y=6) */
+  transform-origin: 12px 6px;
+}
+
+header#UserNav #mks-nav-mobile #menuIcon svg line:nth-of-type(3) { /* Bottom line (y=18) */
+  transform-origin: 12px 18px;
+}
+
+/* Hamburger to X Transformation */
+header#UserNav #mks-nav-mobile #menuIcon.is-active svg line:nth-of-type(1) { /* Middle line */
+  opacity: 0;
+  transform: scaleX(0); 
+}
+
+header#UserNav #mks-nav-mobile #menuIcon.is-active svg line:nth-of-type(2) { /* Top line, becomes one arm of X */
+  /* Rotates around its own center (12px, 6px), then translated to SVG center (12px,12px) */
+  transform: translateY(6px) rotate(45deg);
+}
+
+header#UserNav #mks-nav-mobile #menuIcon.is-active svg line:nth-of-type(3) { /* Bottom line, becomes other arm of X */
+  /* Rotates around its own center (12px, 18px), then translated to SVG center (12px,12px) */
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Mobile Logo in the Nav Bar */
+header#UserNav #mks-nav-mobile .mks-navbar-manage-mobile-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  height: 100%;
+  /* To perfectly center, the hamburger icon's space needs to be accounted for on the right if it were not for justify-content: space-between */
+  /* If logo needs to be truly centered and hamburger is on left, a common technique is absolute positioning the hamburger or using a spacer */
+  margin-left: -36px; /* Pull logo left to visually center it, assuming hamburger is ~28px + padding. Adjust as needed. */
+}
+
+header#UserNav #mks-nav-mobile .mks-navbar-manage-mobile-logo a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+header#UserNav #mks-nav-mobile #small-mobile-logo svg,
+header#UserNav #mks-nav-mobile #medium-mobile-logo svg {
+  height: 30px; /* Adjusted height for the mobile bar */
+  width: auto;
+  max-width: 160px;
+}
+
+/* --- Styles for expandable group headers in mobile overlay --- */
+.mks-navbar-manage-mobile-group-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: transparent; /* Or a very light gray like var(--mks-gray-50, #f9fafb) if preferred over direct content links */
+  border: none;
+  border-bottom: 1px solid var(--mks-gray-200, #e5e7eb); /* Consistent with other links */
+  padding: 0.8rem 1.5rem; /* Reduced padding */
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--mks-font-condensed, "jaf-bernina-sans-condensed", sans-serif);
+  font-size: 1rem; /* Adjusted font size */
+  color: var(--mks-gray-700, #374151);
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.mks-navbar-manage-mobile-group-header:hover,
+.mks-navbar-manage-mobile-group-header:focus {
+  background-color: var(--mks-gray-100, #f3f4f6);
+  color: var(--mks-primary, #d11317);
+  outline: none;
+}
+
+/* SVG icon at the start of the button */
+.mks-navbar-manage-mobile-group-header > svg:first-of-type {
+  width: 18px; /* Adjusted icon size */
+  height: 18px;
+  margin-right: 0.75rem; /* Space between icon and text */
+  stroke-width: 2; /* Ensure stroke width is appropriate */
+  color: currentColor; /* Inherit color from button for hover effect */
+}
+
+/* Text span */
+.mks-navbar-manage-mobile-group-header span {
+  flex-grow: 1; /* Allow text to take available space */
+  line-height: 1.4;
+}
+
+/* Chevron expand icon */
+.mks-navbar-manage-mobile-group-header .mks-navbar-manage-expand-icon {
+  width: 20px; /* Adjusted icon size */
+  height: 20px;
+  margin-left: 0.5rem; /* Space from text */
+  stroke-width: 2; /* Consistent stroke */
+  transition: transform 0.2s ease-in-out;
+  color: currentColor; /* Inherit color */
+}
+
+/* Rotation for the chevron when expanded */
+.mks-navbar-manage-mobile-group-header[aria-expanded="true"] .mks-navbar-manage-expand-icon {
+  transform: rotate(180deg);
+}
+
+/* Ensure these styles are placed before any more generic 'a' tag styling if specificity is an issue, 
+   or increase specificity if needed. */
+
+/* --- Styles for the SLIDE-OUT mobile menu (#mks-nav-mobile-menu) --- */
+
+/* Overlay container - ensure it's above the mobile nav bar when open */
+#mks-nav-mobile-menu.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1100; /* Higher than #mks-nav-mobile */
+  top: 0;
+  left: 0;
+  background-color: var(--mks-gray-50, #f9fafb); /* Semi-opaque background for the menu itself */
+  overflow-x: hidden;
+  transition: 0.3s ease-out; /* Smoother transition */
+}
+
+/* Overlay content - modern and minimalist */
+#mks-nav-mobile-menu .overlay-content {
+  position: relative;
+  top: 0; /* Align to top */
+  width: 100%; /* Full width of the opened overlay */
+  text-align: left;
+  padding-top: 60px; /* Space for the (now removed) close button area, or just general top padding */
+  padding-bottom: 2rem;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* Links within the overlay */
+#mks-nav-mobile-menu .overlay-content a {
+  padding: 0.9rem 1.5rem; /* Generous padding */
+  text-decoration: none;
+  font-size: 1.1rem; /* Slightly larger for readability */
+  font-family: var(--mks-font-condensed, "jaf-bernina-sans-condensed", sans-serif);
+  font-weight: 400; /* Normal weight for links */
+  display: block;
+  color: var(--mks-gray-700, #374151);
+  border-bottom: 1px solid var(--mks-gray-200, #e5e7eb);
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  line-height: 1.6;
+}
+
+#mks-nav-mobile-menu .overlay-content a:last-child {
+  border-bottom: none;
+}
+
+#mks-nav-mobile-menu .overlay-content a:hover,
+#mks-nav-mobile-menu .overlay-content a:focus {
+  background-color: var(--mks-gray-100, #f3f4f6);
+  color: var(--mks-primary, #d11317);
+  text-decoration: none;
+}
+
+/* Headings within overlay */
+#mks-nav-mobile-menu .overlay-content a.mainHeadingMobile,
+#mks-nav-mobile-menu .overlay-content a.categoryHeadingMobileNoCursor {
+  font-weight: 500; /* Slightly bolder for headings */
+  color: var(--mks-gray-800, #1f2937);
+  background-color: transparent; /* No different background for headings unless desired */
+  /* padding-top: 1.2rem; */ /* Add more space above headings if needed */
+  /* padding-bottom: 0.6rem; */
+}
+
+/* Specific styling for logout or other distinct action links if needed */
+#mks-nav-mobile-menu .overlay-content a.logout-link-mobile {
+  color: var(--mks-primary, #d11317);
+  font-weight: 500;
+  margin-top: 1rem; /* Space it out */
+  border-top: 1px solid var(--mks-gray-200, #e5e7eb);
+}
+
+/* Ensure overlay is not trying to use flex from desktop styles if any were targeting .overlay */
+.mks-overlay-navigation .overlay {
+    display: block; /* Override flex if it was set for desktop */
 }
 
 /* =============================================================================

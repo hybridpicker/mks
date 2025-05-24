@@ -49,7 +49,7 @@
                     </svg>
                     <span>FAQ bearbeiten</span>
                   </a>
-                  <a href="{% url 'get_index_text' %}" class="mks-navbar-manage-item">
+                  <a href="{% url 'controlling:get_index_text' %}" class="mks-navbar-manage-item">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                       <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -64,7 +64,7 @@
               <div class="mks-navbar-manage-section">
                 <h3>Benutzer & Anmeldungen</h3>
                 <div class="mks-navbar-manage-items">
-                  <a href="{% url 'get_controlling_students' %}" class="mks-navbar-manage-item">
+                  <a href="{% url 'controlling:get_controlling_students' %}" class="mks-navbar-manage-item">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                       <circle cx="9" cy="7" r="4"></circle>
@@ -280,7 +280,7 @@
           <div class="mks-navbar-manage-mobile-items" id="content-group" style="display: none;">
             <a href="{% url 'show_blogs_editing' %}">Blog verwalten</a>
             <a href="{% url 'get_all_faqs' %}">FAQ bearbeiten</a>
-            <a href="{% url 'get_index_text' %}">Startseite bearbeiten</a>
+            <a href="{% url 'controlling:get_index_text' %}">Startseite bearbeiten</a>
           </div>
         </div>
         
@@ -300,7 +300,7 @@
             </svg>
           </div>
           <div class="mks-navbar-manage-mobile-items" id="user-group" style="display: none;">
-            <a href="{% url 'get_controlling_students' %}">Schüler:innen verwalten</a>
+            <a href="{% url 'controlling:get_controlling_students' %}">Schüler:innen verwalten</a>
             <a href="{% url 'invitation:invitation_list' %}">Zusagen verwalten</a>
           </div>
         </div>

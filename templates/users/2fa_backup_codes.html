@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Backup Codes" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-check-circle"></i>
+                        {% if show_codes %}
+                            {% trans "2FA Enabled Successfully!" %}
+                        {% else %}
+                            {% trans "Backup Codes Generated" %}
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    {% if show_codes %}
+                        <div class="alert alert-success">
+                            <i class="fas fa-shield-alt"></i>
+                            {% trans "Two-factor authentication is now enabled for your account!" %}
+                        </div>
+                    {% endif %}
+
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>{% trans "Important: Save these backup codes!" %}</strong><br>
+                        {% trans "These codes can be used to access your account if you lose your authenticator device. Each code can only be used once." %}
+                    </div>
+
+                    <div class="card border-primary">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-key"></i> {% trans "Your Backup Codes" %}
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                {% for code in backup_codes %}
+                                    <div class="col-md-6 mb-2">
+                                        <code class="bg-light p-2 d-block text-center user-select-all">{{ code }}</code>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="mt-3 text-center">
+                                <button class="btn btn-secondary" onclick="printCodes()">
+                                    <i class="fas fa-print"></i> {% trans "Print Codes" %}
+                                </button>
+                                <button class="btn btn-primary" onclick="downloadCodes()">
+                                    <i class="fas fa-download"></i> {% trans "Download as Text" %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>{% trans "How to store backup codes safely:" %}</strong>
+                        <ul class="mb-0 mt-2">
+                            <li>{% trans "Save them in a password manager" %}</li>
+                            <li>{% trans "Print them and store in a safe place" %}</li>
+                            <li>{% trans "Keep them separate from your main device" %}</li>
+                            <li>{% trans "Never share them with anyone" %}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'users:2fa_settings' %}" class="btn btn-success">
+                        <i class="fas fa-check"></i> {% trans "I've Saved My Codes" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function printCodes() {
+    const codes = [{% for code in backup_codes %}'{{ code }}'{% if not forloop.last %},{% endif %}{% endfor %}];
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>{% trans "MKS Portal - Backup Codes" %}</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                .header { text-align: center; margin-bottom: 20px; }
+                .codes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+                .code { background: #f5f5f5; padding: 10px; text-align: center; font-family: monospace; }
+                .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; margin: 20px 0; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h2>MKS Portal - {% trans "Two-Factor Authentication Backup Codes" %}</h2>
+                <p>{% trans "Account:" %} {{ user.email }}</p>
+                <p>{% trans "Generated:" %} ${new Date().toLocaleString()}</p>
+            </div>
+            <div class="warning">
+                <strong>{% trans "Important:" %}</strong> {% trans "Keep these codes safe and secure. Each code can only be used once." %}
+            </div>
+            <div class="codes">
+                ${codes.map(code => '<div class="code">' + code + '</div>').join('')}
+            </div>
+        </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+}
+
+function downloadCodes() {
+    const codes = [{% for code in backup_codes %}'{{ code }}'{% if not forloop.last %},{% endif %}{% endfor %}];
+    const content = `MKS Portal - Two-Factor Authentication Backup Codes
+
+Account: {{ user.email }}
+Generated: ${new Date().toLocaleString()}
+
+IMPORTANT: Keep these codes safe and secure. Each code can only be used once.
+
+Backup Codes:
+${codes.map((code, index) => `${index + 1}. ${code}`).join('\n')}
+
+How to use:
+- If you lose access to your authenticator app, use these codes to log in
+- Each code can only be used once
+- Generate new codes if you run low
+- Keep these codes in a safe, separate location from your device
+`;
+    
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'mks-backup-codes.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+}
+</script>
+{% endblock %}

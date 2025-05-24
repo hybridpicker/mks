@@ -14,12 +14,12 @@
           {% if request.user.is_staff %}
           <div class="dropdown arrow">
             <button class="dropbtn">
-              <a href="{% url 'get_controlling_students' %}">Schüler:innen</a>
+              <a href="{% url 'controlling:get_controlling_students' %}">Schüler:innen</a>
             </button>
             <div class="dropdown-hover-section">
             </div>
             <div class="dropdown-content">
-              <a href="{% url 'get_controlling_students' %}">Anmeldungen</a>
+              <a href="{% url 'controlling:get_controlling_students' %}">Anmeldungen</a>
             </div>
           </div>
           <div class="dropdown-b arrow">
@@ -30,7 +30,7 @@
               <a href="{% url 'event_managing_view' %}">Veranstaltungen</a>
               <a href="{% url 'invitation:invitation_list' %}">Zusagen</a>
               <a href="{% url 'show_blogs_editing' %}">Blog</a>
-              <a href="{% url 'get_index_text' %}">Startseite</a>
+              <a href="{% url 'controlling:get_index_text' %}">Startseite</a>
               <a href="{% url 'get_all_faqs' %}">FAQ</a>
               <a href="/tanz-und-bewegung/wartung/">Tanz & Bewegung</a>
               <a href="{% url 'gallery_admin' %}">Galerie</a>
@@ -86,9 +86,9 @@
         <a class="mainHeadingMobile" href="{% url 'event_managing_view' %}">Veranstaltungen</a>
         <!-- Neuer Link zu den Zusagen in der mobilen Navigation -->
         <a class="mainHeadingMobile" href="{% url 'invitation:invitation_list' %}">Zusagen</a>
-        <a class="mainHeadingMobile" href="{% url 'get_controlling_students' %}">Schüler:innen</a>
-        <a class="categoryHeadingMobileNoCursor" href="{% url 'get_controlling_students' %}">Anmeldungen</a>
-        <a class="mainHeadingMobile" href="{% url 'get_index_text' %}">Startseite</a>
+        <a class="mainHeadingMobile" href="{% url 'controlling:get_controlling_students' %}">Schüler:innen</a>
+        <a class="categoryHeadingMobileNoCursor" href="{% url 'controlling:get_controlling_students' %}">Anmeldungen</a>
+        <a class="mainHeadingMobile" href="{% url 'controlling:get_index_text' %}">Startseite</a>
         <a class="mainHeadingMobile" href="{% url 'get_all_faqs' %}">FAQ</a>
         <a class="mainHeadingMobile" href="/tanz-und-bewegung/wartung/">Tanz & Bewegung</a>
         <a class="mainHeadingMobile" href="{% url 'gallery_admin' %}">Galerie</a>

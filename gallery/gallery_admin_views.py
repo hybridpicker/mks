@@ -8,9 +8,14 @@ from django.db.models import Max
 import os
 from django.conf import settings
 from .models import Photo, PhotoCategory
+from .image_utils import process_uploaded_image, get_image_info, check_image_size
+import logging
 
-# Size limit for uploads (3MB)
-MAX_FILE_SIZE = 3 * 1024 * 1024
+logger = logging.getLogger(__name__)
+
+# Updated size limits - now more generous since we auto-resize
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB (original files before processing)
+PROCESSED_MAX_SIZE = 3 * 1024 * 1024  # 3MB (after processing)
 # Maximum number of files per upload
 MAX_FILES = 100
 
@@ -74,7 +79,7 @@ def upload_photo(request):
 
 def handle_single_upload(request):
     """
-    Handle a single file upload
+    Handle a single file upload with automatic image processing
     """
     # Check if a file was uploaded
     if 'image' not in request.FILES:
@@ -82,12 +87,20 @@ def handle_single_upload(request):
     
     uploaded_file = request.FILES['image']
     
-    # Check file size (3MB limit)
+    # Check original file size (be more generous since we'll resize)
     if uploaded_file.size > MAX_FILE_SIZE:
         return JsonResponse({
             'status': 'error', 
-            'message': f'Die Datei ist zu groß (max. 3MB). Ihre Datei ist {(uploaded_file.size / 1024 / 1024):.2f}MB.'
+            'message': f'Die Originaldatei ist zu groß (max. {MAX_FILE_SIZE // (1024*1024)}MB). '
+                      f'Ihre Datei ist {(uploaded_file.size / 1024 / 1024):.2f}MB.'
         }, status=400)
+    
+    # Get image info for logging
+    image_info = get_image_info(uploaded_file)
+    if image_info:
+        logger.info(f"Processing image: {uploaded_file.name}, "
+                   f"original size: {image_info['width']}x{image_info['height']}, "
+                   f"file size: {image_info['size_mb']}MB")
     
     # Get other form data
     title = request.POST.get('title', '')
@@ -101,43 +114,75 @@ def handle_single_upload(request):
     except PhotoCategory.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': 'Invalid category'}, status=400)
     
-    # Determine ordering (put new photos at the top)
-    max_ordering = Photo.objects.filter(category=category).aggregate(Max('ordering'))['ordering__max']
-    ordering = (max_ordering + 1) if max_ordering else 1
-    
-    # Create new photo
-    photo = Photo(
-        title=title,
-        image=uploaded_file,
-        description=description,
-        copyright_by=copyright_by,
-        category=category,
-        ordering=ordering
-    )
-    photo.save()
-    
-    return JsonResponse({
-        'status': 'success',
-        'message': 'Photo uploaded successfully',
-        'photo': {
-            'id': photo.id,
-            'title': photo.title,
-            'image_url': photo.image.url,
-            'description': photo.description,
-            'copyright_by': photo.copyright_by,
-            'ordering': photo.ordering
-        }
-    })
+    # Process the uploaded image (resize and create variants)
+    try:
+        processed_images = process_uploaded_image(uploaded_file)
+        
+        # Determine ordering (put new photos at the top)
+        max_ordering = Photo.objects.filter(category=category).aggregate(Max('ordering'))['ordering__max']
+        ordering = (max_ordering + 1) if max_ordering else 1
+        
+        # Create new photo with processed images
+        photo = Photo(
+            title=title,
+            description=description,
+            copyright_by=copyright_by,
+            category=category,
+            ordering=ordering
+        )
+        
+        # Assign the processed images
+        photo.image = processed_images['main']
+        
+        if processed_images['thumbnail']:
+            photo.image_thumbnail = processed_images['thumbnail']
+        
+        if processed_images['lazy']:
+            photo.image_lazy = processed_images['lazy']
+        
+        # Save the photo
+        photo.save()
+        
+        # Log success with final file sizes
+        main_size = photo.image.size if photo.image else 0
+        thumb_size = photo.image_thumbnail.size if photo.image_thumbnail else 0
+        lazy_size = photo.image_lazy.size if photo.image_lazy else 0
+        
+        logger.info(f"Photo saved successfully: {photo.title}, "
+                   f"main: {main_size/(1024*1024):.2f}MB, "
+                   f"thumb: {thumb_size/1024:.1f}KB, "
+                   f"lazy: {lazy_size/1024:.1f}KB")
+        
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Foto erfolgreich hochgeladen und optimiert',
+            'photo': {
+                'id': photo.id,
+                'title': photo.title,
+                'image_url': photo.image.url,
+                'description': photo.description,
+                'copyright_by': photo.copyright_by,
+                'ordering': photo.ordering,
+                'file_size_mb': round(photo.image.size / (1024 * 1024), 2) if photo.image else 0
+            }
+        })
+        
+    except Exception as e:
+        logger.error(f"Error processing image {uploaded_file.name}: {str(e)}")
+        return JsonResponse({
+            'status': 'error',
+            'message': f'Fehler beim Verarbeiten des Bildes: {str(e)}'
+        }, status=500)
 
 def handle_multiple_uploads(request):
     """
-    Handle multiple file uploads
+    Handle multiple file uploads with automatic image processing
     """
     # Get files from request
     files = request.FILES.getlist('images')
     
     # Debug log
-    print(f"Multiple upload received: {len(files)} files")
+    logger.info(f"Multiple upload received: {len(files)} files")
     
     # Check if any files were uploaded
     if not files:
@@ -160,16 +205,30 @@ def handle_multiple_uploads(request):
     # Process each file
     uploaded_photos = []
     errors = []
+    warnings = []
     
     # Get max ordering to start from
     max_ordering = Photo.objects.filter(category=category).aggregate(Max('ordering'))['ordering__max'] or 0
     
     for i, uploaded_file in enumerate(files):
         try:
-            # Check file size
+            # Check original file size
             if uploaded_file.size > MAX_FILE_SIZE:
-                errors.append(f'{uploaded_file.name}: Zu groß (max. 3MB). Datei ist {(uploaded_file.size / 1024 / 1024):.2f}MB.')
+                errors.append(
+                    f'{uploaded_file.name}: Originaldatei zu groß '
+                    f'(max. {MAX_FILE_SIZE//(1024*1024)}MB). '
+                    f'Datei ist {(uploaded_file.size / 1024 / 1024):.2f}MB.'
+                )
                 continue
+            
+            # Get image info
+            image_info = get_image_info(uploaded_file)
+            if image_info:
+                logger.info(f"Processing {uploaded_file.name}: {image_info['width']}x{image_info['height']}, "
+                           f"{image_info['size_mb']}MB")
+            
+            # Process the image
+            processed_images = process_uploaded_image(uploaded_file)
             
             # Extract filename as title (without extension)
             filename = os.path.splitext(uploaded_file.name)[0]
@@ -179,37 +238,67 @@ def handle_multiple_uploads(request):
             ordering = max_ordering + i + 1
             photo = Photo(
                 title=title,
-                image=uploaded_file,
                 description='',  # Can be updated later
                 copyright_by='',  # Can be updated later
                 category=category,
                 ordering=ordering
             )
+            
+            # Assign processed images
+            photo.image = processed_images['main']
+            
+            if processed_images['thumbnail']:
+                photo.image_thumbnail = processed_images['thumbnail']
+            
+            if processed_images['lazy']:
+                photo.image_lazy = processed_images['lazy']
+            
+            # Save the photo
             photo.save()
+            
+            # Check if the processed image is still quite large
+            final_size_mb = photo.image.size / (1024 * 1024) if photo.image else 0
+            if final_size_mb > 5:  # Warn if still over 5MB after processing
+                warnings.append(
+                    f'{uploaded_file.name}: Verarbeitetes Bild ist noch {final_size_mb:.1f}MB groß'
+                )
             
             uploaded_photos.append({
                 'id': photo.id,
                 'title': photo.title,
                 'image_url': photo.image.url,
-                'ordering': photo.ordering
+                'ordering': photo.ordering,
+                'original_size_mb': image_info['size_mb'] if image_info else 0,
+                'final_size_mb': final_size_mb
             })
             
+            logger.info(f"Successfully processed {uploaded_file.name} -> {final_size_mb:.2f}MB")
+            
         except Exception as e:
+            logger.error(f"Error processing {uploaded_file.name}: {str(e)}")
             errors.append(f'{uploaded_file.name}: {str(e)}')
     
     # Return response
     if uploaded_photos:
+        message_parts = [f'{len(uploaded_photos)} Bilder erfolgreich hochgeladen und optimiert']
+        
+        if warnings:
+            message_parts.append(f'{len(warnings)} Warnungen')
+        
+        if errors:
+            message_parts.append(f'{len(errors)} Fehler')
+        
         return JsonResponse({
             'status': 'success',
-            'message': f'{len(uploaded_photos)} Bilder erfolgreich hochgeladen' + 
-                       (f' ({len(errors)} Fehler)' if errors else ''),
+            'message': ' (' + ', '.join(message_parts[1:]) + ')' if len(message_parts) > 1 else message_parts[0],
             'photos': uploaded_photos,
-            'errors': errors
+            'errors': errors,
+            'warnings': warnings
         })
     else:
         return JsonResponse({
             'status': 'error',
-            'message': 'Keine Bilder konnten hochgeladen werden',
+            'message': 'Keine Bilder konnten verarbeitet werden',
             'errors': errors
         }, status=400)
 

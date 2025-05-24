@@ -1,0 +1,241 @@
+from django.views.generic import TemplateView
+from django.urls import reverse_lazy
+from django.views import generic
+from django.shortcuts import render, redirect
+
+from django.template import RequestContext
+from school.models import MusicSchool
+from events.models import Event
+from events.forms import EventForm
+from .forms import CustomUserCreationForm
+from django.utils.datastructures import MultiValueDictKeyError
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.decorators import login_required
+
+@login_required(login_url='/team/login/')
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password_success')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/password_change.html', {
+        'form': form
+    })
+
+@login_required(login_url='/team/login/')
+def change_password_success(request):
+    return render(request, 'registration/password_change_success.html',)
+
+class SignUp(generic.CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'registration/signup.html'
+
+class HomePageView(TemplateView):
+    template_name = 'users/home.html'
+
+# Create your views here.
+
+@login_required(login_url='/team/login/')
+def eventView(request):
+    events = Event.objects.all().order_by('-date')
+    edit_event = None
+    
+    # Löschen einer Veranstaltung
+    try:
+        if 'delete_id' in request.GET:
+            event_id = request.GET['delete_id']
+            Event.objects.filter(id=event_id).delete()
+            messages.success(request, 'Veranstaltung erfolgreich gelöscht!')
+            return redirect('event_managing_view')
+    except Exception as e:
+        messages.error(request, f'Fehler beim Löschen der Veranstaltung: {str(e)}')
+    
+    # Bearbeiten einer Veranstaltung - Event zum Bearbeiten laden
+    if 'edit_id' in request.GET:
+        try:
+            edit_id = request.GET['edit_id']
+            edit_event = Event.objects.get(id=edit_id)
+        except Event.DoesNotExist:
+            messages.error(request, 'Die gewählte Veranstaltung existiert nicht.')
+            return redirect('event_managing_view')
+    
+    # Formular verarbeiten (entweder neues Event erstellen oder bestehendes aktualisieren)
+    if request.method == 'POST':
+        # Event aktualisieren
+        if 'event_id' in request.POST and request.POST['event_id']:
+            try:
+                event_id = request.POST['event_id']
+                event = Event.objects.get(id=event_id)
+                
+                # Formularfelder aktualisieren
+                event.name = request.POST['name']
+                event.venue = request.POST['venue']
+                event.date = request.POST['date']
+                event.time = request.POST['time']
+                event.link = request.POST.get('link', '')
+                
+                # Projekt-Zuordnung
+                project_id = request.POST.get('project')
+                if project_id:
+                    event.project_id = project_id
+                else:
+                    event.project = None
+                
+                # Prüfen, ob ein neues Bild hochgeladen wurde
+                if 'image' in request.FILES:
+                    event.image = request.FILES['image']
+                
+                event.save()
+                messages.success(request, 'Veranstaltung erfolgreich aktualisiert!')
+                return redirect('event_managing_view')
+            except Exception as e:
+                messages.error(request, f'Fehler beim Aktualisieren der Veranstaltung: {str(e)}')
+        
+        # Neues Event erstellen
+        else:
+            form = EventForm(request.POST, request.FILES)
+            if form.is_valid():
+                name = request.POST['name']
+                venue = request.POST['venue']
+                date = request.POST['date']
+                time = request.POST['time']
+                link = request.POST.get('link', '')
+                
+                # Projekt-Zuordnung
+                project_id = request.POST.get('project')
+                project = None
+                if project_id:
+                    try:
+                        from projects.models import Project
+                        project = Project.objects.get(id=project_id)
+                    except Project.DoesNotExist:
+                        pass
+                
+                # Prüfen, ob ein Bild hochgeladen wurde
+                if 'image' not in request.FILES:
+                    messages.error(request, 'Bitte laden Sie ein Bild für diese Veranstaltung hoch.')
+                    context = {
+                        'events': events,
+                        'form': form,
+                        'edit_event': edit_event,
+                    }
+                    return render(request, 'users/events.html', context)
+                    
+                image = request.FILES['image']
+                
+                new_event = Event(
+                    name=name,
+                    venue=venue,
+                    date=date,
+                    time=time,
+                    link=link,
+                    project=project,
+                    image=image
+                )
+                new_event.save()
+                messages.success(request, 'Veranstaltung erfolgreich erstellt!')
+                return redirect('event_managing_view')
+    else:
+        form = EventForm()
+    
+    # Projekte für Dropdown laden
+    try:
+        from projects.models import Project
+        projects = Project.objects.all()
+    except:
+        projects = []
+    
+    context = {
+        'events': events,
+        'form': form,
+        'edit_event': edit_event,
+        'projects': projects,
+    }
+    return render(request, 'users/events.html', context)
+
+# Team View - Updated to use real database data
+@login_required(login_url='/team/login/')
+def team_view(request):
+    """Modern Team View for Musikschule St. Pölten - Using real database data"""
+    from teaching.models import Teacher
+    from teaching.subject import Subject, SubjectCategory
+    
+    # Echte Lehrer aus der Datenbank laden
+    teachers = Teacher.objects.select_related('gender', 'academic_title').prefetch_related('subject', 'subject_coordinator').all()
+    
+    # Team-Mitglieder für das Template vorbereiten
+    team_members = []
+    for teacher in teachers:
+        # Vollständiger Name mit akademischem Titel
+        full_name = ""
+        if teacher.academic_title:
+            full_name += f"{teacher.academic_title} "
+        full_name += f"{teacher.first_name} {teacher.last_name}"
+        
+        # Initialen erstellen
+        initials = f"{teacher.first_name[0] if teacher.first_name else ''}{teacher.last_name[0] if teacher.last_name else ''}"
+        
+        # Fächer sammeln
+        subjects = [subject.subject for subject in teacher.subject.all()]
+        coordinator_subjects = [cat.name for cat in teacher.subject_coordinator.all()]
+        all_skills = subjects + coordinator_subjects
+        
+        # Rolle bestimmen (basierend auf Koordinatorfunktion oder erstem Fach)
+        role = "Lehrkraft"
+        if coordinator_subjects:
+            role = f"{coordinator_subjects[0]}-Koordination"
+        elif subjects:
+            role = f"{subjects[0]}-Lehrer"
+        
+        # Bio oder Standard-Beschreibung
+        description = teacher.bio if teacher.bio else f"Qualifizierte Lehrkraft für {', '.join(subjects[:2])}."
+        
+        # Team-Mitglied-Dictionary erstellen
+        team_member = {
+            'name': full_name,
+            'role': role,
+            'description': description,
+            'skills': all_skills[:6],  # Max 6 Skills für bessere Darstellung
+            'email': teacher.email if teacher.email else 'info@musikschule-stpoelten.at',
+            'initials': initials,
+            'image': teacher.image.url if teacher.image else None,
+            'phone': str(teacher.phone) if teacher.phone else None,
+            'homepage': teacher.homepage if teacher.homepage else None,
+        }
+        team_members.append(team_member)
+    
+    # Statistiken basierend auf echten Daten
+    total_teachers = teachers.count()
+    total_subjects = Subject.objects.filter(hidden_subject=False).count()
+    # Student-Count - falls Sie ein Student-Model haben
+    try:
+        from students.models import Student
+        total_students = Student.objects.count()
+    except ImportError:
+        total_students = "250+"  # Fallback
+    
+    stats = {
+        'teachers': total_teachers,
+        'instruments': total_subjects,
+        'students': total_students,
+        'experience': 10  # Das können Sie später auch aus der DB holen
+    }
+    
+    context = {
+        'team_members': team_members,
+        'stats': stats,
+        'user': request.user,
+    }
+    
+    return render(request, 'users/team.html', context)
