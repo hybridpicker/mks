@@ -1,6 +1,8 @@
+# Verbesserte Middleware - ersetzt den Inhalt in users/middleware.py
+
 """
 2FA Enforcement Middleware for Musik- und Kunstschule St. Pölten
-Forces users to setup 2FA after first login
+Fixed version to prevent redirect loops after successful 2FA setup
 """
 
 from django.shortcuts import redirect
@@ -9,9 +11,81 @@ from django.contrib import messages
 from django.utils.translation import gettext as _
 
 
+class TwoFactorSetupRedirectMiddleware:
+    """
+    Fixed middleware that prevents redirect loops after 2FA setup
+    """
+    
+    def __init__(self, get_response):
+        self.get_response = get_response
+        
+        # URLs that are always accessible without 2FA
+        self.always_allowed = [
+            '/team/login/',
+            '/team/logout/',
+            '/team/2fa/',  # All 2FA URLs - wichtig!
+            '/admin/',
+            '/static/',
+            '/media/',
+        ]
+        
+        # URLs that require 2FA to be setup
+        self.requires_2fa_setup = [
+            '/team/',
+            '/controlling/',
+            '/blogedit/',
+            '/galerie/',
+        ]
+
+    def __call__(self, request):
+        # WICHTIG: Prüfe ZUERST ob Redirect nötig ist, dann erst Response verarbeiten
+        if self.needs_2fa_redirect(request):
+            messages.warning(
+                request, 
+                _('Für die Sicherheit Ihres Kontos müssen Sie die Zwei-Faktor-Authentifizierung einrichten.')
+            )
+            return redirect('users:2fa_setup')
+        
+        # Nur wenn kein Redirect nötig ist, normale Response verarbeiten
+        response = self.get_response(request)
+        return response
+
+    def needs_2fa_redirect(self, request):
+        """Check if user needs to be redirected to 2FA setup"""
+        
+        # Skip if not authenticated
+        if not request.user.is_authenticated:
+            return False
+            
+        # Skip if already has 2FA - DB-Check mit Refresh
+        try:
+            # Refresh user from DB to get latest state
+            request.user.refresh_from_db()
+            if request.user.is_2fa_enabled:
+                return False
+        except:
+            # If refresh fails, assume no 2FA
+            pass
+            
+        # Skip always allowed URLs (erweitert für 2FA-Pfade)
+        if any(request.path.startswith(url) for url in self.always_allowed):
+            return False
+            
+        # WICHTIG: Skip auch für erfolgreiche 2FA-Setup Response
+        if '/2fa/' in request.path:
+            return False
+            
+        # Check if accessing protected area
+        if any(request.path.startswith(url) for url in self.requires_2fa_setup):
+            return True
+            
+        return False
+
+
+# Behalte die alte Middleware als Backup
 class Enforce2FAMiddleware:
     """
-    Middleware that enforces 2FA setup for all users
+    Original middleware - nicht verwenden, nur als Backup
     """
     
     def __init__(self, get_response):
@@ -63,74 +137,3 @@ class Enforce2FAMiddleware:
         
         # Enforce 2FA for all authenticated users without 2FA
         return True
-
-
-class TwoFactorSetupRedirectMiddleware:
-    """
-    Alternative middleware with more granular control
-    """
-    
-    def __init__(self, get_response):
-        self.get_response = get_response
-        
-        # URLs that are always accessible without 2FA
-        self.always_allowed = [
-            '/team/login/',
-            '/team/logout/',
-            '/team/2fa/',  # All 2FA URLs
-            '/admin/',
-            '/static/',
-            '/media/',
-        ]
-        
-        # URLs that require 2FA to be setup but not necessarily verified
-        self.requires_2fa_setup = [
-            '/team/',
-            '/controlling/',
-            '/blogedit/',
-            '/galerie/',
-        ]
-
-    def __call__(self, request):
-        # WICHTIG: Prüfe ZUERST ob Redirect nötig ist, dann erst Response verarbeiten
-        if self.needs_2fa_redirect(request):
-            messages.warning(
-                request, 
-                _('Für die Sicherheit Ihres Kontos müssen Sie die Zwei-Faktor-Authentifizierung einrichten.')
-            )
-            return redirect('users:2fa_setup')
-        
-        # Nur wenn kein Redirect nötig ist, normale Response verarbeiten
-        response = self.get_response(request)
-        return response
-
-    def needs_2fa_redirect(self, request):
-        """Check if user needs to be redirected to 2FA setup"""
-        
-        # Skip if not authenticated
-        if not request.user.is_authenticated:
-            return False
-            
-        # Skip if already has 2FA - DB-Check mit Refresh
-        try:
-            # Refresh user from DB to get latest state
-            request.user.refresh_from_db()
-            if request.user.is_2fa_enabled:
-                return False
-        except:
-            # If refresh fails, assume no 2FA
-            pass
-            
-        # Skip always allowed URLs (erweitert für 2FA-Pfade)
-        if any(request.path.startswith(url) for url in self.always_allowed):
-            return False
-            
-        # WICHTIG: Skip auch für erfolgreiche 2FA-Setup Response
-        if '/2fa/' in request.path:
-            return False
-            
-        # Check if accessing protected area
-        if any(request.path.startswith(url) for url in self.requires_2fa_setup):
-            return True
-            
-        return False

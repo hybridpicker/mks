@@ -248,6 +248,8 @@ class CustomUser(AbstractUser):
         )
         
         return reset_code
+
+    def generate_backup_codes(self):
         """Generate backup codes for 2FA recovery"""
         import secrets
         codes = []
