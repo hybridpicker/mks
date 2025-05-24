@@ -31,7 +31,9 @@ diff-match-patch==20241021
 # Database
 psycopg2-binary==2.9.3
 
-# File processing
+# Data processing and Excel handling
+pandas==2.2.3
+numpy==2.2.6
 openpyxl==3.1.5
 xlwt==1.3.0
 lxml==5.4.0
