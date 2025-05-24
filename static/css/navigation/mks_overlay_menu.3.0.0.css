@@ -1148,3 +1148,32 @@ header#UserNav #mks-nav-mobile #medium-mobile-logo svg {
     transition-duration: 0.01ms !important;
   }
 }
+/* CSS für deaktivierte Statistik-Karten */
+.mks-overlay-stat-card.disabled-stat {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: var(--mks-gray-50);
+}
+
+.mks-overlay-stat-card.disabled-stat:hover {
+  border-color: var(--mks-gray-200);
+  box-shadow: none;
+  transform: none;
+}
+
+.mks-overlay-stat-card.disabled-stat::before {
+  display: none;
+}
+
+.mks-overlay-stat-card.disabled-stat .mks-overlay-stat-number {
+  color: var(--mks-gray-400);
+}
+
+.mks-overlay-stat-card.disabled-stat .mks-overlay-stat-label {
+  color: var(--mks-gray-500);
+}
+
+.mks-overlay-stat-card.disabled-stat .mks-overlay-stat-icon svg {
+  stroke: var(--mks-gray-400);
+}

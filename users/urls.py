@@ -15,7 +15,10 @@ urlpatterns = [
     # Main URLs
     path('', HomePageView.as_view(), name='user_home'),
     path('team/', views.team_view, name='team'),
+    path('profile/', views.user_profile, name='profile'),  # Neu: User Profile
+    path('security/', views.user_security_settings, name='security_settings'),  # Neu: Security Settings
     path('events', views.eventView, name='event_managing_view'),
+    path('controlling/', include('controlling.urls', namespace='controlling')),
     path('password/change', views.change_password, name='change_password'),
     path('password/sucess', views.change_password_success, name='change_password_success'),
     # path('', include('todo.urls')),  # TODO functionality disabled
