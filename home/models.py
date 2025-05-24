@@ -1,13 +1,13 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from ckeditor.fields import RichTextField
+from tinymce.models import HTMLField
 
 class IndexText(models.Model):
     lead_paragraph = models.TextField(
         _("Lead paragraph"),
         blank=True)
-    content = RichTextField(_("Content of Index page"), blank=True)
+    content = HTMLField(_("Content of Index page"), blank=True)
 
     def __str__(self):
         return 'IndexText'

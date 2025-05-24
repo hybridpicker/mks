@@ -1,6 +1,6 @@
 from django.utils.translation import gettext as _
 from django.db import models
-from ckeditor.fields import RichTextField
+from tinymce.models import HTMLField
 from django.template.defaultfilters import slugify
 
 class Project(models.Model):
@@ -22,7 +22,7 @@ class Project(models.Model):
         upload_to='project/images/logo',
         default='project_logo_imageDefault',
         blank=True)
-    description = RichTextField()
+    description = HTMLField()
     press_text = models.TextField(blank=True)
     programm = models.TextField(blank=True)
     poster_img = models.ImageField(

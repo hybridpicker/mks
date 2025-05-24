@@ -52,8 +52,6 @@ INSTALLED_APPS = [
     'students.apps.StudentsConfig',
     'teaching.apps.TeachingConfig',
     'home',
-    'ckeditor',
-    'ckeditor_uploader',
     'tinymce',  # Added TinyMCE
     'blog.apps.BlogConfig',
     'school.apps.SchoolConfig',
@@ -185,8 +183,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
-CKEDITOR_UPLOAD_PATH = "/media/blog_uploads/"
 
 # TinyMCE Configuration
 TINYMCE_DEFAULT_CONFIG = {
