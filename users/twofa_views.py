@@ -128,7 +128,8 @@ def setup_2fa(request):
         form = TOTPSetupForm(request.POST)
         if form.is_valid():
             token = form.cleaned_data['token']
-            if user.verify_totp(token):
+            # Allow reuse during setup for better user experience
+            if user.verify_totp(token, allow_reuse=True):
                 user.is_2fa_enabled = True
                 backup_codes = user.generate_backup_codes()
                 user.save()
@@ -139,7 +140,7 @@ def setup_2fa(request):
                     'show_codes': True
                 })
             else:
-                messages.error(request, _('Invalid code. Please try again.'))
+                messages.error(request, _('Invalid code. Please try again. Make sure your device time is synchronized and wait for a new code if necessary.'))
     else:
         form = TOTPSetupForm()
     

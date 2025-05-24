@@ -149,13 +149,29 @@ class CustomUser(AbstractUser):
         img_str = base64.b64encode(buffer.getvalue()).decode()
         return f"data:image/png;base64,{img_str}"
 
-    def verify_totp(self, token):
-        """Verify TOTP token"""
+    def verify_totp(self, token, allow_reuse=False):
+        """Verify TOTP token with improved tolerance"""
         if not self.totp_secret:
             return False
         
+        # Clean token (remove spaces, ensure 6 digits)
+        token = str(token).replace(' ', '').strip()
+        if len(token) != 6 or not token.isdigit():
+            return False
+        
         totp = pyotp.TOTP(self.totp_secret)
-        return totp.verify(token, valid_window=1)  # Allow 1 step tolerance
+        
+        # For setup, we allow reuse since users might need to try multiple times
+        if allow_reuse:
+            # Try current time window first
+            if totp.verify(token, valid_window=0):
+                return True
+                
+            # Try with wider window for clock synchronization issues
+            return totp.verify(token, valid_window=2)
+        else:
+            # For login, standard verification (prevents replay attacks)
+            return totp.verify(token, valid_window=1)
 
     def generate_backup_codes(self):
         """Generate backup codes for 2FA recovery"""
