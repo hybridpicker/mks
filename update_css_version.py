@@ -22,7 +22,7 @@ def find_mks_css_files(project_root):
     """Find only MKS-specific CSS files"""
     css_files = []
     include_paths = ['static/css', 'static/gallery/css']
-    exclude_patterns = ['animate', 'tinymce', 'admin', 'ckeditor', 'vendor', '.min.css']
+    exclude_patterns = ['animate', 'tinymce', 'static_cdn/admin', 'ckeditor', 'vendor', '.min.css']
     
     for include_path in include_paths:
         full_path = project_root / include_path
