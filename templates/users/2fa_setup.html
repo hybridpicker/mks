@@ -21,7 +21,6 @@
 }
 
 .setup-header {
-  background: linear-gradient(135deg, #10b981, #059669);
   color: white;
   padding: 1.6rem;
   text-align: center;
@@ -156,8 +155,7 @@
 }
 
 .form-input {
-  width: 100%;
-  padding: 1rem;
+  width: 80%;
   border: 2px solid #f1f1f1;
   border-radius: 8px;
   background: white;
@@ -186,13 +184,12 @@
   display: flex;
   gap: 1rem;
   justify-content: center;
-  margin-top: 2rem;
 }
 
 .btn {
   font-family: "jaf-bernina-sans-condensed", sans-serif;
   font-size: 1rem;
-  padding: 1rem 2rem;
+  padding: 1rem;
   font-weight: 600;
   border: none;
   border-radius: 8px;
@@ -332,9 +329,9 @@
               <button type="submit" class="btn btn-primary">
                 2FA Aktivieren
               </button>
-              <a href="{% url 'users:2fa_settings' %}" class="btn btn-secondary">
+              <button href="{% url 'users:2fa_settings' %}" class="btn btn-secondary">
                 Abbrechen
-              </a>
+              </button>
             </div>
           </form>
           
