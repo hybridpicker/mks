@@ -134,7 +134,7 @@ class CustomUser(AbstractUser):
         totp = pyotp.TOTP(self.totp_secret)
         return totp.provisioning_uri(
             name=self.email,
-            issuer_name="MKS Portal"
+            issuer_name="Musik- und Kunstschule St. Pölten"
         )
 
     def get_qr_code(self):

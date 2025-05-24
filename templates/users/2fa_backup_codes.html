@@ -84,7 +84,7 @@ function printCodes() {
     printWindow.document.write(`
         <html>
         <head>
-            <title>{% trans "MKS Portal - Backup Codes" %}</title>
+            <title>{% trans "Musik- und Kunstschule St. Pölten - Backup Codes" %}</title>
             <style>
                 body { font-family: Arial, sans-serif; margin: 20px; }
                 .header { text-align: center; margin-bottom: 20px; }
@@ -95,7 +95,7 @@ function printCodes() {
         </head>
         <body>
             <div class="header">
-                <h2>MKS Portal - {% trans "Two-Factor Authentication Backup Codes" %}</h2>
+                <h2>Musik- und Kunstschule St. Pölten - {% trans "Two-Factor Authentication Backup Codes" %}</h2>
                 <p>{% trans "Account:" %} {{ user.email }}</p>
                 <p>{% trans "Generated:" %} ${new Date().toLocaleString()}</p>
             </div>
@@ -114,7 +114,7 @@ function printCodes() {
 
 function downloadCodes() {
     const codes = [{% for code in backup_codes %}'{{ code }}'{% if not forloop.last %},{% endif %}{% endfor %}];
-    const content = `MKS Portal - Two-Factor Authentication Backup Codes
+    const content = `Musik- und Kunstschule St. Pölten - Two-Factor Authentication Backup Codes
 
 Account: {{ user.email }}
 Generated: ${new Date().toLocaleString()}
@@ -135,7 +135,7 @@ How to use:
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'mks-backup-codes.txt';
+    a.download = 'musikschule-st-poelten-backup-codes.txt';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
