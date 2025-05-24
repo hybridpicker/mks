@@ -32,18 +32,12 @@ class CustomLoginView(LoginView):
             self.request.session['pre_2fa_user_id'] = user.id
             return redirect('users:2fa_verify')
         
-        # For users without 2FA, log them in but they'll be redirected by middleware
+        # For users without 2FA, log them in normally - NO WARNINGS
         user.backend = f'{get_backends()[0].__module__}.{get_backends()[0].__class__.__name__}'
         login(self.request, user)
         
-        # Add message for users who need to setup 2FA
-        if not user.is_2fa_enabled:
-            messages.warning(
-                self.request, 
-                _('Für die Sicherheit Ihres Kontos müssen Sie die Zwei-Faktor-Authentifizierung einrichten.')
-            )
-        else:
-            messages.success(self.request, _('Erfolgreich angemeldet!'))
+        # Simple success message - no 2FA pressure
+        messages.success(self.request, _('Erfolgreich angemeldet!'))
             
         return super().form_valid(form)
 
@@ -114,11 +108,11 @@ def two_factor_verify(request):
 
 @login_required
 def setup_2fa(request):
-    """Setup TOTP 2FA for user"""
+    """Setup TOTP 2FA for user - Optional security enhancement"""
     user = request.user
     
     if user.is_2fa_enabled:
-        messages.info(request, _('2FA is already enabled for your account.'))
+        messages.info(request, _('2FA ist bereits für Ihr Konto aktiviert.'))
         return redirect('users:2fa_settings')
     
     # Generate secret if not exists
@@ -142,7 +136,7 @@ def setup_2fa(request):
                         # Session-Flag setzen um Middleware-Konflikte zu vermeiden
                         request.session['2fa_just_setup'] = True
                 
-                    messages.success(request, _('2FA has been successfully enabled!'))
+                    messages.success(request, _('2FA wurde erfolgreich aktiviert! Ihr Konto ist jetzt besser geschützt.'))
                     return render(request, 'users/2fa_backup_codes.html', {
                         'backup_codes': backup_codes,
                         'show_codes': True
@@ -158,6 +152,8 @@ def setup_2fa(request):
         'form': form,
         'qr_code': user.get_qr_code(),
         'secret': user.totp_secret,
+        'optional_setup': True,  # Mark as optional
+        'benefits_text': _('2FA erhöht die Sicherheit Ihres Kontos erheblich, ist aber optional.'),
     }
     return render(request, 'users/2fa_setup.html', context)
 
@@ -209,11 +205,13 @@ def regenerate_backup_codes(request):
 
 @login_required
 def two_factor_settings(request):
-    """2FA settings page"""
+    """2FA settings page - optional security feature"""
     user = request.user
     context = {
         'is_2fa_enabled': user.is_2fa_enabled,
         'backup_codes_count': len(user.backup_codes) if user.backup_codes else 0,
+        'show_benefits': not user.is_2fa_enabled,  # Show benefits if not enabled
+        'optional_feature': True,  # Mark as optional, not required
     }
     return render(request, 'users/2fa_settings.html', context)
 

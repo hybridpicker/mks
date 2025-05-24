@@ -100,6 +100,11 @@ class MKSOverlayMenu {
         const statCards = document.querySelectorAll('.mks-overlay-stat-card');
         
         statCards.forEach(card => {
+            // Skip disabled cards
+            if (card.classList.contains('disabled-stat')) {
+                return;
+            }
+            
             // Click handlers
             card.addEventListener('click', this.handleStatCardClick.bind(this));
             
@@ -297,13 +302,13 @@ class MKSOverlayMenu {
         
         switch (cardId) {
             case 'new-registrations':
-                targetUrl = this.getUrlByName('get_controlling_students') || '/team/controlling/students/';
+                targetUrl = this.getUrlByName('get_controlling_students') || '/controlling/students';
                 break;
             case 'recent-blogs':
-                targetUrl = this.getUrlByName('show_blogs_editing') || '/blog/manage/';
+                targetUrl = this.getUrlByName('show_blogs_editing') || '/blogedit/summary';
                 break;
             case 'gallery-images':
-                targetUrl = this.getUrlByName('gallery_admin') || '/gallery/admin/';
+                targetUrl = this.getUrlByName('gallery_admin') || '/galerie/admin/';
                 break;
             case 'website-visits':
                 // Show info modal
@@ -328,10 +333,10 @@ class MKSOverlayMenu {
         // This is a simple fallback - in a real implementation,
         // you might want to expose Django URLs to JavaScript
         const urlMap = {
-            'get_controlling_students': '/team/controlling/students/',
-            'show_blogs_editing': '/blog/manage/',
-            'gallery_admin': '/gallery/admin/',
-            'event_managing_view': '/events/manage/'
+            'get_controlling_students': '/controlling/students',
+            'show_blogs_editing': '/blogedit/summary',
+            'gallery_admin': '/galerie/admin/',
+            'event_managing_view': '/team/events'
         };
         return urlMap[urlName];
     }

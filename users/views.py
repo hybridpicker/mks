@@ -474,3 +474,39 @@ def role_permissions(request, role_id):
     }
     
     return render(request, 'users/role_permissions.html', context)
+
+
+
+@login_required
+def user_profile(request):
+    """User profile page with optional 2FA settings"""
+    from django.utils.translation import gettext as _
+    
+    user = request.user
+    
+    context = {
+        'user': user,
+        'is_2fa_enabled': user.is_2fa_enabled,
+        'backup_codes_count': len(user.backup_codes) if user.backup_codes else 0,
+        'show_2fa_info': True,  # Show 2FA as optional feature
+    }
+    
+    return render(request, 'users/profile.html', context)
+
+
+@login_required  
+def user_security_settings(request):
+    """Security settings page with optional 2FA"""
+    from django.utils.translation import gettext as _
+    
+    user = request.user
+    
+    context = {
+        'user': user,
+        'is_2fa_enabled': user.is_2fa_enabled,
+        'backup_codes_count': len(user.backup_codes) if user.backup_codes else 0,
+        'show_2fa_benefits': not user.is_2fa_enabled,  # Show benefits if not enabled
+        'optional_feature': True,  # Mark as optional, not required
+    }
+    
+    return render(request, 'users/security_settings.html', context)
