@@ -1,0 +1,530 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de" class="mks-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ bearbeiten - MKS Management</title>
+    
+    <!-- MKS Core Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_nav.3.0.0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/FontStylesheet/FontStylesheet.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mobile-enhancements.3.0.0.css' %}">
+    
+    <!-- TinyMCE -->
+    {{ form.media }}
+    
+    <style>
+        /* Complete Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Document Base */
+        .mks-html, .mks-body {
+            height: 100%;
+            font-family: 'jaf-bernina-sans-condensed', Arial, sans-serif;
+            font-weight: 300;
+            background-color: #fdfdfd;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .mks-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Main Content */
+        .mks-main {
+            flex: 1;
+            padding: 2rem 0;
+            background: #fdfdfd;
+        }
+        
+        .mks-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Header */
+        .mks-header {
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .mks-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #d11317;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mks-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 300;
+        }
+        
+        /* Breadcrumb */
+        .mks-breadcrumb {
+            background: #f8f9fa;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .mks-breadcrumb-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .mks-breadcrumb-list {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .mks-breadcrumb-list a {
+            color: #d11317;
+            text-decoration: none;
+            font-weight: 400;
+        }
+        
+        .mks-breadcrumb-list a:hover {
+            text-decoration: underline;
+        }
+        
+        .mks-breadcrumb-separator {
+            color: #999;
+        }
+        
+        /* Form Card */
+        .mks-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-card-header {
+            background: linear-gradient(135deg, #d11317 0%, #b30f13 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+        }
+        
+        .mks-card-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 0;
+        }
+        
+        .mks-card-body {
+            padding: 2rem;
+        }
+        
+        /* Form Styles */
+        .mks-form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .mks-form-label {
+            display: block;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .mks-form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: white;
+        }
+        
+        .mks-form-control:focus {
+            outline: none;
+            border-color: #d11317;
+            box-shadow: 0 0 0 3px rgba(209, 19, 23, 0.1);
+        }
+        
+        .mks-form-help {
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        /* Button Styles */
+        .mks-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 44px;
+        }
+        
+        .mks-btn-primary {
+            background: linear-gradient(135deg, #d11317 0%, #b30f13 100%);
+            color: white;
+            border: 2px solid transparent;
+        }
+        
+        .mks-btn-primary:hover {
+            background: linear-gradient(135deg, #b30f13 0%, #9a0d11 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(209, 19, 23, 0.3);
+        }
+        
+        .mks-btn-secondary {
+            background: white;
+            color: #666;
+            border: 2px solid #e1e5e9;
+        }
+        
+        .mks-btn-secondary:hover {
+            background: #f8f9fa;
+            border-color: #d11317;
+            color: #d11317;
+        }
+        
+        .mks-btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        /* Alert Styles */
+        .mks-alert {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid transparent;
+        }
+        
+        .mks-alert-error {
+            background: #fff5f5;
+            border-color: #fed7d7;
+            color: #c53030;
+        }
+        
+        .mks-alert-success {
+            background: #f0fff4;
+            border-color: #c6f6d5;
+            color: #22543d;
+        }
+        
+        /* TinyMCE Customization */
+        .tox-tinymce {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #e1e5e9 !important;
+        }
+        
+        .tox-edit-area {
+            border: none !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mks-title {
+                font-size: 2rem;
+            }
+            
+            .mks-content,
+            .mks-header-content,
+            .mks-breadcrumb-content {
+                padding: 0 1rem;
+            }
+            
+            .mks-card-body {
+                padding: 1.5rem;
+            }
+            
+            .mks-btn-group {
+                flex-direction: column;
+            }
+            
+            .mks-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Back Button */
+        .mks-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #d11317;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+            transition: color 0.2s ease;
+        }
+        
+        .mks-back-btn:hover {
+            color: #b30f13;
+        }
+        
+        .mks-back-btn::before {
+            content: "←";
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body class="mks-body">
+    <div class="mks-container">
+        <!-- Navigation -->
+        {% include 'templates/user_navbar.html' %}
+        
+        <!-- Breadcrumb -->
+        <div class="mks-breadcrumb">
+            <div class="mks-breadcrumb-content">
+                <nav class="mks-breadcrumb-list">
+                    <a href="{% url 'index' %}">Startseite</a>
+                    <span class="mks-breadcrumb-separator">/</span>
+                    <a href="{% url 'faq:get-all-faqs' %}">FAQ Verwaltung</a>
+                    <span class="mks-breadcrumb-separator">/</span>
+                    <span>{% if form.instance.pk %}Bearbeiten{% else %}Neue FAQ{% endif %}</span>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- Header -->
+        <div class="mks-header">
+            <div class="mks-header-content">
+                <h1 class="mks-title">
+                    {% if form.instance.pk %}
+                        FAQ bearbeiten
+                    {% else %}
+                        Neue FAQ erstellen
+                    {% endif %}
+                </h1>
+                <p class="mks-subtitle">
+                    {% if form.instance.pk %}
+                        Bearbeiten Sie die ausgewählte FAQ-Eintrag
+                    {% else %}
+                        Erstellen Sie einen neuen FAQ-Eintrag für die Website
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <main class="mks-main">
+            <div class="mks-content">
+                <!-- Back Button -->
+                <a href="{% url 'faq:get-all-faqs' %}" class="mks-back-btn">
+                    Zurück zur FAQ-Übersicht
+                </a>
+                
+                <!-- Messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="mks-alert mks-alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Form Card -->
+                <div class="mks-card">
+                    <div class="mks-card-header">
+                        <h2 class="mks-card-title">
+                            {% if form.instance.pk %}FAQ-Details bearbeiten{% else %}Neue FAQ erstellen{% endif %}
+                        </h2>
+                    </div>
+                    <div class="mks-card-body">
+                        <form method="post" class="mks-form" novalidate>
+                            {% csrf_token %}
+                            
+                            <!-- Question Field -->
+                            <div class="mks-form-group">
+                                <label for="{{ form.question.id_for_label }}" class="mks-form-label">
+                                    {{ form.question.label }}
+                                    {% if form.question.field.required %}<span style="color: #d11317;">*</span>{% endif %}
+                                </label>
+                                <input 
+                                    type="text" 
+                                    name="{{ form.question.name }}" 
+                                    id="{{ form.question.id_for_label }}"
+                                    class="mks-form-control {% if form.question.errors %}border-danger{% endif %}"
+                                    value="{% if form.question.value %}{{ form.question.value }}{% endif %}"
+                                    placeholder="Geben Sie die häufig gestellte Frage ein..."
+                                    maxlength="500"
+                                >
+                                {% if form.question.errors %}
+                                    <div class="mks-alert mks-alert-error mt-2">
+                                        {{ form.question.errors.0 }}
+                                    </div>
+                                {% endif %}
+                                {% if form.question.help_text %}
+                                    <div class="mks-form-help">{{ form.question.help_text }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Answer Field -->
+                            <div class="mks-form-group">
+                                <label for="{{ form.answer.id_for_label }}" class="mks-form-label">
+                                    {{ form.answer.label }}
+                                    {% if form.answer.field.required %}<span style="color: #d11317;">*</span>{% endif %}
+                                </label>
+                                {{ form.answer }}
+                                {% if form.answer.errors %}
+                                    <div class="mks-alert mks-alert-error mt-2">
+                                        {{ form.answer.errors.0 }}
+                                    </div>
+                                {% endif %}
+                                {% if form.answer.help_text %}
+                                    <div class="mks-form-help">{{ form.answer.help_text }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Ordering Field -->
+                            <div class="mks-form-group">
+                                <label for="{{ form.ordering.id_for_label }}" class="mks-form-label">
+                                    {{ form.ordering.label }}
+                                    {% if form.ordering.field.required %}<span style="color: #d11317;">*</span>{% endif %}
+                                </label>
+                                <input 
+                                    type="number" 
+                                    name="{{ form.ordering.name }}" 
+                                    id="{{ form.ordering.id_for_label }}"
+                                    class="mks-form-control {% if form.ordering.errors %}border-danger{% endif %}"
+                                    value="{% if form.ordering.value %}{{ form.ordering.value }}{% endif %}"
+                                    placeholder="z.B. 1 für erste Position"
+                                >
+                                {% if form.ordering.errors %}
+                                    <div class="mks-alert mks-alert-error mt-2">
+                                        {{ form.ordering.errors.0 }}
+                                    </div>
+                                {% endif %}
+                                {% if form.ordering.help_text %}
+                                    <div class="mks-form-help">{{ form.ordering.help_text }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Submit Buttons -->
+                            <div class="mks-btn-group">
+                                <button type="submit" class="mks-btn mks-btn-primary">
+                                    {% if form.instance.pk %}
+                                        💾 Änderungen speichern
+                                    {% else %}
+                                        ✅ FAQ erstellen
+                                    {% endif %}
+                                </button>
+                                <a href="{% url 'faq:get-all-faqs' %}" class="mks-btn mks-btn-secondary">
+                                    ❌ Abbrechen
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- JavaScript for Enhanced UX -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-focus first input
+            const firstInput = document.querySelector('.mks-form-control');
+            if (firstInput && !firstInput.value) {
+                firstInput.focus();
+            }
+            
+            // Character counter for question field
+            const questionField = document.querySelector('input[name="question"]');
+            if (questionField) {
+                const maxLength = questionField.getAttribute('maxlength');
+                const counter = document.createElement('div');
+                counter.className = 'mks-form-help';
+                counter.id = 'question-counter';
+                questionField.parentNode.appendChild(counter);
+                
+                function updateCounter() {
+                    const remaining = maxLength - questionField.value.length;
+                    counter.textContent = `${remaining} Zeichen verbleibend`;
+                    counter.style.color = remaining < 50 ? '#d11317' : '#666';
+                }
+                
+                questionField.addEventListener('input', updateCounter);
+                updateCounter();
+            }
+            
+            // Form validation
+            const form = document.querySelector('.mks-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const questionInput = form.querySelector('input[name="question"]');
+                    if (!questionInput.value.trim()) {
+                        e.preventDefault();
+                        questionInput.focus();
+                        alert('Bitte geben Sie eine Frage ein.');
+                        return false;
+                    }
+                    
+                    // Show loading state
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '⏳ Wird gespeichert...';
+                    submitBtn.disabled = true;
+                    
+                    // Re-enable after 5 seconds as fallback
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }, 5000);
+                });
+            }
+            
+            // TinyMCE Customization
+            if (typeof tinymce !== 'undefined') {
+                tinymce.init({
+                    selector: 'textarea[name="answer"]',
+                    plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount',
+                    toolbar: 'undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+                    menubar: false,
+                    height: 400,
+                    content_style: 'body { font-family: jaf-bernina-sans-condensed, Arial, sans-serif; font-size: 16px; }',
+                    language: 'de',
+                    setup: function(editor) {
+                        editor.on('init', function() {
+                            // Custom initialization if needed
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

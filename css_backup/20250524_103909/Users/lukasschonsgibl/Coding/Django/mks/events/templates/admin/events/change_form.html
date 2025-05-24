@@ -1,0 +1,47 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    .event-image-guide {
+        margin: 20px 0;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-left: 4px solid #e60000;
+    }
+    .event-image-guide h3 {
+        margin-top: 0;
+        color: #333;
+    }
+    .event-image-guide ul {
+        margin-bottom: 10px;
+    }
+    .event-image-guide li {
+        margin-bottom: 5px;
+    }
+    .image-example {
+        margin-top: 15px;
+        display: block;
+        max-width: 400px;
+        border: 1px solid #ddd;
+    }
+</style>
+{% endblock %}
+
+{% block after_field_sets %}
+{{ block.super }}
+<div class="event-image-guide">
+    <h3>Richtlinien für Veranstaltungsbilder</h3>
+    <ul>
+        <li><strong>Erforderlich:</strong> Jede Veranstaltung muss ein Bild haben</li>
+        <li><strong>Optimale Größe:</strong> 800 × 600 Pixel</li>
+        <li><strong>Format:</strong> JPG oder WEBP (empfohlen)</li>
+        <li><strong>Maximale Dateigröße:</strong> 2MB</li>
+        <li><strong>Seitenverhältnis:</strong> 4:3 (Querformat)</li>
+        <li><strong>Auflösung:</strong> 72 dpi ist ausreichend</li>
+    </ul>
+    <p>Bilder werden auf der Startseite und in der Veranstaltungsübersicht angezeigt. Die optimale Darstellung wird mit einem Bild im Querformat mit guter Auflösung erreicht.</p>
+    <p><strong>Tipp:</strong> Komprimieren Sie Ihre Bilder vor dem Hochladen mit Tools wie <a href="https://tinypng.com/" target="_blank">TinyPNG</a> oder <a href="https://squoosh.app/" target="_blank">Squoosh</a>.</p>
+</div>
+{% endblock %}

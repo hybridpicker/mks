@@ -1,0 +1,50 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% block extra_head %}
+<style media="screen">
+  .django-ckeditor-widget, #cke_id_content{
+      width:100% !important;
+  }
+  p{
+    padding:0;
+  }
+  #id_title{
+    width: 97%;
+  }
+  #id_lead_paragraph{
+    width:100%;
+  }
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <div class="blogpost">
+      <h1>Eröffnungstext</h1>
+      <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.media }}
+      <div class="form-content">
+        <p>Lead*:</p>
+        {{ form.lead_paragraph }}
+        <p>Text*:</p>
+        {{ form.content }}
+      </div>
+      <a>
+      <button type="submit" name="form-save" onclick="return confirm('Wollen Sie wirklich diesen Eintrag abspeichern?');">Speichern</button>
+      </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block footer %}
+
+{% endblock %}

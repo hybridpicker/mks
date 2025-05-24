@@ -1,0 +1,1390 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de" class="mks-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veranstaltungen verwalten - MKS Management</title>
+    <meta name="robots" content="noindex">
+    
+    <!-- MKS Core Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_nav.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/FontStylesheet/FontStylesheet.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mobile-enhancements.css' %}">
+    
+    <style>
+        /* Complete Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Document Base */
+        .mks-html, .mks-body {
+            height: 100%;
+            font-family: 'jaf-bernina-sans-condensed', Arial, sans-serif;
+            font-weight: 300;
+            background-color: #fdfdfd;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .mks-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Main Content */
+        .mks-main {
+            flex: 1;
+            padding: 2rem 0;
+            background: #fdfdfd;
+        }
+        
+        .mks-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Header */
+        .mks-header {
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .mks-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #d11317;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mks-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 300;
+        }
+        
+        /* Breadcrumb */
+        .mks-breadcrumb {
+            background: #f8f9fa;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .mks-breadcrumb-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .mks-breadcrumb-list {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .mks-breadcrumb-list a {
+            color: #d11317;
+            text-decoration: none;
+            font-weight: 400;
+        }
+        
+        .mks-breadcrumb-list a:hover {
+            text-decoration: underline;
+        }
+        
+        .mks-breadcrumb-separator {
+            color: #999;
+        }
+        
+        /* Flash Messages */
+        .mks-messages {
+            margin-bottom: 2rem;
+        }
+        
+        .mks-alert {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            font-weight: 500;
+        }
+        
+        .mks-alert-success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+        .mks-alert-error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        
+        /* Statistics Grid */
+        .mks-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-stat-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .mks-stat-card:hover {
+            border-color: #d11317;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(209, 19, 23, 0.15);
+        }
+        
+        .mks-stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #d11317;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mks-stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        /* Cards */
+        .mks-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-card-header {
+            background: linear-gradient(135deg, #d11317 0%, #b30f13 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mks-card-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 0;
+        }
+        
+        .mks-card-body {
+            padding: 2rem;
+        }
+        
+        /* Events Grid */
+        .mks-events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        /* Event Card */
+        .mks-event-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        
+        .mks-event-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(209, 19, 23, 0.15);
+            border-color: #d11317;
+        }
+        
+        .mks-event-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .mks-event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .mks-event-card:hover .mks-event-image img {
+            transform: scale(1.05);
+        }
+        
+        .mks-event-date-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: linear-gradient(135deg, #d11317 0%, #b30f13 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .mks-event-content {
+            padding: 1.5rem;
+        }
+        
+        .mks-event-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        
+        .mks-event-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .mks-event-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .mks-event-detail-icon {
+            width: 20px;
+            text-align: center;
+            color: #d11317;
+        }
+        
+        .mks-event-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        /* Buttons */
+        .mks-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 44px;
+        }
+        
+        .mks-btn-primary {
+            background: linear-gradient(135deg, #d11317 0%, #b30f13 100%);
+            color: white;
+            border: 2px solid transparent;
+        }
+        
+        .mks-btn-primary:hover {
+            background: linear-gradient(135deg, #b30f13 0%, #9a0d11 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(209, 19, 23, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .mks-btn-secondary {
+            background: white;
+            color: #666;
+            border: 2px solid #e1e5e9;
+        }
+        
+        .mks-btn-secondary:hover {
+            background: #f8f9fa;
+            border-color: #d11317;
+            color: #d11317;
+            text-decoration: none;
+        }
+        
+        .mks-btn-outline-danger {
+            background: transparent;
+            color: #dc3545;
+            border: 2px solid #dc3545;
+        }
+        
+        .mks-btn-outline-danger:hover {
+            background: #dc3545;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .mks-btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            min-height: 36px;
+        }
+        
+        /* Form Styles */
+        .mks-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .mks-form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .mks-form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .mks-form-label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .mks-form-label .required {
+            color: #d11317;
+            margin-left: 0.25rem;
+        }
+        
+        .mks-form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: white;
+        }
+        
+        .mks-form-control:focus {
+            outline: none;
+            border-color: #d11317;
+            box-shadow: 0 0 0 3px rgba(209, 19, 23, 0.1);
+        }
+        
+        .mks-form-help {
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        /* File Upload Styling */
+        .mks-file-upload {
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+        
+        .mks-file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .mks-file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            background: #f9fafb;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .mks-file-upload-label:hover {
+            border-color: #d11317;
+            background: #fff5f5;
+            color: #d11317;
+        }
+        
+        .mks-file-upload-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+        
+        /* Image Preview */
+        .mks-image-preview {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .mks-image-preview img {
+            max-width: 100%;
+            height: auto;
+            max-height: 200px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .mks-image-preview-label {
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        /* Guidelines Box */
+        .mks-guidelines-box {
+            background: #f0f9ff;
+            border: 2px solid #bae6fd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-guidelines-box h4 {
+            color: #0c4a6e;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .mks-guidelines-box ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+        
+        .mks-guidelines-box li {
+            margin-bottom: 0.5rem;
+            color: #0f172a;
+        }
+        
+        /* Empty State */
+        .mks-empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #666;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 2px dashed #e1e5e9;
+        }
+        
+        .mks-empty-icon {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+        
+        .mks-empty-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #999;
+        }
+        
+        .mks-empty-text {
+            margin-bottom: 2rem;
+        }
+        
+        /* Mobile-specific enhancements for events */
+        @media (max-width: 480px) {
+            .mks-event-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .mks-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            /* Mobile form improvements */
+            .mks-form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .mks-form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            /* Touch-friendly file upload */
+            .mks-file-upload-label {
+                padding: 3rem 1rem;
+                font-size: 1.1rem;
+            }
+            
+            .mks-file-upload-icon {
+                font-size: 4rem;
+            }
+        }
+        
+        /* Events grid mobile optimization */
+        @media (max-width: 768px) {
+            .mks-events-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .mks-event-card {
+                margin-bottom: 1rem;
+            }
+            
+            .mks-event-image {
+                height: 250px;
+            }
+            
+            /* Swipe hint for overflowing content */
+            .mks-card-body {
+                position: relative;
+            }
+            
+            .mks-card-body::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: 20px;
+                background: linear-gradient(to left, white 0%, transparent 100%);
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            
+            .mks-card-body:hover::after {
+                opacity: 1;
+            }
+        }
+        
+        /* Mobile-specific loading states */
+        .mks-mobile-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(253,253,253,0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            flex-direction: column;
+        }
+        
+        .mks-mobile-loading.show {
+            display: flex;
+        }
+        
+        .mks-mobile-loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e1e5e9;
+            border-top-color: #d11317;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .mks-mobile-loading-text {
+            margin-top: 1rem;
+            font-weight: 500;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="mks-body">
+    <div class="mks-container">
+        <!-- Navigation -->
+        {% include 'templates/user_navbar.html' %}
+        
+        <!-- Breadcrumb -->
+        <div class="mks-breadcrumb">
+            <div class="mks-breadcrumb-content">
+                <nav class="mks-breadcrumb-list">
+                    <a href="{% url 'home_view' %}">Startseite</a>
+                    <span class="mks-breadcrumb-separator">/</span>
+                    <a href="/team/controlling/students">Verwaltung</a>
+                    <span class="mks-breadcrumb-separator">/</span>
+                    <span>Veranstaltungen</span>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- Header -->
+        <div class="mks-header">
+            <div class="mks-header-content">
+                <h1 class="mks-title">Veranstaltungen verwalten</h1>
+                <p class="mks-subtitle">
+                    Erstellen und verwalten Sie Veranstaltungen der Musikschule. Alle Veranstaltungen werden auf der Startseite angezeigt.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <main class="mks-main">
+            <div class="mks-content">
+                <!-- Flash Messages -->
+                {% if messages %}
+                <div class="mks-messages">
+                    {% for message in messages %}
+                    <div class="mks-alert mks-alert-{% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <!-- Statistics -->
+                <div class="mks-stats-grid">
+                    <div class="mks-stat-card">
+                        <div class="mks-stat-value">{{ events.count }}</div>
+                        <div class="mks-stat-label">Veranstaltungen gesamt</div>
+                    </div>
+                    <div class="mks-stat-card">
+                        <div class="mks-stat-value" id="upcoming-events">0</div>
+                        <div class="mks-stat-label">Kommende Veranstaltungen</div>
+                    </div>
+                    <div class="mks-stat-card">
+                        <div class="mks-stat-value" id="current-month">0</div>
+                        <div class="mks-stat-label">Diesen Monat</div>
+                    </div>
+                    <div class="mks-stat-card">
+                        <div class="mks-stat-value" id="past-events">0</div>
+                        <div class="mks-stat-label">Vergangene Veranstaltungen</div>
+                    </div>
+                </div>
+                
+                <!-- Event Form -->
+                <div class="mks-card" id="event-form">
+                    <div class="mks-card-header">
+                        <h2 class="mks-card-title">
+                            {% if edit_event %}
+                                ✏️ Veranstaltung bearbeiten
+                            {% else %}
+                                <svg style="width: 1.2em; height: 1.2em; margin-right: 0.5rem; vertical-align: middle;" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>Neue Veranstaltung erstellen
+                            {% endif %}
+                        </h2>
+                        {% if edit_event %}
+                        <a href="{% url 'event_managing_view' %}" class="mks-btn mks-btn-secondary mks-btn-sm">
+                            ❌ Abbrechen
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="mks-card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            {% if edit_event %}
+                            <input type="hidden" name="event_id" value="{{ edit_event.id }}">
+                            {% endif %}
+                            
+                            <div class="mks-form-grid">
+                                <!-- Event Name -->
+                                <div class="mks-form-group">
+                                    <label for="id_name" class="mks-form-label">
+                                        Veranstaltungsname <span class="required">*</span>
+                                    </label>
+                                    <input type="text" name="name" id="id_name" class="mks-form-control" 
+                                           maxlength="100" required 
+                                           value="{% if edit_event %}{{ edit_event.name }}{% endif %}"
+                                           placeholder="z.B. Frühlingskonzert 2025">
+                                    <div class="mks-form-help">Maximal 100 Zeichen</div>
+                                    {% if form.name.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.name.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Venue -->
+                                <div class="mks-form-group">
+                                    <label for="id_venue" class="mks-form-label">
+                                        Veranstaltungsort
+                                    </label>
+                                    <input type="text" name="venue" id="id_venue" class="mks-form-control" 
+                                           maxlength="80" 
+                                           value="{% if edit_event %}{{ edit_event.venue }}{% endif %}"
+                                           placeholder="z.B. Hauptsaal der Musikschule">
+                                    <div class="mks-form-help">Maximal 80 Zeichen</div>
+                                    {% if form.venue.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.venue.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Date -->
+                                <div class="mks-form-group">
+                                    <label for="id_date" class="mks-form-label">
+                                        Datum <span class="required">*</span>
+                                    </label>
+                                    <input type="date" name="date" id="id_date" class="mks-form-control" required
+                                           value="{% if edit_event %}{{ edit_event.date|date:'Y-m-d' }}{% endif %}">
+                                    {% if form.date.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.date.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Time -->
+                                <div class="mks-form-group">
+                                    <label for="id_time" class="mks-form-label">
+                                        Beginnzeit <span class="required">*</span>
+                                    </label>
+                                    <input type="time" name="time" id="id_time" class="mks-form-control" required
+                                           value="{% if edit_event %}{{ edit_event.time|time:'H:i' }}{% endif %}">
+                                    {% if form.time.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.time.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Link -->
+                                <div class="mks-form-group">
+                                    <label for="id_link" class="mks-form-label">
+                                        Link zu weiteren Informationen
+                                    </label>
+                                    <input type="url" name="link" id="id_link" class="mks-form-control" 
+                                           value="{% if edit_event %}{{ edit_event.link }}{% endif %}"
+                                           placeholder="https://...">
+                                    <div class="mks-form-help">Optional: Link zu Website oder weiteren Details</div>
+                                    {% if form.link.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.link.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Project -->
+                                <div class="mks-form-group">
+                                    <label for="id_project" class="mks-form-label">
+                                        Projekt-Zuordnung
+                                    </label>
+                                    <select name="project" id="id_project" class="mks-form-control">
+                                        <option value="">-- Kein Projekt --</option>
+                                        {% for project in projects %}
+                                        <option value="{{ project.id }}" 
+                                                {% if edit_event and edit_event.project.id == project.id %}selected{% endif %}>
+                                            {{ project.name }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="mks-form-help">Optional: Ordnen Sie die Veranstaltung einem Projekt zu</div>
+                                    {% if form.project.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.project.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Image Upload -->
+                                <div class="mks-form-group full-width">
+                                    <label for="id_image" class="mks-form-label">
+                                        Veranstaltungsbild 
+                                        {% if not edit_event %}<span class="required">*</span>{% endif %}
+                                    </label>
+                                    
+                                    {% if edit_event and edit_event.image %}
+                                    <div class="mks-current-image">
+                                        <img src="{{ edit_event.get_image_url }}" alt="Aktuelles Bild" 
+                                             style="max-width: 200px; height: auto; border-radius: 4px; margin-bottom: 1rem;">
+                                        <div class="mks-form-help">Aktuelles Bild - Neues Bild auswählen zum Ersetzen</div>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <div class="mks-file-upload">
+                                        <input type="file" name="image" id="id_image" accept="image/*" 
+                                               {% if not edit_event %}required{% endif %}>
+                                        <label for="id_image" class="mks-file-upload-label">
+                                            <span class="mks-file-upload-icon">📁</span>
+                                            <span>
+                                                {% if edit_event %}
+                                                    Neues Bild auswählen (optional)
+                                                {% else %}
+                                                    Klicken Sie hier oder ziehen Sie ein Bild hinein
+                                                {% endif %}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    {% if form.image.errors %}
+                                    <div class="mks-form-error">
+                                        {% for error in form.image.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Guidelines -->
+                                <div class="mks-form-group full-width">
+                                    <div class="mks-guidelines-box">
+                                        <h4>📋 Bildrichtlinien für Veranstaltungen</h4>
+                                        <ul>
+                                            <li><strong>Erforderlich:</strong> Jede Veranstaltung muss ein Bild haben</li>
+                                            <li><strong>Optimale Größe:</strong> 800 × 600 Pixel (4:3 Querformat)</li>
+                                            <li><strong>Dateiformate:</strong> JPG, PNG oder WEBP</li>
+                                            <li><strong>Maximale Dateigröße:</strong> 2MB</li>
+                                            <li><strong>Verwendung:</strong> Wird auf der Startseite und in der Übersicht angezeigt</li>
+                                            <li><strong>Tipp:</strong> Verwenden Sie <a href="https://tinypng.com/" target="_blank">TinyPNG</a> oder <a href="https://squoosh.app/" target="_blank">Squoosh</a> zur Komprimierung</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Form Actions -->
+                            <div style="text-align: right; margin-top: 2rem;">
+                                {% if edit_event %}
+                                <button type="submit" class="mks-btn mks-btn-primary">
+                                    ✅ Änderungen speichern
+                                </button>
+                                {% else %}
+                                <button type="submit" class="mks-btn mks-btn-primary">
+                                    ✅ Veranstaltung erstellen
+                                </button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Events List -->
+                <div class="mks-card">
+                    <div class="mks-card-header">
+                        <h2 class="mks-card-title">📅 Alle Veranstaltungen</h2>
+                    </div>
+                    <div class="mks-card-body">
+                        {% if events %}
+                        <div class="mks-events-grid">
+                            {% for event in events %}
+                            <div class="mks-event-card">
+                                <div class="mks-event-image">
+                                    <img src="{{ event.get_image_url }}" alt="{{ event.name }}">
+                                    <div class="mks-event-date-badge">
+                                        {{ event.date|date:"d.m.Y" }}
+                                    </div>
+                                </div>
+                                <div class="mks-event-content">
+                                    <h3 class="mks-event-title">{{ event.name }}</h3>
+                                    <div class="mks-event-details">
+                                        <div class="mks-event-detail-item">
+                                            <span class="mks-event-detail-icon">🕒</span>
+                                            <span>{{ event.get_time_presentation }}</span>
+                                        </div>
+                                        {% if event.venue %}
+                                        <div class="mks-event-detail-item">
+                                            <span class="mks-event-detail-icon">📍</span>
+                                            <span>{{ event.venue }}</span>
+                                        </div>
+                                        {% endif %}
+                                        {% if event.link %}
+                                        <div class="mks-event-detail-item">
+                                            <span class="mks-event-detail-icon">🔗</span>
+                                            <a href="{{ event.link }}" target="_blank">Weitere Informationen</a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="mks-event-actions">
+                                        <a href="?edit_id={{ event.id }}#event-form" class="mks-btn mks-btn-secondary mks-btn-sm">
+                                            ✏️ Bearbeiten
+                                        </a>
+                                        <a href="?delete_id={{ event.id }}" 
+                                           class="mks-btn mks-btn-outline-danger mks-btn-sm"
+                                           onclick="return confirm('Möchten Sie &quot;{{ event.name }}&quot; wirklich löschen?');">
+                                            🗑️ Löschen
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="mks-empty-state">
+                            <div class="mks-empty-icon">📅</div>
+                            <h3 class="mks-empty-title">Keine Veranstaltungen vorhanden</h3>
+                            <p class="mks-empty-text">
+                                Erstellen Sie Ihre erste Veranstaltung mit dem Formular oben.
+                            </p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Event Form -->
+                <div class="mks-card" id="event-form">
+                    <div class="mks-card-header">
+                        <h2 class="mks-card-title">
+                            {% if edit_event %}
+                                ✏️ Veranstaltung bearbeiten
+                            {% else %}
+                                <svg style="width: 1.2em; height: 1.2em; margin-right: 0.5rem; vertical-align: middle;" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>Neue Veranstaltung erstellen
+                            {% endif %}
+                        </h2>
+                        {% if edit_event %}
+                        <a href="{% url 'event_managing_view' %}" class="mks-btn mks-btn-secondary mks-btn-sm">
+                            ❌ Abbrechen
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="mks-card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            {% if edit_event %}
+                            <input type="hidden" name="event_id" value="{{ edit_event.id }}">
+                            {% endif %}
+                            
+                            <div class="mks-form-grid">
+                                <!-- Event Name -->
+                                <div class="mks-form-group">
+                                    <label for="id_name" class="mks-form-label">
+                                        Veranstaltungsname <span class="required">*</span>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="name" 
+                                        id="id_name" 
+                                        class="mks-form-control"
+                                        maxlength="100"
+                                        required
+                                        value="{{ edit_event.name|default:'' }}"
+                                        placeholder="z.B. Frühlingskonzert 2025"
+                                    >
+                                    <div class="mks-form-help">Maximal 100 Zeichen</div>
+                                    {{ form.name.errors }}
+                                </div>
+                                
+                                <!-- Venue -->
+                                <div class="mks-form-group">
+                                    <label for="id_venue" class="mks-form-label">
+                                        Veranstaltungsort
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="venue" 
+                                        id="id_venue" 
+                                        class="mks-form-control"
+                                        maxlength="80"
+                                        value="{{ edit_event.venue|default:'' }}"
+                                        placeholder="z.B. Hauptsaal der Musikschule"
+                                    >
+                                    <div class="mks-form-help">Maximal 80 Zeichen</div>
+                                    {{ form.venue.errors }}
+                                </div>
+                                
+                                <!-- Date -->
+                                <div class="mks-form-group">
+                                    <label for="id_date" class="mks-form-label">
+                                        Datum <span class="required">*</span>
+                                    </label>
+                                    <input 
+                                        type="date" 
+                                        name="date" 
+                                        id="id_date" 
+                                        class="mks-form-control"
+                                        required
+                                        value="{% if edit_event %}{{ edit_event.date|date:'Y-m-d' }}{% endif %}"
+                                    >
+                                    {{ form.date.errors }}
+                                </div>
+                                
+                                <!-- Time -->
+                                <div class="mks-form-group">
+                                    <label for="id_time" class="mks-form-label">
+                                        Beginnzeit <span class="required">*</span>
+                                    </label>
+                                    <input 
+                                        type="time" 
+                                        name="time" 
+                                        id="id_time" 
+                                        class="mks-form-control"
+                                        required
+                                        value="{% if edit_event %}{{ edit_event.time|time:'H:i' }}{% endif %}"
+                                    >
+                                    {{ form.time.errors }}
+                                </div>
+                                
+                                <!-- Link -->
+                                <div class="mks-form-group">
+                                    <label for="id_link" class="mks-form-label">
+                                        Link zu weiteren Informationen
+                                    </label>
+                                    <input 
+                                        type="url" 
+                                        name="link" 
+                                        id="id_link" 
+                                        class="mks-form-control"
+                                        value="{{ edit_event.link|default:'' }}"
+                                        placeholder="https://..."
+                                    >
+                                    <div class="mks-form-help">Optional: Link zu Website oder weiteren Details</div>
+                                    {{ form.link.errors }}
+                                </div>
+                                
+                                <!-- Project -->
+                                <div class="mks-form-group">
+                                    <label for="id_project" class="mks-form-label">
+                                        Projekt-Zuordnung
+                                    </label>
+                                    <select name="project" id="id_project" class="mks-form-control">
+                                        <option value="">-- Kein Projekt --</option>
+                                        {% for project in projects %}
+                                        <option value="{{ project.id }}" 
+                                                {% if edit_event and edit_event.project.id == project.id %}selected{% endif %}>
+                                            {{ project.name }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="mks-form-help">Optional: Ordnen Sie die Veranstaltung einem Projekt zu</div>
+                                    {{ form.project.errors }}
+                                </div>
+                                
+                                <!-- Image Upload -->
+                                <div class="mks-form-group full-width">
+                                    <label for="id_image" class="mks-form-label">
+                                        Veranstaltungsbild 
+                                        {% if not edit_event %}<span class="required">*</span>{% endif %}
+                                    </label>
+                                    
+                                    {% if edit_event and edit_event.image %}
+                                    <div class="mks-image-preview">
+                                        <img src="{{ edit_event.get_image_url }}" alt="{{ edit_event.name }}">
+                                        <div class="mks-image-preview-label">Aktuelles Bild</div>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <div class="mks-file-upload">
+                                        <input 
+                                            type="file" 
+                                            name="image" 
+                                            id="id_image" 
+                                            accept="image/*"
+                                            {% if not edit_event %}required{% endif %}
+                                        >
+                                        <label for="id_image" class="mks-file-upload-label">
+                                            <span class="mks-file-upload-icon">📁</span>
+                                            <span>
+                                                {% if edit_event %}
+                                                    Klicken Sie hier, um ein neues Bild hochzuladen
+                                                {% else %}
+                                                    Klicken Sie hier oder ziehen Sie ein Bild hinein
+                                                {% endif %}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    {{ form.image.errors }}
+                                </div>
+                                
+                                <!-- Guidelines -->
+                                <div class="mks-form-group full-width">
+                                    <div class="mks-guidelines-box">
+                                        <h4>📋 Bildrichtlinien für Veranstaltungen</h4>
+                                        <ul>
+                                            <li><strong>Erforderlich:</strong> Jede Veranstaltung muss ein Bild haben</li>
+                                            <li><strong>Optimale Größe:</strong> 800 × 600 Pixel (4:3 Querformat)</li>
+                                            <li><strong>Dateiformate:</strong> JPG, PNG oder WEBP</li>
+                                            <li><strong>Maximale Dateigröße:</strong> 2MB</li>
+                                            <li><strong>Verwendung:</strong> Wird auf der Startseite und in der Übersicht angezeigt</li>
+                                            <li><strong>Tipp:</strong> Verwenden Sie <a href="https://tinypng.com/" target="_blank">TinyPNG</a> oder <a href="https://squoosh.app/" target="_blank">Squoosh</a> zur Komprimierung</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Form Actions -->
+                            <div style="text-align: right; margin-top: 2rem;">
+                                {% if edit_event %}
+                                <a href="{% url 'event_managing_view' %}" class="mks-btn mks-btn-secondary" style="margin-right: 1rem;">
+                                    ❌ Abbrechen
+                                </a>
+                                <button type="submit" class="mks-btn mks-btn-primary">
+                                    💾 Änderungen speichern
+                                </button>
+                                {% else %}
+                                <button type="submit" class="mks-btn mks-btn-primary">
+                                    ✅ Veranstaltung erstellen
+                                </button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- JavaScript for Enhanced Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Calculate statistics
+            function updateStatistics() {
+                const eventCards = document.querySelectorAll('.mks-event-card');
+                const now = new Date();
+                const currentMonth = now.getMonth();
+                const currentYear = now.getFullYear();
+                
+                let upcomingCount = 0;
+                let currentMonthCount = 0;
+                let pastCount = 0;
+                
+                eventCards.forEach(card => {
+                    const dateText = card.querySelector('.mks-event-date-badge').textContent.trim();
+                    const [day, month, year] = dateText.split('.');
+                    const eventDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+                    
+                    if (eventDate > now) {
+                        upcomingCount++;
+                    } else {
+                        pastCount++;
+                    }
+                    
+                    if (eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear) {
+                        currentMonthCount++;
+                    }
+                });
+                
+                document.getElementById('upcoming-events').textContent = upcomingCount;
+                document.getElementById('current-month').textContent = currentMonthCount;
+                document.getElementById('past-events').textContent = pastCount;
+            }
+            
+            updateStatistics();
+            
+            // File upload enhancement
+            const fileInput = document.getElementById('id_image');
+            const fileLabel = document.querySelector('.mks-file-upload-label');
+            
+            if (fileInput && fileLabel) {
+                fileInput.addEventListener('change', function() {
+                    const fileName = this.files[0]?.name;
+                    if (fileName) {
+                        fileLabel.innerHTML = `
+                            <span class="mks-file-upload-icon">✅</span>
+                            <span>Ausgewählt: ${fileName}</span>
+                        `;
+                        fileLabel.style.background = '#f0fff4';
+                        fileLabel.style.borderColor = '#22c55e';
+                    }
+                });
+                
+                // Drag and drop functionality
+                const fileUpload = document.querySelector('.mks-file-upload');
+                
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    fileUpload.addEventListener(eventName, preventDefaults, false);
+                });
+                
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    fileUpload.addEventListener(eventName, highlight, false);
+                });
+                
+                ['dragleave', 'drop'].forEach(eventName => {
+                    fileUpload.addEventListener(eventName, unhighlight, false);
+                });
+                
+                fileUpload.addEventListener('drop', handleDrop, false);
+                
+                function preventDefaults(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                
+                function highlight() {
+                    fileLabel.style.background = '#f0f9ff';
+                    fileLabel.style.borderColor = '#3b82f6';
+                }
+                
+                function unhighlight() {
+                    fileLabel.style.background = '#f9fafb';
+                    fileLabel.style.borderColor = '#d1d5db';
+                }
+                
+                function handleDrop(e) {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    
+                    fileInput.files = files;
+                    fileInput.dispatchEvent(new Event('change'));
+                }
+            }
+            
+            // Form validation enhancement
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const requiredFields = form.querySelectorAll('[required]');
+                    let isValid = true;
+                    
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            field.style.borderColor = '#dc3545';
+                            isValid = false;
+                        } else {
+                            field.style.borderColor = '#e1e5e9';
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        e.preventDefault();
+                        alert('Bitte füllen Sie alle erforderlichen Felder aus.');
+                        return false;
+                    }
+                    
+                    // Show loading state
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '⏳ Wird gespeichert...';
+                    submitBtn.disabled = true;
+                    
+                    // Re-enable after 10 seconds as fallback
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }, 10000);
+                });
+            }
+            
+            // Smooth scrolling to form when edit is clicked
+            const editButtons = document.querySelectorAll('a[href*="#event-form"]');
+            editButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetUrl = this.href.split('#')[0];
+                    if (targetUrl !== window.location.href.split('#')[0]) {
+                        window.location.href = this.href;
+                    } else {
+                        document.getElementById('event-form').scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Mobile enhancements for events
+            if (window.innerWidth <= 768) {
+                // Touch-friendly interactions
+                document.body.classList.add('mobile-optimized');
+                
+                // Improved form experience on mobile
+                const formInputs = document.querySelectorAll('.mks-form-control');
+                formInputs.forEach(input => {
+                    // Prevent zoom on iOS
+                    if (input.type === 'text' || input.type === 'email' || input.type === 'tel') {
+                        input.style.fontSize = '16px';
+                    }
+                    
+                    // Add better focus indicators
+                    input.addEventListener('focus', function() {
+                        this.closest('.mks-form-group').classList.add('focused');
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        this.closest('.mks-form-group').classList.remove('focused');
+                    });
+                });
+                
+                // Touch feedback for event cards
+                document.querySelectorAll('.mks-event-card').forEach(card => {
+                    card.addEventListener('touchstart', function() {
+                        this.style.transform = 'scale(0.98)';
+                    });
+                    
+                    card.addEventListener('touchend', function() {
+                        this.style.transform = '';
+                    });
+                });
+                
+                // Mobile-optimized file upload
+                const fileUploads = document.querySelectorAll('input[type="file"]');
+                fileUploads.forEach(upload => {
+                    upload.addEventListener('change', function() {
+                        showMobileUploadFeedback(this);
+                    });
+                });
+            }
+            
+            // Mobile loading helpers
+            function showMobileLoading(text = 'Lädt...') {
+                const overlay = document.createElement('div');
+                overlay.className = 'mks-mobile-loading show';
+                overlay.innerHTML = `
+                    <div class="mks-mobile-loading-spinner"></div>
+                    <div class="mks-mobile-loading-text">${text}</div>
+                `;
+                document.body.appendChild(overlay);
+                return overlay;
+            }
+            
+            function hideMobileLoading(overlay) {
+                if (overlay && overlay.parentNode) {
+                    overlay.classList.remove('show');
+                    setTimeout(() => {
+                        overlay.parentNode.removeChild(overlay);
+                    }, 300);
+                }
+            }
+            
+            function showMobileUploadFeedback(fileInput) {
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const feedback = document.createElement('div');
+                    feedback.className = 'mks-mobile-upload-feedback';
+                    feedback.innerHTML = `
+                        <p>✅ Datei ausgewählt:</p>
+                        <strong>${file.name}</strong>
+                        <small>(${(file.size / 1024 / 1024).toFixed(2)} MB)</small>
+                    `;
+                    
+                    const existingFeedback = fileInput.parentNode.querySelector('.mks-mobile-upload-feedback');
+                    if (existingFeedback) {
+                        existingFeedback.remove();
+                    }
+                    
+                    fileInput.parentNode.appendChild(feedback);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

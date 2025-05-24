@@ -1,0 +1,174 @@
+{% load static %}
+
+<!-- NAV -->
+<header>
+  <div class="nvb">
+    <div class="bnbs">
+      <div class="bls">
+        <a href="{% url 'home_view' %}">
+          {% include "templates/svg/nav_bar_icon.html" %}
+        </a>
+      </div>
+      <div class="bns">
+        <div class="drops">
+        <div class="dropdown arrow">
+          <button class="dropbtn">
+            <a href="{% url 'teaching:teaching_music'%}">Musikschule</a>
+          </button>
+          <div class="dropdown-content dropdown-wide">
+            <div class="dropdown-columns">
+              <div class="dropdown-column">
+                <h3>Fachgruppen</h3>
+                <a href="{% url 'teaching:teaching_brass'%}">Blasinstrumente</a>
+                <a href="{% url 'teaching:teaching_eme'%}">Elementare Musikerziehung</a>
+                <a href="{% url 'teaching:teaching_theory'%}">Musikkunde</a>
+                <a href="{% url 'teaching:teaching_drums'%}">Schlaginstrumente</a>
+              </div>
+              <div class="dropdown-column">
+                <h3>&nbsp;</h3>
+                <a href="{% url 'teaching:teaching_vocal'%}">Stimmbildung</a>
+                <a href="{% url 'teaching:teaching_strings'%}">Streichinstrumente</a>
+                <a href="{% url 'teaching:teaching_keys'%}">Tasteninstrumente</a>
+                <a href="{% url 'teaching:teaching_picked'%}">Zupfinstrumente</a>
+              </div>
+              <div class="dropdown-column">
+                <h3>Weitere Angebote</h3>
+                <a href="{% url 'teaching:teaching_dance'%}">Tanz & Bewegung</a>
+                <a href="/orgelunterricht">Orgelunterricht</a>
+                <a href="/midi-band">MIDI Band</a>
+                <a href="{% url 'teaching:teaching_prices'%}">Beiträge & Ermäßigungen</a>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown-hover-section">
+          </div>
+        </div>
+        <div class="dropdown-b arrow">
+          <button class="dropbtn-b">
+            <a href="{% url 'teaching:teaching_art'%}">Kunstschule</a>
+          </button>
+          <div class="dropdown-hover-section-b">
+          </div>
+        </div>
+        <div class="dropdown arrow">
+          <button class="dropbtn">
+            <a href="{% url 'gallery_view'%}">Galerie</a>
+          </button>
+          <div class="dropdown-hover-section-b">
+          </div>
+        </div>
+        <div class="dropdown-d arrow">
+          <button class="dropbtn-d">
+            <a href="{% url 'teaching:all_teachers'%}">Über uns</a>
+          </button>
+          <div class="dropdown-content-d">
+            <a href="{% url 'teaching:all_teachers'%}">Team</a>
+            <a href="{% url 'history'%}">Geschichte</a>
+            <a href="{% url 'blog_summary' %}">Blog</a>
+          </div>
+          <div class="dropdown-hover-section-d">
+          </div>
+        </div>
+        <div class="dropdown-e arrow">
+          <button class="dropbtn-e">
+            <a href="{% url 'contact_email' %}">Kontakt</a>
+          </button>
+          <div class="dropdown-hover-section-e">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div id="mks-nav-mobile" class="menu">
+    <div>
+      <span id="menuIcon" onclick="openNav()">
+        {% include "templates/svg/nav_bar_hamburger_mobile.html" %}
+      </span>
+    </div>
+    <div class="">
+    </div>
+    <div id="mobileLogo">
+      <a id="small-mobile-logo" href="{% url 'home_view' %}">
+        {% include "templates/svg/nav_bar_mobile_logo.html" %}
+      </a>
+      <a id="medium-mobile-logo" href="{% url 'home_view' %}">
+        {% include "templates/svg/nav_bar_icon.html" %}
+      </a>
+    </div>
+  </div>
+  <div id="mks-nav-mobile-menu" class="overlay">
+    <div class="overlay-content">
+      <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+        {% include "templates/svg/nav_bar_cross_burger.html" %}
+      </a>
+      <a class="mainHeadingMobile" href="{% url 'teaching:teaching_music'%}">Musikschule</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_brass'%}">- Blasinstrumente</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_eme'%}">- Elementare Musikerziehung</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_theory'%}">- Musikkunde</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_drums'%}">- Schlaginstrumente</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_vocal'%}">- Stimmbildung</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_strings'%}">- Streichinstrumente</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_keys'%}">- Tasteninstrumente</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_picked'%}">- Zupfinstrumente</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_dance'%}">- Tanz & Bewegung</a>
+      <a class="categoryHeadingMobileNoCursor" href="/orgelunterricht">- Orgelunterricht</a>
+      <a class="categoryHeadingMobileNoCursor" href="/midi-band">- MIDI Band</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'teaching:teaching_prices'%}">- Beiträge & Ermäßigungen</a>
+      <a class="mainHeadingMobile" href="{% url 'teaching:teaching_art'%}">Kunstschule</a>
+      <a class="mainHeadingMobile" href="{% url 'gallery_view'%}">Galerie</a>
+      <a class="mainHeadingMobile" href="{% url 'teaching:all_teachers'%}">Über Uns</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'history'%}">- Geschichte</a>
+      <a class="categoryHeadingMobileNoCursor" href="{% url 'blog_summary' %}">- Blog</a>
+      <a class="mainHeadingMobile" href="{% url 'contact_email' %}">Kontakt</a>
+    </div>
+  </div>
+</header>
+
+<style>
+/* Ergänzende Styles für die neue Navigation */
+.dropdown-wide {
+  min-width: 600px !important;
+  left: -200px;
+}
+
+.dropdown-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 1.5rem;
+}
+
+.dropdown-column h3 {
+  color: var(--accent-color, #d11317);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  font-family: jaf-bernina-sans-condensed, sans-serif;
+}
+
+.dropdown-column a {
+  display: block;
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 820px) {
+  .mainHeadingMobile {
+    color: var(--accent-color, #d11317);
+    font-weight: 600;
+    font-size: 1.4rem;
+    border-bottom: 0.08rem solid #33333363;
+    margin-top: 1rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .categoryHeadingMobileNoCursor {
+    padding-left: 3rem !important;
+    font-weight: 400;
+  }
+}
+</style>

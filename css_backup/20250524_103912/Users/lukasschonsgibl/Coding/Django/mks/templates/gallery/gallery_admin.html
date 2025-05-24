@@ -1,0 +1,2137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de" class="mks-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie verwalten - MKS Management</title>
+    <meta name="robots" content="noindex">
+    
+    <!-- MKS Core Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_nav.3.0.0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/FontStylesheet/FontStylesheet.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mobile-enhancements.3.0.0.css' %}">
+    
+    <style>
+        /* Complete Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Document Base */
+        .mks-html, .mks-body {
+            height: 100%;
+            font-family: 'jaf-bernina-sans-condensed', Arial, sans-serif;
+            font-weight: 300;
+            background-color: #fdfdfd;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .mks-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Main Content */
+        .mks-main {
+            flex: 1;
+            padding: 2rem 0;
+            background: #fdfdfd;
+        }
+        
+        .mks-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Header */
+        .mks-header {
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .mks-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #d11317;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mks-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 300;
+        }
+        
+        /* Breadcrumb */
+        .mks-breadcrumb {
+            background: #f8f9fa;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .mks-breadcrumb-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .mks-breadcrumb-list {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .mks-breadcrumb-list a {
+            color: #d11317;
+            text-decoration: none;
+            font-weight: 400;
+        }
+        
+        .mks-breadcrumb-list a:hover {
+            text-decoration: underline;
+        }
+        
+        .mks-breadcrumb-separator {
+            color: #999;
+        }
+        
+        /* Cards */
+        .mks-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-card-header {
+            background: linear-gradient(135deg, #d11317 0%, #b30f13 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mks-card-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 0;
+        }
+        
+        .mks-card-body {
+            padding: 2rem;
+        }
+        
+        /* Flash Messages */
+        .mks-messages {
+            margin-bottom: 2rem;
+        }
+        
+        .mks-alert {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            font-weight: 500;
+        }
+        
+        .mks-alert-success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+        .mks-alert-error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        
+        /* Category Tabs */
+        .mks-category-section {
+            margin-bottom: 2rem;
+        }
+        
+        .mks-category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .mks-category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .mks-category-tab {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .mks-category-tab:hover {
+            background: #f8f9fa;
+            border-color: #d11317;
+            color: #d11317;
+        }
+        
+        .mks-category-tab.active {
+            background: #d11317;
+            color: white;
+            border-color: #d11317;
+        }
+        
+        .mks-category-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Upload Area */
+        .mks-upload-container {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            background: #f9fafb;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-upload-container.dragover {
+            border-color: #d11317;
+            background: #fff5f5;
+        }
+        
+        .mks-upload-icon {
+            font-size: 3rem;
+            color: #d11317;
+            margin-bottom: 1rem;
+        }
+        
+        .mks-upload-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mks-upload-subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        /* Upload Tabs */
+        .mks-upload-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+        
+        .mks-upload-tab {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .mks-upload-tab:hover {
+            background: #f8f9fa;
+            border-color: #d11317;
+            color: #d11317;
+        }
+        
+        .mks-upload-tab.active {
+            background: #d11317;
+            color: white;
+            border-color: #d11317;
+        }
+        
+        .mks-upload-tab-content {
+            display: none;
+        }
+        
+        .mks-upload-tab-content.active {
+            display: block;
+        }
+        
+        /* Form Styles */
+        .mks-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .mks-form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .mks-form-label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .mks-form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: white;
+        }
+        
+        .mks-form-control:focus {
+            outline: none;
+            border-color: #d11317;
+            box-shadow: 0 0 0 3px rgba(209, 19, 23, 0.1);
+        }
+        
+        .mks-form-control.textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        /* Buttons */
+        .mks-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 44px;
+        }
+        
+        .mks-btn-primary {
+            background: linear-gradient(135deg, #d11317 0%, #b30f13 100%);
+            color: white;
+            border: 2px solid transparent;
+        }
+        
+        .mks-btn-primary:hover {
+            background: linear-gradient(135deg, #b30f13 0%, #9a0d11 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(209, 19, 23, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .mks-btn-secondary {
+            background: white;
+            color: #666;
+            border: 2px solid #e1e5e9;
+        }
+        
+        .mks-btn-secondary:hover {
+            background: #f8f9fa;
+            border-color: #d11317;
+            color: #d11317;
+            text-decoration: none;
+        }
+        
+        .mks-btn-danger {
+            background: #dc3545;
+            color: white;
+            border: 2px solid transparent;
+        }
+        
+        .mks-btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .mks-btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            min-height: 36px;
+        }
+        
+        .mks-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        /* File Input Styling */
+        .mks-file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .mks-file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        /* Progress Bar */
+        .mks-progress {
+            width: 100%;
+            height: 20px;
+            background: #e1e5e9;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+            display: none;
+        }
+        
+        .mks-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #d11317 0%, #b30f13 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        
+        .mks-progress-text {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Photo Grid */
+        .mks-photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .mks-photo-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: grab;
+        }
+        
+        .mks-photo-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .mks-photo-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+        
+        .mks-photo-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .mks-photo-item:hover .mks-photo-image {
+            transform: scale(1.05);
+        }
+        
+        .mks-photo-info {
+            padding: 1.5rem;
+        }
+        
+        .mks-photo-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .mks-photo-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        
+        .mks-photo-meta {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 1rem;
+        }
+        
+        .mks-photo-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        /* Modal Styles */
+        .mks-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .mks-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mks-modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .mks-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .mks-modal-close:hover {
+            background: #f1f1f1;
+            color: #333;
+        }
+        
+        .mks-modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Statistics */
+        .mks-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-stat-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .mks-stat-card:hover {
+            border-color: #d11317;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(209, 19, 23, 0.15);
+        }
+        
+        .mks-stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #d11317;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mks-stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        /* Empty State */
+        .mks-empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #666;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 2px dashed #e1e5e9;
+        }
+        
+        .mks-empty-icon {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+        
+        .mks-empty-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #999;
+        }
+        
+        .mks-empty-text {
+            margin-bottom: 2rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .mks-photo-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mks-title {
+                font-size: 2rem;
+            }
+            
+            .mks-form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mks-form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .mks-category-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            
+            .mks-category-actions {
+                justify-content: center;
+            }
+            
+            .mks-upload-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mks-photo-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            
+            .mks-photo-actions {
+                flex-direction: column;
+            }
+            
+            .mks-stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .mks-content {
+                padding: 0 0.5rem;
+            }
+            
+            .mks-card-header,
+            .mks-card-body {
+                padding: 1rem;
+            }
+            
+            .mks-upload-container {
+                padding: 1rem;
+            }
+            
+            .mks-photo-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .mks-modal-content {
+                padding: 1rem;
+            }
+        }
+        
+        /* Mobile-specific gallery enhancements */
+        @media (max-width: 768px) {
+            /* Improved category tabs for mobile */
+            .mks-category-tabs {
+                overflow-x: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                padding-bottom: 0.5rem;
+            }
+            
+            .mks-category-tabs::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .mks-category-tab {
+                flex-shrink: 0;
+                min-width: 120px;
+                min-height: 48px;
+                padding: 0.875rem 1.5rem;
+            }
+            
+            /* Photo grid mobile optimization */
+            .mks-photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+            
+            .mks-photo-item {
+                border-radius: 8px;
+                cursor: pointer; /* Better for touch */
+            }
+            
+            .mks-photo-item:active {
+                transform: scale(0.98);
+            }
+            
+            .mks-photo-image {
+                height: 150px;
+            }
+            
+            .mks-photo-info {
+                padding: 1rem;
+            }
+            
+            .mks-photo-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .mks-photo-actions .mks-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            /* Upload area mobile improvements */
+            .mks-upload-container {
+                padding: 1.5rem 1rem;
+                border-radius: 8px;
+            }
+            
+            .mks-upload-icon {
+                font-size: 2.5rem;
+            }
+            
+            .mks-upload-title {
+                font-size: 1.2rem;
+            }
+            
+            /* Drag and drop improvements */
+            .mks-upload-container.dragover {
+                transform: scale(1.02);
+                border-color: #d11317;
+                background: linear-gradient(135deg, #fff5f5 0%, #f8f9fa 100%);
+            }
+            
+            /* Better touch targets */
+            .mks-btn {
+                min-height: 48px; /* Better touch targets */
+                padding: 0.875rem 1.5rem;
+            }
+            
+            .mks-btn-sm {
+                min-height: 44px;
+                padding: 0.75rem 1.25rem;
+            }
+            
+            .mks-upload-tab {
+                min-height: 48px;
+                padding: 0.875rem 1.5rem;
+            }
+            
+            .mks-form-control {
+                min-height: 48px;
+                padding: 0.875rem 1rem;
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* Single column layout for very small screens */
+            .mks-photo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mks-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .mks-stat-card {
+                padding: 1rem;
+            }
+            
+            .mks-stat-value {
+                font-size: 1.5rem;
+            }
+            
+            /* Mobile-friendly modals */
+            .mks-modal-content {
+                width: 95%;
+                max-height: 90vh;
+                margin: 1rem;
+            }
+            
+            /* Simplified category actions for mobile */
+            .mks-category-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .mks-category-actions .mks-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="mks-body">
+    <div class="mks-container">
+        <!-- Navigation -->
+        {% include 'templates/user_navbar.html' %}
+        
+        <!-- Breadcrumb -->
+        <div class="mks-breadcrumb">
+            <div class="mks-breadcrumb-content">
+                <nav class="mks-breadcrumb-list">
+                    <a href="{% url 'home_view' %}">Startseite</a>
+                    <span class="mks-breadcrumb-separator">/</span>
+                    <a href="/team/controlling/students">Verwaltung</a>
+                    <span class="mks-breadcrumb-separator">/</span>
+                    <span>Galerie</span>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- Header -->
+        <div class="mks-header">
+            <div class="mks-header-content">
+                <h1 class="mks-title">Galerie verwalten</h1>
+                <p class="mks-subtitle">
+                    Verwalten Sie Ihre Galerie-Kategorien und laden Sie Bilder hoch. Alle Bilder werden in der öffentlichen Galerie angezeigt.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <main class="mks-main">
+            <div class="mks-content">
+                <!-- Flash Messages -->
+                <div id="message-container" class="mks-messages">
+                    <!-- Messages will be inserted here by JavaScript -->
+                </div>
+                
+                <!-- Statistics -->
+                <div class="mks-stats-grid">
+                    <div class="mks-stat-card">
+                        <div class="mks-stat-value">{{ categories.count }}</div>
+                        <div class="mks-stat-label">Kategorien</div>
+                    </div>
+                    <div class="mks-stat-card">
+                        <div class="mks-stat-value" id="total-photos">
+                            {% if photos %}{{ photos.count }}{% else %}0{% endif %}
+                        </div>
+                        <div class="mks-stat-label">Bilder gesamt</div>
+                    </div>
+                    <div class="mks-stat-card">
+                        <div class="mks-stat-value" id="category-photos">
+                            {% if selected_category_id and photos %}{{ photos.count }}{% else %}0{% endif %}
+                        </div>
+                        <div class="mks-stat-label">In aktueller Kategorie</div>
+                    </div>
+                    <div class="mks-stat-card">
+                        <div class="mks-stat-value" id="total-size">~</div>
+                        <div class="mks-stat-label">Geschätzte Größe</div>
+                    </div>
+                </div>
+                
+                <!-- Categories Section -->
+                <div class="mks-category-section">
+                    <div class="mks-category-header">
+                        <h2>📁 Kategorien</h2>
+                        <div class="mks-category-actions">
+                            <button id="new-category-btn" class="mks-btn mks-btn-primary mks-btn-sm">
+                                ➕ Neue Kategorie
+                            </button>
+                            {% if selected_category_id %}
+                            <button id="edit-category-btn" class="mks-btn mks-btn-secondary mks-btn-sm">
+                                ✏️ Bearbeiten
+                            </button>
+                            <button id="delete-category-btn" class="mks-btn mks-btn-danger mks-btn-sm">
+                                🗑️ Löschen
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="mks-category-tabs">
+                        {% for category in categories %}
+                        <div class="mks-category-tab {% if category.id == selected_category_id %}active{% endif %}" 
+                             data-category-id="{{ category.id }}"
+                             onclick="switchCategory({{ category.id }})">
+                            {{ category.title }}
+                        </div>
+                        {% empty %}
+                        <div class="mks-empty-state">
+                            <div class="mks-empty-icon">📁</div>
+                            <h3 class="mks-empty-title">Keine Kategorien vorhanden</h3>
+                            <p class="mks-empty-text">Erstellen Sie Ihre erste Kategorie, um Bilder hochladen zu können.</p>
+                            <button id="create-first-category-btn" class="mks-btn mks-btn-primary">
+                                ➕ Erste Kategorie erstellen
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                {% if selected_category_id %}
+                <!-- Upload Section -->
+                <div class="mks-card">
+                    <div class="mks-card-header">
+                        <h2 class="mks-card-title">📤 Bilder hochladen</h2>
+                        <a href="{% url 'gallery_view' %}" class="mks-btn mks-btn-secondary mks-btn-sm">
+                            👁️ Galerie ansehen
+                        </a>
+                    </div>
+                    <div class="mks-card-body">
+                        <!-- Upload Tabs -->
+                        <div class="mks-upload-tabs">
+                            <div class="mks-upload-tab active" data-tab="single">
+                                📷 Einzelnes Bild
+                            </div>
+                            <div class="mks-upload-tab" data-tab="multiple">
+                                📷📷 Mehrere Bilder
+                            </div>
+                        </div>
+                        
+                        <!-- Single Upload -->
+                        <div id="single-upload" class="mks-upload-tab-content active">
+                            <div class="mks-upload-container" id="single-drop-zone">
+                                <div class="mks-upload-icon">📁</div>
+                                <h3 class="mks-upload-title">Bild hochladen</h3>
+                                <p class="mks-upload-subtitle">
+                                    Ziehen Sie ein Bild hier hinein oder klicken Sie, um eines auszuwählen<br>
+                                    <small>Maximale Größe: 3MB • Formate: JPG, PNG, GIF, WEBP</small>
+                                </p>
+                                
+                                <form id="single-upload-form" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                                    <input type="hidden" name="category_id" value="{{ selected_category_id }}">
+                                    <input type="hidden" name="is_multiple" value="false">
+                                    
+                                    <div class="mks-form-grid">
+                                        <div class="mks-form-group">
+                                            <label for="single-title" class="mks-form-label">Titel</label>
+                                            <input 
+                                                type="text" 
+                                                id="single-title" 
+                                                name="title" 
+                                                class="mks-form-control"
+                                                placeholder="Titel des Bildes"
+                                                maxlength="50"
+                                            >
+                                        </div>
+                                        
+                                        <div class="mks-form-group">
+                                            <label for="single-copyright" class="mks-form-label">Copyright</label>
+                                            <input 
+                                                type="text" 
+                                                id="single-copyright" 
+                                                name="copyright_by" 
+                                                class="mks-form-control"
+                                                placeholder="Copyright-Inhaber (optional)"
+                                                maxlength="100"
+                                            >
+                                        </div>
+                                        
+                                        <div class="mks-form-group full-width">
+                                            <label for="single-description" class="mks-form-label">Beschreibung</label>
+                                            <textarea 
+                                                id="single-description" 
+                                                name="description" 
+                                                class="mks-form-control textarea"
+                                                placeholder="Beschreibung des Bildes (optional)"
+                                                maxlength="120"
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mks-file-upload">
+                                        <input 
+                                            type="file" 
+                                            id="single-file-input" 
+                                            name="image" 
+                                            accept="image/jpeg,image/png,image/gif,image/webp"
+                                        >
+                                        <button type="button" class="mks-btn mks-btn-secondary" onclick="document.getElementById('single-file-input').click()">
+                                            📁 Bild auswählen
+                                        </button>
+                                    </div>
+                                    
+                                    <div id="single-file-preview" class="mks-file-preview" style="display: none; margin-top: 1rem;">
+                                        <img id="single-preview-image" style="max-width: 200px; max-height: 200px; border-radius: 8px;">
+                                        <p id="single-preview-name" style="margin-top: 0.5rem; font-weight: 500;"></p>
+                                    </div>
+                                    
+                                    <button type="submit" class="mks-btn mks-btn-primary" style="margin-top: 1rem;" disabled>
+                                        ⬆️ Hochladen
+                                    </button>
+                                </form>
+                                
+                                <div id="single-progress" class="mks-progress">
+                                    <div id="single-progress-bar" class="mks-progress-bar"></div>
+                                </div>
+                                <div id="single-progress-text" class="mks-progress-text"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Multiple Upload -->
+                        <div id="multiple-upload" class="mks-upload-tab-content">
+                            <div class="mks-upload-container" id="multiple-drop-zone">
+                                <div class="mks-upload-icon">📁📁</div>
+                                <h3 class="mks-upload-title">Mehrere Bilder hochladen</h3>
+                                <p class="mks-upload-subtitle">
+                                    Ziehen Sie mehrere Bilder hier hinein oder klicken Sie, um welche auszuwählen<br>
+                                    <small>Maximale Größe pro Bild: 3MB • Maximale Anzahl: 100 Bilder</small>
+                                </p>
+                                
+                                <form id="multiple-upload-form" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                                    <input type="hidden" name="category_id" value="{{ selected_category_id }}">
+                                    <input type="hidden" name="is_multiple" value="true">
+                                    
+                                    <div class="mks-file-upload">
+                                        <input 
+                                            type="file" 
+                                            id="multiple-file-input" 
+                                            name="images" 
+                                            accept="image/jpeg,image/png,image/gif,image/webp"
+                                            multiple
+                                        >
+                                        <button type="button" class="mks-btn mks-btn-secondary" onclick="document.getElementById('multiple-file-input').click()">
+                                            📁 Bilder auswählen
+                                        </button>
+                                    </div>
+                                    
+                                    <div id="multiple-file-preview" class="mks-file-preview" style="display: none; margin-top: 1rem;">
+                                        <p id="multiple-preview-count" style="font-weight: 500; margin-bottom: 1rem;"></p>
+                                        <div id="multiple-preview-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem;"></div>
+                                    </div>
+                                    
+                                    <button type="submit" class="mks-btn mks-btn-primary" style="margin-top: 1rem;" disabled>
+                                        ⬆️ Alle hochladen
+                                    </button>
+                                </form>
+                                
+                                <div id="multiple-progress" class="mks-progress">
+                                    <div id="multiple-progress-bar" class="mks-progress-bar"></div>
+                                </div>
+                                <div id="multiple-progress-text" class="mks-progress-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Photos Section -->
+                <div class="mks-card">
+                    <div class="mks-card-header">
+                        <h2 class="mks-card-title">🖼️ Bilder in dieser Kategorie</h2>
+                        <span class="mks-btn mks-btn-secondary mks-btn-sm" style="pointer-events: none;">
+                            {{ photos.count }} Bilder
+                        </span>
+                    </div>
+                    <div class="mks-card-body">
+                        {% if photos %}
+                        <div class="mks-photo-grid" id="photo-grid">
+                            {% for photo in photos %}
+                            <div class="mks-photo-item" data-id="{{ photo.id }}">
+                                <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="mks-photo-image" loading="lazy">
+                                <div class="mks-photo-info">
+                                    <h3 class="mks-photo-title">{{ photo.title|default:"Unbenannt" }}</h3>
+                                    {% if photo.description %}
+                                    <p class="mks-photo-description">{{ photo.description }}</p>
+                                    {% endif %}
+                                    {% if photo.copyright_by %}
+                                    <p class="mks-photo-meta">© {{ photo.copyright_by }}</p>
+                                    {% endif %}
+                                    <div class="mks-photo-actions">
+                                        <button class="mks-btn mks-btn-secondary mks-btn-sm photo-edit-btn" 
+                                                data-id="{{ photo.id }}"
+                                                data-title="{{ photo.title }}"
+                                                data-description="{{ photo.description }}"
+                                                data-copyright="{{ photo.copyright_by }}">
+                                            ✏️ Bearbeiten
+                                        </button>
+                                        <button class="mks-btn mks-btn-danger mks-btn-sm photo-delete-btn" 
+                                                data-id="{{ photo.id }}"
+                                                data-title="{{ photo.title }}">
+                                            🗑️ Löschen
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="mks-empty-state">
+                            <div class="mks-empty-icon">🖼️</div>
+                            <h3 class="mks-empty-title">Keine Bilder in dieser Kategorie</h3>
+                            <p class="mks-empty-text">Laden Sie Ihr erstes Bild hoch, um die Galerie zu füllen.</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                <!-- No category selected -->
+                <div class="mks-empty-state">
+                    <div class="mks-empty-icon">📁</div>
+                    <h3 class="mks-empty-title">Keine Kategorie ausgewählt</h3>
+                    <p class="mks-empty-text">
+                        {% if categories %}
+                            Wählen Sie eine Kategorie oben aus, um Bilder zu verwalten.
+                        {% else %}
+                            Erstellen Sie zuerst eine Kategorie, um Bilder hochladen zu können.
+                        {% endif %}
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modals -->
+    
+    <!-- Edit Photo Modal -->
+    <div id="edit-photo-modal" class="mks-modal">
+        <div class="mks-modal-content">
+            <button class="mks-modal-close" onclick="closeModal('edit-photo-modal')">&times;</button>
+            <h2 class="mks-modal-title">Bild bearbeiten</h2>
+            <form id="edit-photo-form">
+                <input type="hidden" id="edit-photo-id">
+                
+                <div class="mks-form-group">
+                    <label for="edit-photo-title" class="mks-form-label">Titel</label>
+                    <input 
+                        type="text" 
+                        id="edit-photo-title" 
+                        class="mks-form-control"
+                        placeholder="Titel des Bildes"
+                        maxlength="50"
+                    >
+                </div>
+                
+                <div class="mks-form-group">
+                    <label for="edit-photo-description" class="mks-form-label">Beschreibung</label>
+                    <textarea 
+                        id="edit-photo-description" 
+                        class="mks-form-control textarea"
+                        placeholder="Beschreibung des Bildes"
+                        maxlength="120"
+                    ></textarea>
+                </div>
+                
+                <div class="mks-form-group">
+                    <label for="edit-photo-copyright" class="mks-form-label">Copyright</label>
+                    <input 
+                        type="text" 
+                        id="edit-photo-copyright" 
+                        class="mks-form-control"
+                        placeholder="Copyright-Inhaber"
+                        maxlength="100"
+                    >
+                </div>
+                
+                <div style="text-align: right; margin-top: 2rem;">
+                    <button type="button" class="mks-btn mks-btn-secondary" onclick="closeModal('edit-photo-modal')" style="margin-right: 1rem;">
+                        ❌ Abbrechen
+                    </button>
+                    <button type="submit" class="mks-btn mks-btn-primary">
+                        💾 Speichern
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- New Category Modal -->
+    <div id="new-category-modal" class="mks-modal">
+        <div class="mks-modal-content">
+            <button class="mks-modal-close" onclick="closeModal('new-category-modal')">&times;</button>
+            <h2 class="mks-modal-title">Neue Kategorie erstellen</h2>
+            <form id="new-category-form">
+                <div class="mks-form-group">
+                    <label for="new-category-title" class="mks-form-label">Titel</label>
+                    <input 
+                        type="text" 
+                        id="new-category-title" 
+                        class="mks-form-control"
+                        placeholder="Titel der Kategorie"
+                        maxlength="50"
+                        required
+                    >
+                </div>
+                
+                <div style="text-align: right; margin-top: 2rem;">
+                    <button type="button" class="mks-btn mks-btn-secondary" onclick="closeModal('new-category-modal')" style="margin-right: 1rem;">
+                        ❌ Abbrechen
+                    </button>
+                    <button type="submit" class="mks-btn mks-btn-primary">
+                        ✅ Erstellen
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Edit Category Modal -->
+    <div id="edit-category-modal" class="mks-modal">
+        <div class="mks-modal-content">
+            <button class="mks-modal-close" onclick="closeModal('edit-category-modal')">&times;</button>
+            <h2 class="mks-modal-title">Kategorie bearbeiten</h2>
+            <form id="edit-category-form">
+                <input type="hidden" id="edit-category-id">
+                
+                <div class="mks-form-group">
+                    <label for="edit-category-title" class="mks-form-label">Titel</label>
+                    <input 
+                        type="text" 
+                        id="edit-category-title" 
+                        class="mks-form-control"
+                        placeholder="Titel der Kategorie"
+                        maxlength="50"
+                        required
+                    >
+                </div>
+                
+                <div style="text-align: right; margin-top: 2rem;">
+                    <button type="button" class="mks-btn mks-btn-secondary" onclick="closeModal('edit-category-modal')" style="margin-right: 1rem;">
+                        ❌ Abbrechen
+                    </button>
+                    <button type="submit" class="mks-btn mks-btn-primary">
+                        💾 Speichern
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- JavaScript for Gallery Management -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize gallery management
+            initializeGalleryManagement();
+        });
+        
+        function initializeGalleryManagement() {
+            // Initialize upload tabs
+            initializeUploadTabs();
+            
+            // Initialize drag and drop
+            initializeDragAndDrop();
+            
+            // Initialize file inputs
+            initializeFileInputs();
+            
+            // Initialize modal handlers
+            initializeModals();
+            
+            // Initialize category handlers
+            initializeCategoryHandlers();
+            
+            // Initialize photo handlers
+            initializePhotoHandlers();
+            
+            // Mobile-specific enhancements
+            if (window.innerWidth <= 768) {
+                // Enable horizontal scrolling for category tabs
+                const categoryTabs = document.querySelector('.mks-category-tabs');
+                if (categoryTabs) {
+                    let isScrolling = false;
+                    
+                    categoryTabs.addEventListener('scroll', function() {
+                        if (!isScrolling) {
+                            isScrolling = true;
+                            
+                            // Add visual feedback for scrollable content
+                            this.classList.add('scrolling');
+                            
+                            setTimeout(() => {
+                                this.classList.remove('scrolling');
+                                isScrolling = false;
+                            }, 1000);
+                        }
+                    });
+                    
+                    // Auto-scroll to active category on mobile
+                    const activeTab = categoryTabs.querySelector('.mks-category-tab.active');
+                    if (activeTab) {
+                        activeTab.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'nearest',
+                            inline: 'center'
+                        });
+                    }
+                }
+                
+                // Improved touch feedback for all interactive elements
+                const touchElements = document.querySelectorAll(
+                    '.mks-btn, .mks-category-tab, .mks-upload-tab, .mks-photo-item'
+                );
+                
+                touchElements.forEach(element => {
+                    element.addEventListener('touchstart', function(e) {
+                        this.classList.add('touching');
+                    }, { passive: true });
+                    
+                    element.addEventListener('touchend', function(e) {
+                        setTimeout(() => {
+                            this.classList.remove('touching');
+                        }, 150);
+                    }, { passive: true });
+                    
+                    element.addEventListener('touchcancel', function(e) {
+                        this.classList.remove('touching');
+                    }, { passive: true });
+                });
+                
+                // Mobile-optimized drag and drop
+                const uploadContainers = document.querySelectorAll('.mks-upload-container');
+                uploadContainers.forEach(container => {
+                    // Add mobile-specific drag feedback
+                    container.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        this.classList.add('mobile-drag-over');
+                    });
+                    
+                    container.addEventListener('dragleave', function(e) {
+                        this.classList.remove('mobile-drag-over');
+                    });
+                    
+                    container.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        this.classList.remove('mobile-drag-over');
+                        this.classList.add('mobile-drop-success');
+                        
+                        setTimeout(() => {
+                            this.classList.remove('mobile-drop-success');
+                        }, 1000);
+                    });
+                });
+                
+                // Mobile photo grid optimizations
+                const photoGrid = document.querySelector('.mks-photo-grid');
+                if (photoGrid) {
+                    // Improved touch scrolling
+                    photoGrid.style.webkitOverflowScrolling = 'touch';
+                    
+                    // Lazy load images for better performance on mobile
+                    const images = photoGrid.querySelectorAll('img[loading="lazy"]');
+                    if ('IntersectionObserver' in window) {
+                        const imageObserver = new IntersectionObserver((entries, observer) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    const img = entry.target;
+                                    img.src = img.dataset.src || img.src;
+                                    img.classList.remove('lazy');
+                                    imageObserver.unobserve(img);
+                                }
+                            });
+                        });
+                        
+                        images.forEach(img => imageObserver.observe(img));
+                    }
+                }
+                
+                // Mobile-friendly modal behavior
+                const modals = document.querySelectorAll('.mks-modal');
+                modals.forEach(modal => {
+                    modal.addEventListener('touchstart', function(e) {
+                        if (e.target === this) {
+                            // Close modal when touching backdrop on mobile
+                            closeModal(this.id);
+                        }
+                    });
+                });
+            }
+            
+            // Mobile loading state improvements
+            function showMobileLoading(text = 'Verarbeitung...', progress = false) {
+                const overlay = document.createElement('div');
+                overlay.className = 'mks-loading-overlay show';
+                overlay.innerHTML = `
+                    <div class="mks-loading-spinner"></div>
+                    <div class="mks-loading-text">${text}</div>
+                    ${progress ? '<div class="mks-loading-progress"><div class="mks-loading-progress-bar"></div></div>' : ''}
+                `;
+                document.body.appendChild(overlay);
+                return overlay;
+            }
+            
+            function updateMobileLoadingProgress(overlay, percent) {
+                if (overlay) {
+                    const progressBar = overlay.querySelector('.mks-loading-progress-bar');
+                    if (progressBar) {
+                        progressBar.style.width = percent + '%';
+                    }
+                    
+                    const text = overlay.querySelector('.mks-loading-text');
+                    if (text) {
+                        text.textContent = `Verarbeitung... ${percent}%`;
+                    }
+                }
+            }
+            
+            function hideMobileLoading(overlay) {
+                if (overlay && overlay.parentNode) {
+                    overlay.classList.remove('show');
+                    setTimeout(() => {
+                        overlay.parentNode.removeChild(overlay);
+                    }, 300);
+                }
+            }
+            
+            // Enhanced mobile file upload feedback
+            function showMobileUploadFeedback(files, isMultiple = false) {
+                const feedback = document.createElement('div');
+                feedback.className = 'mks-mobile-upload-feedback';
+                
+                if (isMultiple) {
+                    let totalSize = 0;
+                    Array.from(files).forEach(file => totalSize += file.size);
+                    
+                    feedback.innerHTML = `
+                        <div class="mks-upload-success">✅ ${files.length} Dateien ausgewählt</div>
+                        <div class="mks-upload-size">Gesamtgröße: ${formatFileSize(totalSize)}</div>
+                        <div class="mks-upload-files">
+                            ${Array.from(files).slice(0, 3).map(file => 
+                                `<div class="mks-upload-file">${file.name}</div>`
+                            ).join('')}
+                            ${files.length > 3 ? `<div class="mks-upload-more">...und ${files.length - 3} weitere</div>` : ''}
+                        </div>
+                    `;
+                } else {
+                    const file = files[0];
+                    feedback.innerHTML = `
+                        <div class="mks-upload-success">✅ Datei ausgewählt</div>
+                        <div class="mks-upload-filename">${file.name}</div>
+                        <div class="mks-upload-size">${formatFileSize(file.size)}</div>
+                    `;
+                }
+                
+                return feedback;
+            }
+        }
+        
+        function initializeUploadTabs() {
+            const tabs = document.querySelectorAll('.mks-upload-tab');
+            const contents = document.querySelectorAll('.mks-upload-tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    const target = this.getAttribute('data-tab');
+                    document.getElementById(target + '-upload').classList.add('active');
+                });
+            });
+        }
+        
+        function initializeDragAndDrop() {
+            const singleDropZone = document.getElementById('single-drop-zone');
+            const multipleDropZone = document.getElementById('multiple-drop-zone');
+            
+            if (singleDropZone) {
+                setupDropZone(singleDropZone, false);
+            }
+            
+            if (multipleDropZone) {
+                setupDropZone(multipleDropZone, true);
+            }
+        }
+        
+        function setupDropZone(dropZone, isMultiple) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'), false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'), false);
+            });
+            
+            dropZone.addEventListener('drop', function(e) {
+                const files = e.dataTransfer.files;
+                const fileInput = isMultiple 
+                    ? document.getElementById('multiple-file-input')
+                    : document.getElementById('single-file-input');
+                    
+                fileInput.files = files;
+                fileInput.dispatchEvent(new Event('change'));
+            }, false);
+        }
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        function initializeFileInputs() {
+            const singleInput = document.getElementById('single-file-input');
+            const multipleInput = document.getElementById('multiple-file-input');
+            
+            if (singleInput) {
+                singleInput.addEventListener('change', function() {
+                    handleSingleFileSelection(this.files[0]);
+                });
+            }
+            
+            if (multipleInput) {
+                multipleInput.addEventListener('change', function() {
+                    handleMultipleFileSelection(this.files);
+                });
+            }
+            
+            // Form submissions
+            const singleForm = document.getElementById('single-upload-form');
+            const multipleForm = document.getElementById('multiple-upload-form');
+            
+            if (singleForm) {
+                singleForm.addEventListener('submit', handleSingleUpload);
+            }
+            
+            if (multipleForm) {
+                multipleForm.addEventListener('submit', handleMultipleUpload);
+            }
+        }
+        
+        function handleSingleFileSelection(file) {
+            if (!file) return;
+            
+            const preview = document.getElementById('single-file-preview');
+            const previewImage = document.getElementById('single-preview-image');
+            const previewName = document.getElementById('single-preview-name');
+            const submitBtn = document.querySelector('#single-upload-form button[type="submit"]');
+            
+            if (file.size > 3 * 1024 * 1024) {
+                showMessage('error', `Die Datei "${file.name}" ist zu groß. Maximale Größe: 3MB.`);
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewName.textContent = file.name;
+                preview.style.display = 'block';
+                submitBtn.disabled = false;
+                
+                // Auto-fill title if empty
+                const titleInput = document.getElementById('single-title');
+                if (!titleInput.value) {
+                    titleInput.value = file.name.replace(/\.[^/.]+$/, '');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function handleMultipleFileSelection(files) {
+            if (!files.length) return;
+            
+            const preview = document.getElementById('multiple-file-preview');
+            const previewCount = document.getElementById('multiple-preview-count');
+            const previewGrid = document.getElementById('multiple-preview-grid');
+            const submitBtn = document.querySelector('#multiple-upload-form button[type="submit"]');
+            
+            let validFiles = 0;
+            let totalSize = 0;
+            
+            previewGrid.innerHTML = '';
+            
+            Array.from(files).forEach(file => {
+                if (file.size > 3 * 1024 * 1024) {
+                    showMessage('error', `Die Datei "${file.name}" ist zu groß und wird übersprungen.`);
+                    return;
+                }
+                
+                validFiles++;
+                totalSize += file.size;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageDiv = document.createElement('div');
+                    imageDiv.innerHTML = `
+                        <img src="${e.target.result}" style="width: 100%; height: 100px; object-fit: cover; border-radius: 4px;">
+                        <p style="font-size: 0.8rem; margin-top: 0.5rem; word-break: break-word;">${file.name}</p>
+                    `;
+                    previewGrid.appendChild(imageDiv);
+                };
+                reader.readAsDataURL(file);
+            });
+            
+            previewCount.textContent = `${validFiles} Bilder ausgewählt (${formatFileSize(totalSize)})`;
+            preview.style.display = 'block';
+            submitBtn.disabled = validFiles === 0;
+        }
+        
+        function handleSingleUpload(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const progressBar = document.getElementById('single-progress-bar');
+            const progressText = document.getElementById('single-progress-text');
+            const progressContainer = document.getElementById('single-progress');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ Wird hochgeladen...';
+            progressContainer.style.display = 'block';
+            
+            // Show progress animation
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 2;
+                if (progress <= 90) {
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = progress + '%';
+                }
+            }, 100);
+            
+            fetch("{% url 'gallery_upload' %}", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+                progressText.textContent = '100%';
+                
+                if (data.status === 'success') {
+                    showMessage('success', data.message);
+                    form.reset();
+                    document.getElementById('single-file-preview').style.display = 'none';
+                    progressContainer.style.display = 'none';
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showMessage('error', data.message || 'Fehler beim Hochladen');
+                }
+            })
+            .catch(error => {
+                clearInterval(progressInterval);
+                showMessage('error', 'Fehler beim Hochladen: ' + error.message);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '⬆️ Hochladen';
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                    progressBar.style.width = '0%';
+                }, 2000);
+            });
+        }
+        
+        function handleMultipleUpload(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const progressBar = document.getElementById('multiple-progress-bar');
+            const progressText = document.getElementById('multiple-progress-text');
+            const progressContainer = document.getElementById('multiple-progress');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ Wird hochgeladen...';
+            progressContainer.style.display = 'block';
+            
+            // Show progress animation
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 1;
+                if (progress <= 90) {
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = progress + '%';
+                }
+            }, 150);
+            
+            fetch("{% url 'gallery_upload' %}", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+                progressText.textContent = '100%';
+                
+                if (data.status === 'success') {
+                    showMessage('success', data.message);
+                    if (data.errors && data.errors.length > 0) {
+                        data.errors.forEach(error => showMessage('error', error));
+                    }
+                    form.reset();
+                    document.getElementById('multiple-file-preview').style.display = 'none';
+                    progressContainer.style.display = 'none';
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showMessage('error', data.message || 'Fehler beim Hochladen');
+                    if (data.errors && data.errors.length > 0) {
+                        data.errors.forEach(error => showMessage('error', error));
+                    }
+                }
+            })
+            .catch(error => {
+                clearInterval(progressInterval);
+                showMessage('error', 'Fehler beim Hochladen: ' + error.message);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '⬆️ Alle hochladen';
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                    progressBar.style.width = '0%';
+                }, 2000);
+            });
+        }
+        
+        function initializeModals() {
+            // Close modals when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target.classList.contains('mks-modal')) {
+                    closeModal(e.target.id);
+                }
+            });
+        }
+        
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        function initializeCategoryHandlers() {
+            // New category button
+            const newCategoryBtn = document.getElementById('new-category-btn');
+            if (newCategoryBtn) {
+                newCategoryBtn.addEventListener('click', () => openModal('new-category-modal'));
+            }
+            
+            const createFirstCategoryBtn = document.getElementById('create-first-category-btn');
+            if (createFirstCategoryBtn) {
+                createFirstCategoryBtn.addEventListener('click', () => openModal('new-category-modal'));
+            }
+            
+            // Edit category button
+            const editCategoryBtn = document.getElementById('edit-category-btn');
+            if (editCategoryBtn) {
+                editCategoryBtn.addEventListener('click', function() {
+                    const activeTab = document.querySelector('.mks-category-tab.active');
+                    if (activeTab) {
+                        document.getElementById('edit-category-id').value = activeTab.getAttribute('data-category-id');
+                        document.getElementById('edit-category-title').value = activeTab.textContent.trim();
+                        openModal('edit-category-modal');
+                    }
+                });
+            }
+            
+            // Delete category button
+            const deleteCategoryBtn = document.getElementById('delete-category-btn');
+            if (deleteCategoryBtn) {
+                deleteCategoryBtn.addEventListener('click', function() {
+                    const activeTab = document.querySelector('.mks-category-tab.active');
+                    if (activeTab && confirm(`Möchten Sie die Kategorie "${activeTab.textContent.trim()}" wirklich löschen? Alle Bilder in dieser Kategorie werden ebenfalls gelöscht.`)) {
+                        deleteCategory(activeTab.getAttribute('data-category-id'));
+                    }
+                });
+            }
+            
+            // Category form submissions
+            const newCategoryForm = document.getElementById('new-category-form');
+            if (newCategoryForm) {
+                newCategoryForm.addEventListener('submit', handleNewCategory);
+            }
+            
+            const editCategoryForm = document.getElementById('edit-category-form');
+            if (editCategoryForm) {
+                editCategoryForm.addEventListener('submit', handleEditCategory);
+            }
+        }
+        
+        function switchCategory(categoryId) {
+            window.location.href = `{% url 'gallery_admin' %}?category=${categoryId}`;
+        }
+        
+        function handleNewCategory(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const title = document.getElementById('new-category-title').value.trim();
+            
+            if (!title) {
+                showMessage('error', 'Bitte geben Sie einen Titel ein.');
+                return;
+            }
+            
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ Wird erstellt...';
+            
+            fetch("{% url 'gallery_create_category' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ title: title })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showMessage('success', data.message);
+                    closeModal('new-category-modal');
+                    setTimeout(() => {
+                        window.location.href = `{% url 'gallery_admin' %}?category=${data.category.id}`;
+                    }, 1000);
+                } else {
+                    showMessage('error', data.message || 'Fehler beim Erstellen der Kategorie');
+                }
+            })
+            .catch(error => {
+                showMessage('error', 'Fehler: ' + error.message);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '✅ Erstellen';
+            });
+        }
+        
+        function handleEditCategory(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const categoryId = document.getElementById('edit-category-id').value;
+            const title = document.getElementById('edit-category-title').value.trim();
+            
+            if (!title) {
+                showMessage('error', 'Bitte geben Sie einen Titel ein.');
+                return;
+            }
+            
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ Wird gespeichert...';
+            
+            fetch(`/galerie/admin/category/edit/${categoryId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ title: title })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showMessage('success', data.message);
+                    closeModal('edit-category-modal');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showMessage('error', data.message || 'Fehler beim Bearbeiten der Kategorie');
+                }
+            })
+            .catch(error => {
+                showMessage('error', 'Fehler: ' + error.message);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '💾 Speichern';
+            });
+        }
+        
+        function deleteCategory(categoryId) {
+            fetch(`/galerie/admin/category/delete/${categoryId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showMessage('success', data.message);
+                    setTimeout(() => {
+                        window.location.href = "{% url 'gallery_admin' %}";
+                    }, 1000);
+                } else {
+                    showMessage('error', data.message || 'Fehler beim Löschen der Kategorie');
+                }
+            })
+            .catch(error => {
+                showMessage('error', 'Fehler: ' + error.message);
+            });
+        }
+        
+        function initializePhotoHandlers() {
+            // Photo edit buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('photo-edit-btn')) {
+                    const button = e.target;
+                    document.getElementById('edit-photo-id').value = button.getAttribute('data-id');
+                    document.getElementById('edit-photo-title').value = button.getAttribute('data-title') || '';
+                    document.getElementById('edit-photo-description').value = button.getAttribute('data-description') || '';
+                    document.getElementById('edit-photo-copyright').value = button.getAttribute('data-copyright') || '';
+                    openModal('edit-photo-modal');
+                }
+            });
+            
+            // Photo delete buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('photo-delete-btn')) {
+                    const button = e.target;
+                    const photoId = button.getAttribute('data-id');
+                    const photoTitle = button.getAttribute('data-title') || 'Dieses Bild';
+                    
+                    if (confirm(`Möchten Sie "${photoTitle}" wirklich löschen?`)) {
+                        deletePhoto(photoId);
+                    }
+                }
+            });
+            
+            // Photo edit form submission
+            const editPhotoForm = document.getElementById('edit-photo-form');
+            if (editPhotoForm) {
+                editPhotoForm.addEventListener('submit', handleEditPhoto);
+            }
+        }
+        
+        function handleEditPhoto(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const photoId = document.getElementById('edit-photo-id').value;
+            const title = document.getElementById('edit-photo-title').value.trim();
+            const description = document.getElementById('edit-photo-description').value.trim();
+            const copyright_by = document.getElementById('edit-photo-copyright').value.trim();
+            
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ Wird gespeichert...';
+            
+            fetch(`/galerie/admin/edit/${photoId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    title: title,
+                    description: description,
+                    copyright_by: copyright_by
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showMessage('success', data.message);
+                    closeModal('edit-photo-modal');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showMessage('error', data.message || 'Fehler beim Bearbeiten des Bildes');
+                }
+            })
+            .catch(error => {
+                showMessage('error', 'Fehler: ' + error.message);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '💾 Speichern';
+            });
+        }
+        
+        function deletePhoto(photoId) {
+            fetch(`/galerie/admin/delete/${photoId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showMessage('success', data.message);
+                    // Remove photo item from DOM
+                    const photoItem = document.querySelector(`[data-id="${photoId}"]`);
+                    if (photoItem) {
+                        photoItem.style.transition = 'all 0.3s ease';
+                        photoItem.style.opacity = '0';
+                        photoItem.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            photoItem.remove();
+                            updatePhotoCount();
+                        }, 300);
+                    }
+                } else {
+                    showMessage('error', data.message || 'Fehler beim Löschen des Bildes');
+                }
+            })
+            .catch(error => {
+                showMessage('error', 'Fehler: ' + error.message);
+            });
+        }
+        
+        function updatePhotoCount() {
+            const photoItems = document.querySelectorAll('.mks-photo-item');
+            const categoryPhotosStat = document.getElementById('category-photos');
+            if (categoryPhotosStat) {
+                categoryPhotosStat.textContent = photoItems.length;
+            }
+        }
+        
+        function calculateEstimatedSize() {
+            const photoCount = document.querySelectorAll('.mks-photo-item').length;
+            const estimatedSize = photoCount * 500; // Assume 500KB per image on average
+            const totalSizeStat = document.getElementById('total-size');
+            if (totalSizeStat) {
+                totalSizeStat.textContent = formatFileSize(estimatedSize * 1024);
+            }
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function showMessage(type, message) {
+            const messageContainer = document.getElementById('message-container');
+            const messageElement = document.createElement('div');
+            messageElement.className = `mks-alert mks-alert-${type}`;
+            messageElement.textContent = message;
+            
+            messageContainer.appendChild(messageElement);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                messageElement.style.transition = 'all 0.3s ease';
+                messageElement.style.opacity = '0';
+                messageElement.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    if (messageElement.parentNode) {
+                        messageElement.parentNode.removeChild(messageElement);
+                    }
+                }, 300);
+            }, 5000);
+        }
+        
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>

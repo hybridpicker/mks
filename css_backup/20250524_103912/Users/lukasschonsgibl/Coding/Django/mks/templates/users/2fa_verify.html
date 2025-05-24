@@ -1,0 +1,367 @@
+{% extends "templates/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block extra_head %}
+<meta name="robots" content="noindex">
+<style>
+.verify-container {
+  padding: 4rem 0;
+  margin-top: 2rem;
+  background: #fafbfc;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.verify-wrapper {
+  max-width: 420px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid #e1e5e9;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  overflow: hidden;
+  animation: slideInUp 0.5s ease-out;
+}
+
+.verify-header {
+  background: #ffffff;
+  color: #2d3748;
+  padding: 2rem;
+  text-align: center;
+  border-bottom: 1px solid #f7fafc;
+}
+
+.verify-header .shield-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #4a5568;
+  opacity: 0.8;
+}
+
+.verify-header h1 {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: #2d3748;
+}
+
+.verify-header p {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1rem;
+  margin: 0.5rem 0 0 0;
+  color: #718096;
+}
+
+.verify-content {
+  padding: 2rem;
+  background: #ffffff;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-input {
+  width: 90%;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 1.5rem;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  text-align: center;
+  letter-spacing: 0.3em;
+  outline: none;
+  transition: all 0.2s ease;
+  color: #2d3748;
+}
+
+.form-input:focus {
+  border-color: #D11317;
+  box-shadow: 0 0 0 3px rgba(209, 19, 23, 0.1);
+}
+
+.form-input::placeholder {
+  color: #a0aec0;
+  font-size: 1.2rem;
+}
+
+.btn {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.9rem;
+  padding: 0.7rem 1.2rem;
+  font-weight: 500;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  background: transparent;
+}
+
+.btn-primary {
+  border-color: #D11317;
+  color: #D11317;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.btn-primary:hover {
+  background: #D11317;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(209, 19, 23, 0.2);
+}
+
+.btn-link {
+  color: #718096;
+  border-color: #e2e8f0;
+  font-size: 0.8rem;
+  padding: 0.5rem 1rem;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+.btn-link:hover {
+  background: #f7fafc;
+  border-color: #cbd5e0;
+  color: #4a5568;
+}
+
+.backup-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
+}
+
+.collapse {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid #e2e8f0;
+}
+
+.card-footer {
+  background: #f8fafc;
+  padding: 1.25rem 2rem;
+  text-align: center;
+  border-top: 1px solid #e2e8f0;
+}
+
+.card-footer a {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  color: #718096;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.card-footer a:hover {
+  color: #D11317;
+}
+
+.card-footer i {
+  font-size: 0.8rem;
+}
+
+.error-message {
+  color: #e53e3e;
+  background: #fed7d7;
+  border: 1px solid #feb2b2;
+  border-radius: 6px;
+  padding: 0.6rem;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.backup-input {
+  letter-spacing: 0.2em !important;
+  font-size: 1.2rem !important;
+}
+
+@media (max-width: 768px) {
+  .verify-container {
+    padding: 2rem 1rem;
+  }
+  
+  .verify-wrapper {
+    margin: 0 1rem;
+    border-radius: 12px;
+  }
+  
+  .verify-content, .verify-header {
+    padding: 1.5rem;
+  }
+  
+  .form-input {
+    font-size: 1.3rem;
+    padding: 0.9rem;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+<img src="/static/banner/team_banner.jpg" alt="">
+<img id="mbimg" src="/static/banner/mobile/team_banner.jpg" alt="">
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container verify-container">
+    <div class="verify-wrapper">
+      <div class="verify-header">
+        <div class="shield-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h1>{% trans "Two-Factor Authentication" %}</h1>
+        <p>{% trans "Enter your 6-digit authentication code" %}</p>
+      </div>
+      
+      <div class="verify-content">
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="id_token" class="form-label">{% trans "Authentication Code" %}</label>
+            <input 
+              type="text" 
+              name="token"
+              id="id_token"
+              class="form-input"
+              placeholder="000000"
+              maxlength="6"
+              required
+              autocomplete="one-time-code"
+              inputmode="numeric"
+            >
+            {% if form.token.errors %}
+              <div class="error-message">
+                {{ form.token.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+          
+          <button type="submit" class="btn btn-primary">
+            {% trans "Verify Code" %}
+          </button>
+        </form>
+        
+        <div class="backup-section">
+          <div class="collapse" id="backupCodeForm">
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="backup_token" value="1">
+              <div class="form-group">
+                <label class="form-label">{% trans "Backup Code" %}</label>
+                <input 
+                  type="text" 
+                  name="backup_code"
+                  class="form-input backup-input"
+                  placeholder="{% trans 'Enter backup code' %}"
+                  maxlength="8"
+                  required
+                >
+              </div>
+              <button type="submit" class="btn btn-primary">
+                {% trans "Use Backup Code" %}
+              </button>
+            </form>
+          </div>
+          
+          <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#backupCodeForm" aria-expanded="false" aria-controls="backupCodeForm">
+            {% trans "Use backup code instead" %}
+          </button>
+          
+          <div style="margin-top: 1rem; text-align: center;">
+            <a href="{% url 'users:2fa_reset_request' %}" class="btn btn-link" style="color: #f56565; border-color: #f56565; font-size: 0.8rem;">
+              <i class="fas fa-question-circle"></i> Authenticator verloren?
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <a href="{% url 'users:login' %}">
+          <i class="fas fa-arrow-left"></i> {% trans "Back to Login" %}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-focus on the token input
+    const tokenInput = document.querySelector('input[name="token"]');
+    if (tokenInput) {
+        tokenInput.focus();
+        
+        // Only allow numbers
+        tokenInput.addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            
+            // Auto-submit when 6 digits are entered
+            if (e.target.value.length === 6) {
+                setTimeout(() => {
+                    e.target.closest('form').submit();
+                }, 300);
+            }
+        });
+        
+        // Prevent non-numeric input
+        tokenInput.addEventListener('keypress', function(e) {
+            if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'Enter'].includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+    }
+    
+    // Handle backup code input
+    const backupInput = document.querySelector('input[name="backup_code"]');
+    if (backupInput) {
+        backupInput.addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+    }
+});
+</script>
+{% endblock %}

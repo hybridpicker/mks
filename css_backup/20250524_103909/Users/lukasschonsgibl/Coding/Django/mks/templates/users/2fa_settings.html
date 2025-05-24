@@ -1,0 +1,574 @@
+{% extends "templates/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block tab_id %}id="2fa_settings_tab"{% endblock %}
+
+{% block extra_head %}
+<meta name="robots" content="noindex">
+<style>
+.security-container {
+  padding: 1.6rem 0;
+  margin-top: 2rem;
+}
+
+.security-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.security-header h1 {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 2.8rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.security-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #D11317, #b10e13);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 12px rgba(209, 19, 23, 0.3);
+}
+
+.security-header p {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1.05rem;
+  color: #666;
+  text-align: center;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.nav-breadcrumb {
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.nav-breadcrumb a {
+  color: #D11317;
+  text-decoration: none;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0 0.5rem;
+}
+
+.nav-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.nav-breadcrumb .separator {
+  color: #999;
+  margin: 0 0.5rem;
+}
+
+.status-card {
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-radius: 12px;
+  padding: 1.6rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.status-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #D11317, #b10e13);
+}
+
+.status-enabled::before {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.status-warning::before {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.status-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.status-icon {
+  width: 50px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.status-enabled .status-icon {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.status-warning .status-icon {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.status-title {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.status-subtitle {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-radius: 12px;
+  padding: 1.6rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.feature-card.primary::before {
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+}
+
+.feature-card.success::before {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.feature-card.danger::before {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.feature-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.feature-icon {
+  width: 50px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.feature-card.primary .feature-icon {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.feature-card.success .feature-icon {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.feature-card.danger .feature-icon {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.feature-title {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.feature-description {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: justify;
+  padding: 0;
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.benefits-list li {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.95rem;
+  color: #333;
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.benefits-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #10b981;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.security-btn {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1rem;
+  padding: 0.8rem 1.5rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.security-btn.primary {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+}
+
+.security-btn.primary:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  color: white;
+  text-decoration: none;
+}
+
+.security-btn.success {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.security-btn.success:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  color: white;
+  text-decoration: none;
+}
+
+.security-btn.danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.security-btn.danger:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  color: white;
+  text-decoration: none;
+}
+
+.security-btn.secondary {
+  background: #6b7280;
+  color: white;
+}
+
+.security-btn.secondary:hover {
+  background: #4b5563;
+  transform: translateY(-1px);
+  color: white;
+  text-decoration: none;
+}
+
+.backup-status {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.backup-status.good {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.backup-status.warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+@media (max-width: 768px) {
+  .security-header h1 {
+    font-size: 1.4rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .status-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .feature-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container security-container">
+    
+    <div class="nav-breadcrumb">
+      <a href="/team/">Dashboard</a>
+      <span class="separator">→</span>
+      <a href="/team/2fa/settings/" class="active">2FA Einstellungen</a>
+    </div>
+
+    <div class="security-header">
+      <h1>
+        <div class="security-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="16" r="1" stroke="currentColor" stroke-width="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        Two-Factor Authentication
+      </h1>
+      <p>Schützen Sie Ihr Konto mit einer zusätzlichen Sicherheitsebene für maximalen Schutz.</p>
+    </div>
+
+    {% if is_2fa_enabled %}
+      <div class="status-card status-enabled">
+        <div class="status-header">
+          <div class="status-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="9,11 12,14 22,4" stroke="currentColor" stroke-width="2" fill="none"/>
+              <path d="M21,12v7a2,2 0,0 1,-2,2H5a2,2 0,0 1,-2,-2V5a2,2 0,0 1,2,-2h11" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="status-title">2FA ist aktiviert</h2>
+            <p class="status-subtitle">Ihr Konto ist optimal geschützt</p>
+          </div>
+        </div>
+        <p class="feature-description">
+          Ihre Zwei-Faktor-Authentifizierung ist aktiv und schützt Ihr Konto vor unbefugtem Zugriff.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card primary">
+          <div class="feature-header">
+            <div class="feature-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="m7 16 6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="feature-title">Backup Codes</h3>
+            </div>
+          </div>
+          <div class="feature-description">
+            Notfall-Codes für den Fall, dass Sie keinen Zugriff auf Ihr Authentifizierungs-Gerät haben.
+          </div>
+          
+          <div class="backup-status {% if backup_codes_count >= 3 %}good{% else %}warning{% endif %}">
+            {% blocktrans count counter=backup_codes_count %}
+              {{ counter }} Code verfügbar
+            {% plural %}
+              {{ counter }} Codes verfügbar
+            {% endblocktrans %}
+          </div>
+          
+          {% if backup_codes_count < 3 %}
+            <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); color: #d97706; padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: 'jaf-bernina-sans-condensed', sans-serif;">
+              Wenige Backup-Codes verfügbar!
+            </div>
+          {% endif %}
+          
+          <a href="{% url 'users:2fa_regenerate_backup' %}" class="security-btn primary">
+            Neue Codes generieren
+          </a>
+        </div>
+
+        <div class="feature-card danger">
+          <div class="feature-header">
+            <div class="feature-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
+                <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="feature-title">2FA Deaktivieren</h3>
+            </div>
+          </div>
+          <div class="feature-description">
+            Deaktivieren Sie die Zwei-Faktor-Authentifizierung für Ihr Konto.
+          </div>
+          
+          <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); color: #d97706; padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: 'jaf-bernina-sans-condensed', sans-serif;">
+            Dies macht Ihr Konto weniger sicher!
+          </div>
+          
+          <a href="{% url 'users:2fa_disable' %}" class="security-btn danger">
+            2FA Deaktivieren
+          </a>
+        </div>
+      </div>
+
+    {% else %}
+      <div class="status-card status-warning">
+        <div class="status-header">
+          <div class="status-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+              <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2"/>
+              <line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="status-title">2FA ist nicht aktiviert</h2>
+            <p class="status-subtitle">Ihr Konto könnte sicherer sein</p>
+          </div>
+        </div>
+        <p class="feature-description">
+          Aktivieren Sie die Zwei-Faktor-Authentifizierung für zusätzlichen Schutz Ihres Kontos.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card success">
+          <div class="feature-header">
+            <div class="feature-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3" stroke="currentColor" stroke-width="2"/>
+                <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 3c0 1-1 3-3 3s-3-2-3-3 1-3 3-3 3 2 3 3" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 21c0-1 1-3 3-3s3 2 3 3-1 3-3 3-3-2-3-3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="feature-title">2FA Aktivieren</h3>
+            </div>
+          </div>
+          <div class="feature-description">
+            Die Zwei-Faktor-Authentifizierung fügt eine zusätzliche Sicherheitsebene hinzu, indem neben Ihrem Passwort auch ein Code von Ihrem Telefon erforderlich ist.
+          </div>
+          
+          <div style="margin: 1.5rem 0;">
+            <h4 style="font-family: 'jaf-bernina-sans-condensed', sans-serif; color: #333; font-size: 1rem; margin-bottom: 1rem;">Vorteile:</h4>
+            <ul class="benefits-list">
+              <li>Schutz vor Passwort-Diebstahl</li>
+              <li>Verhindert unbefugten Zugriff auch bei bekanntem Passwort</li>
+              <li>Funktioniert mit beliebten Apps wie Google Authenticator</li>
+              <li>Erhöht die Kontosicherheit erheblich</li>
+            </ul>
+          </div>
+          
+          <a href="{% url 'users:2fa_setup' %}" class="security-btn success">
+            2FA Jetzt Aktivieren
+          </a>
+        </div>
+      </div>
+    {% endif %}
+
+    <div style="text-align: center; margin-top: 3rem;">
+      <a href="{% url 'users:user_home' %}" class="security-btn secondary">
+        Zurück zum Dashboard
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Add smooth animations on load
+  const cards = document.querySelectorAll('.feature-card, .status-card');
+  cards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+      card.style.transition = 'all 0.6s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, index * 100);
+  });
+});
+</script>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

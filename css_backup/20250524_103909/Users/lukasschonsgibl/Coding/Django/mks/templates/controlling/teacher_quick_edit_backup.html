@@ -1,0 +1,103 @@
+        .mks-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+        
+        .mks-btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .mks-btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .mks-alert {
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .mks-alert-success {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+        }
+        
+        .mks-alert-error {
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+        
+        @media (max-width: 768px) {
+            .mks-form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="mks-page">
+    <div class="mks-container">
+        <div class="mks-header">
+            <h1 class="mks-title">{{ teacher.first_name }} {{ teacher.last_name }} bearbeiten</h1>
+            <p>Schnellbearbeitung der wichtigsten Daten</p>
+        </div>
+        
+        <form method="post" class="mks-form">
+            {% csrf_token %}
+            
+            {% if messages %}
+                {% for message in messages %}
+                <div class="mks-alert {% if message.tags == 'success' %}mks-alert-success{% else %}mks-alert-error{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+            
+            <div class="mks-form-row">
+                <div class="mks-form-group">
+                    <label class="mks-label" for="first_name">Vorname</label>
+                    <input type="text" name="first_name" id="first_name" class="mks-input" value="{{ teacher.first_name }}" required>
+                </div>
+                
+                <div class="mks-form-group">
+                    <label class="mks-label" for="last_name">Nachname</label>
+                    <input type="text" name="last_name" id="last_name" class="mks-input" value="{{ teacher.last_name }}" required>
+                </div>
+            </div>
+            
+            <div class="mks-form-group">
+                <label class="mks-label" for="email">E-Mail</label>
+                <input type="email" name="email" id="email" class="mks-input" value="{{ teacher.email }}">
+            </div>
+            
+            <div class="mks-form-group">
+                <label class="mks-label" for="phone">Telefon</label>
+                <input type="text" name="phone" id="phone" class="mks-input" value="{{ teacher.phone }}">
+            </div>
+            
+            <div class="mks-form-group">
+                <label class="mks-label" for="bio">Biografie</label>
+                <textarea name="bio" id="bio" class="mks-textarea">{{ teacher.bio }}</textarea>
+            </div>
+        </form>
+        
+        <div class="mks-actions">
+            <button type="submit" form="mks-form" class="mks-btn mks-btn-primary">Speichern</button>
+            <a href="{% url 'controlling:teacher_detail' teacher.id %}" class="mks-btn mks-btn-secondary">Abbrechen</a>
+        </div>
+    </div>
+    
+    <script>
+        // Form-Element richtig verknüpfen
+        document.querySelector('.mks-form').id = 'mks-form';
+    </script>
+</body>
+</html>

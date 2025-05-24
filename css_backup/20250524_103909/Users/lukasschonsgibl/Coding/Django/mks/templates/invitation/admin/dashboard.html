@@ -1,0 +1,417 @@
+<!-- invitation/admin/dashboard.html -->
+
+{% extends "templates/base.html" %}
+{% load static %}
+
+{% block tab_id %}id="invitation_admin_tab"{% endblock %}
+
+{% block extra_head %}
+<style media="screen">
+  .admin-dashboard {
+    padding: 2rem;
+    background: #f8f9fa;
+    min-height: 100vh;
+  }
+  
+  .dashboard-header {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .dashboard-title {
+    margin: 0;
+    color: #333;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  .dashboard-subtitle {
+    color: #6c757d;
+    margin: 0.5rem 0 0 0;
+    font-size: 1.1rem;
+  }
+  
+  .dashboard-actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-left: 4px solid #007bff;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  
+  .stat-card.stat-primary { border-left-color: #007bff; }
+  .stat-card.stat-success { border-left-color: #28a745; }
+  .stat-card.stat-info { border-left-color: #17a2b8; }
+  
+  .stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    color: #007bff;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #007bff;
+    margin: 0;
+  }
+  
+  .stat-label {
+    color: #6c757d;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .events-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  
+  .events-header {
+    background: #f8f9fa;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .events-title {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .events-grid {
+    padding: 1rem;
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .event-card {
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .event-card:hover {
+    border-color: #007bff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  
+  .event-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #007bff;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  
+  .event-card:hover::before {
+    opacity: 1;
+  }
+  
+  .event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  
+  .event-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .event-date {
+    color: #6c757d;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .event-date::before {
+    content: '📅';
+    font-size: 1rem;
+  }
+  
+  .event-stats {
+    display: flex;
+    gap: 2rem;
+    margin: 1rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .event-stat {
+    text-align: center;
+    flex: 1;
+  }
+  
+  .event-stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 0.2rem;
+  }
+  
+  .event-stat-label {
+    font-size: 0.85rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .event-location {
+    color: #495057;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .event-location::before {
+    content: '📍';
+    font-size: 1rem;
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    text-decoration: none;
+  }
+  
+  .btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+    color: white;
+  }
+  
+  .btn-secondary {
+    background: #6c757d;
+    color: white;
+  }
+  
+  .btn-secondary:hover {
+    background: #5a6268;
+    color: white;
+  }
+  
+  .btn-success {
+    background: linear-gradient(135deg, #28a745, #1e7e34);
+    color: white;
+  }
+  
+  .btn-success:hover {
+    background: linear-gradient(135deg, #1e7e34, #155724);
+    color: white;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 4rem;
+    color: #6c757d;
+  }
+  
+  .empty-state h3 {
+    color: #495057;
+    margin-bottom: 1rem;
+  }
+  
+  .empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+  
+  @media (max-width: 768px) {
+    .admin-dashboard {
+      padding: 1rem;
+    }
+    
+    .dashboard-header {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+    
+    .dashboard-actions {
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .event-header {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .event-stats {
+      gap: 1rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% include "templates/user_navbar.html" %}
+{% endblock %}
+
+{% block body %}
+<div class="admin-dashboard">
+  <div class="dashboard-header">
+    <div>
+      <h1 class="dashboard-title">Anmeldungen Verwaltung</h1>
+      <p class="dashboard-subtitle">Übersicht und Verwaltung aller Event-Anmeldungen</p>
+    </div>
+    <div class="dashboard-actions">
+      <a href="{% url 'invitation:admin_create' %}" class="btn btn-success">
+        ➕ Neue Anmeldung
+      </a>
+      <a href="{% url 'invitation:admin_edit_all' %}" class="btn btn-primary">
+        📋 Alle verwalten
+      </a>
+    </div>
+  </div>
+  
+  <!-- Zusammenfassung -->
+  <div class="dashboard-stats">
+    <div class="stat-card stat-primary">
+      <div class="stat-header">
+        <div class="stat-icon">📝</div>
+        <div class="stat-number">{{ total_invitations }}</div>
+      </div>
+      <div class="stat-label">Gesamte Anmeldungen</div>
+    </div>
+    <div class="stat-card stat-success">
+      <div class="stat-header">
+        <div class="stat-icon">👥</div>
+        <div class="stat-number">{{ total_all_persons }}</div>
+      </div>
+      <div class="stat-label">Gesamte Personen</div>
+    </div>
+    <div class="stat-card stat-info">
+      <div class="stat-header">
+        <div class="stat-icon">🎭</div>
+        <div class="stat-number">{{ event_stats|length }}</div>
+      </div>
+      <div class="stat-label">Events mit Anmeldungen</div>
+    </div>
+  </div>
+  
+  <!-- Events Liste -->
+  <div class="events-section">
+    <div class="events-header">
+      <h2 class="events-title">Events mit Anmeldungen</h2>
+    </div>
+    
+    <div class="events-grid">
+      {% for stat in event_stats %}
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-info">
+            <h3>{{ stat.event.title }}</h3>
+            <div class="event-date">{{ stat.event.date|date:"d.m.Y H:i" }}</div>
+          </div>
+          <div class="admin-actions">
+            <a href="{% url 'invitation:admin_edit_all' %}?event_date={{ stat.event.date|date:'Y-m-d' }}" class="btn btn-primary">
+              🔧 Verwalten
+            </a>
+          </div>
+        </div>
+        
+        <div class="event-location">{{ stat.event.location|default:"Noch nicht bekannt" }}</div>
+        
+        <div class="event-stats">
+          <div class="event-stat">
+            <div class="event-stat-number">{{ stat.invitation_count }}</div>
+            <div class="event-stat-label">Anmeldungen</div>
+          </div>
+          <div class="event-stat">
+            <div class="event-stat-number">{{ stat.total_persons }}</div>
+            <div class="event-stat-label">Personen</div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="empty-state">
+        <div class="empty-state-icon">🎫</div>
+        <h3>Noch keine Events mit Anmeldungen</h3>
+        <p>Sobald Anmeldungen eingehen, werden sie hier angezeigt.</p>
+        <a href="{% url 'invitation:admin_create' %}" class="btn btn-success">
+          ➕ Erste Anmeldung erstellen
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

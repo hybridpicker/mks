@@ -1,0 +1,204 @@
+<!-- invitation/admin/create.html -->
+
+{% extends "templates/base.html" %}
+{% load static %}
+
+{% block tab_id %}id="invitation_create_tab"{% endblock %}
+
+{% block extra_head %}
+<style media="screen">
+  .admin-page {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .page-header {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 1rem;
+  }
+  
+  .create-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #495057;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+  
+  .help-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+  }
+  
+  .info-box {
+    background: #e7f3ff;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #007bff;
+  }
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% include "templates/user_navbar.html" %}
+{% endblock %}
+
+{% block body %}
+<div class="admin-page">
+  <div class="page-header">
+    <h1>Neue Anmeldung erstellen</h1>
+    <p>Erstellen Sie eine neue Anmeldung für ein Event</p>
+  </div>
+  
+  <!-- Info Box -->
+  <div class="info-box">
+    <strong>Hinweis:</strong> Diese Anmeldung wird als administrative Erstellung markiert und kann später bearbeitet werden.
+  </div>
+  
+  <!-- Create Form -->
+  <div class="create-form">
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <label for="name">Name der Person</label>
+        <input type="text" 
+               id="name" 
+               name="name" 
+               required>
+        <div class="help-text">Vollständiger Name der angemeldeten Person</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">E-Mail Adresse</label>
+        <input type="email" 
+               id="email" 
+               name="email" 
+               required>
+        <div class="help-text">E-Mail für Bestätigungen und Kommunikation</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="event_date">Event auswählen</label>
+        <select id="event_date" name="event_date" required>
+          <option value="">-- Event auswählen --</option>
+          {% for date_str, label in event_choices %}
+            <option value="{{ date_str }}">
+              {{ label }}
+            </option>
+          {% endfor %}
+        </select>
+        <div class="help-text">Wählen Sie das Event für die Anmeldung</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="event_name">Event Name</label>
+        <input type="text" 
+               id="event_name" 
+               name="event_name" 
+               value="Die Hexe Rabaukel bekommt Weihnachtspost"
+               required>
+        <div class="help-text">Name des Events (kann bei Bedarf angepasst werden)</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="number_of_guests">Anzahl Begleitpersonen</label>
+        <input type="number" 
+               id="number_of_guests" 
+               name="number_of_guests" 
+               value="0"
+               min="0"
+               max="10"
+               required>
+        <div class="help-text">Anzahl der zusätzlichen Personen (nicht inkl. der Hauptperson)</div>
+      </div>
+      
+      <div class="form-actions">
+        <a href="{% url 'invitation:admin_dashboard' %}" class="btn btn-secondary">
+          Abbrechen
+        </a>
+        <button type="submit" class="btn btn-primary">
+          Anmeldung erstellen
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// Optional: Auto-fill event name based on selection
+document.getElementById('event_date').addEventListener('change', function() {
+  const selectedOption = this.options[this.selectedIndex];
+  // You could add more logic here if needed
+});
+</script>
+{% endblock %}

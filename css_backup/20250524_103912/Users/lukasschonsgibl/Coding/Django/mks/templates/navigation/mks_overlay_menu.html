@@ -1,0 +1,387 @@
+{% load static %}
+
+<!-- MKS Overlay Menu - Neues Design -->
+<link rel="stylesheet" href="{% static 'css/navigation/mks_overlay_menu.3.0.0.css' %}">
+
+<!-- Overlay Navigation Container -->
+<div class="mks-overlay-navigation">
+  <!-- Trigger Button -->
+  <button class="mks-overlay-trigger" 
+          type="button"
+          aria-label="Verwaltungsmenü öffnen"
+          aria-controls="overlayMenu"
+          aria-expanded="false">
+    <svg class="mks-overlay-trigger-icon" 
+         xmlns="http://www.w3.org/2000/svg" 
+         viewBox="0 0 24 24" 
+         fill="none" 
+         stroke="currentColor" 
+         stroke-width="2" 
+         stroke-linecap="round" 
+         stroke-linejoin="round"
+         aria-hidden="true">
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+    </svg>
+    <span>Verwaltung</span>
+  </button>
+
+  <!-- User Profile Info -->
+  <div class="mks-navbar-user-info" aria-label="Benutzerinformationen">
+    <span class="mks-navbar-user-name">{{ request.user.get_full_name|default:request.user.username }}</span>
+    <span class="mks-navbar-user-role">
+      {% if request.user.is_superuser %}
+        Administrator
+      {% elif request.user.is_staff %}
+        Staff
+      {% elif request.user.coordinator %}
+        Koordinator
+      {% else %}
+        Benutzer
+      {% endif %}
+    </span>
+  </div>
+  
+  <!-- Minimalistic Logout Button -->
+  <form method="post" action="{% url 'users:logout' %}" class="mks-minimal-logout-form">
+    {% csrf_token %}
+    <button type="submit" 
+            class="mks-minimal-logout-btn"
+            aria-label="Ausloggen"
+            title="Ausloggen">
+      <svg xmlns="http://www.w3.org/2000/svg" 
+           viewBox="0 0 24 24" 
+           fill="none" 
+           stroke="currentColor" 
+           stroke-width="2" 
+           stroke-linecap="round" 
+           stroke-linejoin="round"
+           aria-hidden="true">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+        <polyline points="16 17 21 12 16 7"></polyline>
+        <line x1="21" y1="12" x2="9" y2="12"></line>
+      </svg>
+    </button>
+  </form>
+</div>
+
+<!-- Overlay Menu -->
+<div class="mks-overlay-menu" 
+     id="overlayMenu" 
+     role="dialog" 
+     aria-modal="true"
+     aria-hidden="true" 
+     aria-labelledby="overlay-title">
+  
+  <!-- Main Content -->
+  <div class="mks-overlay-content">
+    
+    <!-- Header -->
+    <header class="mks-overlay-header">
+      <h2 id="overlay-title">Verwaltung</h2>
+      <button class="mks-overlay-close" 
+              type="button"
+              aria-label="Verwaltungsmenü schließen">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             viewBox="0 0 24 24" 
+             fill="none" 
+             stroke="currentColor" 
+             stroke-width="2" 
+             stroke-linecap="round" 
+             stroke-linejoin="round"
+             aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="mks-overlay-main">
+      
+      <!-- Sidebar -->
+      <aside class="mks-overlay-sidebar">
+        
+        <!-- User Profile Section -->
+        <section class="mks-overlay-user-section">
+          
+          <div class="mks-overlay-user-avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 viewBox="0 0 24 24" 
+                 fill="none" 
+                 stroke="currentColor" 
+                 stroke-width="2" 
+                 stroke-linecap="round" 
+                 stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          
+          <div class="mks-overlay-user-info">
+            <h3>{{ request.user.get_full_name|default:request.user.username }}</h3>
+            <p>{{ request.user.email }}</p>
+            <span class="mks-overlay-user-badge">Administrator</span>
+          </div>
+          
+          <nav class="mks-overlay-user-actions">
+            <a href="/admin/users/customuser/{{ request.user.id }}/change/" class="mks-overlay-user-action">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Profil
+            </a>
+            
+            <a href="{% url 'users:change_password' %}" class="mks-overlay-user-action">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+              </svg>
+              Passwort
+            </a>
+          </nav>
+        </section>
+
+        <!-- Navigation Sections -->
+        <div class="mks-overlay-nav-sections">
+          
+          <!-- Content Section -->
+          <section class="mks-overlay-nav-section">
+            <h3>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              Inhalte
+            </h3>
+            
+            <nav class="mks-overlay-nav-items">
+              <a href="{% url 'controlling:get_index_text' %}" class="mks-overlay-nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 3h21v18H3z"></path>
+                  <path d="M8 12h8"></path>
+                  <path d="M8 8h8"></path>
+                  <path d="M8 16h5"></path>
+                </svg>
+                <span>Startseite</span>
+              </a>
+              
+              <a href="{% url 'show_blogs_editing' %}" class="mks-overlay-nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+                <span>Blog</span>
+              </a>
+              
+              <a href="{% url 'get_all_faqs' %}" class="mks-overlay-nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <span>FAQ</span>
+              </a>
+            </nav>
+          </section>
+
+          <!-- User Management Section -->
+          <section class="mks-overlay-nav-section">
+            <h3>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+              </svg>
+              Personal & Anmeldungen
+            </h3>
+            
+            <nav class="mks-overlay-nav-items">
+              <a href="{% url 'controlling:get_controlling_students' %}" class="mks-overlay-nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                </svg>
+                <span>Schüler:innen</span>
+              </a>
+              
+              <a href="{% url 'controlling:get_controlling_teachers' %}" class="mks-overlay-nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>Lehrer:innen</span>
+              </a>
+            </nav>
+          </section>
+
+          <!-- System Section -->
+          <section class="mks-overlay-nav-section">
+            <h3>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              System
+            </h3>
+            
+            <nav class="mks-overlay-nav-items">
+              <a href="{% url 'users:event_managing_view' %}" class="mks-overlay-nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>Events</span>
+              </a>
+              
+              <a href="{% url 'invitation:admin_dashboard' %}" class="mks-overlay-nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 11 12 14 22 4"></polyline>
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                </svg>
+                <span>Anmeldungen</span>
+              </a>
+              
+              <a href="{% url 'gallery_admin' %}" class="mks-overlay-nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <span>Galerie</span>
+              </a>
+            </nav>
+          </section>
+          
+        </div>
+      </aside>
+
+      <!-- Content Area -->
+      <main class="mks-overlay-content-area">
+        <h3>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3v18h18"></path>
+            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+          </svg>
+          Dashboard & Statistiken
+        </h3>
+        
+        <div class="mks-overlay-stats-grid">
+          
+          <div class="mks-overlay-stat-card" id="new-registrations" tabindex="0" role="button">
+            <div class="mks-overlay-stat-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div class="mks-overlay-stat-content">
+              <span class="mks-overlay-stat-number">15</span>
+              <span class="mks-overlay-stat-label">Neue Anmeldungen (7T)</span>
+            </div>
+          </div>
+          
+          <div class="mks-overlay-stat-card" id="website-visits" tabindex="0" role="button">
+            <div class="mks-overlay-stat-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+            </div>
+            <div class="mks-overlay-stat-content">
+              <span class="mks-overlay-stat-number">3 247</span>
+              <span class="mks-overlay-stat-label">Seitenaufrufe (30T)</span>
+            </div>
+          </div>
+          
+          <div class="mks-overlay-stat-card" id="recent-blogs" tabindex="0" role="button">
+            <div class="mks-overlay-stat-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+            </div>
+            <div class="mks-overlay-stat-content">
+              <span class="mks-overlay-stat-number">23</span>
+              <span class="mks-overlay-stat-label">Blog-Beiträge (30T)</span>
+            </div>
+          </div>
+          
+          <div class="mks-overlay-stat-card" id="gallery-images" tabindex="0" role="button">
+            <div class="mks-overlay-stat-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </div>
+            <div class="mks-overlay-stat-content">
+              <span class="mks-overlay-stat-number">428</span>
+              <span class="mks-overlay-stat-label">Galerie Bilder</span>
+            </div>
+          </div>
+          
+        </div>
+      </main>
+      
+    </div>
+
+    <!-- Quick Actions Footer -->
+    <footer class="mks-overlay-quick-actions">
+      <a href="{% url 'create_blog_post' %}" class="mks-overlay-quick-action mks-overlay-action-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+        </svg>
+        <span>Neuer Blog-Post</span>
+      </a>
+      
+      <a href="{% url 'users:event_managing_view' %}" class="mks-overlay-quick-action mks-overlay-action-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <span>Neue Veranstaltung</span>
+      </a>
+      
+      <a href="{% url 'invitation:admin_create' %}" class="mks-overlay-quick-action mks-overlay-action-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        <span>Neue Anmeldung</span>
+      </a>
+      
+      <a href="{% url 'controlling:get_controlling_teachers' %}" class="mks-overlay-quick-action mks-overlay-action-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Lehrer:innen verwalten</span>
+      </a>
+      
+      <div class="mks-overlay-quick-actions-spacer"></div>
+      
+      <form method="post" action="{% url 'users:logout' %}" class="mks-overlay-logout-form">
+        {% csrf_token %}
+        <button type="submit" class="mks-overlay-quick-action mks-overlay-action-danger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Ausloggen</span>
+        </button>
+      </form>
+    </footer>
+    
+  </div>
+</div>
+
+<!-- Include JavaScript -->
+<script src="{% static 'js/navigation/mks_overlay_menu.js' %}" defer></script>

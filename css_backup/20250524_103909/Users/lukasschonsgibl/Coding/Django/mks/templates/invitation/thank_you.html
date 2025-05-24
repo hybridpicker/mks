@@ -1,0 +1,23 @@
+<!-- invitation/thank_you.html -->
+{% extends "templates/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<meta name="robots" content="noindex">
+{% endblock %}
+
+{% block banner %}
+<img src="{% static 'banner/invitation_banner_rabaukel.jpg' %}" alt="Die Hexe Rabaukel bekommt Weihnachtspost">
+<img id="mbimg" src="{% static 'banner/mobile/invitation_banner_rabaukel.jpg' %}" alt="Die Hexe Rabaukel bekommt Weihnachtspost - Mobile Banner">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1>Vielen Dank für Ihre Anmeldung!</h1>
+  <p>
+    Ihre Anmeldung war erfolgreich. Wir freuen uns darauf, Sie am
+    {{ event_date|date:"d.m.Y" }} um {{ event_date|time:"H:i" }} Uhr
+    im Grillparzer Campus (Grillparzerstraße 17) begrüßen zu dürfen.
+  </p>
+</div>
+{% endblock %}

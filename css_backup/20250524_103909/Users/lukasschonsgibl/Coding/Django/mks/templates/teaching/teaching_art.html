@@ -1,0 +1,211 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% load i18n static %}
+
+{% load thumbnail %}
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+<meta name="title" content="Musik- und Kunstschule St. Pölten">
+<meta name="description" content="Unter der Bezeichnung Musik- und Kunstschule findet mit der Kreativakademie Niederösterreich eine Kooperation in den Räumlichkeiten der Musikschule statt.">
+
+<!-- Social Media Meta --->
+<meta property="og:title" content="Musik- und Kunstschule St. Pölten">
+<meta property="og:description" content="Unter der Bezeichnung Musik- und Kunstschule findet mit der Kreativakademie Niederösterreich eine Kooperation in den Räumlichkeiten der Musikschule statt.">
+<meta property="og:image" content="static/thumbnail/facebook/home.jpg">
+<meta property="og:url" content="https://musikschule-stp.at/unsere-paedagoginnen">
+
+<meta name="twitter:title" content="Musik- und Kunstschule St. Pölten">
+<meta name="twitter:description" content="Unter der Bezeichnung Musik- und Kunstschule findet mit der Kreativakademie Niederösterreich eine Kooperation in den Räumlichkeiten der Musikschule statt.">
+<meta name="twitter:image" content="static/thumbnail/twitter/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- lazyload -->
+<script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+
+
+<style media="screen">
+  section {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .heading-teaching {
+    text-align: center;
+  }
+  @media only screen and (max-width: 1387px) {
+  section > iframe {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    padding-bottom: 20px;
+  }
+  }
+  @media only screen and (max-width: 677px) {
+  section > iframe {
+    width: 100% !important;
+    height: 200px !important;
+  }
+  }
+  @media only screen and (max-width: 400px) {
+  section > iframe {
+    width: 100% !important;
+    height: 180px !important;
+  }
+  }
+  @media only screen and (max-width: 370px) {
+  section > iframe {
+    width: 100% !important;
+    height: 150px !important;
+  }
+  }
+  @media only screen and (max-width: 771px) {
+    .bs{
+      height: auto;
+    }
+  }
+  .grtnmc{
+    display: grid !important;
+  }
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+<img src="/static/banner/kunstschule_banner.webp" alt="">
+<img id="mbimg" src="/static/banner/mobile/kunstschule_banner.webp" alt="">
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h1>Musik- und Kunstschule</h1>
+    <p>Unter der Bezeichnung "Musik- und Kunstschule" findet mit der <a href="https://www.mkmnoe.at/angebote-fuer-kinder-jugendliche/kreativakademie" target="_blank" rel="noopener">Kreativakademie Niederösterreich</a> des Landes Niederösterreich, der <a href="https://www.ndu.ac.at/" target="_blank">New Design University</a> (NDU St. Pölten), sowie dem Magistrat der Landeshauptstadt St. Pölten eine Kooperation in den Räumlichkeiten der Musikschule statt. <p>
+      {% if blog %}
+      <section id="blogEntrySection" class="container">
+        <div class="tmcon">
+          <div class="tmcb">
+            {% for blog in blog %}
+            <div class="tmcbpb">
+              <div class="mti">
+                <a href="blog/{{blog.published_year}}/{{blog.slug}}">
+                  <picture>
+                    {% thumbnail blog.image "400x300" crop="center" format="WEBP" as im %}
+                    <source srcset="{{ im.url }}" type="image/webp">
+                    {% endthumbnail %}
+                    {% thumbnail blog.image "400x300" crop="center" format="JPEG" as im %}
+                    <source srcset="{{ im.url }}" type="image/jpeg">
+                    <img src="{{ im.url }}" 
+                    width="{{ im.width }}" 
+                    height="{{ im.height }}"
+                    alt="{{ blog.image.title }} Beitragsbild">
+                    {% endthumbnail %}
+                  </picture>
+                  <h3>{{ blog.title }}</h3>
+                </a>
+                <div class="tctm">
+                  <p>{{ blog.meta_description|linebreaks|truncatewords:30 }}</p>
+                  <a href="blog/{{blog.published_year}}/{{blog.slug}}">
+                    <button>
+                    Weiterlesen
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+      {% endif %}
+    <p>Seit Oktober 2015 werden folgende Kreativakademien angeboten:</p>
+    <h3>Für 6-11 Jahre:</h3> <p><strong>Schauspielakademie KIDS: </strong></p>
+    <p>Die Beschäftigung mit Schauspiel ist wie das Öffnen einer Wundertüte – eine Überraschung nach der anderen. Bei der Schauspielakademie KIDS bedeutet das einen bunten Konfettiregen aus Fantasie, Spaß, Kostümen, Geschichten und natürlich vielen neuen FreundInnen. Ob schüchtern oder extrovertiert, jedes Kind profitiert vom Zusammenspiel mit anderen.</p>
+    <p><strong>Musicalakademie KIDS: </strong></p> <p>Musical ist eine umfassende Bühnenkunst, bei der Geschichten, Musik und Choreographie zusammenspielen. Durch die Beschäftigung mit Sprache, Tanz, Rhythmus und Gesang erleben die Kinder die große Bandbreite ihrer Ausdrucksmöglichkeiten. In der Gruppe macht das nicht nur jede Menge Spaß, sondern hilft die Persönlichkeit zu entwickeln, stärkt das Selbstbewusstsein und fördert soziales Verhalten.</p>
+    <p><strong>Malakademie KIDS: </strong></p> <p>Kinder haben eine enorme Schaffenskraft und sind dabei unverfälscht und unmittelbar. Kreativität und Eigenständigkeit sollen gefördert werden. Es werden verschiedene Maltechniken erprobt, gezeichnet, aber auch einfache Drucktechniken ausprobiert. Verschiedene Materialien (Bunt- und Graphitstifte, Öl- oder Pastellkreiden, Wasserfarben, Gouache, etc.) warten darauf, entdeckt zu werden. Ob Farben mischen oder monochromes Arbeiten, alles kann ein Bild in Szene setzen. Im Atelier darf großzügig gearbeitet werden, so kann sich die Fantasie voll entfalten.</p>
+    <h3>Für 12-19 Jahre:</h3>
+    <p><strong>Filmakademie: </strong></p>
+    <p>Die Entwicklung einer originellen Idee bis zum fertigen Werk kann hier erlebt werden. Begleitet von erfahrenen ReferentInnen wird in Teamarbeit eine Story oder ein Thema entwickelt, gefilmt und geschnitten. Während den Lehrgängen wird erkannt, welches Talent besonders ausgeprägt ist und welcher Bereich besonders gefördert werden soll: Drehbuch, Regie, Kamera, Ton, Licht Organisation, Schauspiel, Schnitt, und, und, und, …</p>
+    <p><strong>Fotoakademie</strong>:</p> <p>Professionelle FotografInnen geben im Rahmen der Fotoakademie ihren Erfahrungsschatz weiter. Ganz spielerisch erlernen die SchülerInnen den Blick und die Wahrnehmung zu schulen und Unterschiede im Bildaufbau zu erkennen. Das Wissen über digitale Bildbearbeitung rundet die Ausbildung ab und die Aufnahmen werden schließlich im Rahmen einer Ausstellung präsentiert.</p>
+    <p><strong>Malakademie:</strong></p>
+    <p>In den Ateliers können die SchülerInnen großflächig und frei arbeiten, und bei den Farben aus dem Vollen schöpfen. Farbspritzer kein Problem! Die Malakademie ist ein guter Ort, um sich auch im Gespräch mit Kunst zu beschäftigen und etwas über ihre Geschichte zu erfahren. Die kontinuierliche Arbeit schult den Blick und öffnet die Wahrnehmung für gestalterische Möglichkeiten.</p>
+    <p><strong>Schreibakademie: </strong></p> <p>In einem kreativen Prozess werden die TeilnehmerInnen von erfolgreichen AutorInnen aus der Region begleitet. Gespräche und kreative Übungen regen das schriftstellerische Potential an und gemeinsam mit Gleichgesinnten kann der Wortschatz entwickelt werden. Die SchülerInnen erleben das eigene literarische Potential und packen innere Bilder, Farben, wilde Gedanken und starke Gefühle in Wörter und Sätze und teilen sie der Welt mit.</p> 
+    <p><strong>Schauspielakademie: </strong></p> 
+    <p>In der Schauspielakademie kann mit Körper, Stimme und Fantasie die darstellerische Kreativität erforscht werden. Unter Anleitung von professionellen KünstlerInnen können die SchülerInnen Bühnenluft schnuppern und ihr schauspielerisches Talent entfalten. Ihnen wird gezeigt wie mit Körpereinsatz gespielt und mit Sprache, Gestik und Mimik erzählt werden kann.</p>
+    <section>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/QLB3DQFV3So" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+     </section>
+    <p><strong>Schauspielakademie in Gebärdensprache:</strong></p>
+    <p>Der Vortragende Juho Saarinen ist gehörlos geboren und verwendet die Gebärdensprache zur Kommunikation. Die Unterhaltung mit gehörlosen Menschen liegt ihm sehr, er gibt Theaterunterricht, macht Regie, Tanzchoreographien und hält Filmworkshops. Die drei Bereiche dieses Workshops umfassen das Theaterspielen<b>, </b>die Arbeit mit der Fotokamera, und der Film.</p>
+    <p><strong>Musicalakademie: </strong></p>
+    <p>Mamma Mia – hier können die SchülerInnen ihre Talente erforschen und lernen, was es heißt, gleichzeitig zu singen und zu tanzen. Sie erwerben körperliche Fitness, machen Erfahrungen im Solo- und Chorgesang sowie Tanz und lernen eine Figur in einer Geschichte zu spielen. Immer dabei sind professionelle MusicaldarstellerInnen, die die Lehrgänge leiten und mit Rat und Tat zur Seite stehen.</p>
+    <h3>New Design University</h3>
+    <p><strong>Akademie kreative Holzbearbeitung & Design</strong></p>
+    <p>Die Teilnehmer*innen bekommen hier ein Spektrum im Bereich Holzbearbeitung und Design geboten. So werden unter anderem die Grundlagen des Möbeldesigns und die Umsetzung eigener Entwürfe in Modelle und einfache Prototypen. Als Nonplusultra haben die TeilnehmerInnen die Möglichkeit zur Nutzung des Lasercutters und der 3D-Drucker.</p>
+    <p><strong>Akademie Character Design, Illustration Art und Buchbinden</strong></p>
+    <p>Es gibt vielleicht schon Ideen für ein eigenes Buch und es spucken auch schon so manche Charaktere dafür im Kopf herum? Hier bekommen die TeilnehmerInnen die Chance, ihre Ideen in die Tat umzusetzen und für ihre Charaktere wie zum Beispiel bereits für Batman, Wonderwomen, Spongebob etc. eine eigene Welt und Backgroundstory zu schaffen. Nach einem Einblick in das handwerkliche Buchbinden, werden eigene Wege für eine Darstellung gesucht. Verschiedene Techniken und Zeichenmaterialien können ausprobiert werden.</p>
+    <p><a href="https://www.mkmnoe.at/angebote-fuer-kinder-jugendliche/kreativakademie/anmeldung" target="_blank" rel="noopener">Anmeldung.</a> für die Fächer der Kreativakademien. (Weiterleitung zur Website des Musik- und Kunstschulmanagement NÖ)</p> <p>&nbsp;</p>
+  
+    <h3>Referent:innen der Akademien</h3>
+  
+    <section id="art" class="grtnmc" data-aos="fade-left" 
+    style="display: grid; opacity: 1;" data-aos-duration="1000">
+  
+
+    {% for teacher in teacher_art %}
+    <div class="tnmc">
+      <div class="tnmhl">
+        <section class="teaching-name">
+          <h3>{{teacher.first_name}}</h3>
+          <h3>{{teacher.last_name}}</h3>
+        </section>
+      </div>
+      <div class="tpfcf">
+        <div class="tpcfptr">
+          <div class="icc-tpcfptr">
+            {% if teacher.image.height <= teacher.image.width %}
+            <img class="teacher_img square lazyload" src="{{ teacher.lazy_image.url }}"
+            data-src="{{ teacher.image.url }}"
+            alt="{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+            {% else %}
+            <img class="teacher_img lazyload" src="{{ teacher.lazy_image.url }}"
+            data-src="{{ teacher.image.url }}"
+            alt="{{teacher.first_name}} {{teacher.last_name}} profilepicture Lehrer:innen St. pölten">
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="tbt">
+        <div class="info-text">
+          <p>{% for subject in teacher.subject.all %}
+            {% if forloop.last %}
+            {{ subject }}
+            {% else %}
+            {{ subject }},
+            {% endif %}
+            {% endfor %}
+          </p>
+          <a target="_blank" href="{{ teacher.homepage }}">{{ teacher.homepage_adress }}</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    
+    </section>
+
+  </div>
+</div>
+
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+<script>
+  lazyload();
+</script>
+{% endblock %}

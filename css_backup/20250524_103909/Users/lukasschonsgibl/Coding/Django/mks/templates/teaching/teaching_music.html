@@ -1,0 +1,285 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% load i18n static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+<style>
+:root {
+  --accent-color: #dc3545;
+  --accent-hover: #c82333;
+  --accent-light: #f8d7da;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --background-white: #ffffff;
+  --background-light: #fafafa;
+  --border-color: #e0e0e0;
+  --hover-bg: #f8f8f8;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.mbs {
+  background-color: var(--background-white);
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  margin-bottom: 3rem;
+  letter-spacing: -0.5px;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--accent-color);
+}
+
+p {
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.fachgruppen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  margin-top: 3rem;
+  background-color: var(--border-color);
+}
+
+.fachgruppe-item {
+  background: var(--background-white);
+  padding: 2rem;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.fachgruppe-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.fachgruppe-item:hover {
+  text-decoration: none;
+  background-color: var(--background-light);
+}
+
+.fachgruppe-item:hover::before {
+  background-color: var(--accent-color);
+}
+
+.fachgruppe-item:hover .fachgruppe-title {
+  color: var(--accent-color);
+}
+
+.fachgruppe-title {
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  transition: color 0.2s ease;
+  letter-spacing: -0.02em;
+}
+
+.fachgruppe-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .fachgruppen-grid {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+  
+  .fachgruppe-item {
+    padding: 1.5rem;
+  }
+  
+  .fachgruppe-title {
+    font-size: 1.2rem;
+  }
+  
+  .fachgruppe-description {
+    font-size: 0.9rem;
+  }
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+<img src="/static/banner/msmusic_banner.webp" alt="Musikschule Banner">
+<img id="mbimg" src="/static/banner/mobile/msmusic_banner.webp" alt="Musikschule Mobile Banner">
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h1>Bildungsangebot Musikschule</h1>
+    
+    <p>Die Musikschule St. Pölten ist die größte ihrer Art in Niederösterreich. Wir sind besonders stolz auf die große Vielzahl der angebotenen Instrumente. Diese gliedern sich in folgende Kategorien:</p>
+    
+    <div class="fachgruppen-grid">
+      <a href="/lehrende/bildungsangebot-musikschule/blasinstrumente" class="fachgruppe-item">
+        <h3 class="fachgruppe-title">Blasinstrumente</h3>
+        <p class="fachgruppe-description">
+          {% if categories.blasinstrumente %}
+            {% for subject in categories.blasinstrumente|slice:":6" %}
+              {% if not forloop.first %}, {% endif %}{{ subject }}
+            {% endfor %}
+            {% if categories.blasinstrumente|length > 6 %} und weitere{% endif %}
+          {% else %}
+            Holzblasinstrumente und Blechblasinstrumente
+          {% endif %}
+        </p>
+      </a>
+      
+      <a href="/lehrende/bildungsangebot-musikschule/elementare-musikerziehung" class="fachgruppe-item">
+        <h3 class="fachgruppe-title">Elementare Musikerziehung</h3>
+        <p class="fachgruppe-description">
+          {% if categories.elementare_musikerziehung %}
+            {% for subject in categories.elementare_musikerziehung|slice:":6" %}
+              {% if not forloop.first %}, {% endif %}{{ subject }}
+            {% endfor %}
+            {% if categories.elementare_musikerziehung|length > 6 %} und weitere{% endif %}
+          {% else %}
+            Eltern-Kind-Gruppen und Musikunterricht für Kinder
+          {% endif %}
+        </p>
+      </a>
+      
+      <a href="/lehrende/bildungsangebot-musikschule/musikkunde" class="fachgruppe-item">
+        <h3 class="fachgruppe-title">Musikkunde</h3>
+        <p class="fachgruppe-description">
+          {% if categories.musikkunde %}
+            {% for subject in categories.musikkunde|slice:":6" %}
+              {% if not forloop.first %}, {% endif %}{{ subject }}
+            {% endfor %}
+            {% if categories.musikkunde|length > 6 %} und weitere{% endif %}
+          {% else %}
+            Elementar, Unterstufe, Mittelstufe, Oberstufe
+          {% endif %}
+        </p>
+      </a>
+      
+      <a href="/lehrende/bildungsangebot-musikschule/schlaginstrumente" class="fachgruppe-item">
+        <h3 class="fachgruppe-title">Schlaginstrumente</h3>
+        <p class="fachgruppe-description">
+          {% if categories.schlaginstrumente %}
+            {% for subject in categories.schlaginstrumente|slice:":6" %}
+              {% if not forloop.first %}, {% endif %}{{ subject }}
+            {% endfor %}
+            {% if categories.schlaginstrumente|length > 6 %} und weitere{% endif %}
+          {% else %}
+            Drumset, Jazz Mallets, Percussion, Stabspiele
+          {% endif %}
+        </p>
+      </a>
+      
+      <a href="/lehrende/bildungsangebot-musikschule/stimmbildung" class="fachgruppe-item">
+        <h3 class="fachgruppe-title">Stimmbildung</h3>
+        <p class="fachgruppe-description">
+          {% if categories.stimmbildung %}
+            {% for subject in categories.stimmbildung|slice:":6" %}
+              {% if not forloop.first %}, {% endif %}{{ subject }}
+            {% endfor %}
+            {% if categories.stimmbildung|length > 6 %} und weitere{% endif %}
+          {% else %}
+            Klassischer Gesang, Rock/Pop-Gesang, Jazz-Gesang, Chöre
+          {% endif %}
+        </p>
+      </a>
+      
+      <a href="/lehrende/bildungsangebot-musikschule/streichinstrumente" class="fachgruppe-item">
+        <h3 class="fachgruppe-title">Streichinstrumente</h3>
+        <p class="fachgruppe-description">
+          {% if categories.streichinstrumente %}
+            {% for subject in categories.streichinstrumente|slice:":6" %}
+              {% if not forloop.first %}, {% endif %}{{ subject }}
+            {% endfor %}
+            {% if categories.streichinstrumente|length > 6 %} und weitere{% endif %}
+          {% else %}
+            Kontrabass, Viola, Violine, Violoncello
+          {% endif %}
+        </p>
+      </a>
+      
+      <a href="/lehrende/bildungsangebot-musikschule/tanz-und-bewegung" class="fachgruppe-item">
+        <h3 class="fachgruppe-title">Tanz und Bewegung</h3>
+        <p class="fachgruppe-description">
+          {% if categories.tanz_und_bewegung %}
+            {% for subject in categories.tanz_und_bewegung|slice:":6" %}
+              {% if not forloop.first %}, {% endif %}{{ subject }}
+            {% endfor %}
+            {% if categories.tanz_und_bewegung|length > 6 %} und weitere{% endif %}
+          {% else %}
+            Tanz- und Bewegungsprogramm
+          {% endif %}
+        </p>
+      </a>
+      
+      <a href="/lehrende/bildungsangebot-musikschule/tasteninstrumente" class="fachgruppe-item">
+        <h3 class="fachgruppe-title">Tasteninstrumente</h3>
+        <p class="fachgruppe-description">
+          {% if categories.tasteninstrumente %}
+            {% for subject in categories.tasteninstrumente|slice:":6" %}
+              {% if not forloop.first %}, {% endif %}{{ subject }}
+            {% endfor %}
+            {% if categories.tasteninstrumente|length > 6 %} und weitere{% endif %}
+          {% else %}
+            Akkordeon, Cembalo, Klavier, Pfeifenorgel
+          {% endif %}
+        </p>
+      </a>
+      
+      <a href="/lehrende/bildungsangebot-musikschule/zupfinstrumente" class="fachgruppe-item">
+        <h3 class="fachgruppe-title">Zupfinstrumente</h3>
+        <p class="fachgruppe-description">
+          {% if categories.zupfinstrumente %}
+            {% for subject in categories.zupfinstrumente|slice:":6" %}
+              {% if not forloop.first %}, {% endif %}{{ subject }}
+            {% endfor %}
+            {% if categories.zupfinstrumente|length > 6 %} und weitere{% endif %}
+          {% else %}
+            E-Gitarre, E-Bass, Gitarre, Harfe, Zither
+          {% endif %}
+        </p>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

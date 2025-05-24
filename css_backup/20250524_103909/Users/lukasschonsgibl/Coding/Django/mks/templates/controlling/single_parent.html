@@ -1,0 +1,171 @@
+{% extends "templates/base.html" %}
+{% load i18n static %}
+
+{% load static %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block extra_head %}
+<style>
+  .phone-field > span, .phone-field > #id_phone_1{
+    display: none;
+  }
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block banner %}
+{% endblock %}
+{% block body %}
+<div class="mbs">
+  <div class="container teacher-view">
+    <img class="studentProfileImg" src="{{ image }}" width=150>
+    <h1>Elternstammdaten</h1>
+    <br>
+    <div class="row">
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-content" id="student-single-data-form">
+          <div class="col-4">
+            <p>Vorname:</p>
+          </div>
+          <div class="col-8">
+            {{ form.first_name }}
+          </div>
+          <div class="col-4">
+            <p>Nachname:</p>
+          </div>
+          <div class="col-8">
+            {{ form.last_name }}
+          </div>
+          <div class="col-4">
+            <p>Email:</p>
+          </div>
+          <div class="col-8">
+            {{ form.email }}
+          </div>
+          <div class="col-4">
+            <p>Telefonnummer:</p>
+          </div>
+          <div class="col-8 phone-field">
+            {{ form.phone }}
+          </div>
+          <div class="col-4">
+            <p>Straße:</p>
+          </div>
+          <div class="col-8">
+            {{ form.adress_line }}
+          </div>
+          <div class="col-4">
+            <p>Hausnummer:</p>
+          </div>
+          <div class="col-8">
+            {{ form.house_number }}
+          </div>
+          <div class="col-4">
+            <p>PLZ:</p>
+          </div>
+          <div class="col-8">
+            {{ form.postal_code }}
+          </div>
+          <div class="col-4">
+            <p>Ort:</p>
+          </div>
+          <div class="col-8">
+            {{ form.city }}
+          </div>
+        </div>
+        <br>
+        <a>
+          <button type="submit" name="form-save" style="width: 14rem;" onclick="return confirm('Wollen Sie wirklich diesen Eintrag abspeichern?');">Speichern</button>
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+  var x, i, j, selElmnt, a, b, c;
+  /* Look for any elements with the class "sfbsf": */
+  x = document.getElementsByClassName("sfbsfcon");
+  for (i = 0; i < x.length; i++) {
+    selElmnt = x[i].getElementsByTagName("select")[0];
+    /* For each element, create a new DIV that will act as the selected item: */
+    a = document.createElement("DIV");
+    a.setAttribute("class", "sese");
+    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+    x[i].appendChild(a);
+    /* For each element, create a new DIV that will contain the option list: */
+    b = document.createElement("DIV");
+    b.setAttribute("class", "slitcon sehi");
+    for (j = 1; j < selElmnt.length; j++) {
+      /* For each option in the original select element,
+      create a new DIV that will act as an option item: */
+      c = document.createElement("DIV");
+      c.innerHTML = selElmnt.options[j].innerHTML;
+      c.addEventListener("click", function(e) {
+        /* When an item is clicked, update the original select box,
+        and the selected item: */
+        var y, i, k, s, h;
+        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        h = this.parentNode.previousSibling;
+        for (i = 0; i < s.length; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("swasd");
+            for (k = 0; k < y.length; k++) {
+              y[k].removeAttribute("class");
+            }
+            this.setAttribute("class", "swasd",);
+            break;
+          }
+        }
+        h.click();
+        h.classList.add("active")
+        console.log(h)
+      });
+      b.appendChild(c);
+    }
+    x[i].appendChild(b);
+    a.addEventListener("click", function(e) {
+      /* When the select box is clicked, close any other select boxes,
+      and open/close the current select box: */
+      e.stopPropagation();
+      closeAllSelect(this);
+      this.nextSibling.classList.toggle("sehi");
+      this.classList.toggle("slar-active");
+    });
+  }
+
+  function closeAllSelect(elmnt) {
+    /*  Close all select boxes in the document,
+    except the current select box: */
+    var x, y, i, arrNo = [];
+    x = document.getElementsByClassName("slitcon");
+    y = document.getElementsByClassName("sese");
+    for (i = 0; i < y.length; i++) {
+      if (elmnt == y[i]) {
+        arrNo.push(i)
+      } else {
+        y[i].classList.remove("slar-active");
+      }
+    }
+    for (i = 0; i < x.length; i++) {
+      if (arrNo.indexOf(i)) {
+        x[i].classList.add("sehi");
+      }
+    }
+  }
+
+  /* If the user clicks anywhere outside the select box,
+  then close all select boxes: */
+  document.addEventListener("click", closeAllSelect);
+</script>
+{% endblock %}

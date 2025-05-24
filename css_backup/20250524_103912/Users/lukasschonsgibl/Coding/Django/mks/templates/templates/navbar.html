@@ -1,0 +1,170 @@
+{% load static %}
+
+<!-- NAV -->
+<header>
+  <div class="nvb">
+    <div class="bnbs">
+      <div class="bls">
+        <a href="{% url 'home_view' %}">
+          {% include "templates/svg/nav_bar_icon.html" %}
+        </a>
+      </div>
+      <div class="bns">
+        <div class="drops">
+        <div class="dropdown arrow">
+          <button class="dropbtn">
+            <a href="{% url 'teaching:teaching_music'%}">Musikschule</a>
+          </button>
+          <div class="dropdown-content dropdown-wide">
+            <div class="dropdown-columns">
+              <div class="dropdown-column">
+                <h3>Fachgruppen</h3>
+                <a href="{% url 'teaching:teaching_brass'%}">Blasinstrumente</a>
+                <a href="{% url 'teaching:teaching_eme'%}">Elementare Musikerziehung</a>
+                <a href="{% url 'teaching:teaching_theory'%}">Musikkunde</a>
+                <a href="{% url 'teaching:teaching_drums'%}">Schlaginstrumente</a>
+              </div>
+              <div class="dropdown-column">
+                <h3>&nbsp;</h3>
+                <a href="{% url 'teaching:teaching_vocal'%}">Stimmbildung</a>
+                <a href="{% url 'teaching:teaching_strings'%}">Streichinstrumente</a>
+                <a href="{% url 'dance:schedule'%}">Tanz & Bewegung</a>
+                <a href="{% url 'teaching:teaching_keys'%}">Tasteninstrumente</a>
+                <a href="{% url 'teaching:teaching_picked'%}">Zupfinstrumente</a>
+              </div>
+              <div class="dropdown-column">
+                <h3>Weitere Angebote</h3>
+                <a href="/orgelunterricht">Orgelunterricht</a>
+                <a href="/midi-band">MIDI Band</a>
+                <a href="{% url 'teaching:teaching_prices'%}">Beiträge & Ermäßigungen</a>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown-hover-section">
+          </div>
+        </div>
+        <div class="dropdown-b arrow">
+          <button class="dropbtn-b">
+            <a href="{% url 'teaching:teaching_art'%}">Kunstschule</a>
+          </button>
+          <div class="dropdown-hover-section-b">
+          </div>
+        </div>
+        <div class="dropdown arrow">
+          <button class="dropbtn">
+            <a href="{% url 'gallery_view'%}">Galerie</a>
+          </button>
+          <div class="dropdown-hover-section-b">
+          </div>
+        </div>
+        <div class="dropdown-d arrow">
+          <button class="dropbtn-d">
+            <a href="{% url 'teaching:all_teachers'%}">Über uns</a>
+          </button>
+          <div class="dropdown-content-d">
+            <a href="{% url 'teaching:all_teachers'%}">Team</a>
+            <a href="{% url 'history'%}">Geschichte</a>
+            <a href="{% url 'blog_summary' %}">Blog</a>
+          </div>
+          <div class="dropdown-hover-section-d">
+          </div>
+        </div>
+        <div class="dropdown-e arrow">
+          <button class="dropbtn-e">
+            <a href="{% url 'contact_email' %}">Kontakt</a>
+          </button>
+          <div class="dropdown-hover-section-e">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div id="mks-nav-mobile" class="menu">
+    <div>
+      <span id="menuIcon" onclick="openNav()">
+        {% include "templates/svg/nav_bar_hamburger_mobile.html" %}
+      </span>
+    </div>
+    <div class="">
+    </div>
+    <div id="mobileLogo">
+      <a id="small-mobile-logo" href="{% url 'home_view' %}">
+        {% include "templates/svg/nav_bar_mobile_logo.html" %}
+      </a>
+      <a id="medium-mobile-logo" href="{% url 'home_view' %}">
+        {% include "templates/svg/nav_bar_icon.html" %}
+      </a>
+    </div>
+  </div>
+  <div id="mks-nav-mobile-menu" class="overlay">
+    <div class="overlay-content">
+      <a id="closeMobileMenu" href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+        {% include "templates/svg/nav_bar_cross_burger.html" %}
+      </a>
+      
+      <!-- Musikschule Gruppe -->
+      <div class="mobile-nav-group">
+        <a class="mobile-main-heading" href="{% url 'teaching:teaching_music'%}">
+          Musikschule
+        </a>
+        <div class="mobile-sub-items">
+          <div class="mobile-section-divider">Fachgruppen</div>
+          <a href="{% url 'teaching:teaching_brass'%}">Blasinstrumente</a>
+          <a href="{% url 'teaching:teaching_eme'%}">Elementare Musikerziehung</a>
+          <a href="{% url 'teaching:teaching_theory'%}">Musikkunde</a>
+          <a href="{% url 'teaching:teaching_drums'%}">Schlaginstrumente</a>
+          <a href="{% url 'teaching:teaching_vocal'%}">Stimmbildung</a>
+          <a href="{% url 'teaching:teaching_strings'%}">Streichinstrumente</a>
+          <a href="{% url 'dance:schedule'%}">Tanz & Bewegung</a>
+          <a href="{% url 'teaching:teaching_keys'%}">Tasteninstrumente</a>
+          <a href="{% url 'teaching:teaching_picked'%}">Zupfinstrumente</a>
+          
+          <div class="mobile-section-divider">Weitere Angebote</div>
+          <a href="/orgelunterricht">Orgelunterricht</a>
+          <a href="/midi-band">MIDI Band</a>
+        </div>
+      </div>
+      
+      <!-- Kunstschule -->
+      <div class="mobile-nav-group">
+        <a class="mobile-main-heading single" href="{% url 'teaching:teaching_art'%}">
+          Kunstschule
+        </a>
+      </div>
+      
+      <!-- Galerie -->
+      <div class="mobile-nav-group">
+        <a class="mobile-main-heading single" href="{% url 'gallery_view'%}">
+          Galerie
+        </a>
+      </div>
+      
+      <!-- Über Uns Gruppe -->
+      <div class="mobile-nav-group">
+        <a class="mobile-main-heading" href="{% url 'teaching:all_teachers'%}">
+          Über Uns
+        </a>
+        <div class="mobile-sub-items">
+          <a href="{% url 'teaching:all_teachers'%}">Team</a>
+          <a href="{% url 'history'%}">Geschichte</a>
+          <a href="{% url 'blog_summary' %}">Blog</a>
+        </div>
+      </div>
+      
+      <!-- Kontakt & Info -->
+      <div class="mobile-nav-group">
+        <a class="mobile-main-heading single" href="{% url 'contact_email' %}">
+          Kontakt
+        </a>
+      </div>
+      
+      <div class="mobile-nav-group">
+        <a class="mobile-main-heading single" href="{% url 'teaching:teaching_prices'%}">
+          Beiträge & Ermäßigungen
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

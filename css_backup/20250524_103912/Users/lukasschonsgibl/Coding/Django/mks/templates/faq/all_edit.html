@@ -1,0 +1,404 @@
+{% load i18n static %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQ Verwaltung - Musikschule St. Pölten</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow">
+    
+    {% include "templates/favicon.html" %}
+    
+    <!-- Admin Navigation CSS -->
+    <link rel="stylesheet" href="{% static 'css/admin_nav.3.0.0.css' %}">
+    
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            font-family: jaf-bernina-sans-condensed, sans-serif;
+            background-color: #fdfdfd;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        body {
+            padding-top: 6rem; /* Space for fixed navbar */
+            min-height: 100vh;
+        }
+        
+        /* Container */
+        .faq-management-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Header */
+        .faq-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .faq-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #d11317;
+            margin: 0;
+            font-family: jaf-bernina-sans-condensed, sans-serif;
+        }
+        
+        .btn-new-faq {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background-color: #d11317;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-family: jaf-bernina-sans-condensed, sans-serif;
+        }
+        
+        .btn-new-faq:hover {
+            background-color: #b01115;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(209, 19, 23, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .btn-new-faq svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        /* FAQ List */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        /* FAQ Cards */
+        .faq-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 8px 16px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #d11317;
+        }
+        
+        .faq-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            padding: 1.5rem;
+        }
+        
+        .faq-link:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .faq-question {
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0 0 1rem 0;
+            line-height: 1.3;
+            font-family: jaf-bernina-sans-condensed, sans-serif;
+            transition: color 0.3s ease;
+        }
+        
+        .faq-card:hover .faq-question {
+            color: #d11317;
+        }
+        
+        .faq-answer {
+            color: #6b7280;
+            font-size: 1rem;
+            line-height: 1.6;
+            font-family: jaf-bernina-sans-condensed, sans-serif;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .faq-meta {
+            padding: 1rem 1.5rem;
+            background-color: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-family: jaf-bernina-sans-condensed, sans-serif;
+        }
+        
+        .faq-actions {
+            display: flex;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background-color: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .faq-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: jaf-bernina-sans-condensed, sans-serif;
+        }
+        
+        .btn-edit {
+            background-color: #d11317;
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background-color: #b01115;
+            color: white;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+        
+        .btn-delete {
+            background-color: white;
+            color: #dc2626;
+            border: 1.5px solid #fecaca;
+        }
+        
+        .btn-delete:hover {
+            background-color: #fef2f2;
+            border-color: #dc2626;
+            color: #dc2626;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+        
+        /* Empty State */
+        .faq-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 12px;
+            border: 2px dashed #e5e7eb;
+            margin-top: 2rem;
+        }
+        
+        .faq-empty svg {
+            width: 25px;
+            height: 25px;
+            margin-bottom: 0;
+            color: #d1d5db;
+        }
+        
+        .faq-empty h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 1rem;
+            font-family: jaf-bernina-sans-condensed, sans-serif;
+        }
+        
+        .faq-empty p {
+            color: #6b7280;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: jaf-bernina-sans-condensed, sans-serif;
+        }
+        
+        /* Info box */
+        .faq-info-box {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #d11317;
+        }
+        
+        .faq-info-box h3 {
+            color: #d11317;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: jaf-bernina-sans-condensed, sans-serif;
+        }
+        
+        .faq-info-box p {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin: 0;
+            font-family: jaf-bernina-sans-condensed, sans-serif;
+        }
+        
+        /* Responsive */
+        @media (max-width: 820px) {
+            body {
+                padding-top: 4rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .faq-management-container {
+                padding: 1rem;
+            }
+            
+            .faq-header {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: flex-start;
+            }
+            
+            .faq-title {
+                font-size: 2rem;
+            }
+            
+            .faq-actions {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .faq-management-container {
+                padding: 0.75rem;
+            }
+            
+            .faq-link {
+                padding: 1rem;
+            }
+            
+            .faq-actions {
+                padding: 0.75rem 1rem;
+            }
+            
+            .faq-empty {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Enhanced User Navigation -->
+    {% if user.is_authenticated %}
+        {% include "templates/user_navbar.html" %}
+    {% endif %}
+
+    <div class="faq-management-container">
+        <header class="faq-header">
+            <h1 class="faq-title">FAQ Verwaltung</h1>
+            <a href="{% url 'create_faq' %}" class="btn-new-faq">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Neue FAQ erstellen
+            </a>
+        </header>
+        
+        {% if faqs %}
+        <div class="faq-info-box">
+            <h3>📋 FAQ Management</h3>
+            <p>Hier können Sie alle häufig gestellten Fragen verwalten, bearbeiten und neue hinzufügen. Klicken Sie auf eine Frage, um sie zu bearbeiten.</p>
+        </div>
+        
+        <div class="faq-list">
+            {% for faq in faqs %}
+            <article class="faq-card">
+                <a href="get-faq?pk={{faq.pk}}" class="faq-link">
+                    <h2 class="faq-question">{{ faq.question }}</h2>
+                    <p class="faq-answer">{{ faq.answer|truncatewords:30 }}</p>
+                </a>
+                
+                <div class="faq-meta">
+                    <span>Erstellt: {% now "d.m.Y" %}</span>
+                    {% if faq.last_modified %}
+                    <span> • Zuletzt bearbeitet: {{ faq.last_modified|date:"d.m.Y" }}</span>
+                    {% endif %}
+                </div>
+                
+                <div class="faq-actions">
+                    <a href="get-faq?pk={{faq.pk}}" class="faq-btn btn-edit">
+                        Bearbeiten
+                    </a>
+                    <a href="#" onclick="if(confirm('Sind Sie sicher, dass Sie diese FAQ löschen möchten?')) { /* Delete logic here */ }" class="faq-btn btn-delete">
+                        Löschen
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="faq-empty">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h2>Noch keine FAQs vorhanden</h2>
+            <p>Erstellen Sie Ihre erste FAQ, um häufig gestellte Fragen zu beantworten und Ihren Besuchern zu helfen.</p>
+            <a href="{% url 'create_faq' %}" class="btn-new-faq">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Erste FAQ erstellen
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqCards = document.querySelectorAll('.faq-card');
+            
+            faqCards.forEach(card => {
+                const link = card.querySelector('.faq-link');
+                const question = card.querySelector('.faq-question');
+                
+                // Add keyboard accessibility
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        link.click();
+                    }
+                });
+                
+                // Set tabindex for keyboard navigation
+                card.setAttribute('tabindex', '0');
+            });
+        });
+    </script>
+</body>
+</html>
