@@ -26,4 +26,6 @@ urlpatterns = [
     path('2fa/disable/', twofa_views.disable_2fa, name='2fa_disable'),
     path('2fa/backup-codes/regenerate/', twofa_views.regenerate_backup_codes, name='2fa_regenerate_backup'),
     path('2fa/settings/', twofa_views.two_factor_settings, name='2fa_settings'),
+    path('2fa/reset/request/', twofa_views.two_factor_reset_request, name='2fa_reset_request'),
+    path('2fa/reset/confirm/', twofa_views.two_factor_reset_confirm, name='2fa_reset_confirm'),
 ]

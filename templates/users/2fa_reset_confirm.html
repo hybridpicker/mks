@@ -1,0 +1,298 @@
+{% extends "templates/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block extra_head %}
+<meta name="robots" content="noindex">
+<style>
+.confirm-container {
+  padding: 4rem 0;
+  margin-top: 2rem;
+  background: #fafbfc;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.confirm-wrapper {
+  max-width: 450px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid #e1e5e9;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  overflow: hidden;
+  animation: slideInUp 0.5s ease-out;
+}
+
+.confirm-header {
+  background: #ffffff;
+  color: #2d3748;
+  padding: 2rem;
+  text-align: center;
+  border-bottom: 1px solid #f7fafc;
+}
+
+.confirm-header .key-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #4299e1;
+  opacity: 0.9;
+}
+
+.confirm-header h1 {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: #2d3748;
+}
+
+.confirm-header p {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1rem;
+  margin: 0.5rem 0 0 0;
+  color: #718096;
+}
+
+.confirm-content {
+  padding: 2rem;
+  background: #ffffff;
+}
+
+.info-box {
+  background: rgba(49, 130, 206, 0.05);
+  border: 1px solid rgba(49, 130, 206, 0.2);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-text {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.9rem;
+  color: #2b6cb0;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 1.2rem;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  text-align: center;
+  letter-spacing: 0.2em;
+  outline: none;
+  transition: all 0.2s ease;
+  color: #2d3748;
+  text-transform: uppercase;
+}
+
+.form-input:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.form-help {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.8rem;
+  color: #a0aec0;
+  margin-top: 0.4rem;
+  text-align: center;
+}
+
+.btn {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  background: transparent;
+}
+
+.btn-primary {
+  border-color: #4299e1;
+  color: #4299e1;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.btn-primary:hover {
+  background: #4299e1;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+}
+
+.btn-secondary {
+  color: #718096;
+  border-color: #e2e8f0;
+  font-size: 0.85rem;
+  padding: 0.6rem 1rem;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+.btn-secondary:hover {
+  background: #f7fafc;
+  border-color: #cbd5e0;
+  color: #4a5568;
+}
+
+.card-footer {
+  background: #f8fafc;
+  padding: 1.25rem 2rem;
+  text-align: center;
+  border-top: 1px solid #e2e8f0;
+}
+
+.card-footer a {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  color: #718096;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.card-footer a:hover {
+  color: #4299e1;
+}
+
+.error-message {
+  color: #e53e3e;
+  background: #fed7d7;
+  border: 1px solid #feb2b2;
+  border-radius: 6px;
+  padding: 0.6rem;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+<img src="/static/banner/team_banner.jpg" alt="">
+<img id="mbimg" src="/static/banner/mobile/team_banner.jpg" alt="">
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container confirm-container">
+    <div class="confirm-wrapper">
+      <div class="confirm-header">
+        <div class="key-icon">
+          <i class="fas fa-key"></i>
+        </div>
+        <h1>Reset-Code eingeben</h1>
+        <p>Prüfen Sie Ihre E-Mails</p>
+      </div>
+      
+      <div class="confirm-content">
+        <div class="info-box">
+          <p class="info-text">
+            Wir haben Ihnen einen 8-stelligen Reset-Code per E-Mail gesendet. Geben Sie diesen Code ein, um Ihre 2FA zu deaktivieren.
+          </p>
+        </div>
+
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="id_reset_code" class="form-label">Reset-Code</label>
+            <input 
+              type="text" 
+              name="reset_code"
+              id="id_reset_code"
+              class="form-input"
+              placeholder="ABC12345"
+              maxlength="8"
+              required
+              autocomplete="one-time-code"
+              inputmode="text"
+            >
+            {% if form.reset_code.errors %}
+              <div class="error-message">
+                {{ form.reset_code.errors.0 }}
+              </div>
+            {% endif %}
+            <div class="form-help">
+              Der Code ist 1 Stunde gültig
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-unlock"></i>
+            2FA zurücksetzen
+          </button>
+        </form>
+      </div>
+      
+      <div class="card-footer">
+        <a href="{% url 'users:2fa_reset_request' %}">
+          <i class="fas fa-envelope"></i> Neuen Code anfordern
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const codeInput = document.getElementById('id_reset_code');
+    
+    if (codeInput) {
+        codeInput.focus();
+        
+        // Auto-uppercase and format input
+        codeInput.addEventListener('input', function(e) {
+            e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        });
+    }
+});
+</script>
+{% endblock %}

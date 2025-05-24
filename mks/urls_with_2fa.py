@@ -45,7 +45,6 @@ urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^blog/', include('blog.urls')),
     re_path(r'^blogedit/', include('blog.edit_urls')),
-    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     re_path(r'^tinymce/', include('tinymce.urls')),  # Added TinyMCE URLs
 
     # Custom login with 2FA support

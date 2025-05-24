@@ -310,6 +310,12 @@
           <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#backupCodeForm" aria-expanded="false" aria-controls="backupCodeForm">
             {% trans "Use backup code instead" %}
           </button>
+          
+          <div style="margin-top: 1rem; text-align: center;">
+            <a href="{% url 'users:2fa_reset_request' %}" class="btn btn-link" style="color: #f56565; border-color: #f56565; font-size: 0.8rem;">
+              <i class="fas fa-question-circle"></i> Authenticator verloren?
+            </a>
+          </div>
         </div>
       </div>
       

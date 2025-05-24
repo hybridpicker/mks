@@ -1,4 +1,5 @@
 # Python CircleCI 2.0 configuration file
+# Optimized for AlmaLinux 9 deployment compatibility
 #
 # Check https://circleci.com/docs/2.0/language-python/ for more details
 #
@@ -6,30 +7,41 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: circleci/python:3.9
-      - image: cimg/postgres:11.12
+      # Use Python 3.9 to match AlmaLinux 9 default Python version
+      - image: cimg/python:3.9
+      - image: cimg/postgres:13.8
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: mks
           POSTGRES_PASSWORD: test
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
     working_directory: ~/repo
 
     steps:
       - checkout
+      
+      # Install system dependencies that might be needed for AlmaLinux 9 compatibility
+      - run:
+          name: Install system dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y \
+              build-essential \
+              libpq-dev \
+              python3-dev \
+              libjpeg-dev \
+              libpng-dev \
+              libfreetype6-dev \
+              libxml2-dev \
+              libxslt1-dev \
+              zlib1g-dev
 
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v2-dependencies-{{ checksum "requirements.txt" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v2-dependencies-
 
       - run:
           name: install dependencies
@@ -37,26 +49,64 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
-            pip install -r requirements.txt
+            # Install requirements with verbose output for debugging
+            pip install -r requirements.txt --verbose
+            # Verify critical packages are installed
+            echo "Verifying package installations..."
+            python -c "import django; print(f'Django: {django.get_version()}')"
+            python -c "import pandas; print(f'Pandas: {pandas.__version__}')"
+            python -c "import numpy; print(f'Numpy: {numpy.__version__}')"
 
       - save_cache:
           paths:
             - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+          key: v2-dependencies-{{ checksum "requirements.txt" }}
+
+      # Setup Django environment for testing
+      - run:
+          name: Setup Django environment
+          command: |
+            . venv/bin/activate
+            # Create a basic local_settings.py for testing if it doesn't exist
+            if [ ! -f local_settings.py ]; then
+              cat > local_settings.py << EOF
+            # Test settings for CircleCI
+            DEBUG = True
+            
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.postgresql',
+                    'NAME': 'mks',
+                    'USER': 'postgres',
+                    'PASSWORD': 'test',
+                    'HOST': 'localhost',
+                    'PORT': '5432',
+                }
+            }
+            
+            SECRET_KEY = 'test-secret-key-for-ci-only'
+            ALLOWED_HOSTS = ['*']
+            EOF
+            fi
+
+      # run database migrations
+      - run:
+          name: run migrations
+          command: |
+            . venv/bin/activate
+            export DJANGO_SETTINGS_MODULE=mks.settings
+            python manage.py migrate --noinput
 
       # run tests!
-      # this example uses Django's built-in test-runner
-      # other common Python testing frameworks include pytest and nose
-      # https://pytest.org
-      # https://nose.readthedocs.io
       - run:
           name: run tests
           command: |
             . venv/bin/activate
-            # Set environment variables for better compatibility
             export DJANGO_SETTINGS_MODULE=mks.settings
-            # Run tests
-            python manage.py test
+            # Run Django system check first
+            python manage.py check
+            # Run the actual tests
+            python manage.py test --keepdb --verbosity=2
 
       - store_artifacts:
           path: test-reports

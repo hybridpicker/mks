@@ -1,5 +1,5 @@
 from django.db import models
-from ckeditor.fields import RichTextField
+from tinymce.models import HTMLField
 from django.template.defaultfilters import slugify
 from django.utils.translation import gettext as _
 
@@ -8,7 +8,7 @@ class Instrument(models.Model):
     image = models.ImageField(
         upload_to='instruments/images',
         default='instruments_imageDefault', blank=True,)
-    content = RichTextField()
+    content = HTMLField()
     meta_title = models.CharField(max_length=60)
     meta_description = models.TextField()
     slug = models.SlugField(_("slug"), max_length=200, unique=True)

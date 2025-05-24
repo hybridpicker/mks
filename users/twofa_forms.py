@@ -78,6 +78,39 @@ class CustomAuthenticationForm(AuthenticationForm):
         })
 
 
+class TwoFAResetRequestForm(forms.Form):
+    """Form to request 2FA reset via email"""
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': _('Enter your email address')
+        }),
+        label=_('Email Address'),
+        help_text=_('Enter the email address associated with your account')
+    )
+
+
+class TwoFAResetConfirmForm(forms.Form):
+    """Form to confirm 2FA reset with code from email"""
+    reset_code = forms.CharField(
+        max_length=8,
+        min_length=8,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': _('Enter 8-character reset code'),
+            'style': 'text-transform: uppercase; letter-spacing: 2px; font-family: monospace;'
+        }),
+        label=_('Reset Code'),
+        help_text=_('Enter the 8-character code from your email')
+    )
+
+    def clean_reset_code(self):
+        code = self.cleaned_data.get('reset_code', '').strip().upper()
+        if not code or len(code) != 8:
+            raise forms.ValidationError(_('Please enter a valid 8-character reset code.'))
+        return code
+
+
 class Disable2FAForm(forms.Form):
     """Form to disable 2FA with password confirmation"""
     password = forms.CharField(

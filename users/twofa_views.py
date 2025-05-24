@@ -12,7 +12,7 @@ from django.http import JsonResponse
 from django.views.generic import TemplateView
 from .twofa_forms import (
     TOTPSetupForm, TOTPVerificationForm, BackupCodeForm, 
-    CustomAuthenticationForm, Disable2FAForm
+    CustomAuthenticationForm, Disable2FAForm, TwoFAResetRequestForm, TwoFAResetConfirmForm
 )
 from .models import CustomUser
 
@@ -206,6 +206,57 @@ def two_factor_settings(request):
         'backup_codes_count': len(user.backup_codes) if user.backup_codes else 0,
     }
     return render(request, 'users/2fa_settings.html', context)
+
+
+@csrf_protect
+@never_cache
+def two_factor_reset_request(request):
+    """Request 2FA reset via email"""
+    if request.method == 'POST':
+        form = TwoFAResetRequestForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                user = CustomUser.objects.get(email=email, is_2fa_enabled=True)
+                user.send_2fa_reset_email()
+                messages.success(request, _('Reset code has been sent to your email address.'))
+                return redirect('users:2fa_reset_confirm')
+            except CustomUser.DoesNotExist:
+                messages.error(request, _('No account found with 2FA enabled for this email address.'))
+    else:
+        form = TwoFAResetRequestForm()
+    
+    return render(request, 'users/2fa_reset_request.html', {'form': form})
+
+
+@csrf_protect
+@never_cache
+def two_factor_reset_confirm(request):
+    """Confirm 2FA reset with email code"""
+    if request.method == 'POST':
+        form = TwoFAResetConfirmForm(request.POST)
+        if form.is_valid():
+            reset_code = form.cleaned_data['reset_code']
+            # Try to find user with this reset code
+            try:
+                user = CustomUser.objects.get(twofa_reset_code=reset_code)
+                if user.verify_2fa_reset_code(reset_code):
+                    # Disable 2FA for this user
+                    user.is_2fa_enabled = False
+                    user.totp_secret = ''
+                    user.backup_codes = []
+                    user.save()
+                    
+                    messages.success(request, _('2FA has been successfully disabled. You can now log in normally.'))
+                    return redirect('users:login')
+                else:
+                    messages.error(request, _('Invalid or expired reset code.'))
+            except CustomUser.DoesNotExist:
+                messages.error(request, _('Invalid reset code.'))
+    else:
+        form = TwoFAResetConfirmForm()
+    
+    return render(request, 'users/2fa_reset_confirm.html', {'form': form})
 
 
 class TwoFactorSettingsView(TemplateView):
