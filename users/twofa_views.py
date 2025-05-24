@@ -130,15 +130,25 @@ def setup_2fa(request):
             token = form.cleaned_data['token']
             # Allow reuse during setup for better user experience
             if user.verify_totp(token, allow_reuse=True):
-                user.is_2fa_enabled = True
-                backup_codes = user.generate_backup_codes()
-                user.save()
+                try:
+                    # WICHTIG: Atomare Transaktion für 2FA-Aktivierung
+                    from django.db import transaction
+                    
+                    with transaction.atomic():
+                        user.is_2fa_enabled = True
+                        backup_codes = user.generate_backup_codes()
+                        user.save()
+                        
+                        # Session-Flag setzen um Middleware-Konflikte zu vermeiden
+                        request.session['2fa_just_setup'] = True
                 
-                messages.success(request, _('2FA has been successfully enabled!'))
-                return render(request, 'users/2fa_backup_codes.html', {
-                    'backup_codes': backup_codes,
-                    'show_codes': True
-                })
+                    messages.success(request, _('2FA has been successfully enabled!'))
+                    return render(request, 'users/2fa_backup_codes.html', {
+                        'backup_codes': backup_codes,
+                        'show_codes': True
+                    })
+                except Exception as e:
+                    messages.error(request, _('Error saving 2FA settings. Please try again.'))
             else:
                 messages.error(request, _('Invalid code. Please try again. Make sure your device time is synchronized and wait for a new code if necessary.'))
     else:
