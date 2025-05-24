@@ -87,6 +87,10 @@ class CustomUser(AbstractUser):
     totp_secret = models.CharField(max_length=32, blank=True, null=True, help_text="TOTP secret key")
     is_2fa_enabled = models.BooleanField(default=False, help_text="Two-Factor Authentication enabled")
     backup_codes = models.JSONField(default=list, blank=True, help_text="Backup codes for 2FA")
+    
+    # 2FA Reset fields
+    twofa_reset_code = models.CharField(max_length=8, blank=True, null=True, help_text="2FA reset code")
+    twofa_reset_expires = models.DateTimeField(blank=True, null=True, help_text="2FA reset code expiration")
 
     def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)
@@ -173,7 +177,77 @@ class CustomUser(AbstractUser):
             # For login, standard verification (prevents replay attacks)
             return totp.verify(token, valid_window=1)
 
-    def generate_backup_codes(self):
+    def generate_2fa_reset_code(self):
+        """Generate a secure reset code for 2FA recovery"""
+        import secrets
+        import string
+        from django.utils import timezone
+        from datetime import timedelta
+        
+        # Generate 8-character alphanumeric code
+        code = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(8))
+        
+        # Store with expiration (valid for 1 hour)
+        self.twofa_reset_code = code
+        self.twofa_reset_expires = timezone.now() + timedelta(hours=1)
+        self.save()
+        
+        return code
+    
+    def verify_2fa_reset_code(self, code):
+        """Verify 2FA reset code"""
+        from django.utils import timezone
+        
+        if not self.twofa_reset_code or not self.twofa_reset_expires:
+            return False
+            
+        # Check if code is expired
+        if timezone.now() > self.twofa_reset_expires:
+            self.twofa_reset_code = None
+            self.twofa_reset_expires = None
+            self.save()
+            return False
+            
+        # Verify code
+        if self.twofa_reset_code == code.upper().strip():
+            # Clear reset code after successful verification
+            self.twofa_reset_code = None
+            self.twofa_reset_expires = None
+            self.save()
+            return True
+            
+        return False
+    
+    def send_2fa_reset_email(self):
+        """Send 2FA reset email"""
+        from django.core.mail import send_mail
+        from django.conf import settings
+        from django.template.loader import render_to_string
+        
+        reset_code = self.generate_2fa_reset_code()
+        
+        subject = 'Zwei-Faktor-Authentifizierung zurücksetzen - MKS'
+        
+        message = render_to_string('users/emails/2fa_reset_email.txt', {
+            'user': self,
+            'reset_code': reset_code,
+        })
+        
+        html_message = render_to_string('users/emails/2fa_reset_email.html', {
+            'user': self,
+            'reset_code': reset_code,
+        })
+        
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [self.email],
+            html_message=html_message,
+            fail_silently=False,
+        )
+        
+        return reset_code
         """Generate backup codes for 2FA recovery"""
         import secrets
         codes = []

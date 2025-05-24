@@ -1,0 +1,12 @@
+Hallo {{ user.first_name }} {{ user.last_name }},
+
+Sie haben eine Zurücksetzung Ihrer Zwei-Faktor-Authentifizierung angefordert.
+
+Ihr Reset-Code lautet: {{ reset_code }}
+
+Dieser Code ist für 1 Stunde gültig und kann nur einmal verwendet werden.
+
+Wenn Sie diese Anfrage nicht gestellt haben, ignorieren Sie diese E-Mail.
+
+Mit freundlichen Grüßen,
+Ihr MKS Team
