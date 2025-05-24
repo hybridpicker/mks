@@ -1,5 +1,5 @@
 """
-2FA Enforcement Middleware for MKS Portal
+2FA Enforcement Middleware for Musik- und Kunstschule St. Pölten
 Forces users to setup 2FA after first login
 """
 
