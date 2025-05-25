@@ -218,70 +218,76 @@
       </div>
       {% endif %}
 
-      <!-- Statistics Section -->
-      <div class="mks-overlay-nav-section mks-overlay-stats-section">
+      <!-- Quick Actions Section -->
+      <div class="mks-overlay-nav-section mks-overlay-quick-section">
         <h3>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 3v18h18"></path>
-            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 4l8 8-8 8"></path>
+            <path d="M4 12h16"></path>
           </svg>
-          Dashboard & Statistiken
+          Häufige Aktionen
         </h3>
-        <div class="mks-overlay-stats-grid">
-          <div class="mks-overlay-stat-card" id="new-registrations">
-            <div class="mks-overlay-stat-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        
+        <!-- Quick Actions Grid -->
+        <div class="mks-overlay-quick-grid">
+          
+          <a href="{% url 'show_blogs_editing' %}" class="mks-overlay-quick-card">
+            <div class="mks-overlay-quick-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+            </div>
+            <div class="mks-overlay-quick-content">
+              <span class="mks-overlay-quick-title">Blog verwalten</span>
+              <span class="mks-overlay-quick-desc">Beiträge erstellen und bearbeiten</span>
+            </div>
+          </a>
+          
+          <a href="{% url 'gallery_admin' %}" class="mks-overlay-quick-card">
+            <div class="mks-overlay-quick-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </div>
+            <div class="mks-overlay-quick-content">
+              <span class="mks-overlay-quick-title">Galerie verwalten</span>
+              <span class="mks-overlay-quick-desc">Bilder hochladen und organisieren</span>
+            </div>
+          </a>
+          
+          <a href="{% url 'controlling:get_controlling_students' %}" class="mks-overlay-quick-card">
+            <div class="mks-overlay-quick-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                 <circle cx="9" cy="7" r="4"></circle>
                 <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
               </svg>
             </div>
-            <div class="mks-overlay-stat-content">
-              <span class="mks-overlay-stat-number">8</span>
-              <span class="mks-overlay-stat-label">Neue Anmeldungen (7T)</span>
+            <div class="mks-overlay-quick-content">
+              <span class="mks-overlay-quick-title">Schüler verwalten</span>
+              <span class="mks-overlay-quick-desc">Anmeldungen und Daten bearbeiten</span>
             </div>
-          </div>
+          </a>
           
-          <div class="mks-overlay-stat-card" id="website-visits">
-            <div class="mks-overlay-stat-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          <a href="{% url 'users:event_managing_view' %}" class="mks-overlay-quick-card">
+            <div class="mks-overlay-quick-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
             </div>
-            <div class="mks-overlay-stat-content">
-              <span class="mks-overlay-stat-number">1&nbsp;523</span>
-              <span class="mks-overlay-stat-label">Seitenaufrufe (30T)</span>
+            <div class="mks-overlay-quick-content">
+              <span class="mks-overlay-quick-title">Veranstaltungen</span>
+              <span class="mks-overlay-quick-desc">Events planen und verwalten</span>
             </div>
-          </div>
+          </a>
           
-          <div class="mks-overlay-stat-card" id="recent-blogs">
-            <div class="mks-overlay-stat-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 20h9"></path>
-                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-              </svg>
-            </div>
-            <div class="mks-overlay-stat-content">
-              <span class="mks-overlay-stat-number">9</span>
-              <span class="mks-overlay-stat-label">Blog-Beiträge (30T)</span>
-            </div>
-          </div>
-          
-          <div class="mks-overlay-stat-card" id="gallery-images">
-            <div class="mks-overlay-stat-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
-              </svg>
-            </div>
-            <div class="mks-overlay-stat-content">
-              <span class="mks-overlay-stat-number">156</span>
-              <span class="mks-overlay-stat-label">Galerie Bilder</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>

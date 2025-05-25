@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Mein Profil" %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h4><i class="fas fa-user"></i> {% trans "Mein Profil" %}</h4>
+                </div>
+                <div class="card-body">
+                    
+                    <!-- User Information -->
+                    <div class="profile-section mb-4">
+                        <h5><i class="fas fa-id-card"></i> {% trans "Persönliche Informationen" %}</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><strong>{% trans "Benutzername:" %}</strong></label>
+                                    <p class="form-control-static">{{ user.username }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><strong>{% trans "E-Mail:" %}</strong></label>
+                                    <p class="form-control-static">{{ user.email }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><strong>{% trans "Vorname:" %}</strong></label>
+                                    <p class="form-control-static">{{ user.first_name|default:"—" }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><strong>{% trans "Nachname:" %}</strong></label>
+                                    <p class="form-control-static">{{ user.last_name|default:"—" }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><strong>{% trans "Registriert seit:" %}</strong></label>
+                                    <p class="form-control-static">{{ user.date_joined|date:"d.m.Y" }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><strong>{% trans "Letzter Login:" %}</strong></label>
+                                    <p class="form-control-static">{{ user.last_login|date:"d.m.Y H:i"|default:"—" }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="/admin/users/customuser/{{ user.id }}/change/" class="btn btn-primary">
+                            <i class="fas fa-edit"></i> {% trans "Profil bearbeiten" %}
+                        </a>
+                    </div>
+
+                    <hr>
+
+                    <!-- User Permissions -->
+                    <div class="profile-section mb-4">
+                        <h5><i class="fas fa-shield-alt"></i> {% trans "Berechtigungen" %}</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="permission-badges">
+                                    {% if user.is_superuser %}
+                                        <span class="badge badge-danger badge-lg">
+                                            <i class="fas fa-crown"></i> {% trans "Administrator" %}
+                                        </span>
+                                    {% elif user.is_staff %}
+                                        <span class="badge badge-warning badge-lg">
+                                            <i class="fas fa-user-tie"></i> {% trans "Staff" %}
+                                        </span>
+                                    {% elif user.coordinator %}
+                                        <span class="badge badge-info badge-lg">
+                                            <i class="fas fa-users"></i> {% trans "Koordinator" %}
+                                        </span>
+                                    {% else %}
+                                        <span class="badge badge-secondary badge-lg">
+                                            <i class="fas fa-user"></i> {% trans "Benutzer" %}
+                                        </span>
+                                    {% endif %}
+                                    
+                                    {% if user.is_active %}
+                                        <span class="badge badge-success badge-lg">
+                                            <i class="fas fa-check-circle"></i> {% trans "Aktiv" %}
+                                        </span>
+                                    {% else %}
+                                        <span class="badge badge-secondary badge-lg">
+                                            <i class="fas fa-pause-circle"></i> {% trans "Inaktiv" %}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Security Section -->
+                    <div class="profile-section">
+                        <h5><i class="fas fa-lock"></i> {% trans "Sicherheit" %}</h5>
+                        
+                        <div class="security-status mb-3">
+                            {% if show_2fa_info %}
+                                {% if user.is_2fa_enabled %}
+                                    <div class="alert alert-success" role="alert">
+                                        <i class="fas fa-shield-alt"></i> 
+                                        {% trans "Zwei-Faktor-Authentifizierung ist aktiviert" %}
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-info" role="alert">
+                                        <i class="fas fa-info-circle"></i> 
+                                        {% trans "Zwei-Faktor-Authentifizierung ist optional verfügbar" %}
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="btn-group" role="group">
+                            <a href="{% url 'users:change_password' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-key"></i> {% trans "Passwort ändern" %}
+                            </a>
+                            <a href="{% url 'users:security_settings' %}" class="btn btn-outline-info">
+                                <i class="fas fa-cog"></i> {% trans "Sicherheitseinstellungen" %}
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer text-muted">
+                    <small>
+                        <i class="fas fa-info-circle"></i> 
+                        {% trans "Bei Fragen zu Ihrem Profil wenden Sie sich an einen Administrator." %}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.profile-section {
+    padding: 1rem 0;
+}
+
+.form-control-static {
+    padding: 0.375rem 0;
+    margin-bottom: 0;
+    font-weight: 500;
+    color: #495057;
+}
+
+.permission-badges .badge {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+.badge-lg {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+.security-status .alert {
+    border-left: 4px solid;
+    margin-bottom: 1rem;
+}
+
+.alert-success {
+    border-left-color: #28a745;
+}
+
+.alert-info {
+    border-left-color: #17a2b8;
+}
+
+.btn-group .btn {
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .btn-group .btn {
+        margin-right: 0;
+    }
+}
+</style>
+{% endblock %}

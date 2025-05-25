@@ -214,12 +214,42 @@
   max-width: 1200px;
   max-height: 90vh;
   
+  /* Enable scrolling */
   overflow: hidden;
+  overflow-y: auto;
+  
   display: flex;
   flex-direction: column;
   
   transform: scale(0.95) translateY(10px);
   transition: var(--mks-transition-slow);
+  
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+  
+  /* Custom scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: var(--mks-gray-300) var(--mks-gray-100);
+}
+
+/* Webkit scrollbar styling */
+.mks-overlay-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mks-overlay-content::-webkit-scrollbar-track {
+  background: var(--mks-gray-100);
+  border-radius: var(--mks-radius-sm);
+}
+
+.mks-overlay-content::-webkit-scrollbar-thumb {
+  background: var(--mks-gray-300);
+  border-radius: var(--mks-radius-sm);
+  transition: var(--mks-transition);
+}
+
+.mks-overlay-content::-webkit-scrollbar-thumb:hover {
+  background: var(--mks-gray-400);
 }
 
 .mks-overlay-menu.is-open .mks-overlay-content {
@@ -276,13 +306,70 @@
 }
 
 /* =============================================================================
-   MAIN CONTENT AREA
+   MAIN CONTENT (Frühere Sidebar ist jetzt Hauptinhalt)
    ============================================================================= */
 .mks-overlay-main {
   display: flex;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow: hidden; /* Fixed: Changed from scroll to hidden */
+}
+
+.mks-overlay-main-content {
+  flex: 1;
+  background: var(--mks-white);
+  
+  overflow-y: auto;
+  padding: var(--mks-space-6);
+  
+  display: flex;
+  flex-direction: column;
+  gap: var(--mks-space-6);
+  
+  /* Ensure full height usage */
+  min-height: 100%;
+  
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+  
+  /* Custom scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: var(--mks-gray-300) var(--mks-gray-100);
+  
+  /* Ensure content starts from top and user section is visible */
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* Webkit scrollbar styling for main content */
+.mks-overlay-main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mks-overlay-main-content::-webkit-scrollbar-track {
+  background: var(--mks-gray-100);
+  border-radius: var(--mks-radius-sm);
+}
+
+.mks-overlay-main-content::-webkit-scrollbar-thumb {
+  background: var(--mks-gray-300);
+  border-radius: var(--mks-radius-sm);
+  transition: var(--mks-transition);
+}
+
+.mks-overlay-main-content::-webkit-scrollbar-thumb:hover {
+  background: var(--mks-gray-400);
+}
+  height: 100%;
+}
+
+/* Navigation Sections Grid */
+.mks-overlay-nav-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--mks-space-6);
+  flex: 1;
+  align-content: start;
 }
 
 /* =============================================================================
@@ -298,30 +385,96 @@
   flex-shrink: 0;
 }
 
-/* User Profile in Sidebar */
+/* User Profile Section - Enhanced for full-width */
 .mks-overlay-user-section {
+  border-radius: var(--mks-radius-xl);
+  padding: var(--mks-space-8);
   margin-bottom: var(--mks-space-8);
-  padding-bottom: var(--mks-space-6);
-  border-bottom: 1px solid var(--mks-gray-200);
+  color: var(--mks-white);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  
+  /* Ensure visibility */
+  flex-shrink: 0;
+  z-index: 1;
+  
+  /* Much more margin-top to prevent header overlap */
+  margin-top: var(--mks-space-12); /* 3rem = 48px */
+}
+
+/* Add pattern overlay */
+.mks-overlay-user-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 1px, transparent 1px),
+    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px, 30px 30px;
+  opacity: 0.5;
 }
 
 .mks-overlay-user-avatar {
-  width: 4rem;
-  height: 4rem;
-  background: var(--mks-primary);
+  width: 5rem;
+  height: 5rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   
   display: flex;
   align-items: center;
   justify-content: center;
   
-  margin-bottom: var(--mks-space-4);
+  margin: 0 auto var(--mks-space-4) auto;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 2;
 }
 
 .mks-overlay-user-avatar svg {
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   color: var(--mks-white);
+}
+
+.mks-overlay-user-info {
+  position: relative;
+  z-index: 2;
+  margin-bottom: var(--mks-space-6);
+}
+
+.mks-overlay-user-info h3 {
+  font-size: var(--mks-text-xl);
+  font-weight: 700;
+  margin: 0 0 var(--mks-space-2) 0;
+  color: var(--mks-white);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.mks-overlay-user-info p {
+  font-size: var(--mks-text-sm);
+  text-align: center;
+  margin: 0 0 var(--mks-space-3) 0;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0.9;
+}
+
+.mks-overlay-user-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--mks-radius-full);
+  padding: var(--mks-space-2) var(--mks-space-4);
+  font-size: var(--mks-text-xs);
+  font-weight: 600;
+  color: var(--mks-white);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
 }
 
 .mks-overlay-user-info h3 {
@@ -353,9 +506,46 @@
 
 .mks-overlay-user-actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: var(--mks-space-3);
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  flex-wrap: wrap;
+}
+
+.mks-overlay-user-action {
+  display: flex;
+  align-items: center;
   gap: var(--mks-space-2);
-  margin-top: var(--mks-space-4);
+  padding: var(--mks-space-3) var(--mks-space-4);
+  
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--mks-radius-lg);
+  
+  color: var(--mks-white);
+  text-decoration: none;
+  font-size: var(--mks-text-sm);
+  font-weight: 500;
+  
+  transition: var(--mks-transition);
+  backdrop-filter: blur(10px);
+}
+
+.mks-overlay-user-action:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: var(--mks-white);
+  text-decoration: none;
+}
+
+.mks-overlay-user-action svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
 }
 
 .mks-overlay-user-action {
@@ -388,14 +578,26 @@
 }
 
 /* Navigation in Sidebar */
+/* Navigation Sections - Updated for full-width layout */
 .mks-overlay-nav-sections {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--mks-space-6);
+  flex: 1;
+  align-content: start;
 }
 
 .mks-overlay-nav-section {
-  margin-bottom: var(--mks-space-6);
+  background: var(--mks-gray-50);
+  border-radius: var(--mks-radius-lg);
+  padding: var(--mks-space-6);
+  border: 1px solid var(--mks-gray-200);
+  transition: var(--mks-transition);
+}
+
+.mks-overlay-nav-section:hover {
+  border-color: var(--mks-gray-300);
+  box-shadow: var(--mks-shadow-sm);
 }
 
 .mks-overlay-nav-section h3 {
@@ -572,7 +774,13 @@
   display: flex;
   align-items: center;
   gap: var(--mks-space-3);
-  padding: var(--mks-space-6) var(--mks-space-8);
+  
+  /* Increased padding for better button visibility */
+  padding: var(--mks-space-10) var(--mks-space-8); /* Increased from space-6 to space-10 */
+  
+  /* Add more margin for better separation */
+  margin-top: var(--mks-space-8);
+  margin-bottom: var(--mks-space-4);
   
   background: linear-gradient(135deg, var(--mks-gray-50) 0%, var(--mks-white) 100%);
   border-top: 1px solid var(--mks-gray-200);
@@ -702,25 +910,36 @@
     width: 95%;
     max-height: 95vh;
     border-radius: var(--mks-radius-lg);
+    
+    /* Tablet scrolling optimization */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
   
   .mks-overlay-main {
     flex-direction: column;
   }
   
-  .mks-overlay-sidebar {
+  .mks-overlay-main-content {
     width: 100%;
-    border-right: none;
-    border-bottom: 1px solid var(--mks-gray-200);
-    max-height: 40vh;
+    max-height: none;
     padding: var(--mks-space-4) var(--mks-space-6);
+    
+    /* Tablet scrolling optimization */
+    -webkit-overflow-scrolling: touch;
   }
   
+  /* Tablet user section fixes */
   .mks-overlay-user-section {
-    display: flex;
-    align-items: center;
-    gap: var(--mks-space-4);
+    margin-top: var(--mks-space-10); /* 2.5rem = 40px */
     margin-bottom: var(--mks-space-6);
+    padding: var(--mks-space-6);
+    
+    /* Ensure visibility on tablet */
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+  }
     padding-bottom: var(--mks-space-4);
   }
   
@@ -756,8 +975,12 @@
   
   .mks-overlay-quick-actions {
     flex-wrap: wrap;
-    padding: var(--mks-space-4) var(--mks-space-6);
+    padding: var(--mks-space-8) var(--mks-space-6); /* Increased from space-4 to space-8 */
     gap: var(--mks-space-2);
+    
+    /* Add more margin for tablet */
+    margin-top: var(--mks-space-6);
+    margin-bottom: var(--mks-space-3);
   }
   
   .mks-overlay-quick-actions-spacer {
@@ -784,6 +1007,24 @@
 
 /* Mobile */
 @media (max-width: 639px) {
+  .mks-overlay-content {
+    width: 95%;
+    max-height: 95vh;
+    margin: var(--mks-space-2);
+    
+    /* Mobile scrolling optimization */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  .mks-overlay-main-content {
+    padding: var(--mks-space-4);
+    gap: var(--mks-space-4);
+    
+    /* Mobile scrolling optimization */
+    -webkit-overflow-scrolling: touch;
+  }
+  
   .mks-overlay-header {
     padding: var(--mks-space-4) var(--mks-space-6);
   }
@@ -792,8 +1033,20 @@
     font-size: 1.25rem;
   }
   
-  .mks-overlay-stats-grid {
-    grid-template-columns: 1fr;
+  /* Mobile user section fixes */
+  .mks-overlay-user-section {
+    margin-top: var(--mks-space-12); /* 3rem = 48px */
+    margin-bottom: var(--mks-space-6);
+    padding: var(--mks-space-6);
+    
+    /* Ensure visibility on mobile */
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+  
+  .mks-overlay-nav-sections {
+    margin-top: 0;
   }
   
   .mks-navbar-user-info {
@@ -803,7 +1056,11 @@
   .mks-overlay-quick-actions {
     flex-direction: column;
     gap: var(--mks-space-3);
-    padding: var(--mks-space-4) var(--mks-space-6);
+    padding: var(--mks-space-8) var(--mks-space-6); /* Increased from space-4 to space-8 */
+    
+    /* Add more margin for mobile */
+    margin-top: var(--mks-space-6);
+    margin-bottom: var(--mks-space-3);
   }
   
   .mks-overlay-quick-actions-spacer {
