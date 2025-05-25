@@ -1,7 +1,7 @@
 [
   {
     "model": "dance.teacher",
-    "pk": 233,
+    "pk": 3,
     "fields": {
       "name": "Modified Import Teacher",
       "email": "teacher1@test.com"
@@ -9,7 +9,7 @@
   },
   {
     "model": "dance.teacher",
-    "pk": 234,
+    "pk": 4,
     "fields": {
       "name": "Test Teacher 2",
       "email": "teacher2@test.com"
@@ -17,29 +17,29 @@
   },
   {
     "model": "dance.course",
-    "pk": 233,
+    "pk": 3,
     "fields": {
       "name": "Test Course 1",
-      "teacher": 233,
+      "teacher": 3,
       "age_group": "6-8 Jahre",
       "description": "Test course description 1"
     }
   },
   {
     "model": "dance.course",
-    "pk": 234,
+    "pk": 4,
     "fields": {
       "name": "Test Course 2",
-      "teacher": 234,
+      "teacher": 4,
       "age_group": "10-12 Jahre",
       "description": "Test course description 2"
     }
   },
   {
     "model": "dance.timeslot",
-    "pk": 233,
+    "pk": 3,
     "fields": {
-      "course": 233,
+      "course": 3,
       "day": "Montag",
       "start_time": "14:00:00",
       "end_time": "15:30:00",
@@ -49,9 +49,9 @@
   },
   {
     "model": "dance.timeslot",
-    "pk": 234,
+    "pk": 4,
     "fields": {
-      "course": 234,
+      "course": 4,
       "day": "Dienstag",
       "start_time": "16:00:00",
       "end_time": "17:30:00",
