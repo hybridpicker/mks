@@ -9,6 +9,8 @@ from sorl.thumbnail import ImageField
 from django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError
 import uuid
+from PIL import Image
+import os
 
 class Author(models.Model):
     first_name = models.CharField(max_length=60)
@@ -44,6 +46,12 @@ class BlogPost(models.Model):
     content = HTMLField()  # Changed from RichTextField to HTMLField for TinyMCE
     image = models.ImageField(upload_to='blog/posts/images/', blank=True, null=True)  # Bild optional
     image_alt_text = models.CharField(max_length=255, blank=True)  # Added for SEO/accessibility
+    
+    # Neue Felder für bessere Bildverwaltung
+    image_focus_x = models.FloatField(default=0.5, help_text="Horizontal focus point (0-1, left to right)")
+    image_focus_y = models.FloatField(default=0.5, help_text="Vertical focus point (0-1, top to bottom)")
+    image_width = models.PositiveIntegerField(null=True, blank=True, editable=False)
+    image_height = models.PositiveIntegerField(null=True, blank=True, editable=False)
     author = models.ForeignKey(
         Author,
         on_delete=models.SET_NULL,  # Optionaler Autor
@@ -108,7 +116,117 @@ class BlogPost(models.Model):
                 if not self.meta_description:
                     self.meta_description = self.lead_paragraph[:160] if self.lead_paragraph else "Blog post"
         
+        # Simple save - image optimization is handled by signals
         super().save(*args, **kwargs)
+
+    def optimize_banner_image(self):
+        """Optimiert das Banner-Bild für bessere Performance und Format"""
+        from PIL import ImageOps
+        from django.core.files.base import ContentFile
+        from io import BytesIO
+        import os
+        
+        try:
+            # Get original file path before any modifications
+            original_path = self.image.path
+            
+            with Image.open(original_path) as img:
+                # Metadaten speichern
+                original_width, original_height = img.size
+                self.image_width, self.image_height = original_width, original_height
+                
+                # EXIF-Rotation korrigieren
+                img = ImageOps.exif_transpose(img)
+                
+                # Maximale Größe für Banner (performance optimization)
+                max_width = 1920
+                max_height = 1080
+                
+                # Nur optimieren wenn das Bild zu groß ist
+                needs_resize = img.width > max_width or img.height > max_height
+                
+                if needs_resize:
+                    # Create a copy for resizing
+                    img_copy = img.copy()
+                    img_copy.thumbnail((max_width, max_height), Image.Resampling.LANCZOS)
+                    
+                    # Optimiertes Bild speichern
+                    output = BytesIO()
+                    
+                    # Format bestimmen
+                    format_type = 'JPEG'
+                    save_kwargs = {'format': format_type, 'optimize': True, 'quality': 85}
+                    
+                    # RGB Konvertierung für JPEG
+                    if img_copy.mode in ('RGBA', 'LA', 'P'):
+                        rgb_img = Image.new('RGB', img_copy.size, (255, 255, 255))
+                        if img_copy.mode == 'RGBA':
+                            rgb_img.paste(img_copy, mask=img_copy.split()[-1])
+                        else:
+                            rgb_img.paste(img_copy)
+                        img_copy = rgb_img
+                    
+                    img_copy.save(output, **save_kwargs)
+                    output.seek(0)
+                    
+                    # Get the current filename
+                    current_name = os.path.basename(self.image.name)
+                    
+                    # Replace file content WITHOUT triggering save
+                    self.image.delete(save=False)  # Remove old file
+                    self.image.save(
+                        current_name,
+                        ContentFile(output.read()),
+                        save=False  # CRITICAL: Don't trigger model save
+                    )
+                    
+                    # Update dimensions to optimized size
+                    self.image_width, self.image_height = img_copy.size
+                else:
+                    # Just update dimensions, no resize needed
+                    self.image_width, self.image_height = img.size
+                
+        except Exception as e:
+            # Bei Fehler nur Dimensionen speichern wenn möglich
+            try:
+                with Image.open(self.image.path) as img:
+                    self.image_width, self.image_height = img.size
+            except:
+                # Set default dimensions if all else fails
+                self.image_width, self.image_height = None, None
+
+    @property
+    def image_aspect_ratio(self):
+        """Calculate the aspect ratio of the image"""
+        if self.image_width and self.image_height:
+            return self.image_width / self.image_height
+        return 16/9  # Default banner aspect ratio
+    
+    @property
+    def is_image_landscape(self):
+        """Check if image is landscape oriented"""
+        return self.image_aspect_ratio > 1.2
+    
+    @property
+    def is_image_portrait(self):
+        """Check if image is portrait oriented"""
+        return self.image_aspect_ratio < 0.8
+    
+    @property
+    def is_image_square(self):
+        """Check if image is square oriented"""
+        ratio = self.image_aspect_ratio
+        return 0.8 <= ratio <= 1.2
+    
+    @property
+    def optimal_banner_class(self):
+        """Returns CSS class for optimal banner display"""
+        if self.is_image_portrait:
+            return "portrait-banner"
+        elif self.image_aspect_ratio > 3:
+            return "wide-banner"
+        else:
+            return "standard-banner"
 
     def __str__(self):
         return f"{self.title} ({self.date.year})"
