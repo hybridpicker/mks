@@ -83,8 +83,13 @@ def create_slug_text(title):
 @login_required(login_url='/team/login/')
 def create_blog(request):
     if request.method == 'POST':
+        logger.info(f"POST request received from user: {request.user}")
+        logger.info(f"POST data keys: {list(request.POST.keys())}")
+        logger.info(f"FILES data keys: {list(request.FILES.keys())}")
+        
         # Auto-save request
         if request.POST.get('auto-save'):
+            logger.info("Processing auto-save request")
             form = ArticleForm(request.POST, request.FILES)
             if form.is_valid():
                 try:
@@ -102,20 +107,39 @@ def create_blog(request):
                             blog_post.meta_description = f"Blog post about {blog_post.title}"[:160] if blog_post.title else "Blog post"
                         
                         blog_post.save()
+                        logger.info(f"Auto-save successful: {blog_post.id}")
                         return JsonResponse({'success': True, 'id': blog_post.id})
                 except Exception as e:
                     logger.error(f"Auto-save error: {e}")
                     return JsonResponse({'success': False, 'error': str(e)})
-            return JsonResponse({'success': False, 'errors': form.errors})
+            else:
+                logger.warning(f"Auto-save form invalid: {form.errors}")
+                return JsonResponse({'success': False, 'errors': form.errors})
         
         # Normal save
+        logger.info("Processing normal save request")
         form = ArticleForm(request.POST, request.FILES)
         gallery_formset = GalleryImageFormSet(request.POST, request.FILES)
+        
+        logger.info(f"Form is valid: {form.is_valid()}")
+        if not form.is_valid():
+            logger.error(f"Form errors: {form.errors}")
+        
+        logger.info(f"Gallery formset is valid: {gallery_formset.is_valid()}")
+        if not gallery_formset.is_valid():
+            logger.error(f"Gallery formset errors: {gallery_formset.errors}")
         
         if form.is_valid():
             try:
                 with transaction.atomic():
                     blog_post = form.save(commit=False)
+                    logger.info(f"Blog post created (not saved yet): {blog_post.title}")
+                    
+                    # Log image info
+                    if blog_post.image:
+                        logger.info(f"Image attached: {blog_post.image.name}")
+                    else:
+                        logger.info("No image attached")
                     
                     # Ensure slug exists
                     if not blog_post.slug:
@@ -132,12 +156,19 @@ def create_blog(request):
                     # Handle save & publish
                     if 'save-publish' in request.POST:
                         blog_post.published = True
+                        logger.info("Set to published")
                     elif 'save-draft' in request.POST:
                         blog_post.published = False
+                        logger.info("Set to draft")
                     
                     # Save main blog post
                     blog_post.save()
-                    logger.info(f"Blog post created successfully: {blog_post.title}")
+                    logger.info(f"Blog post saved successfully: {blog_post.id}")
+                    
+                    # Log final image info
+                    if blog_post.image:
+                        logger.info(f"Final image URL: {blog_post.image.url}")
+                        logger.info(f"Final image path: {blog_post.image.path}")
                     
                     # Process gallery formset
                     if gallery_formset.is_valid():
@@ -148,6 +179,7 @@ def create_blog(request):
                         logger.warning(f"Gallery formset errors: {gallery_formset.errors}")
                 
                 messages.success(request, f"Blog post '{blog_post.title}' was created successfully!")
+                logger.info("Redirecting to blog_thanks")
                 return redirect('blog_thanks')
                 
             except IntegrityError as e:
@@ -161,12 +193,15 @@ def create_blog(request):
                 form.add_error(None, f'Validation error: {e}')
             except Exception as e:
                 logger.error(f"Unexpected error creating blog post: {e}")
+                import traceback
+                logger.error(f"Traceback: {traceback.format_exc()}")
                 form.add_error(None, 'An unexpected error occurred. Please try again.')
         else:
             logger.warning(f"Form validation errors: {form.errors}")
             if gallery_formset.errors:
                 logger.warning(f"Gallery formset errors: {gallery_formset.errors}")
     else:
+        logger.info("GET request - showing empty form")
         form = ArticleForm()
         gallery_formset = GalleryImageFormSet()
     
@@ -174,6 +209,7 @@ def create_blog(request):
         'form': form,
         'gallery_formset': gallery_formset
     }
+    logger.info("Rendering form template")
     return render(request, "blog/edit/form.html", context)
 
 class BlogPostView(View):
