@@ -868,6 +868,183 @@
     overflow-x: hidden;
   }
 
+  /* Error Alert Styles */
+  .error-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    left: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border: 1px solid #f87171;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 10px 25px rgba(248, 113, 113, 0.2);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .error-alert.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .error-alert-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  
+  .error-alert-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #dc2626;
+    font-size: 1rem;
+  }
+  
+  .error-alert-close {
+    background: none;
+    border: none;
+    color: #dc2626;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+  
+  .error-alert-close:hover {
+    background-color: rgba(220, 38, 38, 0.1);
+  }
+  
+  .error-alert-content {
+    color: #991b1b;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  
+  .error-list {
+    margin: 8px 0 0 0;
+    padding-left: 20px;
+  }
+  
+  .error-list li {
+    margin-bottom: 4px;
+  }
+  
+  /* Success Alert Styles */
+  .success-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    left: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    border: 1px solid #34d399;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 10px 25px rgba(52, 211, 153, 0.2);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .success-alert.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .success-alert-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #065f46;
+    font-size: 1rem;
+  }
+  
+  .success-alert-content {
+    color: #047857;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
+  
+  /* Loading Overlay */
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .loading-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+  
+  .loading-text {
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Mobile responsiveness for alerts */
+  @media (max-width: 640px) {
+    .error-alert,
+    .success-alert {
+      top: 10px;
+      right: 10px;
+      left: 10px;
+      padding: 12px 16px;
+    }
+    
+    .error-alert-title,
+    .success-alert-title {
+      font-size: 0.875rem;
+    }
+    
+    .error-alert-content,
+    .success-alert-content {
+      font-size: 0.8rem;
+    }
+  }
+
   /* Ensure all content stays within bounds */
   .blog-editor * {
     max-width: 100%;
@@ -918,6 +1095,45 @@
 {% endblock %}
 
 {% block body %}
+<!-- Error Alert -->
+<div id="error-alert" class="error-alert">
+  <div class="error-alert-header">
+    <div class="error-alert-title">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+      </svg>
+      Error
+    </div>
+    <button type="button" class="error-alert-close" onclick="hideErrorAlert()">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+      </svg>
+    </button>
+  </div>
+  <div class="error-alert-content" id="error-alert-content">
+    <!-- Error message will be inserted here -->
+  </div>
+</div>
+
+<!-- Success Alert -->
+<div id="success-alert" class="success-alert">
+  <div class="success-alert-title">
+    <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+    </svg>
+    Success
+  </div>
+  <div class="success-alert-content" id="success-alert-content">
+    <!-- Success message will be inserted here -->
+  </div>
+</div>
+
+<!-- Loading Overlay -->
+<div id="loading-overlay" class="loading-overlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Saving your blog post...</div>
+</div>
+
 <div class="blog-editor">
   <!-- Status Bar -->
   <div class="editor-status-bar">
@@ -1747,6 +1963,258 @@ if (addGalleryBtn && totalFormsInput) {
       }
     });
   }
+  
+  // DEBUG: Form submission monitoring
+  form.addEventListener('submit', function(e) {
+    console.log('=== FORM SUBMISSION DEBUG ===');
+    console.log('Form action:', this.action);
+    console.log('Form method:', this.method);
+    console.log('Form enctype:', this.enctype);
+    
+    // Log form data
+    const formData = new FormData(this);
+    console.log('Form fields:');
+    for (let [key, value] of formData.entries()) {
+      if (value instanceof File) {
+        console.log(`  ${key}: FILE - ${value.name} (${value.size} bytes, ${value.type})`);
+      } else {
+        console.log(`  ${key}: ${value}`);
+      }
+    }
+    
+    // Check for required fields
+    const requiredFields = ['title', 'content'];
+    const missingFields = [];
+    
+    requiredFields.forEach(field => {
+      const fieldElement = this.querySelector(`[name="${field}"]`);
+      if (fieldElement && (!fieldElement.value || fieldElement.value.trim() === '')) {
+        missingFields.push(field);
+      }
+    });
+    
+    if (missingFields.length > 0) {
+      console.error('Missing required fields:', missingFields);
+    }
+    
+    // Check image file
+    const imageInput = this.querySelector('input[name="image"]');
+    if (imageInput && imageInput.files && imageInput.files[0]) {
+      const file = imageInput.files[0];
+      console.log('Image file details:');
+      console.log(`  Name: ${file.name}`);
+      console.log(`  Size: ${file.size} bytes (${(file.size/1024/1024).toFixed(2)} MB)`);
+      console.log(`  Type: ${file.type}`);
+      console.log(`  Last modified: ${new Date(file.lastModified)}`);
+      
+      // Check file size limit (10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        console.error('Image file too large!', file.size, 'bytes');
+        alert('Image file is too large (max 10MB)');
+        e.preventDefault();
+        return false;
+      }
+      
+      // Check file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        console.error('Invalid image type!', file.type);
+        alert('Invalid image format. Please use JPG, PNG, GIF, or WebP.');
+        e.preventDefault();
+        return false;
+      }
+    } else {
+      console.log('No image file selected');
+    }
+    
+    console.log('=== END FORM DEBUG ===');
+  });
+  
+  // DEBUG: Monitor form changes
+  const debugFormChange = function(e) {
+    if (e.target.name === 'image') {
+      console.log('Image input changed:', e.target.files);
+    }
+  };
+  
+  form.addEventListener('change', debugFormChange);
+  
+  // DEBUG: Add global error handler
+  window.addEventListener('error', function(e) {
+    console.error('JavaScript Error:', e.error);
+  });
+
+  // FRONTEND ERROR HANDLING FUNCTIONS
+  function showErrorAlert(title, message, errors = null) {
+    const errorAlert = document.getElementById('error-alert');
+    const errorContent = document.getElementById('error-alert-content');
+    
+    let content = `<p>${message}</p>`;
+    
+    if (errors && typeof errors === 'object') {
+      content += '<ul class="error-list">';
+      
+      if (Array.isArray(errors)) {
+        errors.forEach(error => {
+          content += `<li>${error}</li>`;
+        });
+      } else {
+        Object.keys(errors).forEach(field => {
+          const fieldErrors = Array.isArray(errors[field]) ? errors[field] : [errors[field]];
+          fieldErrors.forEach(error => {
+            content += `<li><strong>${field}:</strong> ${error}</li>`;
+          });
+        });
+      }
+      
+      content += '</ul>';
+    }
+    
+    errorContent.innerHTML = content;
+    errorAlert.classList.add('show');
+    
+    // Auto-hide after 10 seconds
+    setTimeout(() => {
+      hideErrorAlert();
+    }, 10000);
+  }
+  
+  function hideErrorAlert() {
+    const errorAlert = document.getElementById('error-alert');
+    errorAlert.classList.remove('show');
+  }
+  
+  function showSuccessAlert(message) {
+    const successAlert = document.getElementById('success-alert');
+    const successContent = document.getElementById('success-alert-content');
+    
+    successContent.innerHTML = `<p>${message}</p>`;
+    successAlert.classList.add('show');
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+      successAlert.classList.remove('show');
+    }, 5000);
+  }
+  
+  function showLoadingOverlay(text = 'Saving your blog post...') {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const loadingText = loadingOverlay.querySelector('.loading-text');
+    loadingText.textContent = text;
+    loadingOverlay.classList.add('show');
+  }
+  
+  function hideLoadingOverlay() {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    loadingOverlay.classList.remove('show');
+  }
+  
+  // ENHANCED FORM SUBMISSION WITH ERROR HANDLING
+  form.addEventListener('submit', function(e) {
+    console.log('=== FORM SUBMISSION DEBUG ===');
+    
+    // Hide any existing alerts
+    hideErrorAlert();
+    
+    // Show loading overlay
+    showLoadingOverlay();
+    
+    // Validate form client-side first
+    const validationErrors = [];
+    
+    // Check required fields
+    const titleInput = this.querySelector('input[name="title"]');
+    const contentInput = this.querySelector('textarea[name="content"], input[name="content"]');
+    
+    if (!titleInput || !titleInput.value.trim()) {
+      validationErrors.push('Title is required');
+    } else if (titleInput.value.trim().length < 3) {
+      validationErrors.push('Title must be at least 3 characters long');
+    }
+    
+    if (!contentInput || !contentInput.value.trim()) {
+      validationErrors.push('Content is required');
+    } else if (contentInput.value.trim().length < 10) {
+      validationErrors.push('Content must be at least 10 characters long');
+    }
+    
+    // Check image file if present
+    const imageInput = this.querySelector('input[name="image"]');
+    if (imageInput && imageInput.files && imageInput.files[0]) {
+      const file = imageInput.files[0];
+      
+      // Check file size (10MB limit)
+      if (file.size > 10 * 1024 * 1024) {
+        validationErrors.push(`Image file is too large (${(file.size/1024/1024).toFixed(2)}MB). Maximum size is 10MB.`);
+      }
+      
+      // Check file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        validationErrors.push(`Invalid image format (${file.type}). Please use JPG, PNG, GIF, or WebP.`);
+      }
+    }
+    
+    // If validation errors, show them and prevent submission
+    if (validationErrors.length > 0) {
+      hideLoadingOverlay();
+      showErrorAlert('Validation Error', 'Please correct the following errors:', validationErrors);
+      e.preventDefault();
+      return false;
+    }
+    
+    console.log('Client-side validation passed');
+    
+    // Log form data for debugging
+    const formData = new FormData(this);
+    console.log('Form fields:');
+    for (let [key, value] of formData.entries()) {
+      if (value instanceof File) {
+        console.log(`  ${key}: FILE - ${value.name} (${value.size} bytes, ${value.type})`);
+      } else {
+        console.log(`  ${key}: ${value}`);
+      }
+    }
+    
+    console.log('=== END FORM DEBUG ===');
+    
+    // Form will submit normally
+    // Loading overlay will be hidden by page redirect or by error handling
+  });
+  
+  // Handle form errors from server (if form is re-rendered with errors)
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check for Django form errors in the rendered HTML
+    const formErrors = document.querySelectorAll('.error-message');
+    if (formErrors.length > 0) {
+      const errors = [];
+      formErrors.forEach(errorEl => {
+        errors.push(errorEl.textContent.trim());
+      });
+      
+      if (errors.length > 0) {
+        showErrorAlert('Form Error', 'Please correct the following errors:', errors);
+      }
+    }
+    
+    // Check for Django messages
+    const djangoMessages = document.querySelectorAll('.messages .alert, .messages .message');
+    djangoMessages.forEach(messageEl => {
+      const text = messageEl.textContent.trim();
+      if (messageEl.classList.contains('alert-success') || messageEl.classList.contains('success')) {
+        showSuccessAlert(text);
+      } else if (messageEl.classList.contains('alert-error') || messageEl.classList.contains('error')) {
+        showErrorAlert('Error', text);
+      }
+    });
+  });
+  
+  // Hide loading overlay if page loads (in case of redirect back to form)
+  window.addEventListener('load', function() {
+    hideLoadingOverlay();
+  });
+
+
   
   // Add preview listeners to existing file inputs
   const fileInputs = document.querySelectorAll('.gallery-image-input');
