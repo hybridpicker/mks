@@ -73,6 +73,23 @@
     padding: 16px;
     position: relative;
     background-color: var(--background-color);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .gallery-item.marked-for-deletion {
+    opacity: 0.5;
+    transform: scale(0.98);
+    border-color: var(--danger-color);
+    background-color: #fef2f2;
+  }
+  
+  .gallery-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+  }
+  
+  .gallery-item.marked-for-deletion:hover {
+    transform: scale(0.98) translateY(-1px);
   }
   
   .gallery-item-header {
@@ -80,11 +97,13 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+    position: relative;
   }
   
   .gallery-item-title {
     font-weight: 500;
     font-size: 1rem;
+    flex: 1;
   }
   
   .gallery-form-row {
@@ -102,28 +121,133 @@
     object-fit: cover;
   }
   
+  .gallery-delete-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  
+  .gallery-delete-container input[type="checkbox"] {
+    display: none;
+  }
+  
   .gallery-delete-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background-color: white;
-    border: 1px solid var(--danger-color);
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border: 1px solid #fca5a5;
     color: var(--danger-color);
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     padding: 0;
+    margin: 0;
     line-height: 1;
-    font-size: 14px;
+    font-size: 0;
+    font-weight: 600;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+    box-sizing: border-box;
+  }
+  
+  /* Zusätzliche Sicherheit für perfekte Zentrierung */
+  .gallery-delete-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+  
+  .gallery-delete-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+  }
+  
+  .gallery-delete-btn:hover::before {
+    left: 100%;
   }
   
   .gallery-delete-btn:hover {
-    background-color: var(--danger-color);
+    background: linear-gradient(135deg, var(--danger-color) 0%, #dc2626 100%);
     color: white;
+    border-color: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3), 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gallery-delete-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gallery-delete-btn svg {
+    width: 90%;
+    height: 90%;
+    transition: transform 0.2s;
+    display: block;
+    flex-shrink: 0;
+    pointer-events: none;
+    margin: auto;
+  }
+  
+  .gallery-delete-btn:hover svg {
+    transform: scale(1.1);
+  }
+  
+  .gallery-delete-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  
+  .gallery-delete-btn:hover + .gallery-delete-text {
+    color: var(--danger-color);
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 640px) {
+    .gallery-delete-container {
+      top: 4px;
+      right: 4px;
+      gap: 2px;
+    }
+    
+    .gallery-delete-btn {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      min-height: 32px;
+    }
+    
+    .gallery-delete-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .gallery-delete-text {
+      font-size: 0.65rem;
+    }
   }
   
   .gallery-add-btn {
@@ -281,20 +405,36 @@
     line-height: 1.5;
   }
 
-  select.form-control {
-    height: 44px;
-    cursor: pointer;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 16px 12px;
-    padding-right: 40px;
+  .blog-editor select.form-control,
+  .blog-editor form select.form-control {
+    height: 44px !important;
+    cursor: pointer !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 16px 12px !important;
+    padding-right: 40px !important;
+  }
+  
+  /* Fix for any double arrow issues */
+  .blog-editor select::-ms-expand {
+    display: none !important;
   }
 
   /* Prevent input overflow on small screens */
   @media (max-width: 480px) {
     .form-control {
       font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .blog-editor select.form-control,
+    .blog-editor form select.form-control {
+      font-size: 16px !important;
+      background-size: 14px 10px !important;
+      padding-right: 35px !important;
     }
   }
 
@@ -905,12 +1045,18 @@
         {% if gallery_formset.forms %}
           {% for gallery_form in gallery_formset.forms %}
             <div class="gallery-item" id="gallery-item-{{ forloop.counter0 }}">
+              <div class="gallery-delete-container">
+                {{ gallery_form.DELETE }}
+                <label for="{{ gallery_form.DELETE.id_for_label }}" class="gallery-delete-btn" title="Remove this image">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                </label>
+                <span class="gallery-delete-text">Remove</span>
+              </div>
+              
               <div class="gallery-item-header">
                 <span class="gallery-item-title">Image {{ forloop.counter }}</span>
-                <div class="gallery-delete-container">
-                  {{ gallery_form.DELETE }}
-                  <label for="{{ gallery_form.DELETE.id_for_label }}" class="gallery-delete-btn" title="Remove this image">×</label>
-                </div>
               </div>
               
               {{ gallery_form.id }}
@@ -1361,12 +1507,18 @@ if (galleryDropzone) {
     const fileSize = (file.size / 1024 / 1024).toFixed(2);
     
     newForm.innerHTML = `
+      <div class="gallery-delete-container">
+        <input type="checkbox" name="gallery_images-${index}-DELETE" id="id_gallery_images-${index}-DELETE">
+        <label for="id_gallery_images-${index}-DELETE" class="gallery-delete-btn" title="Remove this image">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+          </svg>
+        </label>
+        <span class="gallery-delete-text">Remove</span>
+      </div>
+      
       <div class="gallery-item-header">
         <span class="gallery-item-title">Image ${index + 1}</span>
-        <div class="gallery-delete-container">
-          <input type="checkbox" name="gallery_images-${index}-DELETE" id="id_gallery_images-${index}-DELETE">
-          <label for="id_gallery_images-${index}-DELETE" class="gallery-delete-btn" title="Remove this image">×</label>
-        </div>
       </div>
       
       <input type="hidden" name="gallery_images-${index}-id" id="id_gallery_images-${index}-id">
@@ -1471,12 +1623,18 @@ if (addGalleryBtn && totalFormsInput) {
       newForm.className = 'gallery-item';
       newForm.id = `gallery-item-${currentForms}`;
       newForm.innerHTML = `
+        <div class="gallery-delete-container">
+          <input type="checkbox" name="gallery_images-${currentForms}-DELETE" id="id_gallery_images-${currentForms}-DELETE">
+          <label for="id_gallery_images-${currentForms}-DELETE" class="gallery-delete-btn" title="Remove this image">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+          </label>
+          <span class="gallery-delete-text">Remove</span>
+        </div>
+        
         <div class="gallery-item-header">
           <span class="gallery-item-title">Image ${currentForms + 1}</span>
-          <div class="gallery-delete-container">
-            <input type="checkbox" name="gallery_images-${currentForms}-DELETE" id="id_gallery_images-${currentForms}-DELETE">
-            <label for="id_gallery_images-${currentForms}-DELETE" class="gallery-delete-btn" title="Remove this image">×</label>
-          </div>
         </div>
         
         <input type="hidden" name="gallery_images-${currentForms}-id" id="id_gallery_images-${currentForms}-id">
@@ -1510,7 +1668,59 @@ if (addGalleryBtn && totalFormsInput) {
       addImagePreviewListener(newImageInput);
     }
     
+    // Add delete button functionality
+    const deleteBtn = newForm.querySelector('.gallery-delete-btn');
+    if (deleteBtn) {
+      addDeleteButtonListener(deleteBtn);
+    }
+    
     formChanged = true;
+  });
+  
+  // Enhanced delete button functionality
+  function addDeleteButtonListener(deleteBtn) {
+    deleteBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const galleryItem = this.closest('.gallery-item');
+      const checkbox = galleryItem.querySelector('input[type="checkbox"]');
+      
+      if (checkbox) {
+        // Add visual feedback
+        if (checkbox.checked) {
+          // Unmark for deletion
+          checkbox.checked = false;
+          galleryItem.classList.remove('marked-for-deletion');
+          this.style.background = '';
+          this.style.color = '';
+          this.setAttribute('title', 'Remove this image');
+          
+          // Update text if present
+          const deleteText = this.parentNode.querySelector('.gallery-delete-text');
+          if (deleteText) {
+            deleteText.textContent = 'Remove';
+          }
+        } else {
+          // Mark for deletion
+          checkbox.checked = true;
+          galleryItem.classList.add('marked-for-deletion');
+          this.style.background = 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)';
+          this.style.color = 'white';
+          this.style.borderColor = '#dc2626';
+          this.setAttribute('title', 'Undo removal');
+          
+          // Update text if present
+          const deleteText = this.parentNode.querySelector('.gallery-delete-text');
+          if (deleteText) {
+            deleteText.textContent = 'Undo';
+          }
+        }
+      }
+    });
+  }
+  
+  // Add delete button listeners to existing gallery items
+  document.querySelectorAll('.gallery-delete-btn').forEach(btn => {
+    addDeleteButtonListener(btn);
   });
   
   // Image preview function

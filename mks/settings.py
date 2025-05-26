@@ -273,3 +273,75 @@ APPEND_SLASH = True
 
 if os.path.isfile(os.path.join(BASE_DIR, 'local_settings.py')):
     from local_settings import *
+
+# Additional Blog Settings - Add these to the end of settings.py
+
+# File Upload Settings
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 1000  # For formsets with many fields
+
+# Logging Configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'blog': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
+
+# Enhanced TinyMCE Configuration
+TINYMCE_DEFAULT_CONFIG.update({
+    'automatic_uploads': True,
+    'images_reuse_filename': True,
+    'paste_data_images': True,
+    'content_style': 'body { font-family: Arial, sans-serif; font-size: 14px; }',
+    'setup': '''
+        function (editor) {
+            editor.on('change', function () {
+                editor.save();
+            });
+        }
+    ''',
+})
+
+# Session Configuration
+SESSION_COOKIE_AGE = 3600 * 24 * 7  # 1 week
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Media Upload Security
+ALLOWED_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp']
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
