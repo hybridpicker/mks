@@ -86,6 +86,7 @@
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s;
+    filter: contrast(1.05) saturate(1.05);
   }
 
   .blog-item:hover .blog-item-image img {
@@ -209,7 +210,8 @@
                 width="{{ im.width }}" 
                 height="{{ im.height }}"
                 alt="{{ blog.image_alt_text|default:blog.title }}"
-                loading="lazy">
+                loading="lazy"
+                style="object-position: {{ blog.image_focus_x|floatformat:1|default:'50' }}% {{ blog.image_focus_y|floatformat:1|default:'50' }}%;">
             {% endthumbnail %}
           </picture>
         </div>

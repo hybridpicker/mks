@@ -298,7 +298,20 @@ textarea {
   grid-area: nvb; }
 
 .bs {
-  grid-area: bs; }
+  grid-area: bs; 
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+  text-align: center;
+  display: grid;
+  width: 100%;
+  height: 400px;
+  margin-top: 6rem;
+  overflow: hidden;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
 
 .lbs {
   grid-area: lbs; }
@@ -330,29 +343,31 @@ textarea {
 .nvb#user_nav {
   height: 70px; }
 
-.bs {
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 0;
-  text-align: center;
-  display: grid;
-  grid-auto-columns: 1fr;
-  overflow-y: hidden;
-  width: 100%;
-  height: auto;
-  margin-top: 6rem;
-  max-height: 28rem; }
-
 .bs > img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  filter: contrast(1.05) saturate(1.05);
+}
+
+.bs:hover > img {
+  transform: scale(1.02);
+}
   overflow-y: hidden; }
 
 @media only screen and (max-width: 771px) {
   .bs {
     margin-top: 0;
-    width: 100%; }
+    width: 100%;
+    height: 240px;
+    border-radius: 0;
+  }
   .bs > img {
-    width: 100%; } }
+    width: 100%;
+    height: 100%;
+  }
+}
 
 .bls {
   grid-area: logo; }
