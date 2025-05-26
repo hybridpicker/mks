@@ -128,10 +128,18 @@ def create_blog(request):
         logger.info(f"Gallery formset is valid: {gallery_formset.is_valid()}")
         if not gallery_formset.is_valid():
             logger.error(f"Gallery formset errors: {gallery_formset.errors}")
+            logger.error(f"Gallery formset non-form errors: {gallery_formset.non_form_errors()}")
         
-        if form.is_valid():
+        # Check if we should proceed even with gallery formset errors
+        form_valid = form.is_valid()
+        gallery_valid = gallery_formset.is_valid()
+        
+        logger.info(f"Proceeding with save - Form valid: {form_valid}, Gallery valid: {gallery_valid}")
+        
+        if form_valid:
             try:
                 with transaction.atomic():
+                    logger.info("Starting atomic transaction")
                     blog_post = form.save(commit=False)
                     logger.info(f"Blog post created (not saved yet): {blog_post.title}")
                     
@@ -144,14 +152,18 @@ def create_blog(request):
                     # Ensure slug exists
                     if not blog_post.slug:
                         blog_post.slug = create_slug_text(blog_post.title)
+                        logger.info(f"Generated slug: {blog_post.slug}")
                     
                     # Ensure meta fields are filled
                     if not blog_post.meta_title:
                         blog_post.meta_title = blog_post.title[:60] if blog_post.title else "Blog Post"
+                        logger.info(f"Generated meta_title: {blog_post.meta_title}")
                     if not blog_post.meta_description and blog_post.lead_paragraph:
                         blog_post.meta_description = blog_post.lead_paragraph[:160]
+                        logger.info(f"Generated meta_description from lead: {blog_post.meta_description[:50]}...")
                     elif not blog_post.meta_description:
                         blog_post.meta_description = f"Blog post about {blog_post.title}"[:160] if blog_post.title else "Blog post"
+                        logger.info(f"Generated meta_description from title: {blog_post.meta_description[:50]}...")
                     
                     # Handle save & publish
                     if 'save-publish' in request.POST:
@@ -162,21 +174,36 @@ def create_blog(request):
                         logger.info("Set to draft")
                     
                     # Save main blog post
+                    logger.info("About to save blog post to database...")
                     blog_post.save()
                     logger.info(f"Blog post saved successfully: {blog_post.id}")
+                    
+                    # Verify it's actually saved
+                    try:
+                        saved_post = BlogPost.objects.get(id=blog_post.id)
+                        logger.info(f"Verified in database: {saved_post.title}")
+                    except BlogPost.DoesNotExist:
+                        logger.error("Blog post not found in database immediately after save!")
+                        raise Exception("Blog post save verification failed")
                     
                     # Log final image info
                     if blog_post.image:
                         logger.info(f"Final image URL: {blog_post.image.url}")
                         logger.info(f"Final image path: {blog_post.image.path}")
                     
-                    # Process gallery formset
-                    if gallery_formset.is_valid():
-                        gallery_formset.instance = blog_post
-                        gallery_formset.save()
-                        logger.info(f"Gallery images saved for blog post: {blog_post.title}")
+                    # Process gallery formset - but don't fail if it has errors
+                    if gallery_valid:
+                        try:
+                            gallery_formset.instance = blog_post
+                            gallery_formset.save()
+                            logger.info(f"Gallery images saved for blog post: {blog_post.title}")
+                        except Exception as gallery_error:
+                            logger.error(f"Gallery save error (but continuing): {gallery_error}")
+                            # Don't re-raise - we still want to save the main post
                     else:
-                        logger.warning(f"Gallery formset errors: {gallery_formset.errors}")
+                        logger.warning(f"Skipping gallery save due to formset errors: {gallery_formset.errors}")
+                
+                    logger.info("Transaction completed successfully")
                 
                 messages.success(request, f"Blog post '{blog_post.title}' was created successfully!")
                 logger.info("Redirecting to blog_thanks")
@@ -198,8 +225,9 @@ def create_blog(request):
                 form.add_error(None, 'An unexpected error occurred. Please try again.')
         else:
             logger.warning(f"Form validation errors: {form.errors}")
+            # Don't show gallery formset errors to user if main form is invalid
             if gallery_formset.errors:
-                logger.warning(f"Gallery formset errors: {gallery_formset.errors}")
+                logger.warning(f"Gallery formset errors (secondary): {gallery_formset.errors}")
     else:
         logger.info("GET request - showing empty form")
         form = ArticleForm()

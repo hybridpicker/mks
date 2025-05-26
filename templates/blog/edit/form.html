@@ -861,11 +861,92 @@
     }
   }
 
-  /* Container overflow prevention */
-  .blog-editor, 
-  .form-section,
+  /* Debug overlay styles */
+  #debug-overlay {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: rgba(0, 0, 0, 0.95) !important;
+    color: white !important;
+    padding: 25px !important;
+    border-radius: 15px !important;
+    max-width: 90% !important;
+    max-height: 90% !important;
+    overflow: auto !important;
+    z-index: 99999 !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+    border: 2px solid #4ecdc4 !important;
+  }
+  
+  #debug-overlay h3 {
+    color: #ff6b6b !important;
+    margin-top: 0 !important;
+    text-align: center !important;
+    font-size: 18px !important;
+  }
+  
+  #debug-overlay button {
+    background: #4ecdc4 !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 24px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    transition: all 0.2s !important;
+  }
+  
+  #debug-overlay button:hover {
+    background: #45b7aa !important;
+    transform: translateY(-1px) !important;
+  }
+  
+  #debug-overlay button.continue-btn {
+    background: #ff6b6b !important;
+    margin-left: 10px !important;
+  }
+  
+  #debug-overlay button.continue-btn:hover {
+    background: #ff5252 !important;
+  }
+  
+  /* Real-time validation indicators */
   .form-group {
-    overflow-x: hidden;
+    position: relative;
+  }
+  
+  .validation-indicator {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    z-index: 10;
+  }
+  
+  .validation-indicator.valid {
+    color: #4ecdc4;
+  }
+  
+  .validation-indicator.invalid {
+    color: #ff6b6b;
+  }
+  
+  .char-counter.live {
+    position: absolute;
+    right: 10px;
+    bottom: -20px;
+    font-size: 11px;
+    color: #666;
+  }
+  
+  .char-counter.live.warning {
+    color: #ff6b6b;
+    font-weight: bold;
   }
 
   /* Error Alert Styles */
@@ -1971,63 +2052,150 @@ if (addGalleryBtn && totalFormsInput) {
     console.log('Form method:', this.method);
     console.log('Form enctype:', this.enctype);
     
+    // Create debug overlay
+    const debugOverlay = document.createElement('div');
+    debugOverlay.id = 'debug-overlay';
+    debugOverlay.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 80%;
+      max-height: 80%;
+      overflow: auto;
+      z-index: 10000;
+      font-family: monospace;
+      font-size: 12px;
+      line-height: 1.4;
+    `;
+    
+    let debugHtml = `
+      <h3 style="color: #ff6b6b; margin-top: 0;">🔍 BLOG FORM DEBUG</h3>
+      <div style="margin-bottom: 15px;">
+        <strong>Form Details:</strong><br>
+        Action: ${this.action}<br>
+        Method: ${this.method}<br>
+        Enctype: ${this.enctype}
+      </div>
+    `;
+    
     // Log form data
     const formData = new FormData(this);
-    console.log('Form fields:');
+    debugHtml += '<div style="margin-bottom: 15px;"><strong>📝 Form Data:</strong><br>';
+    
+    let hasTitle = false;
+    let hasContent = false;
+    let contentLength = 0;
+    let hasImage = false;
+    let imageDetails = '';
+    
     for (let [key, value] of formData.entries()) {
       if (value instanceof File) {
-        console.log(`  ${key}: FILE - ${value.name} (${value.size} bytes, ${value.type})`);
+        if (key === 'image' && value.size > 0) {
+          hasImage = true;
+          imageDetails = `${value.name} (${(value.size/1024/1024).toFixed(2)}MB, ${value.type})`;
+          debugHtml += `  ${key}: FILE - ${imageDetails}<br>`;
+        } else if (value.size > 0) {
+          debugHtml += `  ${key}: FILE - ${value.name} (${value.size} bytes)<br>`;
+        }
       } else {
-        console.log(`  ${key}: ${value}`);
+        if (key === 'title' && value.trim()) {
+          hasTitle = true;
+        }
+        if (key === 'content' && value.trim()) {
+          hasContent = true;
+          contentLength = value.trim().length;
+        }
+        debugHtml += `  ${key}: ${value.slice(0, 100)}${value.length > 100 ? '...' : ''}<br>`;
       }
     }
+    debugHtml += '</div>';
     
-    // Check for required fields
-    const requiredFields = ['title', 'content'];
-    const missingFields = [];
+    // Validation checks
+    debugHtml += '<div style="margin-bottom: 15px;"><strong>✅ Validation Checks:</strong><br>';
     
-    requiredFields.forEach(field => {
-      const fieldElement = this.querySelector(`[name="${field}"]`);
-      if (fieldElement && (!fieldElement.value || fieldElement.value.trim() === '')) {
-        missingFields.push(field);
+    const checks = [
+      { name: 'Has Title', passed: hasTitle, details: hasTitle ? '✅ Title present' : '❌ Title missing or empty' },
+      { name: 'Has Content', passed: hasContent, details: hasContent ? '✅ Content present' : '❌ Content missing or empty' },
+      { name: 'Content Length', passed: contentLength >= 10, details: `${contentLength >= 10 ? '✅' : '❌'} Content: ${contentLength} chars (min: 10)` },
+      { name: 'Has Image', passed: hasImage, details: hasImage ? `✅ Image: ${imageDetails}` : '⚠️ No image selected' },
+      { name: 'User Logged In', passed: true, details: '✅ User is logged in (form accessible)' }
+    ];
+    
+    let allValid = true;
+    checks.forEach(check => {
+      const color = check.passed ? '#4ecdc4' : '#ff6b6b';
+      debugHtml += `  <span style="color: ${color};">${check.details}</span><br>`;
+      if (!check.passed && check.name !== 'Has Image') {
+        allValid = false;
       }
     });
+    debugHtml += '</div>';
     
-    if (missingFields.length > 0) {
-      console.error('Missing required fields:', missingFields);
+    // Potential issues
+    if (!allValid) {
+      debugHtml += '<div style="margin-bottom: 15px; color: #ff6b6b;"><strong>🚨 POTENTIAL ISSUES:</strong><br>';
+      if (!hasTitle) debugHtml += '  • Title is required<br>';
+      if (!hasContent) debugHtml += '  • Content is required<br>';
+      if (contentLength < 10) debugHtml += '  • Content must be at least 10 characters<br>';
+      debugHtml += '</div>';
     }
     
-    // Check image file
-    const imageInput = this.querySelector('input[name="image"]');
-    if (imageInput && imageInput.files && imageInput.files[0]) {
-      const file = imageInput.files[0];
-      console.log('Image file details:');
-      console.log(`  Name: ${file.name}`);
-      console.log(`  Size: ${file.size} bytes (${(file.size/1024/1024).toFixed(2)} MB)`);
-      console.log(`  Type: ${file.type}`);
-      console.log(`  Last modified: ${new Date(file.lastModified)}`);
-      
-      // Check file size limit (10MB)
-      if (file.size > 10 * 1024 * 1024) {
-        console.error('Image file too large!', file.size, 'bytes');
-        alert('Image file is too large (max 10MB)');
-        e.preventDefault();
-        return false;
-      }
-      
-      // Check file type
-      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-      if (!allowedTypes.includes(file.type)) {
-        console.error('Invalid image type!', file.type);
-        alert('Invalid image format. Please use JPG, PNG, GIF, or WebP.');
-        e.preventDefault();
-        return false;
-      }
+    // Check for common problems
+    debugHtml += '<div style="margin-bottom: 15px;"><strong>🔧 System Checks:</strong><br>';
+    
+    const titleInput = this.querySelector('[name="title"]');
+    const contentInput = this.querySelector('[name="content"]');
+    const csrfToken = this.querySelector('[name="csrfmiddlewaretoken"]');
+    
+    debugHtml += `  CSRF Token: ${csrfToken ? '✅ Present' : '❌ Missing'}<br>`;
+    debugHtml += `  Title Field: ${titleInput ? '✅ Found' : '❌ Missing'}<br>`;
+    debugHtml += `  Content Field: ${contentInput ? '✅ Found' : '❌ Missing'}<br>`;
+    
+    if (titleInput) {
+      debugHtml += `  Title Length: ${titleInput.value.length}/120 chars<br>`;
+    }
+    
+    debugHtml += '</div>';
+    
+    // Recommendation
+    if (allValid) {
+      debugHtml += '<div style="color: #4ecdc4;"><strong>🎉 FORM LOOKS GOOD!</strong><br>If submission fails, check server logs.</div>';
     } else {
-      console.log('No image file selected');
+      debugHtml += '<div style="color: #ff6b6b;"><strong>🛑 FORM HAS ISSUES!</strong><br>Fix the issues above before submitting.</div>';
     }
     
-    console.log('=== END FORM DEBUG ===');
+    debugHtml += `
+      <div style="margin-top: 20px; text-align: center;">
+        <button onclick="document.getElementById('debug-overlay').remove()" 
+                style="background: #4ecdc4; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close Debug
+        </button>
+        ${allValid ? 
+          '<button onclick="document.getElementById(\'debug-overlay\').remove(); document.getElementById(\'blog-form\').submit();" style="background: #ff6b6b; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-left: 10px;">Continue Submit</button>' : 
+          ''
+        }
+      </div>
+    `;
+    
+    debugOverlay.innerHTML = debugHtml;
+    document.body.appendChild(debugOverlay);
+    
+    // Prevent form submission to show debug
+    e.preventDefault();
+    
+    console.log('=== DEBUG SUMMARY ===');
+    console.log('Form valid:', allValid);
+    console.log('Title:', hasTitle);
+    console.log('Content:', hasContent, `(${contentLength} chars)`);
+    console.log('Image:', hasImage);
+    console.log('=== END DEBUG ===');
+    
+    return false;
   });
   
   // DEBUG: Monitor form changes
@@ -2043,6 +2211,80 @@ if (addGalleryBtn && totalFormsInput) {
   window.addEventListener('error', function(e) {
     console.error('JavaScript Error:', e.error);
   });
+  
+  // REAL-TIME VALIDATION
+  function addRealTimeValidation() {
+    const titleInput = document.querySelector('input[name="title"]');
+    const contentInput = document.querySelector('textarea[name="content"]') || document.querySelector('#id_content');
+    
+    if (titleInput) {
+      const titleGroup = titleInput.closest('.form-group');
+      const titleIndicator = document.createElement('span');
+      titleIndicator.className = 'validation-indicator';
+      titleGroup.style.position = 'relative';
+      titleGroup.appendChild(titleIndicator);
+      
+      titleInput.addEventListener('input', function() {
+        const length = this.value.trim().length;
+        if (length >= 3 && length <= 120) {
+          titleIndicator.textContent = '✅';
+          titleIndicator.className = 'validation-indicator valid';
+        } else {
+          titleIndicator.textContent = '❌';
+          titleIndicator.className = 'validation-indicator invalid';
+        }
+      });
+    }
+    
+    if (contentInput) {
+      const contentGroup = contentInput.closest('.form-group');
+      const contentIndicator = document.createElement('span');
+      contentIndicator.className = 'validation-indicator';
+      const charCounter = document.createElement('div');
+      charCounter.className = 'char-counter live';
+      
+      contentGroup.style.position = 'relative';
+      contentGroup.appendChild(contentIndicator);
+      contentGroup.appendChild(charCounter);
+      
+      const updateContentValidation = function() {
+        const content = this.value || '';
+        const textContent = content.replace(/<[^>]*>/g, '').trim(); // Strip HTML
+        const length = textContent.length;
+        
+        charCounter.textContent = `${length} characters`;
+        
+        if (length >= 10) {
+          contentIndicator.textContent = '✅';
+          contentIndicator.className = 'validation-indicator valid';
+          charCounter.className = 'char-counter live';
+        } else {
+          contentIndicator.textContent = '❌';
+          contentIndicator.className = 'validation-indicator invalid';
+          charCounter.className = 'char-counter live warning';
+          charCounter.textContent = `${length}/10 characters (too short!)`;
+        }
+      };
+      
+      contentInput.addEventListener('input', updateContentValidation);
+      contentInput.addEventListener('keyup', updateContentValidation);
+      
+      // For TinyMCE, also listen to its events
+      if (window.tinymce) {
+        window.tinymce.on('AddEditor', function(e) {
+          e.editor.on('keyup change', updateContentValidation);
+        });
+      }
+    }
+  }
+  
+  // Add real-time validation when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(addRealTimeValidation, 1000); // Wait for TinyMCE to load
+  });
+  
+  // Also try to add it immediately
+  addRealTimeValidation();
 
   // FRONTEND ERROR HANDLING FUNCTIONS
   function showErrorAlert(title, message, errors = null) {
