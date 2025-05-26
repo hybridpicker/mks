@@ -6,14 +6,19 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from urllib.parse import urlparse
 import json
-from django.db import transaction
+from django.db import transaction, IntegrityError
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+import logging
 
 from blog.models import BlogPost, GalleryImage
 from blog.forms import ArticleForm, GalleryImageFormSet
 
 from slugify import slugify
+import uuid
 
-# Create your views here.
+# Setup logging
+logger = logging.getLogger(__name__)
 
 def blog_summary(request):
     all_blogs = BlogPost.objects.filter(published=True).exclude(category__category__name="Kunstschule")
@@ -58,31 +63,49 @@ def show_blogs_editing(request):
     return render(request, "blog/edit/show_blog_editing.html", context)
 
 def create_slug_text(title):
-    # Remove space and make every character low #
-    title =  title.lower()
-    # Checking for special characters and transform #
-    chars = {'ö':'oe','ä':'ae','ü':'ue', 'ß':'ss',}
-    for char in chars:
-        title = title.replace(char,chars[char])
-    # Check for other special characters #
-    title = slugify(title)
-    return title
+    """Safe slug creation with fallback"""
+    try:
+        if not title:
+            return f"blog-post-{uuid.uuid4().hex[:8]}"
+            
+        title = title.lower()
+        chars = {'ö':'oe','ä':'ae','ü':'ue', 'ß':'ss'}
+        for char in chars:
+            title = title.replace(char, chars[char])
+        slug = slugify(title)
+        if not slug:
+            slug = f"blog-post-{uuid.uuid4().hex[:8]}"
+        return slug
+    except Exception as e:
+        logger.error(f"Error creating slug from title '{title}': {e}")
+        return f"blog-post-{uuid.uuid4().hex[:8]}"
 
 @login_required(login_url='/team/login/')
 def create_blog(request):
-    form = ArticleForm(request.POST)
-    gallery_formset = GalleryImageFormSet()
-    
     if request.method == 'POST':
         # Auto-save request
         if request.POST.get('auto-save'):
             form = ArticleForm(request.POST, request.FILES)
             if form.is_valid():
-                blog_post = form.save(commit=False)
-                if not blog_post.slug:
-                    blog_post.slug = create_slug_text(blog_post.title)
-                blog_post.save()
-                return JsonResponse({'success': True, 'id': blog_post.id})
+                try:
+                    with transaction.atomic():
+                        blog_post = form.save(commit=False)
+                        if not blog_post.slug:
+                            blog_post.slug = create_slug_text(blog_post.title)
+                        
+                        # Ensure meta fields are filled
+                        if not blog_post.meta_title:
+                            blog_post.meta_title = blog_post.title[:60] if blog_post.title else "Blog Post"
+                        if not blog_post.meta_description and blog_post.lead_paragraph:
+                            blog_post.meta_description = blog_post.lead_paragraph[:160]
+                        elif not blog_post.meta_description:
+                            blog_post.meta_description = f"Blog post about {blog_post.title}"[:160] if blog_post.title else "Blog post"
+                        
+                        blog_post.save()
+                        return JsonResponse({'success': True, 'id': blog_post.id})
+                except Exception as e:
+                    logger.error(f"Auto-save error: {e}")
+                    return JsonResponse({'success': False, 'error': str(e)})
             return JsonResponse({'success': False, 'errors': form.errors})
         
         # Normal save
@@ -90,25 +113,59 @@ def create_blog(request):
         gallery_formset = GalleryImageFormSet(request.POST, request.FILES)
         
         if form.is_valid():
-            with transaction.atomic():
-                blog_post = form.save(commit=False)
-                if not blog_post.slug:
-                    blog_post.slug = create_slug_text(blog_post.title)
-                
-                # Handle save & publish
-                if 'save-publish' in request.POST:
-                    blog_post.published = True
-                elif 'save-draft' in request.POST:
-                    blog_post.published = False
+            try:
+                with transaction.atomic():
+                    blog_post = form.save(commit=False)
                     
-                blog_post.save()
+                    # Ensure slug exists
+                    if not blog_post.slug:
+                        blog_post.slug = create_slug_text(blog_post.title)
+                    
+                    # Ensure meta fields are filled
+                    if not blog_post.meta_title:
+                        blog_post.meta_title = blog_post.title[:60] if blog_post.title else "Blog Post"
+                    if not blog_post.meta_description and blog_post.lead_paragraph:
+                        blog_post.meta_description = blog_post.lead_paragraph[:160]
+                    elif not blog_post.meta_description:
+                        blog_post.meta_description = f"Blog post about {blog_post.title}"[:160] if blog_post.title else "Blog post"
+                    
+                    # Handle save & publish
+                    if 'save-publish' in request.POST:
+                        blog_post.published = True
+                    elif 'save-draft' in request.POST:
+                        blog_post.published = False
+                    
+                    # Save main blog post
+                    blog_post.save()
+                    logger.info(f"Blog post created successfully: {blog_post.title}")
+                    
+                    # Process gallery formset
+                    if gallery_formset.is_valid():
+                        gallery_formset.instance = blog_post
+                        gallery_formset.save()
+                        logger.info(f"Gallery images saved for blog post: {blog_post.title}")
+                    else:
+                        logger.warning(f"Gallery formset errors: {gallery_formset.errors}")
                 
-                # Process gallery formset
-                if gallery_formset.is_valid():
-                    gallery_formset.instance = blog_post
-                    gallery_formset.save()
+                messages.success(request, f"Blog post '{blog_post.title}' was created successfully!")
+                return redirect('blog_thanks')
                 
-            return redirect('blog_thanks')
+            except IntegrityError as e:
+                logger.error(f"Database integrity error: {e}")
+                if 'slug' in str(e):
+                    form.add_error('slug', 'This URL slug is already in use. Please choose a different one.')
+                else:
+                    form.add_error(None, 'A database error occurred. Please try again.')
+            except ValidationError as e:
+                logger.error(f"Validation error: {e}")
+                form.add_error(None, f'Validation error: {e}')
+            except Exception as e:
+                logger.error(f"Unexpected error creating blog post: {e}")
+                form.add_error(None, 'An unexpected error occurred. Please try again.')
+        else:
+            logger.warning(f"Form validation errors: {form.errors}")
+            if gallery_formset.errors:
+                logger.warning(f"Gallery formset errors: {gallery_formset.errors}")
     else:
         form = ArticleForm()
         gallery_formset = GalleryImageFormSet()
@@ -121,20 +178,25 @@ def create_blog(request):
 
 class BlogPostView(View):
     def get(self, request, *args, **kwargs):
-        blog_post = get_object_or_404(BlogPost, slug=kwargs['slug'], date__year=kwargs['published_year'])
-        # If not published and user is not authenticated, return 404
-        if not blog_post.published and not request.user.is_authenticated:
+        try:
+            blog_post = get_object_or_404(BlogPost, slug=kwargs['slug'], date__year=kwargs['published_year'])
+            
+            # If not published and user is not authenticated, return 404
+            if not blog_post.published and not request.user.is_authenticated:
+                raise Http404("Blog post not found")
+                
+            # Prefetch gallery images to optimize queries
+            blog_post.gallery_images.all()
+                
+            youtube = check_youtube_link(blog_post.content)
+            if youtube:
+                context = {'blog_post': blog_post, 'youtube': youtube}
+            else:
+                context = {'blog_post': blog_post}
+            return render(request, 'blog/blog_post.html', context)
+        except Exception as e:
+            logger.error(f"Error displaying blog post: {e}")
             raise Http404("Blog post not found")
-            
-        # Prefetch gallery images to optimize queries
-        blog_post.gallery_images.all()
-            
-        youtube = check_youtube_link(blog_post.content)
-        if youtube:
-            context = {'blog_post': blog_post, 'youtube':youtube}
-        else:
-            context = {'blog_post': blog_post}
-        return render(request, 'blog/blog_post.html', context)
 
 @login_required(login_url='/team/login/')
 def post_edit(request, pk):
@@ -145,8 +207,12 @@ def post_edit(request, pk):
         if request.POST.get('auto-save'):
             form = ArticleForm(request.POST, request.FILES, instance=post)
             if form.is_valid():
-                form.save()
-                return JsonResponse({'success': True})
+                try:
+                    form.save()
+                    return JsonResponse({'success': True})
+                except Exception as e:
+                    logger.error(f"Auto-save error for post {pk}: {e}")
+                    return JsonResponse({'success': False, 'error': str(e)})
             return JsonResponse({'success': False, 'errors': form.errors})
         
         # Normal save
@@ -154,22 +220,30 @@ def post_edit(request, pk):
         gallery_formset = GalleryImageFormSet(request.POST, request.FILES, instance=post)
         
         if form.is_valid():
-            with transaction.atomic():
-                blog_post = form.save(commit=False)
-                
-                # Handle save & publish
-                if 'save-publish' in request.POST:
-                    blog_post.published = True
-                elif 'save-draft' in request.POST:
-                    blog_post.published = False
+            try:
+                with transaction.atomic():
+                    blog_post = form.save(commit=False)
                     
-                blog_post.save()
+                    # Handle save & publish
+                    if 'save-publish' in request.POST:
+                        blog_post.published = True
+                    elif 'save-draft' in request.POST:
+                        blog_post.published = False
+                        
+                    blog_post.save()
+                    
+                    # Process gallery formset
+                    if gallery_formset.is_valid():
+                        gallery_formset.save()
+                        
+                messages.success(request, f"Blog post '{blog_post.title}' was updated successfully!")
+                return redirect('show_blogs_editing')
                 
-                # Process gallery formset
-                if gallery_formset.is_valid():
-                    gallery_formset.save()
-                
-            return redirect('show_blogs_editing')
+            except Exception as e:
+                logger.error(f"Error updating blog post {pk}: {e}")
+                form.add_error(None, 'An error occurred while saving. Please try again.')
+        else:
+            logger.warning(f"Form validation errors for post {pk}: {form.errors}")
     else:
         form = ArticleForm(instance=post)
         gallery_formset = GalleryImageFormSet(instance=post)
@@ -181,6 +255,14 @@ def post_edit(request, pk):
 
 @login_required(login_url='/team/login/')
 def delete_blog_post(request, pk):
-    post = get_object_or_404(BlogPost, pk=pk)
-    post.delete()
+    try:
+        post = get_object_or_404(BlogPost, pk=pk)
+        title = post.title
+        post.delete()
+        messages.success(request, f"Blog post '{title}' was deleted successfully!")
+        logger.info(f"Blog post deleted: {title}")
+    except Exception as e:
+        logger.error(f"Error deleting blog post {pk}: {e}")
+        messages.error(request, "An error occurred while deleting the blog post.")
+    
     return redirect('show_blogs_editing')

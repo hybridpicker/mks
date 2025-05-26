@@ -7,8 +7,6 @@ from django.utils import timezone
 import datetime
 from sorl.thumbnail import ImageField
 from django.core.validators import FileExtensionValidator
-from django.core.exceptions import ValidationError
-import uuid
 
 class Author(models.Model):
     first_name = models.CharField(max_length=60)
@@ -50,9 +48,9 @@ class BlogPost(models.Model):
         blank=True, null=True
     )
     date = models.DateField(_("Blog Post Date"), default=timezone.now, blank=True)
-    meta_title = models.CharField(max_length=60, blank=True)  # Make optional
-    meta_description = models.TextField(max_length=160, blank=True)  # Make optional
-    slug = models.SlugField(_("slug"), max_length=200, unique=True, blank=True)  # Make optional
+    meta_title = models.CharField(max_length=60)
+    meta_description = models.TextField(max_length=160)  # Added max_length for SEO best practices
+    slug = models.SlugField(_("slug"), max_length=200, unique=True)
     ordering = models.IntegerField(null=True, blank=True)
     published = models.BooleanField(default=False)  # Added for draft/publish functionality
     updated_at = models.DateTimeField(auto_now=True)  # Added for tracking updates
@@ -62,52 +60,9 @@ class BlogPost(models.Model):
     def published_year(self):
         return self.date.year
 
-    def clean(self):
-        """Custom validation with better error handling"""
-        super().clean()
-        
-        # Auto-generate meta fields if empty
-        if not self.meta_title:
-            self.meta_title = self.title[:60] if self.title else f"Blog Post {self.pk or 'New'}"
-        
-        if not self.meta_description and self.lead_paragraph:
-            self.meta_description = self.lead_paragraph[:160]
-        elif not self.meta_description:
-            self.meta_description = f"Blog post about {self.title}"[:160] if self.title else "Blog post"
-        
-        # Generate unique slug
-        if not self.slug:
-            base_slug = slugify(self.title) if self.title else f"blog-post-{uuid.uuid4().hex[:8]}"
-            if not base_slug:
-                base_slug = f"blog-post-{uuid.uuid4().hex[:8]}"
-            
-            slug = base_slug
-            counter = 1
-            
-            # Check for existing slugs and make unique
-            while BlogPost.objects.filter(slug=slug).exclude(pk=self.pk).exists():
-                slug = f"{base_slug}-{counter}"
-                counter += 1
-                if counter > 100:  # Prevent infinite loop
-                    slug = f"{base_slug}-{uuid.uuid4().hex[:8]}"
-                    break
-            
-            self.slug = slug
-
     def save(self, *args, **kwargs):
-        # Always run clean before save
-        try:
-            self.full_clean()
-        except ValidationError as e:
-            # Log the error but don't crash - instead generate a fallback slug
-            if 'slug' in str(e):
-                self.slug = f"blog-post-{uuid.uuid4().hex[:8]}"
-                # Set default meta fields if missing
-                if not self.meta_title:
-                    self.meta_title = self.title[:60] if self.title else f"Blog Post {self.pk or 'New'}"
-                if not self.meta_description:
-                    self.meta_description = self.lead_paragraph[:160] if self.lead_paragraph else "Blog post"
-        
+        if not self.slug:
+            self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
     def __str__(self):

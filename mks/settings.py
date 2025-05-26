@@ -273,3 +273,122 @@ APPEND_SLASH = True
 
 if os.path.isfile(os.path.join(BASE_DIR, 'local_settings.py')):
     from local_settings import *
+
+# Additional Blog Settings - Add these to the end of settings.py
+
+# File Upload Settings
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 1000  # For formsets with many fields
+
+# Ensure logs directory exists
+LOGS_DIR = os.path.join(BASE_DIR, 'logs')
+try:
+    if not os.path.exists(LOGS_DIR):
+        os.makedirs(LOGS_DIR, exist_ok=True)
+    # Test if we can write to the logs directory
+    test_file = os.path.join(LOGS_DIR, 'test.log')
+    with open(test_file, 'w') as f:
+        f.write('test')
+    os.remove(test_file)
+    LOGGING_ENABLED = True
+except (OSError, PermissionError):
+    # If we can't create/write to logs directory, disable file logging
+    LOGGING_ENABLED = False
+
+# Logging Configuration
+if LOGGING_ENABLED:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+                'style': '{',
+            },
+            'simple': {
+                'format': '{levelname} {message}',
+                'style': '{',
+            },
+        },
+        'handlers': {
+            'file': {
+                'level': 'ERROR',
+                'class': 'logging.FileHandler',
+                'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
+                'formatter': 'verbose',
+            },
+            'console': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'simple',
+            },
+        },
+        'loggers': {
+            'blog': {
+                'handlers': ['file', 'console'],
+                'level': 'INFO',
+                'propagate': True,
+            },
+            'django': {
+                'handlers': ['file'],
+                'level': 'ERROR',
+                'propagate': True,
+            },
+        },
+    }
+else:
+    # Fallback logging configuration without file handler
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'simple': {
+                'format': '{levelname} {message}',
+                'style': '{',
+            },
+        },
+        'handlers': {
+            'console': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'simple',
+            },
+        },
+        'loggers': {
+            'blog': {
+                'handlers': ['console'],
+                'level': 'INFO',
+                'propagate': True,
+            },
+            'django': {
+                'handlers': ['console'],
+                'level': 'ERROR',
+                'propagate': True,
+            },
+        },
+    }
+
+# Enhanced TinyMCE Configuration
+TINYMCE_DEFAULT_CONFIG.update({
+    'automatic_uploads': True,
+    'images_reuse_filename': True,
+    'paste_data_images': True,
+    'content_style': 'body { font-family: Arial, sans-serif; font-size: 14px; }',
+    'setup': '''
+        function (editor) {
+            editor.on('change', function () {
+                editor.save();
+            });
+        }
+    ''',
+})
+
+# Session Configuration
+SESSION_COOKIE_AGE = 3600 * 24 * 7  # 1 week
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Media Upload Security
+ALLOWED_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp']
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB

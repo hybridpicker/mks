@@ -484,10 +484,25 @@ def user_profile(request):
     
     user = request.user
     
+    # Ensure user has all necessary attributes
+    backup_codes_count = 0
+    try:
+        if hasattr(user, 'backup_codes') and user.backup_codes:
+            backup_codes_count = len(user.backup_codes)
+    except:
+        pass
+    
+    # Check 2FA status safely
+    is_2fa_enabled = False
+    try:
+        is_2fa_enabled = getattr(user, 'is_2fa_enabled', False)
+    except:
+        pass
+    
     context = {
         'user': user,
-        'is_2fa_enabled': user.is_2fa_enabled,
-        'backup_codes_count': len(user.backup_codes) if user.backup_codes else 0,
+        'is_2fa_enabled': is_2fa_enabled,
+        'backup_codes_count': backup_codes_count,
         'show_2fa_info': True,  # Show 2FA as optional feature
     }
     
@@ -501,12 +516,31 @@ def user_security_settings(request):
     
     user = request.user
     
+    # Ensure user has all necessary attributes
+    backup_codes_count = 0
+    try:
+        if hasattr(user, 'backup_codes') and user.backup_codes:
+            backup_codes_count = len(user.backup_codes)
+    except:
+        pass
+    
+    # Check 2FA status safely
+    is_2fa_enabled = False
+    try:
+        is_2fa_enabled = getattr(user, 'is_2fa_enabled', False)
+    except:
+        pass
+    
     context = {
         'user': user,
-        'is_2fa_enabled': user.is_2fa_enabled,
-        'backup_codes_count': len(user.backup_codes) if user.backup_codes else 0,
-        'show_2fa_benefits': not user.is_2fa_enabled,  # Show benefits if not enabled
+        'is_2fa_enabled': is_2fa_enabled,
+        'backup_codes_count': backup_codes_count,
+        'show_2fa_benefits': not is_2fa_enabled,  # Show benefits if not enabled
         'optional_feature': True,  # Mark as optional, not required
     }
     
-    return render(request, 'users/security_settings.html', context)
+    # Use team_security template for team security URL
+    if request.path.startswith('/team/security/'):
+        return render(request, 'users/team_security.html', context)
+    else:
+        return render(request, 'users/security_settings.html', context)
