@@ -67,6 +67,8 @@ jobs:
           name: Setup Django environment
           command: |
             . venv/bin/activate
+            # Create logs directory
+            mkdir -p logs
             # Create a basic local_settings.py for testing if it doesn't exist
             if [ ! -f local_settings.py ]; then
               cat > local_settings.py << EOF

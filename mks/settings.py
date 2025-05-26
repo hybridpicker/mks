@@ -281,46 +281,93 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 1000  # For formsets with many fields
 
+# Ensure logs directory exists
+LOGS_DIR = os.path.join(BASE_DIR, 'logs')
+try:
+    if not os.path.exists(LOGS_DIR):
+        os.makedirs(LOGS_DIR, exist_ok=True)
+    # Test if we can write to the logs directory
+    test_file = os.path.join(LOGS_DIR, 'test.log')
+    with open(test_file, 'w') as f:
+        f.write('test')
+    os.remove(test_file)
+    LOGGING_ENABLED = True
+except (OSError, PermissionError):
+    # If we can't create/write to logs directory, disable file logging
+    LOGGING_ENABLED = False
+
 # Logging Configuration
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
+if LOGGING_ENABLED:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+                'style': '{',
+            },
+            'simple': {
+                'format': '{levelname} {message}',
+                'style': '{',
+            },
         },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
+        'handlers': {
+            'file': {
+                'level': 'ERROR',
+                'class': 'logging.FileHandler',
+                'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
+                'formatter': 'verbose',
+            },
+            'console': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'simple',
+            },
         },
-    },
-    'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
-            'formatter': 'verbose',
+        'loggers': {
+            'blog': {
+                'handlers': ['file', 'console'],
+                'level': 'INFO',
+                'propagate': True,
+            },
+            'django': {
+                'handlers': ['file'],
+                'level': 'ERROR',
+                'propagate': True,
+            },
         },
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+    }
+else:
+    # Fallback logging configuration without file handler
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'simple': {
+                'format': '{levelname} {message}',
+                'style': '{',
+            },
         },
-    },
-    'loggers': {
-        'blog': {
-            'handlers': ['file', 'console'],
-            'level': 'INFO',
-            'propagate': True,
+        'handlers': {
+            'console': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'simple',
+            },
         },
-        'django': {
-            'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
+        'loggers': {
+            'blog': {
+                'handlers': ['console'],
+                'level': 'INFO',
+                'propagate': True,
+            },
+            'django': {
+                'handlers': ['console'],
+                'level': 'ERROR',
+                'propagate': True,
+            },
         },
-    },
-}
+    }
 
 # Enhanced TinyMCE Configuration
 TINYMCE_DEFAULT_CONFIG.update({
