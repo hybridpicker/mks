@@ -1,208 +1,357 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
-{% block title %}{% trans "Mein Profil" %}{% endblock %}
+{% block title %}{% trans "Benutzerprofil" %} - Musik- und Kunstschule St. Pölten{% endblock %}
+
+{% block head_extra %}
+<style>
+/* Security Settings Styles - Shared with Profile */
+.security-settings-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
+
+.security-settings-header .page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+}
+
+.security-settings-header .breadcrumb {
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+}
+
+.security-settings-header .breadcrumb a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+}
+
+.security-settings-header .breadcrumb a:hover {
+    color: white;
+}
+
+.security-settings-header .breadcrumb-item.active {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.security-settings-content {
+    padding: 2rem 0;
+}
+
+/* Security Cards */
+.security-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+}
+
+.security-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.security-card-header {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+}
+
+.security-card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #e3f2fd;
+    color: #1976d2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.security-card-icon.enabled {
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+
+.security-card-title h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #212529;
+}
+
+.security-card-title p {
+    margin: 0.25rem 0 0 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.security-card-body {
+    padding: 1.5rem;
+}
+
+/* Quick Action Links */
+.quick-action-link {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #495057;
+    transition: all 0.3s ease;
+    gap: 1rem;
+    border: 1px solid #e9ecef;
+}
+
+.quick-action-link:hover {
+    background: #e9ecef;
+    color: #495057;
+    text-decoration: none;
+    transform: translateX(5px);
+}
+
+.quick-action-link i:first-child {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+.quick-action-link span {
+    flex: 1;
+    font-weight: 500;
+}
+
+.quick-action-link i:last-child {
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.8rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.25rem;
+}
+
+.badge-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.badge-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Utility Classes */
+.me-1 { margin-right: 0.25rem; }
+.me-2 { margin-right: 0.5rem; }
+.me-3 { margin-right: 1rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.d-flex { display: flex; }
+.align-items-center { align-items: center; }
+.gap-2 { gap: 0.5rem; }
+.flex-wrap { flex-wrap: wrap; }
+.text-success { color: #28a745; }
+.text-muted { color: #6c757d; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .security-settings-header .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .security-card-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .security-card-icon {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+}
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <div class="card-header">
-                    <h4><i class="fas fa-user"></i> {% trans "Mein Profil" %}</h4>
-                </div>
-                <div class="card-body">
-                    
-                    <!-- User Information -->
-                    <div class="profile-section mb-4">
-                        <h5><i class="fas fa-id-card"></i> {% trans "Persönliche Informationen" %}</h5>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label><strong>{% trans "Benutzername:" %}</strong></label>
-                                    <p class="form-control-static">{{ user.username }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label><strong>{% trans "E-Mail:" %}</strong></label>
-                                    <p class="form-control-static">{{ user.email }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label><strong>{% trans "Vorname:" %}</strong></label>
-                                    <p class="form-control-static">{{ user.first_name|default:"—" }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label><strong>{% trans "Nachname:" %}</strong></label>
-                                    <p class="form-control-static">{{ user.last_name|default:"—" }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label><strong>{% trans "Registriert seit:" %}</strong></label>
-                                    <p class="form-control-static">{{ user.date_joined|date:"d.m.Y" }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label><strong>{% trans "Letzter Login:" %}</strong></label>
-                                    <p class="form-control-static">{{ user.last_login|date:"d.m.Y H:i"|default:"—" }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <a href="/admin/users/customuser/{{ user.id }}/change/" class="btn btn-primary">
-                            <i class="fas fa-edit"></i> {% trans "Profil bearbeiten" %}
-                        </a>
-                    </div>
 
-                    <hr>
-
-                    <!-- User Permissions -->
-                    <div class="profile-section mb-4">
-                        <h5><i class="fas fa-shield-alt"></i> {% trans "Berechtigungen" %}</h5>
-                        
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="permission-badges">
-                                    {% if user.is_superuser %}
-                                        <span class="badge badge-danger badge-lg">
-                                            <i class="fas fa-crown"></i> {% trans "Administrator" %}
-                                        </span>
-                                    {% elif user.is_staff %}
-                                        <span class="badge badge-warning badge-lg">
-                                            <i class="fas fa-user-tie"></i> {% trans "Staff" %}
-                                        </span>
-                                    {% elif user.coordinator %}
-                                        <span class="badge badge-info badge-lg">
-                                            <i class="fas fa-users"></i> {% trans "Koordinator" %}
-                                        </span>
-                                    {% else %}
-                                        <span class="badge badge-secondary badge-lg">
-                                            <i class="fas fa-user"></i> {% trans "Benutzer" %}
-                                        </span>
-                                    {% endif %}
-                                    
-                                    {% if user.is_active %}
-                                        <span class="badge badge-success badge-lg">
-                                            <i class="fas fa-check-circle"></i> {% trans "Aktiv" %}
-                                        </span>
-                                    {% else %}
-                                        <span class="badge badge-secondary badge-lg">
-                                            <i class="fas fa-pause-circle"></i> {% trans "Inaktiv" %}
-                                        </span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <!-- Security Section -->
-                    <div class="profile-section">
-                        <h5><i class="fas fa-lock"></i> {% trans "Sicherheit" %}</h5>
-                        
-                        <div class="security-status mb-3">
-                            {% if show_2fa_info %}
-                                {% if user.is_2fa_enabled %}
-                                    <div class="alert alert-success" role="alert">
-                                        <i class="fas fa-shield-alt"></i> 
-                                        {% trans "Zwei-Faktor-Authentifizierung ist aktiviert" %}
-                                    </div>
-                                {% else %}
-                                    <div class="alert alert-info" role="alert">
-                                        <i class="fas fa-info-circle"></i> 
-                                        {% trans "Zwei-Faktor-Authentifizierung ist optional verfügbar" %}
-                                    </div>
-                                {% endif %}
-                            {% endif %}
-                        </div>
-                        
-                        <div class="btn-group" role="group">
-                            <a href="{% url 'users:change_password' %}" class="btn btn-outline-primary">
-                                <i class="fas fa-key"></i> {% trans "Passwort ändern" %}
-                            </a>
-                            <a href="{% url 'users:security_settings' %}" class="btn btn-outline-info">
-                                <i class="fas fa-cog"></i> {% trans "Sicherheitseinstellungen" %}
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="card-footer text-muted">
-                    <small>
-                        <i class="fas fa-info-circle"></i> 
-                        {% trans "Bei Fragen zu Ihrem Profil wenden Sie sich an einen Administrator." %}
-                    </small>
+<!-- Header Section -->
+<div class="security-settings-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-header">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'users:user_home' %}">Team</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Profil</li>
+                        </ol>
+                    </nav>
+                    <h1>
+                        <i class="fas fa-user me-3"></i>
+                        {% trans "Benutzerprofil" %}
+                    </h1>
+                    <p class="lead">{% trans "Verwalten Sie Ihre Kontoinformationen" %}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-.profile-section {
-    padding: 1rem 0;
-}
+<!-- Main Content -->
+<div class="security-settings-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                
+                <!-- User Info Section -->
+                <div class="security-card mb-4">
+                    <div class="security-card-header">
+                        <div class="security-card-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="security-card-title">
+                            <h3>{% trans "Benutzerinformationen" %}</h3>
+                            <p>{% trans "Ihre grundlegenden Kontodaten" %}</p>
+                        </div>
+                    </div>
+                    <div class="security-card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <strong>{% trans "Benutzername:" %}</strong><br>
+                                <span class="text-muted">{{ user.username }}</span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>{% trans "E-Mail:" %}</strong><br>
+                                <span class="text-muted">{{ user.email }}</span>
+                            </div>
+                            {% if user.first_name or user.last_name %}
+                            <div class="col-md-6 mb-3">
+                                <strong>{% trans "Name:" %}</strong><br>
+                                <span class="text-muted">{{ user.first_name }} {{ user.last_name }}</span>
+                            </div>
+                            {% endif %}
+                            <div class="col-md-6 mb-3">
+                                <strong>{% trans "Mitglied seit:" %}</strong><br>
+                                <span class="text-muted">{{ user.date_joined|date:"d.m.Y" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-.form-control-static {
-    padding: 0.375rem 0;
-    margin-bottom: 0;
-    font-weight: 500;
-    color: #495057;
-}
+                <!-- Security Section -->
+                <div class="security-card mb-4">
+                    <div class="security-card-header">
+                        <div class="security-card-icon {% if is_2fa_enabled %}enabled{% endif %}">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="security-card-title">
+                            <h3>{% trans "Kontosicherheit" %}</h3>
+                            <p>
+                                {% if is_2fa_enabled %}
+                                    <span class="badge badge-success">
+                                        <i class="fas fa-check-circle me-1"></i>
+                                        {% trans "2FA aktiviert" %}
+                                    </span>
+                                {% else %}
+                                    <span class="badge badge-secondary">
+                                        <i class="fas fa-exclamation-triangle me-1"></i>
+                                        {% trans "Basis-Schutz" %}
+                                    </span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="security-card-body">
+                        {% if is_2fa_enabled %}
+                            <p class="text-success mb-3">
+                                <i class="fas fa-shield-check me-2"></i>
+                                {% trans "Ihr Konto ist durch 2FA geschützt" %}
+                            </p>
+                        {% else %}
+                            <p class="text-muted mb-3">
+                                {% trans "Erhöhen Sie die Sicherheit Ihres Kontos mit der Zwei-Faktor-Authentifizierung." %}
+                            </p>
+                        {% endif %}
+                        
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="{% url 'users:security_settings' %}" class="btn btn-primary">
+                                <i class="fas fa-shield-alt me-2"></i>
+                                {% trans "Sicherheitseinstellungen" %}
+                            </a>
+                            <a href="{% url 'users:change_password' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-key me-2"></i>
+                                {% trans "Passwort ändern" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-.permission-badges .badge {
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-}
+                <!-- Quick Actions -->
+                <div class="security-card">
+                    <div class="security-card-header">
+                        <div class="security-card-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="security-card-title">
+                            <h3>{% trans "Schnellzugriff" %}</h3>
+                            <p>{% trans "Häufig verwendete Funktionen" %}</p>
+                        </div>
+                    </div>
+                    <div class="security-card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <a href="{% url 'show_blogs_editing' %}" class="quick-action-link">
+                                    <i class="fas fa-edit text-warning"></i>
+                                    <span>{% trans "Blog verwalten" %}</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <a href="{% url 'gallery_admin' %}" class="quick-action-link">
+                                    <i class="fas fa-images text-success"></i>
+                                    <span>{% trans "Galerie verwalten" %}</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <a href="{% url 'controlling:get_controlling_students' %}" class="quick-action-link">
+                                    <i class="fas fa-users text-info"></i>
+                                    <span>{% trans "Schüler verwalten" %}</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <a href="{% url 'users:event_managing_view' %}" class="quick-action-link">
+                                    <i class="fas fa-calendar text-danger"></i>
+                                    <span>{% trans "Veranstaltungen" %}</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-.badge-lg {
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-}
+            </div>
+        </div>
+    </div>
+</div>
 
-.security-status .alert {
-    border-left: 4px solid;
-    margin-bottom: 1rem;
-}
-
-.alert-success {
-    border-left-color: #28a745;
-}
-
-.alert-info {
-    border-left-color: #17a2b8;
-}
-
-.btn-group .btn {
-    margin-right: 0.5rem;
-}
-
-@media (max-width: 768px) {
-    .btn-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
-    .btn-group .btn {
-        margin-right: 0;
-    }
-}
-</style>
 {% endblock %}

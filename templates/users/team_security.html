@@ -1,0 +1,630 @@
+{% extends "templates/base.html" %}
+{% load static %}
+
+{% block tab_id %}id="team_security_tab"{% endblock %}
+
+{% block extra_head %}
+<meta name="robots" content="noindex">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+/* Hide banner container completely for team security page */
+.bs {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  visibility: hidden !important;
+}
+
+.team-container {
+  padding: 1.6rem 0;
+  margin-top: 6rem;
+}
+
+.team-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.team-header h1 {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 2.4rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.team-header p {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1.4rem;
+  color: #666;
+  text-align: center;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.team-nav {
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.team-nav a {
+  color: #D11317;
+  text-decoration: none;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.team-nav a:hover, .team-nav a.active {
+  background: #D11317;
+  color: white;
+  text-decoration: none;
+}
+
+.security-section {
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.security-card {
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  padding: 1.6rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.security-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+.security-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.security-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #D11317;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  margin-right: 1.5rem;
+  flex-shrink: 0;
+}
+
+.security-icon.enabled {
+  background: #28a745;
+}
+
+.security-icon.warning {
+  background: #ffc107;
+  color: #333;
+}
+
+.security-title h3 {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+}
+
+.security-title p {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  color: #666;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  margin-top: 0.5rem;
+}
+
+.status-badge.success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.secondary {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.security-content {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.benefit-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.benefit-list li {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  color: #666;
+}
+
+.benefit-list li i {
+  color: #28a745;
+  margin-right: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.security-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.security-btn {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  background: #D11317;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.security-btn:hover {
+  background: #b10e13;
+  text-decoration: none;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.security-btn.btn-outline {
+  background: transparent;
+  color: #D11317;
+  border: 2px solid #D11317;
+}
+
+.security-btn.btn-outline:hover {
+  background: #D11317;
+  color: white;
+}
+
+.security-btn.btn-success {
+  background: #28a745;
+}
+
+.security-btn.btn-success:hover {
+  background: #218838;
+}
+
+.security-btn.btn-warning {
+  background: #ffc107;
+  color: #333;
+}
+
+.security-btn.btn-warning:hover {
+  background: #e0a800;
+  color: #333;
+}
+
+.security-btn.btn-danger {
+  background: #dc3545;
+}
+
+.security-btn.btn-danger:hover {
+  background: #c82333;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.info-box {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.info-box i {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.info-box h6 {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.info-box p {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  color: #666;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.alert-custom {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.alert-custom.success {
+  background: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+.alert-custom.info {
+  background: #d1ecf1;
+  border-color: #bee5eb;
+  color: #0c5460;
+}
+
+.alert-custom i {
+  font-size: 2rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.alert-content h5 {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.alert-content p {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  margin: 0;
+}
+
+.help-section {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 3rem;
+}
+
+.help-section h5 {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.help-section p {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+}
+
+.contact-item i {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  color: #D11317;
+}
+
+.contact-item strong {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  color: #333;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.contact-item a {
+  font-family: "jaf-bernina-sans-condensed", sans-serif;
+  color: #D11317;
+  text-decoration: none;
+}
+
+.contact-item a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .team-header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .security-card-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .security-icon {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .security-actions {
+    flex-direction: column;
+  }
+  
+  .team-nav a {
+    display: block;
+    margin: 0.5rem 0;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container team-container">
+    
+    <div class="team-nav">
+      <a href="/team/">Dashboard</a>
+      <a href="/team/team/">Team</a>
+      <a href="/team/events">Events</a>
+      <a href="/team/security/" class="active">Sicherheit</a>
+      <a href="/controlling/">Controlling</a>
+      <a href="/team/logout/">Abmelden</a>
+    </div>
+
+    <div class="team-header">
+      <h1><i class="fas fa-shield-alt" style="margin-right: 1rem; color: #D11317;"></i>Sicherheitseinstellungen</h1>
+      <p>Verwalten Sie die Sicherheit Ihres Kontos und schützen Sie Ihre Daten.</p>
+    </div>
+
+    <!-- Password Security Card -->
+    <div class="security-card">
+      <div class="security-card-header">
+        <div class="security-icon">
+          <i class="fas fa-key"></i>
+        </div>
+        <div class="security-title">
+          <h3>Passwort-Sicherheit</h3>
+          <p>Ihr Passwort schützt den Zugang zu Ihrem Konto</p>
+        </div>
+      </div>
+      
+      <div class="security-content">
+        <p>Ein starkes Passwort ist der erste Schutz für Ihr Konto. Ändern Sie Ihr Passwort regelmäßig und verwenden Sie mindestens 8 Zeichen mit einer Kombination aus Buchstaben, Zahlen und Sonderzeichen.</p>
+      </div>
+      
+      <div class="security-actions">
+        <a href="/team/password/change" class="security-btn">
+          <i class="fas fa-edit" style="margin-right: 0.5rem;"></i>
+          Passwort ändern
+        </a>
+      </div>
+    </div>
+
+    <!-- Two-Factor Authentication Card -->
+    <div class="security-card">
+      <div class="security-card-header">
+        <div class="security-icon {% if is_2fa_enabled %}enabled{% else %}warning{% endif %}">
+          <i class="fas fa-mobile-alt"></i>
+        </div>
+        <div class="security-title">
+          <h3>Zwei-Faktor-Authentifizierung (2FA)</h3>
+          <p>Zusätzlicher Schutz für Ihr Konto</p>
+          <div class="status-badge {% if is_2fa_enabled %}success{% else %}secondary{% endif %}">
+            <i class="fas {% if is_2fa_enabled %}fa-check-circle{% else %}fa-times-circle{% endif %}" style="margin-right: 0.5rem;"></i>
+            {% if is_2fa_enabled %}Aktiviert{% else %}Nicht aktiviert{% endif %}
+          </div>
+        </div>
+      </div>
+      
+      {% if is_2fa_enabled %}
+        <!-- 2FA Enabled State -->
+        <div class="alert-custom success">
+          <i class="fas fa-shield-check"></i>
+          <div class="alert-content">
+            <h5>Ihr Konto ist geschützt!</h5>
+            <p>2FA ist aktiv und bietet zusätzlichen Schutz für Ihr Konto.</p>
+          </div>
+        </div>
+        
+        <div class="info-grid">
+          <div class="info-box">
+            <i class="fas fa-key" style="color: #D11317;"></i>
+            <h6>Backup-Codes</h6>
+            <p>{{ backup_codes_count }} Codes verfügbar</p>
+          </div>
+          <div class="info-box">
+            <i class="fas fa-mobile-alt" style="color: #28a745;"></i>
+            <h6>Authenticator-App</h6>
+            <p>Verbunden</p>
+          </div>
+        </div>
+        
+        <div class="security-actions">
+          <a href="/team/2fa/settings/" class="security-btn btn-outline">
+            <i class="fas fa-cog" style="margin-right: 0.5rem;"></i>
+            2FA verwalten
+          </a>
+          <a href="/team/2fa/backup-codes/regenerate/" class="security-btn btn-warning">
+            <i class="fas fa-sync-alt" style="margin-right: 0.5rem;"></i>
+            Neue Backup-Codes
+          </a>
+          <a href="/team/2fa/disable/" class="security-btn btn-danger" onclick="return confirm('Sind Sie sicher, dass Sie 2FA deaktivieren möchten?')">
+            <i class="fas fa-times" style="margin-right: 0.5rem;"></i>
+            2FA deaktivieren
+          </a>
+        </div>
+        
+      {% else %}
+        <!-- 2FA Disabled State -->
+        <div class="alert-custom info">
+          <i class="fas fa-info-circle"></i>
+          <div class="alert-content">
+            <h5>2FA ist optional</h5>
+            <p>Erhöhen Sie die Sicherheit Ihres Kontos mit der Zwei-Faktor-Authentifizierung.</p>
+          </div>
+        </div>
+        
+        <div class="security-content">
+          <h6 style="font-family: 'jaf-bernina-sans-condensed', sans-serif; font-weight: 600; margin-bottom: 1rem;">Vorteile von 2FA:</h6>
+          <ul class="benefit-list">
+            <li><i class="fas fa-check"></i>Schutz vor Passwort-Diebstahl</li>
+            <li><i class="fas fa-check"></i>Zusätzliche Sicherheitsebene</li>
+            <li><i class="fas fa-check"></i>Kompatibel mit allen Authenticator-Apps</li>
+            <li><i class="fas fa-check"></i>Backup-Codes für Notfälle</li>
+          </ul>
+        </div>
+        
+        <div class="security-actions">
+          <a href="/team/2fa/setup/" class="security-btn btn-success">
+            <i class="fas fa-plus" style="margin-right: 0.5rem;"></i>
+            2FA jetzt aktivieren
+            <small style="display: block; margin-top: 0.25rem; opacity: 0.8;">(optional)</small>
+          </a>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Account Information Card -->
+    <div class="security-card">
+      <div class="security-card-header">
+        <div class="security-icon" style="background: #17a2b8;">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="security-title">
+          <h3>Konto-Informationen</h3>
+          <p>Übersicht über Ihr Benutzerkonto</p>
+        </div>
+      </div>
+      
+      <div class="info-grid">
+        <div class="info-box">
+          <i class="fas fa-user" style="color: #17a2b8;"></i>
+          <h6>Benutzername</h6>
+          <p>{{ user.username }}</p>
+        </div>
+        <div class="info-box">
+          <i class="fas fa-envelope" style="color: #17a2b8;"></i>
+          <h6>E-Mail</h6>
+          <p>{{ user.email|default:"Nicht angegeben" }}</p>
+        </div>
+        <div class="info-box">
+          <i class="fas fa-calendar-alt" style="color: #17a2b8;"></i>
+          <h6>Mitglied seit</h6>
+          <p>{{ user.date_joined|date:"d.m.Y" }}</p>
+        </div>
+        <div class="info-box">
+          <i class="fas fa-clock" style="color: #17a2b8;"></i>
+          <h6>Letzte Anmeldung</h6>
+          <p>{{ user.last_login|date:"d.m.Y H:i"|default:"Nie" }}</p>
+        </div>
+      </div>
+      
+      <div class="security-actions">
+        <a href="/team/profile/" class="security-btn btn-outline">
+          <i class="fas fa-edit" style="margin-right: 0.5rem;"></i>
+          Profil bearbeiten
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Add smooth animations for card hovers
+  const cards = document.querySelectorAll('.security-card');
+  
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-2px)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0)';
+    });
+  });
+  
+  // Add confirmation for dangerous actions
+  const dangerButtons = document.querySelectorAll('.btn-danger');
+  dangerButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      if (!confirm('Sind Sie sicher? Diese Aktion kann nicht rückgängig gemacht werden.')) {
+        e.preventDefault();
+      }
+    });
+  });
+});
+</script>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
