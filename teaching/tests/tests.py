@@ -43,8 +43,7 @@ class TeacherMetaTest(TestCase):
         teacher = Teacher.objects.create(gender_id=gender, academic_title_id=academic,
                                          first_name=first_name, last_name=last_name,
                                          user_id=user, image=image, email=email,
-                                         phone=phone, socialSecurityField=socialSecurityField,
-                                         iban=iban, bic=bic, adress_line=adress_line,
+                                         phone=phone, adress_line=adress_line,
                                          house_number=house_number, postal_code=postal_code,
                                          city=city, country_id=country,
                                          location_id=location)
@@ -70,8 +69,7 @@ class RequestTeacherIdTest(TestCase):
         return Teacher.objects.create(id=4, gender_id=gender, academic_title_id=academic,
                                       first_name=first_name, last_name=last_name,
                                       user_id=user, image=image, email=email,
-                                      phone=phone, socialSecurityField=socialSecurityField,
-                                      iban=iban, bic=bic, adress_line=adress_line,
+                                      phone=phone, adress_line=adress_line,
                                       house_number=house_number, postal_code=postal_code,
                                       city=city, country_id=country,
                                       location_id=location).user

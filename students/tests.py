@@ -77,8 +77,6 @@ class TeacherModelTest(TestCase):
             adress_line="Mariahilfer Straße",
             house_number="10",
             postal_code="1070",
-            bic="BKAUATWWXXX",  # Valider österreichischer BIC
-            iban="AT611904300234573201",  # Valide österreichische IBAN
             city="Vienna",
         )
 
@@ -87,49 +85,7 @@ class TeacherModelTest(TestCase):
         teacher = Teacher.objects.get(id=self.teacher.id)
         self.assertEqual(teacher.first_name, "Anna")
         self.assertEqual(teacher.last_name, "Schmidt")
-        self.assertEqual(teacher.bic, "BKAUATWWXXX")
-        self.assertEqual(teacher.iban, "AT611904300234573201")
         self.assertEqual(str(teacher), "Anna Schmidt")
-
-    def test_invalid_bic(self):
-        """Test that invalid BIC raises a validation error."""
-        teacher = Teacher(
-            gender=self.gender,
-            country=self.country,
-            location=self.location,
-            first_name="Invalid",
-            last_name="BIC",
-            email="invalid@example.com",
-            phone="+43123456789",
-            adress_line="Invalid Street",
-            house_number="1",
-            postal_code="1070",
-            bic="INVALID",  # Ungültiger BIC
-            iban="AT611904300234573201",
-            city="Vienna",
-        )
-        with self.assertRaises(ValidationError):
-            teacher.full_clean()  # Validierung explizit auslösen
-
-    def test_invalid_iban(self):
-        """Test that invalid IBAN raises a validation error."""
-        teacher = Teacher(
-            gender=self.gender,
-            country=self.country,
-            location=self.location,
-            first_name="Invalid",
-            last_name="IBAN",
-            email="invalid@example.com",
-            phone="+43123456789",
-            adress_line="Invalid Street",
-            house_number="1",
-            postal_code="1070",
-            bic="BKAUATWWXXX",
-            iban="INVALIDIBAN",  # Ungültiger IBAN
-            city="Vienna",
-        )
-        with self.assertRaises(ValidationError):
-            teacher.full_clean()  # Validierung explizit auslösen
 
 class StudentModelTest(TestCase):
     """Tests for the Student model."""
