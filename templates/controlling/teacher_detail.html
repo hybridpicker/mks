@@ -13,232 +13,241 @@
     <link href="https://use.typekit.net/nvs2bby.css" rel="stylesheet">
     
     <style>
-        /* Complete Reset */
+        /* Modern Reset & Base */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
         
-        /* Document Base */
         .mks-html, .mks-body {
             height: 100%;
-            font-family: 'jaf-bernina-sans-condensed', Arial, sans-serif;
-            font-weight: 300;
-            background-color: #fdfdfd;
-            color: #333;
+            font-family: 'jaf-bernina-sans-condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: #1e293b;
             line-height: 1.6;
-        }
-        
-        .mks-body {
-            padding: 0;
-            margin: 0;
         }
         
         /* Container */
         .mks-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1rem;
         }
         
-        /* Header */
-        .mks-header {
-            background: #D11317;
-            color: #FDFDFD;
-            padding: 3rem 2rem;
-            margin: -2rem -2rem 2rem -2rem;
-            text-align: center;
+        /* Header with Hero Design */
+        .mks-hero {
+            background: linear-gradient(135deg, #D11317 0%, #991015 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             position: relative;
+            overflow: hidden;
         }
         
-        .mks-header::before {
+        .mks-hero::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
             right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, transparent 50%);
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
         }
         
-        .mks-header-content {
+        .mks-hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
         
-        .mks-title {
-            font-family: "jaf-bernina-sans-condensed", sans-serif;
+        .mks-hero-title {
             font-size: 2.5rem;
-            font-weight: 600;
-            margin: 0 0 1rem 0;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
         }
         
-        .mks-subtitle {
-            font-size: 1.125rem;
+        .mks-hero-subtitle {
+            font-size: 1.25rem;
             opacity: 0.9;
             margin-bottom: 2rem;
-        }
-        
-        .mks-header-actions {
             display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        /* Buttons */
-        .mks-btn {
-            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.875rem 2rem;
-            border: 2px solid;
-            border-radius: 0;
-            text-decoration: none;
-            font-family: "jaf-bernina-sans-condensed", sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            cursor: pointer;
         }
         
-        .mks-btn-primary {
-            background: #FDFDFD;
-            color: #D11317;
-            border-color: #FDFDFD;
-        }
-        
-        .mks-btn-primary:hover {
-            background: transparent;
-            color: #FDFDFD;
-            border-color: #FDFDFD;
-        }
-        
-        .mks-btn-secondary {
-            background: transparent;
-            color: #FDFDFD;
-            border-color: rgba(253, 253, 253, 0.5);
-        }
-        
-        .mks-btn-secondary:hover {
-            background: rgba(253, 253, 253, 0.1);
-            border-color: #FDFDFD;
-        }
-        
-        /* Content Layout */
-        .mks-content {
-            background: #FDFDFD;
-        }
-        
-        .mks-teacher-hero {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: #fff;
-            border: 1px solid #eee;
-        }
-        
-        .mks-teacher-image {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #D11317;
-            box-shadow: 0 4px 15px rgba(209, 19, 23, 0.3);
-        }
-        
-        .mks-teacher-image-placeholder {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-            border: 4px solid #D11317;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: #999;
-        }
-        
-        .mks-teacher-intro {
-            flex: 1;
-        }
-        
-        .mks-teacher-name {
-            font-family: "jaf-bernina-sans-condensed", sans-serif;
-            font-size: 2rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-        
-        .mks-teacher-role {
-            font-size: 1.125rem;
-            color: #D11317;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-        
-        .mks-contact-quick {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .mks-contact-item {
+        .mks-status-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: #f8f8f8;
-            border: 1px solid #eee;
-            color: #333;
-            text-decoration: none;
+            border-radius: 50px;
             font-size: 0.875rem;
-            transition: all 0.3s ease;
-        }
-        
-        .mks-contact-item:hover {
-            background: #D11317;
-            color: #FDFDFD;
-            border-color: #D11317;
-        }
-        
-        /* Info Grid */
-        .mks-info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .mks-info-card {
-            background: #fff;
-            border: 1px solid #eee;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .mks-info-card:hover {
-            border-color: #D11317;
-            box-shadow: 0 4px 15px rgba(209, 19, 23, 0.1);
-        }
-        
-        .mks-card-title {
-            font-family: "jaf-bernina-sans-condensed", sans-serif;
-            font-size: 1.5rem;
             font-weight: 600;
-            color: #333;
-            margin-bottom: 1.5rem;
+        }
+        
+        .mks-status-active {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .mks-status-inactive {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        
+        .mks-hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .mks-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        
+        .mks-btn-primary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .mks-btn-primary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        .mks-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .mks-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Content Grid */
+        .mks-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Profile Card */
+        .mks-profile-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+        
+        .mks-teacher-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            display: block;
+            border: 4px solid #f1f5f9;
+        }
+        
+        .mks-teacher-name {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mks-teacher-role {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+        
+        .mks-contact-list {
+            list-style: none;
+            space-y: 1rem;
+        }
+        
+        .mks-contact-item {
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            background: #f8fafc;
+            text-decoration: none;
+            color: #1e293b;
+            transition: all 0.2s;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mks-contact-item:hover {
+            background: #e2e8f0;
+            transform: translateX(4px);
+        }
+        
+        .mks-contact-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+        
+        /* Info Cards */
+        .mks-info-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .mks-info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.3s;
+        }
+        
+        .mks-info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mks-card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #f1f5f9;
         }
         
         .mks-card-icon {
@@ -246,302 +255,384 @@
             color: #D11317;
         }
         
-        .mks-card-content {
-            color: #333;
-            line-height: 1.7;
-        }
-        
         .mks-tag-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-        
-        .mks-tag {
-            background: #D11317;
-            color: #FDFDFD;
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            border: 1px solid #D11317;
-            transition: all 0.3s ease;
-        }
-        
-        .mks-tag:hover {
-            background: #FDFDFD;
-            color: #D11317;
-        }
-        
-        /* Bio Section */
-        .mks-bio-section {
-            background: #fff;
-            border: 1px solid #eee;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .mks-section-title {
-            font-family: "jaf-bernina-sans-condensed", sans-serif;
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
             gap: 0.75rem;
         }
         
-        .mks-section-icon {
-            font-size: 1.5rem;
-            color: #D11317;
+        .mks-tag {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #D11317, #991015);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(209, 19, 23, 0.2);
         }
         
-        .mks-bio-text {
-            color: #333;
-            line-height: 1.8;
+        .mks-tag.inactive {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            opacity: 0.7;
+        }
+        
+        .mks-bio {
+            color: #475569;
+            line-height: 1.7;
             font-size: 1rem;
-            white-space: pre-wrap;
         }
         
-        /* Navigation Integration */
-        .mks-breadcrumb {
-            background: #f8f8f8;
-            padding: 1rem 2rem;
-            margin: -2rem -2rem 2rem -2rem;
-            border-bottom: 1px solid #eee;
+        .mks-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f1f5f9;
         }
         
-        .mks-breadcrumb a {
+        .mks-info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .mks-info-label {
+            font-weight: 600;
+            color: #64748b;
+        }
+        
+        .mks-info-value {
+            color: #1e293b;
+            font-weight: 500;
+        }
+        
+        /* Stats Cards */
+        .mks-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .mks-stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        
+        .mks-stat-number {
+            font-size: 2rem;
+            font-weight: 700;
             color: #D11317;
-            text-decoration: none;
-            font-family: "jaf-bernina-sans-condensed", sans-serif;
+            margin-bottom: 0.5rem;
         }
         
-        .mks-breadcrumb a:hover {
-            text-decoration: underline;
+        .mks-stat-label {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        /* YouTube Videos */
+        .mks-video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .mks-video-frame {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Empty State */
+        .mks-empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #64748b;
+        }
+        
+        .mks-empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
-            .mks-container {
-                padding: 1rem;
+            .mks-content {
+                grid-template-columns: 1fr;
             }
             
-            .mks-header {
-                padding: 2rem 1rem;
-                margin: -1rem -1rem 2rem -1rem;
+            .mks-hero {
+                padding: 2rem 1.5rem;
             }
             
-            .mks-title {
+            .mks-hero-title {
                 font-size: 2rem;
             }
             
-            .mks-teacher-hero {
-                flex-direction: column;
-                text-align: center;
-                padding: 1.5rem;
-            }
-            
-            .mks-teacher-image,
-            .mks-teacher-image-placeholder {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .mks-info-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .mks-header-actions {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .mks-btn {
-                width: 100%;
-                max-width: 300px;
+            .mks-hero-actions {
                 justify-content: center;
+            }
+            
+            .mks-profile-card {
+                position: static;
             }
         }
     </style>
 </head>
 <body class="mks-body">
     <div class="mks-container">
-        <!-- Navigation -->
-        {% include 'templates/user_navbar.html' %}
-        
-        <!-- Breadcrumb -->
-        <div class="mks-breadcrumb">
-            <a href="{% url 'controlling:get_controlling_teachers' %}">← Zurück zur Lehrerübersicht</a>
-        
-        
-        <!-- Header -->
-        <div class="mks-header">
-            <div class="mks-header-content">
-                <h1 class="mks-title">
+        <!-- Hero Header -->
+        <div class="mks-hero">
+            <div class="mks-hero-content">
+                <h1 class="mks-hero-title">
                     {% if teacher.academic_title %}{{ teacher.academic_title }} {% endif %}
                     {{ teacher.first_name }} {{ teacher.last_name }}
                 </h1>
-                <p class="mks-subtitle">
-                    {% if teacher.subject_coordinator.all %}
-                        Fachbereichsleitung
+                <div class="mks-hero-subtitle">
+                    {% if teacher.subject_coordinator_active and teacher.subject_coordinator.all %}
+                        <span class="mks-status-badge mks-status-active">
+                            ✅ Fachbereichsleitung (Aktiv)
+                        </span>
+                    {% elif teacher.subject_coordinator.all %}
+                        <span class="mks-status-badge mks-status-inactive">
+                            ⏸️ Fachbereichsleitung (Inaktiv)
+                        </span>
                     {% else %}
                         Lehrkraft der Musikschule St. Pölten
                     {% endif %}
-                </p>
-                <div class="mks-header-actions">
+                </div>
+                
+                <div class="mks-hero-actions">
                     <a href="{% url 'controlling:teacher_quick_edit' teacher.id %}" class="mks-btn mks-btn-primary">
                         ✏️ Bearbeiten
                     </a>
-                    <a href="{% url 'controlling:get_controlling_teachers' %}" class="mks-btn mks-btn-secondary">
-                        ← Zurück
+                    <a href="{% url 'controlling:teacher_full_edit' teacher.id %}" class="mks-btn mks-btn-primary">
+                        🔧 Vollständig bearbeiten
                     </a>
-                
-            
+                    <a href="{% url 'controlling:get_controlling_teachers' %}" class="mks-btn mks-btn-secondary">
+                        ← Zurück zur Übersicht
+                    </a>
+                </div>
+            </div>
+        </div>
         
+        <!-- Stats Overview -->
+        <div class="mks-stats">
+            <div class="mks-stat-card">
+                <div class="mks-stat-number">{{ total_subjects }}</div>
+                <div class="mks-stat-label">Unterrichtsfächer</div>
+            </div>
+            <div class="mks-stat-card">
+                <div class="mks-stat-number">{{ coordinator_subjects.count }}</div>
+                <div class="mks-stat-label">Fachbereichsleitungen</div>
+            </div>
+            <div class="mks-stat-card">
+                <div class="mks-stat-number">
+                    {% if has_contact_info %}✅{% else %}❌{% endif %}
+                </div>
+                <div class="mks-stat-label">Kontaktdaten</div>
+            </div>
+            <div class="mks-stat-card">
+                <div class="mks-stat-number">
+                    {% if teacher.bio %}✅{% else %}❌{% endif %}
+                </div>
+                <div class="mks-stat-label">Biografie</div>
+            </div>
+        </div>
         
-        <!-- Content -->
+        <!-- Main Content -->
         <div class="mks-content">
-            <!-- Teacher Hero -->
-            <div class="mks-teacher-hero">
+            <!-- Profile Sidebar -->
+            <div class="mks-profile-card">
                 {% if teacher.image %}
                 <img src="{{ teacher.image.url }}" alt="{{ teacher.first_name }}" class="mks-teacher-image">
                 {% else %}
                 <img src="{% static 'teachers/teacher_image_default.svg' %}" alt="Platzhalter" class="mks-teacher-image">
-                
                 {% endif %}
                 
-                <div class="mks-teacher-intro">
-                    <h2 class="mks-teacher-name">
-                        {% if teacher.academic_title %}{{ teacher.academic_title }} {% endif %}
-                        {{ teacher.first_name }} {{ teacher.last_name }}
-                    </h2>
-                    <div class="mks-teacher-role">
-                        {% if teacher.subject_coordinator.all %}
-                            Fachbereichsleitung
-                        {% else %}
-                            Lehrkraft
-                        {% endif %}
-                    
-                    
-                    <div class="mks-contact-quick">
-                        {% if teacher.email %}
-                        <a href="mailto:{{ teacher.email }}" class="mks-contact-item">
-                            📧 {{ teacher.email }}
-                        </a>
-                        {% endif %}
-                        {% if teacher.phone %}
-                        <a href="tel:{{ teacher.phone }}" class="mks-contact-item">
-                            📞 {{ teacher.phone }}
-                        </a>
-                        {% endif %}
-                        {% if teacher.homepage %}
-                        <a href="{{ teacher.homepage }}" target="_blank" class="mks-contact-item">
-                            🌐 {{ teacher.homepage_adress }}
-                        </a>
-                        {% endif %}
-                    
+                <h2 class="mks-teacher-name">
+                    {% if teacher.academic_title %}{{ teacher.academic_title }} {% endif %}
+                    {{ teacher.first_name }} {{ teacher.last_name }}
+                </h2>
                 
+                <div class="mks-teacher-role">
+                    {% if teacher.subject_coordinator_active and teacher.subject_coordinator.all %}
+                        Fachbereichsleitung (Aktiv)
+                    {% elif teacher.subject_coordinator.all %}
+                        Fachbereichsleitung (Inaktiv)
+                    {% else %}
+                        Lehrkraft
+                    {% endif %}
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="mks-contact-list">
+                    {% if teacher.email %}
+                    <a href="mailto:{{ teacher.email }}" class="mks-contact-item">
+                        <span class="mks-contact-icon">📧</span>
+                        {{ teacher.email }}
+                    </a>
+                    {% endif %}
+                    
+                    {% if teacher.phone %}
+                    <a href="tel:{{ teacher.phone }}" class="mks-contact-item">
+                        <span class="mks-contact-icon">📞</span>
+                        {{ teacher.phone }}
+                    </a>
+                    {% endif %}
+                    
+                    {% if teacher.homepage %}
+                    <a href="{{ teacher.homepage }}" target="_blank" class="mks-contact-item">
+                        <span class="mks-contact-icon">🌐</span>
+                        {{ teacher.homepage_adress }}
+                    </a>
+                    {% endif %}
+                    
+                    {% if not has_contact_info %}
+                    <div class="mks-empty-state">
+                        <div class="mks-empty-icon">📋</div>
+                        <p>Keine Kontaktdaten verfügbar</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
             
-            
-            <!-- Info Grid -->
-            <div class="mks-info-grid">
-                {% if teacher.subject.all %}
+            <!-- Main Info Cards -->
+            <div class="mks-info-cards">
+                <!-- Teaching Subjects -->
+                {% if subjects %}
                 <div class="mks-info-card">
                     <h3 class="mks-card-title">
                         <span class="mks-card-icon">📚</span>
                         Unterrichtsfächer
                     </h3>
                     <div class="mks-tag-container">
-                        {% for subject in teacher.subject.all %}
+                        {% for subject in subjects %}
                         <span class="mks-tag">{{ subject.subject }}</span>
                         {% endfor %}
-                    
-                
+                    </div>
+                </div>
                 {% endif %}
                 
-                {% if teacher.subject_coordinator.all %}
+                <!-- Subject Coordination -->
+                {% if coordinator_subjects %}
                 <div class="mks-info-card">
                     <h3 class="mks-card-title">
                         <span class="mks-card-icon">👨‍💼</span>
                         Fachbereichsleitung
+                        {% if teacher.subject_coordinator_active %}
+                            <span style="color: #10b981; font-size: 0.8em;">(Aktiv)</span>
+                        {% else %}
+                            <span style="color: #f59e0b; font-size: 0.8em;">(Inaktiv)</span>
+                        {% endif %}
                     </h3>
                     <div class="mks-tag-container">
-                        {% for category in teacher.subject_coordinator.all %}
-                        <span class="mks-tag">{{ category.name }}</span>
+                        {% for category in coordinator_subjects %}
+                        <span class="mks-tag {% if not teacher.subject_coordinator_active %}inactive{% endif %}">
+                            {{ category.name }}
+                        </span>
                         {% endfor %}
-                    
-                
+                    </div>
+                </div>
                 {% endif %}
                 
-                {% if teacher.adress_line or teacher.city %}
+                <!-- Biography -->
+                {% if teacher.bio %}
                 <div class="mks-info-card">
                     <h3 class="mks-card-title">
-                        <span class="mks-card-icon">📍</span>
-                        Adresse
+                        <span class="mks-card-icon">📝</span>
+                        Biografie
                     </h3>
-                    <div class="mks-card-content">
-                        {{ teacher.adress_line }} {{ teacher.house_number }}<br>
-                        {{ teacher.postal_code }} {{ teacher.city }}
-                        {% if teacher.country %}<br>{{ teacher.country }}{% endif %}
-                    
-                
+                    <div class="mks-bio">{{ teacher.bio|linebreaks }}</div>
+                </div>
                 {% endif %}
                 
-                {% if teacher.iban or teacher.bic %}
+                <!-- Address Information -->
+                {% if has_address %}
+                <div class="mks-info-card">
+                    <h3 class="mks-card-title">
+                        <span class="mks-card-icon">🏠</span>
+                        Adresse
+                    </h3>
+                    <div class="mks-info-row">
+                        <span class="mks-info-label">Straße:</span>
+                        <span class="mks-info-value">{{ teacher.adress_line }} {{ teacher.house_number }}</span>
+                    </div>
+                    <div class="mks-info-row">
+                        <span class="mks-info-label">Ort:</span>
+                        <span class="mks-info-value">{{ teacher.postal_code }} {{ teacher.city }}</span>
+                    </div>
+                    {% if teacher.country %}
+                    <div class="mks-info-row">
+                        <span class="mks-info-label">Land:</span>
+                        <span class="mks-info-value">{{ teacher.country.country }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                <!-- Banking Information -->
+                {% if has_bank_info %}
                 <div class="mks-info-card">
                     <h3 class="mks-card-title">
                         <span class="mks-card-icon">💳</span>
                         Bankdaten
                     </h3>
-                    <div class="mks-card-content">
-                        {% if teacher.iban %}<strong>IBAN:</strong> {{ teacher.iban }}<br>{% endif %}
-                        {% if teacher.bic %}<strong>BIC:</strong> {{ teacher.bic }}{% endif %}
-                    
-                
+                    {% if teacher.iban %}
+                    <div class="mks-info-row">
+                        <span class="mks-info-label">IBAN:</span>
+                        <span class="mks-info-value">{{ teacher.iban }}</span>
+                    </div>
+                    {% endif %}
+                    {% if teacher.bic %}
+                    <div class="mks-info-row">
+                        <span class="mks-info-label">BIC:</span>
+                        <span class="mks-info-value">{{ teacher.bic }}</span>
+                    </div>
+                    {% endif %}
+                    {% if teacher.socialSecurityField %}
+                    <div class="mks-info-row">
+                        <span class="mks-info-label">SV-Nr:</span>
+                        <span class="mks-info-value">{{ teacher.socialSecurityField }}</span>
+                    </div>
+                    {% endif %}
+                </div>
                 {% endif %}
-            
-            
-            <!-- Bio Section -->
-            {% if teacher.bio %}
-            <div class="mks-bio-section">
-                <h3 class="mks-section-title">
-                    <span class="mks-section-icon">📝</span>
-                    Biografie
-                </h3>
-                <div class="mks-bio-text">{{ teacher.bio }}
-            
-            {% endif %}
-            
-            <!-- Videos Section -->
-            {% if teacher.youtube_id_one or teacher.youtube_id_two %}
-            <div class="mks-bio-section">
-                <h3 class="mks-section-title">
-                    <span class="mks-section-icon">🎥</span>
-                    Videos
-                </h3>
-                <div class="mks-card-content">
-                    {% if teacher.youtube_id_one %}
-                    <p style="margin-bottom: 1rem;">
-                        <strong>Video 1:</strong> 
-                        <a href="https://youtube.com/watch?v={{ teacher.youtube_id_one }}" target="_blank" style="color: #D11317;">
-                            {{ teacher.youtube_id_one }}
-                        </a>
-                    </p>
-                    {% endif %}
-                    {% if teacher.youtube_id_two %}
-                    <p>
-                        <strong>Video 2:</strong> 
-                        <a href="https://youtube.com/watch?v={{ teacher.youtube_id_two }}" target="_blank" style="color: #D11317;">
-                            {{ teacher.youtube_id_two }}
-                        </a>
-                    </p>
-                    {% endif %}
                 
-            
-            {% endif %}
-        
-    
+                <!-- YouTube Videos -->
+                {% if has_media %}
+                <div class="mks-info-card">
+                    <h3 class="mks-card-title">
+                        <span class="mks-card-icon">🎥</span>
+                        Videos
+                    </h3>
+                    <div class="mks-video-grid">
+                        {% if teacher.youtube_id_one %}
+                        <div class="mks-video-frame">
+                            <iframe width="100%" height="200" 
+                                    src="https://www.youtube.com/embed/{{ teacher.youtube_id_one }}" 
+                                    frameborder="0" 
+                                    allowfullscreen></iframe>
+                        </div>
+                        {% endif %}
+                        {% if teacher.youtube_id_two %}
+                        <div class="mks-video-frame">
+                            <iframe width="100%" height="200" 
+                                    src="https://www.youtube.com/embed/{{ teacher.youtube_id_two }}" 
+                                    frameborder="0" 
+                                    allowfullscreen></iframe>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </body>
 </html>

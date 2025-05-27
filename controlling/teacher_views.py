@@ -148,11 +148,15 @@ def teacher_create(request):
                     subjects = Subject.objects.filter(id__in=subject_ids)
                     teacher.subject.set(subjects)
                 
-                # Handle subject coordinators
-                coordinator_ids = request.POST.getlist('subject_coordinators')
-                if coordinator_ids:
-                    coordinators = SubjectCategory.objects.filter(id__in=coordinator_ids)
-                    teacher.subject_coordinator.set(coordinators)
+                # Handle subject coordinators - nur wenn aktiv
+                subject_coordinator_active = request.POST.get('subject_coordinator_active') == '1'
+                teacher.subject_coordinator_active = subject_coordinator_active
+                
+                if subject_coordinator_active:
+                    coordinator_ids = request.POST.getlist('subject_coordinators')
+                    if coordinator_ids:
+                        coordinators = SubjectCategory.objects.filter(id__in=coordinator_ids)
+                        teacher.subject_coordinator.set(coordinators)
                 
                 messages.success(
                     request, 
@@ -187,10 +191,10 @@ def get_teacher_detail(request, teacher_id):
         'subjects': teacher.subject.all(),
         'coordinator_subjects': teacher.subject_coordinator.all(),
         'total_subjects': teacher.subject.count(),
-        'is_coordinator': teacher.subject_coordinator.exists(),
+        'is_coordinator': teacher.subject_coordinator.exists() and teacher.subject_coordinator_active,
+        'is_coordinator_inactive': teacher.subject_coordinator.exists() and not teacher.subject_coordinator_active,
         'has_contact_info': bool(teacher.email or teacher.phone or teacher.homepage),
         'has_address': bool(teacher.adress_line or teacher.city),
-        'has_bank_info': bool(teacher.iban or teacher.bic),
         'has_media': bool(teacher.youtube_id_one or teacher.youtube_id_two),
     }
     
@@ -239,6 +243,21 @@ def teacher_quick_edit(request, teacher_id):
                 teacher.phone = phone if phone else ''
                 teacher.bio = bio if bio else ''
                 
+                # Handle subject coordinators - nur wenn aktiv
+                subject_coordinator_active = request.POST.get('subject_coordinator_active') == '1'
+                teacher.subject_coordinator_active = subject_coordinator_active
+                
+                if subject_coordinator_active:
+                    coordinator_ids = request.POST.getlist('subject_coordinators')
+                    if coordinator_ids:
+                        coordinators = SubjectCategory.objects.filter(id__in=coordinator_ids)
+                        teacher.subject_coordinator.set(coordinators)
+                    else:
+                        teacher.subject_coordinator.clear()
+                else:
+                    # Wenn inaktiv, alle Zuweisungen entfernen
+                    teacher.subject_coordinator.clear()
+                
                 teacher.save()
                 
                 messages.success(
@@ -252,6 +271,7 @@ def teacher_quick_edit(request, teacher_id):
     
     context = {
         'teacher': teacher,
+        'subject_categories': SubjectCategory.objects.all().order_by('name'),
     }
     
     return render(request, 'controlling/teacher_quick_edit.html', context)
@@ -279,10 +299,10 @@ def teacher_full_edit(request, teacher_id):
             teacher.postal_code = request.POST.get('postal_code', '').strip()
             teacher.city = request.POST.get('city', '').strip()
             
-            # Banking
-            teacher.iban = request.POST.get('iban', '').strip()
-            teacher.bic = request.POST.get('bic', '').strip()
-            teacher.socialSecurityField = request.POST.get('social_security', '').strip()
+            # Banking - REMOVED
+            # teacher.iban = request.POST.get('iban', '').strip()
+            # teacher.bic = request.POST.get('bic', '').strip()
+            # teacher.socialSecurityField = request.POST.get('social_security', '').strip()
             
             # Biography and media
             teacher.bio = request.POST.get('bio', '').strip()
@@ -316,12 +336,19 @@ def teacher_full_edit(request, teacher_id):
             else:
                 teacher.subject.clear()
             
-            # Handle subject coordinators
-            coordinator_ids = request.POST.getlist('subject_coordinators')
-            if coordinator_ids:
-                coordinators = SubjectCategory.objects.filter(id__in=coordinator_ids)
-                teacher.subject_coordinator.set(coordinators)
+            # Handle subject coordinators - nur wenn aktiv
+            subject_coordinator_active = request.POST.get('subject_coordinator_active') == '1'
+            teacher.subject_coordinator_active = subject_coordinator_active
+            
+            if subject_coordinator_active:
+                coordinator_ids = request.POST.getlist('subject_coordinators')
+                if coordinator_ids:
+                    coordinators = SubjectCategory.objects.filter(id__in=coordinator_ids)
+                    teacher.subject_coordinator.set(coordinators)
+                else:
+                    teacher.subject_coordinator.clear()
             else:
+                # Wenn inaktiv, alle Zuweisungen entfernen
                 teacher.subject_coordinator.clear()
             
             messages.success(request, f'Lehrer {teacher.first_name} {teacher.last_name} wurde vollständig aktualisiert.')
