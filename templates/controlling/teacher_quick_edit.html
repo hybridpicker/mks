@@ -202,6 +202,35 @@
             box-shadow: 0 0 0 3px rgba(209, 19, 23, 0.1);
         }
         
+        /* Checkbox Styles */
+        .mks-checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .mks-checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .mks-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: #D11317;
+        }
+        
+        .mks-checkbox-label {
+            font-size: 0.9rem;
+            color: #333;
+            cursor: pointer;
+            text-transform: none;
+            letter-spacing: normal;
+            margin: 0;
+        }
+        
         .mks-input:hover, .mks-textarea:hover {
             border-color: #ccc;
         }
@@ -430,6 +459,46 @@
                         <div class="mks-form-hint">Diese Information wird auf der öffentlichen Website der Musikschule St. Pölten angezeigt</div>
                     </div>
                 </div>
+
+                <!-- Fachbereichsleitung -->
+                <div class="mks-form-section">
+                    <h3 class="mks-section-title">
+                        <span class="mks-section-icon">👨‍💼</span>
+                        Fachbereichsleitung
+                    </h3>
+                    
+                    <div class="mks-form-group">
+                        <div class="mks-checkbox-item">
+                            <input type="checkbox" 
+                                   name="subject_coordinator_active" 
+                                   value="1" 
+                                   id="coordinator_active"
+                                   class="mks-checkbox"
+                                   {% if teacher.subject_coordinator_active %}checked{% endif %}>
+                            <label for="coordinator_active" class="mks-checkbox-label">
+                                <strong>Fachgruppenleitung ist aktiv</strong>
+                            </label>
+                        </div>
+                        <div class="mks-form-hint">Aktivieren Sie diese Option, wenn der Lehrer als Fachgruppenleiter fungiert</div>
+                    </div>
+                    
+                    <div class="mks-checkbox-group" id="coordinator-subjects" {% if not teacher.subject_coordinator_active %}style="opacity: 0.5; pointer-events: none;"{% endif %}>
+                        {% for category in subject_categories %}
+                        <div class="mks-checkbox-item">
+                            <input type="checkbox" 
+                                   name="subject_coordinators" 
+                                   value="{{ category.id }}" 
+                                   id="coordinator_{{ category.id }}"
+                                   class="mks-checkbox coordinator-subject"
+                                   {% if category in teacher.subject_coordinator.all %}checked{% endif %}>
+                            <label for="coordinator_{{ category.id }}" class="mks-checkbox-label">
+                                {{ category.name }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mks-form-hint">Fachbereiche, für die der Lehrer verantwortlich ist</div>
+                </div>
             </form>
         </div>
         
@@ -457,6 +526,27 @@
             
             // Initial resize
             resizeTextarea();
+        }
+        
+        // Coordinator active/inactive toggle
+        const coordinatorActiveCheckbox = document.getElementById('coordinator_active');
+        const coordinatorSubjects = document.getElementById('coordinator-subjects');
+        const coordinatorCheckboxes = document.querySelectorAll('.coordinator-subject');
+        
+        if (coordinatorActiveCheckbox && coordinatorSubjects) {
+            coordinatorActiveCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    coordinatorSubjects.style.opacity = '1';
+                    coordinatorSubjects.style.pointerEvents = 'auto';
+                } else {
+                    coordinatorSubjects.style.opacity = '0.5';
+                    coordinatorSubjects.style.pointerEvents = 'none';
+                    // Uncheck all coordinator subjects when inactive
+                    coordinatorCheckboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                }
+            });
         }
         
         // Form validation feedback - MKS Colors only

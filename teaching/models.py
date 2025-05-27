@@ -10,6 +10,7 @@ from location.models import Location, Country
 from users.models import CustomUser
 from teaching.subject import Subject, SubjectCategory
 
+
 class GroupPhoto(models.Model):
     image = models.ImageField(
         upload_to='teachers/images/', blank=True,)
@@ -41,6 +42,10 @@ class Teacher(models.Model):
     subject_coordinator = models.ManyToManyField(
               SubjectCategory,
               blank=True)
+    subject_coordinator_active = models.BooleanField(
+              default=True, 
+              verbose_name=_('Fachgruppenleitung aktiv'),
+              help_text=_('Bestimmt ob die Fachgruppenleitung aktiv ist'))
     user = models.OneToOneField(
         CustomUser,
         on_delete=models.CASCADE,
@@ -55,31 +60,6 @@ class Teacher(models.Model):
     email = models.EmailField(blank=True)
     homepage = models.URLField(_(u'Deine Website'), blank=True, max_length=80)
     phone = PhoneField(_(u'Telefonnummer'), blank=True, default='+43 ', help_text='Telefonnummer')
-    socialSecurityField = models.CharField(
-        _(u'Sozialversicherungs Nummer'),
-        max_length=11, blank=True)
-    bic = models.CharField(
-        max_length=11,
-        validators=[
-            RegexValidator(
-                regex=r'^[A-Z]{4}AT[A-Z0-9]{2}([A-Z0-9]{3})?$',
-                message='Invalid BIC format for Austria. Must be 8 or 11 characters.'
-            )
-        ],
-        help_text="Bank Identifier Code (BIC) for Austria",
-        blank=True
-    )
-    iban = models.CharField(
-        max_length=20,  # IBAN-Länge für Österreich
-        validators=[
-            RegexValidator(
-                regex=r'^AT[0-9]{2}[0-9]{16}$',
-                message='Invalid IBAN format for Austria. Must be 20 characters.'
-            )
-        ],
-        help_text="International Bank Account Number (IBAN) for Austria",
-        blank=True
-    )
     adress_line = models.CharField(_(u'Straße'), max_length=80, blank=True)
     house_number = models.CharField(_(u'Hausnummer'), max_length=80, blank=True)
     postal_code = models.CharField(_(u'Postleitzahl'), max_length=4, blank=True)
