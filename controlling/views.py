@@ -125,64 +125,11 @@ def get_student(request):
                 }
     return render(request, 'controlling/single_student.html', context)
 
-from django.http import HttpResponse
-from django.template.loader import get_template
-from xhtml2pdf import pisa
-from django.template.defaultfilters import date # Import the date filter
-from django.contrib.staticfiles import finders # Import finders
-
 @login_required(login_url='/team/login/')
 @staff_member_required
 def generate_student_pdf(request, student_id):
-    """Generates a PDF of student data with improved design and embedded logo."""
-    try:
-        student = Student.objects.get(id=student_id)
-        parent = student.parent
-    except Student.DoesNotExist:
-        return HttpResponse("Student not found", status=404)
-
-    # Format dates for locale
-    formatted_birth_date = date(student.birth_date, "d.m.Y") if student.birth_date else ""
-    formatted_start_date = date(student.start_date, "d.m.Y") if student.start_date else ""
-
-    # Explicitly convert foreign key objects to strings
-    subject_str = str(student.subject) if student.subject else ""
-    teacher_str = str(student.teacher) if student.teacher else ""
-
-    # Generate a safe filename
-    safe_name = f"{student.first_name}_{student.last_name}".replace(" ", "_").replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")
-    filename = f"schuelerdaten_{safe_name}_{student_id}.pdf"
-
-    context = {
-        'student': student,
-        'parent': parent,
-        'birth_date': formatted_birth_date,
-        'start_date': formatted_start_date,
-        'subject_str': subject_str,
-        'teacher_str': teacher_str,
-    }
-
-    template_path = 'controlling/single_student_pdf.html'
-    template = get_template(template_path)
-    html = template.render(context)
-
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="{filename}"'
-
-    # Improved PDF generation with better options
-    try:
-        pisa_status = pisa.CreatePDF(
-            html, 
-            dest=response,
-            encoding='UTF-8'
-        )
-        
-        if pisa_status.err:
-            return HttpResponse('Fehler bei der PDF-Erstellung', status=500)
-        return response
-    except Exception as e:
-        print(f"PDF generation error: {str(e)}")
-        return HttpResponse(f'Fehler bei der PDF-Erstellung: {str(e)}', status=500)
+    """Temporarily disabled PDF generation"""
+    return HttpResponse("PDF-Generierung ist vorübergehend deaktiviert", status=503)
 
 
 @login_required(login_url='/team/login/')
