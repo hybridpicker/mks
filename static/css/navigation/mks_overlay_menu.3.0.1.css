@@ -1121,7 +1121,7 @@ header#UserNav #mks-nav-mobile {
   left: 0;
   right: 0;
   width: 100%;
-  height: 60px; /* Fixed height for the bar */
+  height: 75px; /* Fixed height for the bar */
   z-index: 1090; /* Ensure it's above other content, adjust if needed. Original .section.main-nav was 111 */
   box-sizing: border-box;
 }

@@ -16,6 +16,7 @@ urlpatterns = [
     path('', HomePageView.as_view(), name='user_home'),
     path('team/', views.team_view, name='team'),
     path('team/security/', views.user_security_settings, name='team_security_settings'),  # Team Security Settings
+    path('management/users/', views.user_management, name='user_management'),  # User Management for Superusers
     path('profile/', views.user_profile, name='profile'),  # Neu: User Profile
     path('security/', views.user_security_settings, name='security_settings'),  # Neu: Security Settings
     path('events', views.eventView, name='event_managing_view'),

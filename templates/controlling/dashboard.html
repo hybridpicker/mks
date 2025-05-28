@@ -8,7 +8,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style>
 .controlling-container {
-  padding: 2rem 0;
   background: #fdfdfd;
   min-height: 80vh;
 }
@@ -76,6 +75,7 @@
   font-family: "jaf-bernina-sans-condensed", sans-serif;
   display: block;
   margin-bottom: 0.5rem;
+  text-decoration: none;
 }
 
 .stat-label {
@@ -173,7 +173,6 @@
 }
 
 @media (max-width: 768px) {
-  .controlling-container { padding: 1rem 0; }
   .controlling-hero { padding: 2rem 1rem; }
   .controlling-title { font-size: 2rem; }
   .stats-section { margin: 0 1rem 1.5rem; padding: 1.5rem; }
@@ -187,6 +186,9 @@
   .controlling-title { font-size: 1.8rem; }
   .stats-grid { grid-template-columns: 1fr; }
   .dashboard-card { padding: 1.2rem; }
+}
+.bs{
+  height: 0!important;
 }
 </style>
 {% endblock %}

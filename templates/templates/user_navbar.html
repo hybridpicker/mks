@@ -9,7 +9,7 @@
     
     <!-- Logo Section -->
     <div class="mks-navbar-manage-logo">
-      <a href="{% url 'home_view' %}" aria-label="Zur MKS Startseite">
+      <a href="{% if request.user.is_authenticated %}/team{% else %}{% url 'home_view' %}{% endif %}" aria-label="{% if request.user.is_authenticated %}Zum Team-Bereich{% else %}Zur MKS Startseite{% endif %}">
         {% include "templates/svg/nav_bar_icon.html" %}
       </a>
     </div>
@@ -43,7 +43,7 @@
     </div>
     
     <div class="mks-navbar-manage-mobile-logo">
-      <a href="{% url 'home_view' %}" aria-label="Zur MKS Startseite">
+      <a href="{% if request.user.is_authenticated %}/team{% else %}{% url 'home_view' %}{% endif %}" aria-label="{% if request.user.is_authenticated %}Zum Team-Bereich{% else %}Zur MKS Startseite{% endif %}">
         <div id="small-mobile-logo" style="display: none;">
           {% include "templates/svg/nav_bar_mobile_logo.html" %}
         </div>
