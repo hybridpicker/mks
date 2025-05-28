@@ -73,7 +73,7 @@ backcall==0.2.0
 decorator==5.1.1
 
 # PDF Generator and dependencies
-xhtml2pdf==0.2.16
-reportlab==4.2.7
+xhtml2pdf==0.2.15
+reportlab==3.6.13
 html5lib==1.1
 PyPDF2==3.0.1
