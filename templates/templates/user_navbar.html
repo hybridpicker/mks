@@ -1,7 +1,7 @@
 {% load static %}
 
 <!-- MKS Enhanced User Navigation - Optimized Version 2.0 -->
-<link rel="stylesheet" href="{% static 'css/admin_nav.3.0.1.css' %}">
+<link rel="stylesheet" href="{% static 'css/admin_nav.3.0.2.css' %}">
 
 <!-- Main User Navigation Header -->
 <header id="UserNav" role="banner">
@@ -9,7 +9,7 @@
     
     <!-- Logo Section -->
     <div class="mks-navbar-manage-logo">
-      <a href="{% url 'home_view' %}" aria-label="Zur MKS Startseite">
+      <a href="{% if request.user.is_authenticated %}/team{% else %}{% url 'home_view' %}{% endif %}" aria-label="{% if request.user.is_authenticated %}Zum Team-Bereich{% else %}Zur MKS Startseite{% endif %}">
         {% include "templates/svg/nav_bar_icon.html" %}
       </a>
     </div>
@@ -43,7 +43,7 @@
     </div>
     
     <div class="mks-navbar-manage-mobile-logo">
-      <a href="{% url 'home_view' %}" aria-label="Zur MKS Startseite">
+      <a href="{% if request.user.is_authenticated %}/team{% else %}{% url 'home_view' %}{% endif %}" aria-label="{% if request.user.is_authenticated %}Zum Team-Bereich{% else %}Zur MKS Startseite{% endif %}">
         <div id="small-mobile-logo" style="display: none;">
           {% include "templates/svg/nav_bar_mobile_logo.html" %}
         </div>

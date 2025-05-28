@@ -544,3 +544,100 @@ def user_security_settings(request):
         return render(request, 'users/team_security.html', context)
     else:
         return render(request, 'users/security_settings.html', context)
+
+
+
+@login_required
+def user_management(request):
+    """User management view for superusers only"""
+    # Check if user is a superuser
+    if not request.user.is_superuser:
+        messages.error(request, 'Sie haben keine Berechtigung, diese Seite zu sehen.')
+        return redirect('users:user_home')
+    
+    from django.contrib.auth import get_user_model
+    from django.contrib.auth.models import Group
+    from .models import UserRole
+    
+    User = get_user_model()
+    
+    # Get all users
+    users = User.objects.all().order_by('-is_superuser', '-is_staff', 'username')
+    
+    # Handle user role updates
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        action = request.POST.get('action')
+        
+        if user_id and action:
+            try:
+                target_user = User.objects.get(id=user_id)
+                
+                if action == 'toggle_staff':
+                    target_user.is_staff = not target_user.is_staff
+                    target_user.save()
+                    messages.success(request, f'Staff-Status für {target_user.username} wurde aktualisiert.')
+                
+                elif action == 'toggle_superuser':
+                    target_user.is_superuser = not target_user.is_superuser
+                    target_user.save()
+                    messages.success(request, f'Superuser-Status für {target_user.username} wurde aktualisiert.')
+                
+                elif action == 'toggle_coordinator':
+                    target_user.coordinator = not target_user.coordinator
+                    target_user.save()
+                    messages.success(request, f'Koordinator-Status für {target_user.username} wurde aktualisiert.')
+                
+                elif action == 'change_role':
+                    role_id = request.POST.get('user_role_id')
+                    if role_id:
+                        try:
+                            role = UserRole.objects.get(id=role_id)
+                            target_user.user_role = role
+                            target_user.save()
+                            messages.success(request, f'Benutzerrolle für {target_user.username} wurde auf {role.name} geändert.')
+                        except UserRole.DoesNotExist:
+                            messages.error(request, 'Rolle nicht gefunden.')
+                    else:
+                        target_user.user_role = None
+                        target_user.save()
+                        messages.success(request, f'Benutzerrolle für {target_user.username} wurde entfernt.')
+                
+                elif action == 'toggle_active':
+                    target_user.is_active = not target_user.is_active
+                    target_user.save()
+                    messages.success(request, f'Aktiv-Status für {target_user.username} wurde aktualisiert.')
+                
+                elif action == 'delete_user':
+                    if target_user != request.user:  # Prevent self-deletion
+                        username = target_user.username
+                        target_user.delete()
+                        messages.success(request, f'Benutzer {username} wurde gelöscht.')
+                    else:
+                        messages.error(request, 'Sie können sich nicht selbst löschen.')
+                
+                return redirect('users:user_management')
+                
+            except User.DoesNotExist:
+                messages.error(request, 'Benutzer nicht gefunden.')
+    
+    # Get groups and user roles
+    groups = Group.objects.all()
+    user_roles = UserRole.objects.filter(is_active=True)
+    
+    # Statistics
+    stats = {
+        'total_users': users.count(),
+        'active_users': users.filter(is_active=True).count(),
+        'staff_users': users.filter(is_staff=True).count(),
+        'superusers': users.filter(is_superuser=True).count(),
+    }
+    
+    context = {
+        'users': users,
+        'groups': groups,
+        'user_roles': user_roles,
+        'stats': stats,
+    }
+    
+    return render(request, 'users/user_management.html', context)

@@ -10,6 +10,9 @@
   .phone-field > span, .phone-field > #id_phone_1{
     display: none;
   }
+  .bs{
+    height: 0!important;
+  }
 </style>
 {% endblock %}
 
@@ -25,6 +28,10 @@
     <br>
     <div class="row">
       <p>Anmeldungsdatum: <strong>{{ start_date }}</strong></p>
+      <br>
+      <a href="{% url 'controlling:generate_student_pdf' student.id %}" target="_blank">
+        <button style="width: 14rem;">PDF exportieren</button>
+      </a>
       <br>
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}

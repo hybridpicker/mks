@@ -55,3 +55,6 @@ ua-parser>=0.16.1
 user-agents>=2.2.0
 et_xmlfile>=2.0.0
 tablib>=3.8.0
+
+#Pdf Generator
+xhtml2pdf

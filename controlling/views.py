@@ -107,7 +107,7 @@ def get_student(request):
         if parent_form.is_valid():
             parent = parent_form.save(commit=False)
             parent.save()
-        return redirect('get_controlling_students')
+        return redirect('controlling:get_controlling_students')
     else:
         form = SingleStudentDataForm(instance=student)
         parent_form = ParentDataForm(instance=parent)
@@ -116,6 +116,7 @@ def get_student(request):
 
     # Model data
     context = {
+                'student': student, # Add student object to context
                 'start_date': start_date,
                 'form': form,
                 'parent_form': parent_form,
@@ -123,6 +124,62 @@ def get_student(request):
                 'parent_name': parent_name,
                 }
     return render(request, 'controlling/single_student.html', context)
+
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.template.defaultfilters import date # Import the date filter
+from django.contrib.staticfiles import finders # Import finders
+
+@login_required(login_url='/team/login/')
+@staff_member_required
+def generate_student_pdf(request, student_id):
+    """Generates a PDF of student data with improved design and embedded logo."""
+    try:
+        student = Student.objects.get(id=student_id)
+        parent = student.parent
+    except Student.DoesNotExist:
+        return HttpResponse("Student not found", status=404)
+
+    # Format dates for locale
+    formatted_birth_date = date(student.birth_date, "d.m.Y") if student.birth_date else ""
+    formatted_start_date = date(student.start_date, "d.m.Y") if student.start_date else ""
+
+    # Explicitly convert foreign key objects to strings
+    subject_str = str(student.subject) if student.subject else ""
+    teacher_str = str(student.teacher) if student.teacher else ""
+
+    # Generate a safe filename
+    safe_name = f"{student.first_name}_{student.last_name}".replace(" ", "_").replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")
+    filename = f"schuelerdaten_{safe_name}_{student_id}.pdf"
+
+    context = {
+        'student': student,
+        'parent': parent,
+        'birth_date': formatted_birth_date,
+        'start_date': formatted_start_date,
+        'subject_str': subject_str,
+        'teacher_str': teacher_str,
+    }
+
+    template_path = 'controlling/single_student_pdf.html'
+    template = get_template(template_path)
+    html = template.render(context)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    # Improved PDF generation with better options
+    pisa_status = pisa.CreatePDF(
+        html, 
+        dest=response,
+        encoding='UTF-8'
+    )
+    
+    if pisa_status.err:
+        return HttpResponse('Fehler bei der PDF-Erstellung <pre>' + html + '</pre>', status=500)
+    return response
+
 
 @login_required(login_url='/team/login/')
 @staff_member_required
@@ -134,7 +191,7 @@ def get_parent(request):
         if form.is_valid():
             parent = form.save(commit=False)
             parent.save()
-        return redirect('get_controlling_students')
+        return redirect('controlling:get_controlling_students')
     else:
         form = ParentDataForm(instance=parent)
 
@@ -146,56 +203,18 @@ def get_parent(request):
 
 @login_required(login_url='/team/login/')
 def get_student_coordinator(request):
-    student_id = request.GET['id']
-    student = Student.objects.get(id=student_id)
-    if request.method == "POST":
-        form = SingleStudentDataFormCoordinator(request.POST, instance=student)
-        if form.is_valid():
-            student = form.save(commit=False)
-            student.save()
-    else:
-        form = SingleStudentDataFormCoordinator(instance=student)
-    first_name = student.first_name
-    last_name = student.last_name
-    start_date = student.start_date
-    subject = student.subject
-    birth_date = student.birth_date
-    note = student.note
-    trial_lesson = student.trial_lesson
-    teacher = student.teacher
-    '''
-    Parent data
-    '''
-    parent_first_name = student.parent.first_name
-    parent_last_name = student.parent.last_name
-    adressline = student.parent.adress_line
-    house_number = student.parent.house_number
-    postal_code = student.parent.postal_code
-    city = student.parent.city
-    email = student.parent.email
-    parent_phone = student.parent.phone
-    # Model data
-    context = {
-                'first_name': first_name,
-                'last_name': last_name,
-                'start_date': start_date,
-                'birth_date': birth_date,
-                'subject': subject,
-                'parent_first_name': parent_first_name,
-                'parent_last_name': parent_last_name,
-                'adressline': adressline,
-                'house_number': house_number,
-                'postal_code': postal_code,
-                'city': city,
-                'postal_code': postal_code,
-                'email': email,
-                'parent_phone': parent_phone,
-                'note': note,
-                'trial_lesson': trial_lesson,
-                'teacher': teacher,
-                'form': form,
-                }
-        
+    try:
+        user_id = request.GET['user_id']
+        category = Teacher.objects.get(user_id=user_id).subject_coordinator.all()
+        category_id = category[0].id
+        students = Student.objects.filter(subject__category=category_id)
+        context = {
+            'students': students,
+            'category': category[0]
+            }
+    except Exception as e:
+        print(e)
+        context = {'error': True}
     return render(request, 'controlling/single_student_coordinator.html', context)
 
 @login_required(login_url='/team/login/')
