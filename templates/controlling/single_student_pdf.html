@@ -3,159 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>Schülerdaten - {{ student.first_name }} {{ student.last_name }}</title>
-    <style>
+    <style type="text/css">
         @page {
             size: A4;
             margin: 12mm;
         }
         
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 9pt;
-            line-height: 1.2;
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.4;
             color: #333;
             margin: 0;
             padding: 0;
-            background-color: white;
-        }
-        
-        .page-container {
-            width: 100%;
-            height: auto;
-            max-height: 270mm;
         }
         
         .header {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             padding-bottom: 10px;
-        }
-        
-        .logo-container {
-            margin-bottom: 8px;
+            border-bottom: 2px solid #d11317;
         }
         
         .logo-text {
-            font-size: 12pt;
+            font-size: 14pt;
             font-weight: bold;
             color: #d11317;
-            letter-spacing: 1px;
+            margin-bottom: 10px;
         }
         
-        .header h1 {
+        h1 {
+            font-size: 18pt;
+            margin: 10px 0;
             color: #333;
-            font-size: 16pt;
-            margin: 6px 0;
-            font-weight: bold;
-            font-family: Arial, Helvetica, sans-serif;
         }
         
-        .header .subtitle {
+        .subtitle {
+            font-size: 12pt;
             color: #666;
-            font-size: 10pt;
-            margin: 3px 0;
-            font-weight: normal;
-        }
-        
-        .content-wrapper {
-            width: 100%;
-        }
-        
-        .content-grid {
-            width: 100%;
         }
         
         .section {
-            margin-bottom: 15px;
-            page-break-inside: avoid;
+            margin-bottom: 20px;
         }
         
         .section-title {
-            color: #d11317;
-            padding: 5px 0;
-            font-size: 10pt;
+            font-size: 12pt;
             font-weight: bold;
-            margin-bottom: 6px;
-            font-family: Arial, Helvetica, sans-serif;
+            color: #d11317;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
         }
         
-        .data-table {
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
+            margin-bottom: 15px;
         }
         
-        .data-table th {
-            background: #f8f8f8;
-            color: #333;
-            padding: 10px 15px;
+        th {
+            background-color: #f5f5f5;
+            padding: 8px;
             text-align: left;
             font-weight: bold;
             width: 35%;
-            font-size: 9pt;
-            font-family: Arial, Helvetica, sans-serif;
-            border-bottom: 1px solid #ddd;
-            border-right: 1px solid #ddd;
+            border: 1px solid #ddd;
         }
         
-        .data-table td {
-            background-color: white;
-            padding: 10px 15px;
-            border-bottom: 1px solid #eee;
-            vertical-align: top;
-            font-size: 9pt;
-            border-right: 1px solid #eee;
-            min-width: 150px;
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
         }
         
-        .data-table tr:last-child td {
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .highlight {
-            font-weight: bold;
-        }
-        
-        .boolean-yes {
-            color: #333;
-            font-weight: bold;
-        }
-        
-        .boolean-no {
-            color: #666;
-            font-weight: normal;
-        }
-        
-        .empty-field {
-            color: #999;
-            font-style: italic;
-        }
-        
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #666;
-            font-size: 7pt;
-            border-top: 1px solid #ddd;
-            padding-top: 8px;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        
-        .date-generated {
-            font-style: italic;
-        }
-        
-        .notes-cell {
-            word-wrap: break-word;
-            max-width: 180px;
-        }
-        
-        /* Zwei-Spalten Layout */
         .two-column {
-            width: 47%;
+            width: 48%;
             float: left;
-            margin-right: 6%;
+            margin-right: 4%;
         }
         
         .two-column:last-child {
@@ -168,123 +92,111 @@
             clear: both;
         }
         
-        /* Verhindere Seitenumbrüche */
-        .no-break {
-            page-break-inside: avoid;
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 9pt;
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="page-container">
-        <div class="header no-break">
-            <div class="logo-container">
-                <div class="logo-text">Musikschule der Landeshauptstadt St. Pölten</div>
+    <div class="header">
+        <div class="logo-text">Musikschule der Landeshauptstadt St. Pölten</div>
+        <h1>Schülerdaten</h1>
+        <div class="subtitle">{{ student.first_name }} {{ student.last_name }}</div>
+    </div>
+
+    <div class="clearfix">
+        <div class="two-column">
+            <div class="section">
+                <div class="section-title">Schülerinformationen</div>
+                <table>
+                    <tr>
+                        <th>Anmeldung</th>
+                        <td>{{ start_date|default:"Nicht angegeben" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Vorname</th>
+                        <td>{{ student.first_name|default:"Nicht angegeben" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nachname</th>
+                        <td>{{ student.last_name|default:"Nicht angegeben" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Geburtstag</th>
+                        <td>{{ birth_date|default:"Nicht angegeben" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Instrument</th>
+                        <td>{{ subject_str|default:"Nicht zugeordnet" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Lehrer/in</th>
+                        <td>{{ teacher_str|default:"Nicht zugeordnet" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Schnupperstunde</th>
+                        <td>{% if student.trial_lesson %}Ja{% else %}Nein{% endif %}</td>
+                    </tr>
+                    {% if student.note %}
+                    <tr>
+                        <th>Anmerkungen</th>
+                        <td>{{ student.note|truncatewords:15 }}</td>
+                    </tr>
+                    {% endif %}
+                </table>
             </div>
-            <h1>Schülerdaten</h1>
-            <div class="subtitle">{{ student.first_name }} {{ student.last_name }}</div>
         </div>
 
-        <div class="content-wrapper">
-            <div class="content-grid clearfix">
-                <div class="two-column">
-                    <div class="section no-break">
-                        <div class="section-title">Schülerinformationen</div>
-                        <table class="data-table">
-                            <tr>
-                                <th>Anmeldung</th>
-                                <td class="{% if start_date %}highlight{% endif %}">
-                                    {{ start_date|default:"Nicht angegeben" }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Vorname</th>
-                                <td>{{ student.first_name|default:"Nicht angegeben" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Nachname</th>
-                                <td>{{ student.last_name|default:"Nicht angegeben" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Geburtstag</th>
-                                <td>{{ birth_date|default:"Nicht angegeben" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Instrument</th>
-                                <td>{{ subject_str|default:"Nicht zugeordnet" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Lehrer/in</th>
-                                <td>{{ teacher_str|default:"Nicht zugeordnet" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Schnupperstunde</th>
-                                <td>
-                                    {% if student.trial_lesson %}
-                                        <span class="boolean-yes">Ja</span>
-                                    {% else %}
-                                        <span class="boolean-no">Nein</span>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% if student.note %}
-                            <tr>
-                                <th>Anmerkungen</th>
-                                <td class="notes-cell">{{ student.note|truncatewords:15 }}</td>
-                            </tr>
+        <div class="two-column">
+            <div class="section">
+                <div class="section-title">Kontaktdaten Erziehungsberechtigte</div>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <td>
+                            {% if parent.first_name or parent.last_name %}
+                                {{ parent.first_name|default:"" }} {{ parent.last_name|default:"" }}
+                            {% else %}
+                                Nicht angegeben
                             {% endif %}
-                        </table>
-                    </div>
-                </div>
-
-                <div class="two-column">
-                    <div class="section no-break">
-                        <div class="section-title">Kontaktdaten Erziehungsberechtigte</div>
-                        <table class="data-table">
-                            <tr>
-                                <th>Name</th>
-                                <td class="highlight">
-                                    {% if parent.first_name or parent.last_name %}
-                                        {{ parent.first_name|default:"" }} {{ parent.last_name|default:"" }}
-                                    {% else %}
-                                        <span class="empty-field">Nicht angegeben</span>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>{{ parent.email|default:"Nicht angegeben" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Telefon</th>
-                                <td>{{ parent.phone|default:"Nicht angegeben" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Straße</th>
-                                <td>{{ parent.adress_line|default:"Nicht angegeben" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Hausnummer</th>
-                                <td>{{ parent.house_number|default:"Nicht angegeben" }}</td>
-                            </tr>
-                            <tr>
-                                <th>PLZ</th>
-                                <td>{{ parent.postal_code|default:"Nicht angegeben" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Ort</th>
-                                <td>{{ parent.city|default:"Nicht angegeben" }}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ parent.email|default:"Nicht angegeben" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Telefon</th>
+                        <td>{{ parent.phone|default:"Nicht angegeben" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Straße</th>
+                        <td>{{ parent.adress_line|default:"Nicht angegeben" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Hausnummer</th>
+                        <td>{{ parent.house_number|default:"Nicht angegeben" }}</td>
+                    </tr>
+                    <tr>
+                        <th>PLZ</th>
+                        <td>{{ parent.postal_code|default:"Nicht angegeben" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Ort</th>
+                        <td>{{ parent.city|default:"Nicht angegeben" }}</td>
+                    </tr>
+                </table>
             </div>
         </div>
+    </div>
 
-        <div class="footer no-break">
-            <div class="date-generated">
-                Erstellt am: {% now "d.m.Y H:i" %} Uhr | Musikschule St. Pölten - Schülerdatenblatt
-            </div>
-        </div>
+    <div class="footer">
+        <div>Erstellt am: {% now "d.m.Y H:i" %} Uhr | Musikschule St. Pölten - Schülerdatenblatt</div>
     </div>
 </body>
 </html>
