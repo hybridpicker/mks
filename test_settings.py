@@ -1,17 +1,30 @@
-# test_settings.py - Non-interactive test settings
+# Fixed test_settings.py - Complete test configuration
 from mks.settings import *
 
-# Override database settings for testing to avoid prompts
-DATABASES['default']['TEST'] = {
-    'NAME': 'test_mks_auto',
-}
-
-# Set to use in-memory SQLite for tests (fastest option)
-DATABASES['default'] = {
-    'ENGINE': 'django.db.backends.sqlite3',
-    'NAME': ':memory:',
-    'TEST': {
-        'NAME': ':memory:',
+# Override database settings for testing with all required keys
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mks',
+        'USER': 'postgres',
+        'PASSWORD': 'Ax9kl3',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'TEST': {
+            'NAME': 'test_mks',
+            'USER': 'postgres',
+            'PASSWORD': 'Ax9kl3',
+            'HOST': 'localhost',
+            'PORT': '5432',
+            'CHARSET': None,
+            'COLLATION': None,
+            'MIRROR': None,
+            'CREATE_DB': True,
+        },
+        'ATOMIC_REQUESTS': False,
+        'AUTOCOMMIT': True,
+        'CONN_MAX_AGE': 0,
+        'OPTIONS': {},
     }
 }
 
