@@ -56,5 +56,8 @@ user-agents>=2.2.0
 et_xmlfile>=2.0.0
 tablib>=3.8.0
 
-#Pdf Generator
-xhtml2pdf
+# PDF Generator and dependencies
+xhtml2pdf==0.2.11
+reportlab==3.6.13
+html5lib==1.1
+PyPDF2==3.0.1
