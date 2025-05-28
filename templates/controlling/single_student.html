@@ -29,6 +29,10 @@
     <div class="row">
       <p>Anmeldungsdatum: <strong>{{ start_date }}</strong></p>
       <br>
+      <a href="{% url 'controlling:generate_student_pdf' student.id %}" target="_blank">
+        <button style="width: 14rem;">PDF erstellen</button>
+      </a>
+      <br>
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-content" id="student-single-data-form">

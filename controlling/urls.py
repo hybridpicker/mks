@@ -15,12 +15,13 @@ urlpatterns = [
     path('coordinator/students', views.get_all_students_coordinator, name='get_controlling_students_coordinator'),
     path('single_student', views.get_student, name='get_controlling_single_student'),
     path('new_student', views.newStudentView, name='create_new_student'),
+    path('student/<int:student_id>/pdf/', views.generate_student_pdf, name='generate_student_pdf'),
     path('parent', views.get_parent, name='get_controlling_parent'),
     path('coordinator/single_student', views.get_student_coordinator, name='get_controlling_single_student_coordinator'),
     path('index_text', views.get_index_text, name='get_index_text'),
     path('new_student/sucess', views.newStudentSuccessView, name='new_student_saved'),
     re_path(r'^export/xls/$', xlsviews.export_students_xls, name='export_students_xls'),
-    
+
     # Teacher Management URLs
     path('teachers', teacher_views.get_all_teachers, name='get_controlling_teachers'),
     path('teachers/new', teacher_views.teacher_create, name='teacher_create'),
