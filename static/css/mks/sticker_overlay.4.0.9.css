@@ -1,0 +1,33 @@
+/* Sticker Overlay */
+#sticker-overlay {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+#sticker-overlay img {
+  width: 200px;
+  height: auto;
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 771px) {
+  #sticker-overlay {
+    left: 10px;
+    top: 50%;
+  }
+  
+  #sticker-overlay img {
+    width: 120px;
+  }
+}
+
+/* Sehr kleine Bildschirme */
+@media only screen and (max-width: 480px) {
+  #sticker-overlay img {
+    width: 80px;
+  }
+}
