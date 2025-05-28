@@ -170,15 +170,19 @@ def generate_student_pdf(request, student_id):
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
 
     # Improved PDF generation with better options
-    pisa_status = pisa.CreatePDF(
-        html, 
-        dest=response,
-        encoding='UTF-8'
-    )
-    
-    if pisa_status.err:
-        return HttpResponse('Fehler bei der PDF-Erstellung <pre>' + html + '</pre>', status=500)
-    return response
+    try:
+        pisa_status = pisa.CreatePDF(
+            html, 
+            dest=response,
+            encoding='UTF-8'
+        )
+        
+        if pisa_status.err:
+            return HttpResponse('Fehler bei der PDF-Erstellung', status=500)
+        return response
+    except Exception as e:
+        print(f"PDF generation error: {str(e)}")
+        return HttpResponse(f'Fehler bei der PDF-Erstellung: {str(e)}', status=500)
 
 
 @login_required(login_url='/team/login/')
