@@ -1,0 +1,51 @@
+{% extends "templates/base.html" %}
+
+{% load static %}
+{% load thumbnail %}
+
+{% block extra_head %}
+<meta name="title" content="Galerie der Musikschule St. Pölten">
+<meta name="description" content="Bilder und Impressionen der Musikschule St. Pölten in der Voithvilla am Südpark sowie unserer Schülerinnen, Schüler, Lehrer und Lehrerinnen.">
+
+<!-- Social Media Meta --->
+<meta property="og:title" content="Galerie der Musikschule St. Pölten">
+<meta property="og:description" content="Bilder und Impressionen der Musikschule St. Pölten in der Voithvilla am Südpark sowie unserer Schülerinnen, Schüler, Lehrer und Lehrerinnen.">
+<meta property="og:image" content="static/thumbnail/facebook/home.jpg">
+<meta property="og:url" content="https://musikschule-stp.at/gallery">
+
+<meta name="twitter:title" content="Galerie der Musikschule St. Pölten"">
+<meta name="twitter:description" content="Bilder und Impressionen der Musikschule St. Pölten in der Voithvilla am Südpark sowie unserer Schülerinnen, Schüler, Lehrer und Lehrerinnen.">
+<meta name="twitter:image" content="static/thumbnail/twitter/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="text/javascript">
+var photo_data = {{ gallery_json_data|safe }}
+</script>
+<!-- Modern Gallery styles -->
+<link rel="stylesheet" href="{% static 'gallery/css/modern/gallery.4.0.9.css' %}">
+<style>
+/* Lazy Loading Styles */
+body .gallery-header {
+  display: block !important;
+  margin-bottom: 2rem !important;
+  text-align: center !important;
+  position: relative !important;
+  width: 100% !important;
+  visibility: visible !important;
+}
+
+body .gallery-header h1 {
+  display: block !important;
+  font-size: 1.8rem !important;
+  font-weight: 500 !important;
+  color: #333 !important;
+  margin-bottom: 1rem !important;
+  visibility: visible !important;
+}
+
+body .gallery-show {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+  grid-auto-rows: 220px !important;
+  grid-gap: 12px !important;
+}
