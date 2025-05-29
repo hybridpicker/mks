@@ -14,7 +14,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Updated size limits - now more generous since we auto-resize
-MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB (original files before processing)
+MAX_FILE_SIZE = 20 * 1024 * 1024  # 20MB (original files before processing)
 PROCESSED_MAX_SIZE = 3 * 1024 * 1024  # 3MB (after processing)
 # Maximum number of files per upload
 MAX_FILES = 100
@@ -258,7 +258,15 @@ def handle_multiple_uploads(request):
             
             # Check if the processed image is still quite large
             final_size_mb = photo.image.size / (1024 * 1024) if photo.image else 0
-            if final_size_mb > 5:  # Warn if still over 5MB after processing
+            original_size_mb = image_info['size_mb'] if image_info else uploaded_file.size / (1024 * 1024)
+            
+            compression_ratio = 100 - (final_size_mb / original_size_mb * 100) if original_size_mb > 0 else 0
+            
+            if compression_ratio > 50:  # If compressed by more than 50%
+                warnings.append(
+                    f'{uploaded_file.name}: Stark komprimiert von {original_size_mb:.1f}MB auf {final_size_mb:.1f}MB (-{compression_ratio:.0f}%)'
+                )
+            elif final_size_mb > 5:  # Warn if still over 5MB after processing
                 warnings.append(
                     f'{uploaded_file.name}: Verarbeitetes Bild ist noch {final_size_mb:.1f}MB groß'
                 )

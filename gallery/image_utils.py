@@ -15,10 +15,13 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 MAX_IMAGE_SIZE = (2048, 2048)  # Maximum width/height in pixels
-MAX_FILE_SIZE = 2 * 1024 * 1024  # 2MB in bytes
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB in bytes (original upload limit)
 JPEG_QUALITY = 85  # JPEG compression quality (1-100)
 THUMBNAIL_SIZE = (400, 400)  # Thumbnail dimensions
 LAZY_SIZE = (800, 600)  # Lazy loading image dimensions
+# Additional configuration for better compression
+WEBP_QUALITY = 80  # WebP compression quality for modern browsers
+PROGRESSIVE_JPEG = True  # Enable progressive JPEG encoding
 
 def resize_image(image_file, max_size=MAX_IMAGE_SIZE, quality=JPEG_QUALITY):
     """
@@ -65,20 +68,45 @@ def resize_image(image_file, max_size=MAX_IMAGE_SIZE, quality=JPEG_QUALITY):
             img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
             logger.info(f"Resized image from {original_width}x{original_height} to {new_width}x{new_height}")
         
-        # Save to bytes buffer
-        output_buffer = io.BytesIO()
+        # Adaptive quality based on file size
+        # Start with the configured quality and reduce if needed
+        adaptive_quality = quality
         
-        # Determine format and save
-        format_type = 'JPEG'
-        if hasattr(image_file, 'name') and image_file.name.lower().endswith('.png'):
-            # Keep PNG format for images that were originally PNG
-            format_type = 'PNG'
-            img.save(output_buffer, format=format_type, optimize=True)
-        else:
-            # Use JPEG for everything else (smaller file size)
-            img.save(output_buffer, format=format_type, quality=quality, optimize=True)
-        
-        output_buffer.seek(0)
+        # Try different quality settings to get under 2MB
+        for attempt_quality in [quality, 80, 70, 60, 50]:
+            output_buffer = io.BytesIO()
+            
+            # Determine format and save
+            format_type = 'JPEG'
+            if hasattr(image_file, 'name') and image_file.name.lower().endswith('.png'):
+                # For very large PNGs, convert to JPEG for better compression
+                if original_width * original_height > 2000 * 2000:
+                    format_type = 'JPEG'
+                    img.save(output_buffer, format=format_type, quality=attempt_quality, optimize=True, progressive=PROGRESSIVE_JPEG)
+                else:
+                    # Keep PNG format for smaller images
+                    format_type = 'PNG'
+                    img.save(output_buffer, format=format_type, optimize=True)
+            else:
+                # Use JPEG for everything else (smaller file size)
+                # Enable progressive encoding for better loading experience
+                img.save(output_buffer, format=format_type, quality=attempt_quality, optimize=True, progressive=PROGRESSIVE_JPEG)
+            
+            output_buffer.seek(0)
+            file_size = len(output_buffer.getvalue())
+            
+            # If file is under 2MB, we're done
+            if file_size <= 2 * 1024 * 1024:
+                adaptive_quality = attempt_quality
+                break
+            
+            # If still too large after lowest quality, resize further
+            if attempt_quality == 50 and file_size > 2 * 1024 * 1024:
+                # Reduce dimensions by additional 20%
+                new_width = int(new_width * 0.8)
+                new_height = int(new_height * 0.8)
+                img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+                logger.info(f"Further resized to {new_width}x{new_height} for size reduction")
         
         # Generate new filename
         original_name = getattr(image_file, 'name', 'image.jpg')
@@ -94,7 +122,7 @@ def resize_image(image_file, max_size=MAX_IMAGE_SIZE, quality=JPEG_QUALITY):
             name=new_name
         )
         
-        logger.info(f"Image processed successfully: {new_name}, size: {len(output_buffer.getvalue())} bytes")
+        logger.info(f"Image processed successfully: {new_name}, size: {len(output_buffer.getvalue())} bytes, quality: {adaptive_quality}")
         return resized_file
         
     except Exception as e:
@@ -280,14 +308,23 @@ def get_image_info(image_file):
         Dictionary with image information
     """
     try:
+        # Reset file pointer if needed
+        if hasattr(image_file, 'seek'):
+            image_file.seek(0)
+            
         img = Image.open(image_file)
+        
+        # Reset file pointer again for later use
+        if hasattr(image_file, 'seek'):
+            image_file.seek(0)
+            
         return {
             'width': img.width,
             'height': img.height,
             'format': img.format,
             'mode': img.mode,
-            'size_bytes': image_file.size,
-            'size_mb': round(image_file.size / (1024 * 1024), 2)
+            'size_bytes': image_file.size if hasattr(image_file, 'size') else 0,
+            'size_mb': round(image_file.size / (1024 * 1024), 2) if hasattr(image_file, 'size') else 0
         }
     except Exception as e:
         logger.error(f"Error getting image info: {str(e)}")
