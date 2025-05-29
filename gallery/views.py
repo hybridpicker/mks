@@ -6,6 +6,7 @@ import os
 from django.conf import settings
 from gallery.image_utils import create_lazy_image, create_thumbnail
 from django.core.files.base import ContentFile
+from gallery.lazy_image_generator import generate_missing_images_async, check_and_generate_lazy_image
 
 # Logger einrichten
 logger = logging.getLogger(__name__)
@@ -15,54 +16,27 @@ def gallery_view(request):
     # Alle Fotos aus allen Kategorien laden (außer von E-Learning)
     all_photos = Photo.objects.exclude(category__title="E-Learning").order_by('-ordering')
     
-    # Filterung der Fotos, um sicherzustellen, dass die Bilddateien existieren
+    # Listen für verschiedene Verarbeitungsschritte
     photos = []
+    photos_needing_lazy = []
+    
+    # Filterung der Fotos und Sammlung der IDs die Lazy Images brauchen
     for photo in all_photos:
         # Prüfen, ob Bilddatei existiert
         image_path = os.path.join(settings.MEDIA_ROOT, photo.image.name)
         if os.path.exists(image_path):
             photos.append(photo)
             
-            # Automatische Generierung von Lazy Images wenn nicht vorhanden
-            try:
-                # Prüfe ob Lazy Image generiert werden muss (prüfe ob es der default ist)
-                if photo.image and (not photo.image_lazy or photo.image_lazy.name == 'gallery_lazy_imageDefault.jpg'):
-                    logger.info(f"Generiere Lazy Image für Photo ID: {photo.id}")
-                    
-                    # Öffne das Originalbild
-                    photo.image.open()
-                    
-                    # Erstelle Lazy Image
-                    lazy_image = create_lazy_image(photo.image)
-                    if lazy_image:
-                        # Speichere das Lazy Image
-                        photo.image_lazy.save(lazy_image.name, lazy_image, save=True)
-                        logger.info(f"Lazy Image erfolgreich erstellt für Photo ID: {photo.id}")
-                    else:
-                        logger.warning(f"Konnte kein Lazy Image erstellen für Photo ID: {photo.id}")
-                
-                # Optional: Auch Thumbnail generieren wenn nicht vorhanden
-                if photo.image and (not photo.image_thumbnail or photo.image_thumbnail.name == 'gallery_thumbnail_imageDefault.jpg'):
-                    logger.info(f"Generiere Thumbnail für Photo ID: {photo.id}")
-                    
-                    # Reset file pointer
-                    photo.image.seek(0)
-                    
-                    # Erstelle Thumbnail
-                    thumbnail = create_thumbnail(photo.image)
-                    if thumbnail:
-                        # Speichere das Thumbnail
-                        photo.image_thumbnail.save(thumbnail.name, thumbnail, save=True)
-                        logger.info(f"Thumbnail erfolgreich erstellt für Photo ID: {photo.id}")
-                    else:
-                        logger.warning(f"Konnte kein Thumbnail erstellen für Photo ID: {photo.id}")
-                        
-            except Exception as e:
-                logger.error(f"Fehler beim Generieren von Lazy/Thumbnail Images für Photo ID {photo.id}: {str(e)}")
-                # Trotzdem das Foto zur Liste hinzufügen, auch wenn Lazy Image fehlt
-                pass
+            # Sammle Photos die Lazy Images brauchen
+            if photo.image and (not photo.image_lazy or not photo.image_thumbnail):
+                photos_needing_lazy.append(photo.id)
         else:
             logger.warning(f"Bild nicht gefunden: {photo.image.name} (ID: {photo.id})")
+    
+    # Starte asynchrone Generierung im Hintergrund wenn nötig
+    if photos_needing_lazy:
+        logger.info(f"Starte Hintergrund-Generierung für {len(photos_needing_lazy)} Fotos")
+        generate_missing_images_async(photos_needing_lazy)
     
     # Prepare photo data for JavaScript
     json_photo = {}
