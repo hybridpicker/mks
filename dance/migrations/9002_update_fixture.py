@@ -6,6 +6,17 @@ from django.core.management import call_command
 
 def update_fixture(apps, schema_editor):
     """Update the dance_data.json file with the current database state."""
+    # Skip fixture updates during tests
+    import sys
+    if 'test' in sys.argv:
+        print("Skipping fixture update during test run")
+        return
+    
+    # Skip if running in CI environment
+    if os.environ.get('CI') or os.environ.get('CIRCLECI'):
+        print("Skipping fixture update in CI environment")
+        return
+    
     # Path to the fixture file
     fixture_path = os.path.join(settings.BASE_DIR, 'dance', 'fixtures', 'dance_data.json')
     
@@ -33,11 +44,15 @@ def update_fixture(apps, schema_editor):
     else:
         print(f"Fixture file not found: {fixture_path}")
 
+def reverse_update_fixture(apps, schema_editor):
+    """Reverse migration - does nothing."""
+    pass
+
 class Migration(migrations.Migration):
     dependencies = [
         ('dance', '9001_update_categories'),
     ]
 
     operations = [
-        migrations.RunPython(update_fixture),
+        migrations.RunPython(update_fixture, reverse_update_fixture),
     ]
