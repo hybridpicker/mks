@@ -61,7 +61,7 @@ def home(request):
     
     # Keep blog posts as fallback if there are no news items
     if not news_items:
-        blog = BlogPost.objects.all().exclude(category__category__name="Kunstschule")[:6]
+        blog = BlogPost.objects.filter(published=True).exclude(category__category__name="Kunstschule")[:6]
     else:
         blog = None
     

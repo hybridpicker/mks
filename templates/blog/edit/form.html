@@ -2048,171 +2048,45 @@ if (addGalleryBtn && totalFormsInput) {
     });
   }
   
-  // DEBUG: Form submission monitoring
-  form.addEventListener('submit', function(e) {
-    console.log('=== FORM SUBMISSION DEBUG ===');
-    console.log('Form action:', this.action);
-    console.log('Form method:', this.method);
-    console.log('Form enctype:', this.enctype);
-    
-    // Create debug overlay
-    const debugOverlay = document.createElement('div');
-    debugOverlay.id = 'debug-overlay';
-    debugOverlay.style.cssText = `
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.9);
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 80%;
-      max-height: 80%;
-      overflow: auto;
-      z-index: 10000;
-      font-family: monospace;
-      font-size: 12px;
-      line-height: 1.4;
-    `;
-    
-    let debugHtml = `
-      <h3 style="color: #ff6b6b; margin-top: 0;">🔍 BLOG FORM DEBUG</h3>
-      <div style="margin-bottom: 15px;">
-        <strong>Form Details:</strong><br>
-        Action: ${this.action}<br>
-        Method: ${this.method}<br>
-        Enctype: ${this.enctype}
-      </div>
-    `;
-    
-    // Log form data
-    const formData = new FormData(this);
-    debugHtml += '<div style="margin-bottom: 15px;"><strong>📝 Form Data:</strong><br>';
-    
-    let hasTitle = false;
-    let hasContent = false;
-    let contentLength = 0;
-    let hasImage = false;
-    let imageDetails = '';
-    
-    for (let [key, value] of formData.entries()) {
-      if (value instanceof File) {
-        if (key === 'image' && value.size > 0) {
-          hasImage = true;
-          imageDetails = `${value.name} (${(value.size/1024/1024).toFixed(2)}MB, ${value.type})`;
-          debugHtml += `  ${key}: FILE - ${imageDetails}<br>`;
-        } else if (value.size > 0) {
-          debugHtml += `  ${key}: FILE - ${value.name} (${value.size} bytes)<br>`;
+  
+  // REMOVED DEBUG CODE - It was blocking form submission
+  // If you need debugging, uncomment the following line:
+  // window.enableBlogDebug = true;
+  
+  if (window.enableBlogDebug) {
+    form.addEventListener('submit', function(e) {
+      console.log('=== FORM SUBMISSION DEBUG ===');
+      console.log('Debug mode is enabled - form will submit normally after logging');
+      
+      // Log form data without preventing submission
+      const formData = new FormData(this);
+      console.log('Form fields:');
+      for (let [key, value] of formData.entries()) {
+        if (value instanceof File) {
+          console.log(`  ${key}: FILE - ${value.name} (${value.size} bytes)`);
+        } else {
+          console.log(`  ${key}: ${value.slice(0, 100)}${value.length > 100 ? '...' : ''}`);
         }
-      } else {
-        if (key === 'title' && value.trim()) {
-          hasTitle = true;
-        }
-        if (key === 'content' && value.trim()) {
-          hasContent = true;
-          contentLength = value.trim().length;
-        }
-        debugHtml += `  ${key}: ${value.slice(0, 100)}${value.length > 100 ? '...' : ''}<br>`;
       }
-    }
-    debugHtml += '</div>';
-    
-    // Validation checks
-    debugHtml += '<div style="margin-bottom: 15px;"><strong>✅ Validation Checks:</strong><br>';
-    
-    const checks = [
-      { name: 'Has Title', passed: hasTitle, details: hasTitle ? '✅ Title present' : '❌ Title missing or empty' },
-      { name: 'Has Content', passed: hasContent, details: hasContent ? '✅ Content present' : '❌ Content missing or empty' },
-      { name: 'Content Length', passed: contentLength >= 10, details: `${contentLength >= 10 ? '✅' : '❌'} Content: ${contentLength} chars (min: 10)` },
-      { name: 'Has Image', passed: hasImage, details: hasImage ? `✅ Image: ${imageDetails}` : '⚠️ No image selected' },
-      { name: 'User Logged In', passed: true, details: '✅ User is logged in (form accessible)' }
-    ];
-    
-    let allValid = true;
-    checks.forEach(check => {
-      const color = check.passed ? '#4ecdc4' : '#ff6b6b';
-      debugHtml += `  <span style="color: ${color};">${check.details}</span><br>`;
-      if (!check.passed && check.name !== 'Has Image') {
-        allValid = false;
-      }
+      console.log('=== END DEBUG ===');
+      
+      // DO NOT prevent form submission!
+      // e.preventDefault() was causing the duplicate submissions
     });
-    debugHtml += '</div>';
-    
-    // Potential issues
-    if (!allValid) {
-      debugHtml += '<div style="margin-bottom: 15px; color: #ff6b6b;"><strong>🚨 POTENTIAL ISSUES:</strong><br>';
-      if (!hasTitle) debugHtml += '  • Title is required<br>';
-      if (!hasContent) debugHtml += '  • Content is required<br>';
-      if (contentLength < 10) debugHtml += '  • Content must be at least 10 characters<br>';
-      debugHtml += '</div>';
-    }
-    
-    // Check for common problems
-    debugHtml += '<div style="margin-bottom: 15px;"><strong>🔧 System Checks:</strong><br>';
-    
-    const titleInput = this.querySelector('[name="title"]');
-    const contentInput = this.querySelector('[name="content"]');
-    const csrfToken = this.querySelector('[name="csrfmiddlewaretoken"]');
-    
-    debugHtml += `  CSRF Token: ${csrfToken ? '✅ Present' : '❌ Missing'}<br>`;
-    debugHtml += `  Title Field: ${titleInput ? '✅ Found' : '❌ Missing'}<br>`;
-    debugHtml += `  Content Field: ${contentInput ? '✅ Found' : '❌ Missing'}<br>`;
-    
-    if (titleInput) {
-      debugHtml += `  Title Length: ${titleInput.value.length}/120 chars<br>`;
-    }
-    
-    debugHtml += '</div>';
-    
-    // Recommendation
-    if (allValid) {
-      debugHtml += '<div style="color: #4ecdc4;"><strong>🎉 FORM LOOKS GOOD!</strong><br>If submission fails, check server logs.</div>';
-    } else {
-      debugHtml += '<div style="color: #ff6b6b;"><strong>🛑 FORM HAS ISSUES!</strong><br>Fix the issues above before submitting.</div>';
-    }
-    
-    debugHtml += `
-      <div style="margin-top: 20px; text-align: center;">
-        <button onclick="document.getElementById('debug-overlay').remove()" 
-                style="background: #4ecdc4; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
-          Close Debug
-        </button>
-        ${allValid ? 
-          '<button onclick="document.getElementById(\'debug-overlay\').remove(); document.getElementById(\'blog-form\').submit();" style="background: #ff6b6b; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-left: 10px;">Continue Submit</button>' : 
-          ''
-        }
-      </div>
-    `;
-    
-    debugOverlay.innerHTML = debugHtml;
-    document.body.appendChild(debugOverlay);
-    
-    // Prevent form submission to show debug
-    e.preventDefault();
-    
-    console.log('=== DEBUG SUMMARY ===');
-    console.log('Form valid:', allValid);
-    console.log('Title:', hasTitle);
-    console.log('Content:', hasContent, `(${contentLength} chars)`);
-    console.log('Image:', hasImage);
-    console.log('=== END DEBUG ===');
-    
-    return false;
+  }
+  
+  
+  // Monitor form changes for auto-save
+  form.addEventListener('change', () => {
+    formChanged = true;
+    autoSave();
   });
   
-  // DEBUG: Monitor form changes
-  const debugFormChange = function(e) {
-    if (e.target.name === 'image') {
-      console.log('Image input changed:', e.target.files);
-    }
-  };
   
-  form.addEventListener('change', debugFormChange);
-  
-  // DEBUG: Add global error handler
+  // Error handler
   window.addEventListener('error', function(e) {
     console.error('JavaScript Error:', e.error);
+    // Don't show error to user unless it's critical
   });
   
   // REAL-TIME VALIDATION
@@ -2355,9 +2229,8 @@ if (addGalleryBtn && totalFormsInput) {
   }
   
   // ENHANCED FORM SUBMISSION WITH ERROR HANDLING
+  // This handler only validates but doesn't prevent submission unless there are errors
   form.addEventListener('submit', function(e) {
-    console.log('=== FORM SUBMISSION DEBUG ===');
-    
     // Hide any existing alerts
     hideErrorAlert();
     
@@ -2408,23 +2281,11 @@ if (addGalleryBtn && totalFormsInput) {
       return false;
     }
     
-    console.log('Client-side validation passed');
+    // Form is valid - let it submit normally
+    console.log('Form validation passed - submitting...');
     
-    // Log form data for debugging
-    const formData = new FormData(this);
-    console.log('Form fields:');
-    for (let [key, value] of formData.entries()) {
-      if (value instanceof File) {
-        console.log(`  ${key}: FILE - ${value.name} (${value.size} bytes, ${value.type})`);
-      } else {
-        console.log(`  ${key}: ${value}`);
-      }
-    }
-    
-    console.log('=== END FORM DEBUG ===');
-    
-    // Form will submit normally
-    // Loading overlay will be hidden by page redirect or by error handling
+    // The form will submit normally and the page will redirect
+    // Loading overlay will be shown until redirect happens
   });
   
   // Handle form errors from server (if form is re-rendered with errors)

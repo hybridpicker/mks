@@ -197,7 +197,7 @@
   <div class="blog-grid">
     {% for blog in all_blogs %}
     <article class="blog-item{% if not blog.published %} blog-unpublished{% endif %}">
-      <a href="{{blog.published_year}}/{{ blog.slug }}">
+      <a href="/blog/{{blog.published_year}}/{{ blog.slug }}">
         {% if blog.image %}
         <div class="blog-item-image">
           <picture>
