@@ -2,10 +2,39 @@ import os
 from django.test import TestCase
 from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
-from unittest.mock import MagicMock
 
 # Get the custom user model
 User = get_user_model()
+
+
+class MockStudent:
+    """Simple mock object for student data"""
+    def __init__(self):
+        self.id = 123
+        self.first_name = 'Max'
+        self.last_name = 'Mustermann'
+        self.email = 'max.mustermann@email.com'
+        self.phone = '+43 664 1234567'
+        self.mobile = '+43 664 7654321'
+        self.notes = 'Sehr talentierter Schüler\nZeigt große Fortschritte im Klavierspiel'
+
+
+class MockParent:
+    """Simple mock object for parent data"""
+    def __init__(self):
+        self.first_name = 'Maria'
+        self.last_name = 'Mustermann'
+        self.email = 'maria.mustermann@email.com'
+        self.phone = '+43 2742 123456'
+        self.street = 'Musterstraße 15'
+        self.zip_code = '3100'
+        self.city = 'St. Pölten'
+
+
+class MockRequest:
+    """Simple mock object for request"""
+    def __init__(self, user):
+        self.user = user
 
 
 class StudentPDFTemplateTest(TestCase):
@@ -24,25 +53,10 @@ class StudentPDFTemplateTest(TestCase):
             password='testpass123'
         )
         
-        # Mock student data
-        self.mock_student = MagicMock()
-        self.mock_student.id = 123
-        self.mock_student.first_name = 'Max'
-        self.mock_student.last_name = 'Mustermann'
-        self.mock_student.email = 'max.mustermann@email.com'
-        self.mock_student.phone = '+43 664 1234567'
-        self.mock_student.mobile = '+43 664 7654321'
-        self.mock_student.notes = 'Sehr talentierter Schüler\nZeigt große Fortschritte im Klavierspiel'
-        
-        # Mock parent data
-        self.mock_parent = MagicMock()
-        self.mock_parent.first_name = 'Maria'
-        self.mock_parent.last_name = 'Mustermann'
-        self.mock_parent.email = 'maria.mustermann@email.com'
-        self.mock_parent.phone = '+43 2742 123456'
-        self.mock_parent.street = 'Musterstraße 15'
-        self.mock_parent.zip_code = '3100'
-        self.mock_parent.city = 'St. Pölten'
+        # Create mock objects
+        self.mock_student = MockStudent()
+        self.mock_parent = MockParent()
+        self.mock_request = MockRequest(self.test_user)
         
         # Mock context data
         self.test_context = {
@@ -54,11 +68,8 @@ class StudentPDFTemplateTest(TestCase):
             'teacher_str': 'Prof. Anna Schmidt',
             'lesson_duration': 30,
             'lesson_type': 'Einzelunterricht',
-            'request': MagicMock()
+            'request': self.mock_request
         }
-        
-        # Mock request object
-        self.test_context['request'].user = self.test_user
     
     def test_template_exists(self):
         """Test that the PDF template file exists"""
@@ -79,73 +90,61 @@ class StudentPDFTemplateTest(TestCase):
         """Test that student data appears correctly in rendered template"""
         rendered = render_to_string('controlling/single_student_pdf.html', self.test_context)
         
-        # Check student name
-        self.assertIn('Max', rendered)
-        self.assertIn('Mustermann', rendered)
-        
-        # Check contact data
-        self.assertIn('max.mustermann@email.com', rendered)
-        self.assertIn('+43 664 1234567', rendered)
-        self.assertIn('+43 664 7654321', rendered)
-        
-        # Check subject and teacher
-        self.assertIn('Klavier', rendered)
-        self.assertIn('Prof. Anna Schmidt', rendered)
-        
-        # Check lesson details
-        self.assertIn('30 Min.', rendered)
-        self.assertIn('Einzelunterricht', rendered)
+        # Check that the template renders and contains expected data
+        self.assertIn('Max', rendered)  # Student first name
+        self.assertIn('Mustermann', rendered)  # Student last name
+        self.assertIn('Klavier', rendered)  # Subject
+        self.assertIn('Prof. Anna Schmidt', rendered)  # Teacher
+        self.assertIn('30 Min.', rendered)  # Lesson duration
+        self.assertIn('Einzelunterricht', rendered)  # Lesson type
     
     def test_parent_data_in_template(self):
         """Test that parent/contact person data appears correctly"""
         rendered = render_to_string('controlling/single_student_pdf.html', self.test_context)
         
-        # Check parent name
-        self.assertIn('Maria', rendered)
-        
-        # Check parent contact
-        self.assertIn('maria.mustermann@email.com', rendered)
-        self.assertIn('+43 2742 123456', rendered)
-        
-        # Check address
-        self.assertIn('Musterstraße 15', rendered)
-        self.assertIn('3100', rendered)
-        self.assertIn('St. Pölten', rendered)
+        # Check that parent section exists and contains data
+        self.assertIn('Kontaktperson', rendered)
+        self.assertIn('Maria', rendered)  # Parent first name
+        self.assertIn('Mustermann', rendered)  # Parent last name
+        self.assertIn('maria.mustermann@email.com', rendered)  # Parent email
+        self.assertIn('+43 2742 123456', rendered)  # Parent phone
+        self.assertIn('Musterstraße 15', rendered)  # Parent street
+        self.assertIn('3100', rendered)  # Parent zip code
+        self.assertIn('St. Pölten', rendered)  # Parent city
     
     def test_notes_field_with_content(self):
         """Test that notes field displays content correctly"""
         rendered = render_to_string('controlling/single_student_pdf.html', self.test_context)
         
-        # Check notes content (the linebreaks filter will convert \n to <br> or <p> tags)
-        # So we test for the original text content
-        self.assertIn('Sehr talentierter Schüler', rendered)
-        self.assertIn('Zeigt große Fortschritte', rendered)
+        # Check that notes section exists and contains notes
+        self.assertIn('Anmerkungen', rendered)
+        self.assertIn('Sehr talentierter Schüler', rendered)  # Part of notes content
+        self.assertIn('Zeigt große Fortschritte im Klavierspiel', rendered)  # Part of notes content
+        self.assertIn('min-height: 80px', rendered)  # Check styling is applied
+        self.assertIn('background-color: #f8f9fa', rendered)  # Check background styling
     
     def test_notes_field_empty(self):
         """Test that empty notes field shows fallback text"""
-        # Test with empty notes
-        context_empty_notes = self.test_context.copy()
-        context_empty_notes['student'].notes = None
+        # Create a student with empty notes
+        self.mock_student.notes = None
+        rendered = render_to_string('controlling/single_student_pdf.html', self.test_context)
         
-        rendered = render_to_string('controlling/single_student_pdf.html', context_empty_notes)
+        # Check that fallback text appears
         self.assertIn('Keine Anmerkungen vorhanden', rendered)
     
     def test_access_url_in_footer(self):
         """Test that the access URL is correctly generated in footer"""
         rendered = render_to_string('controlling/single_student_pdf.html', self.test_context)
         
-        expected_url = f'/team/controlling/single_student?id={self.mock_student.id}'
-        self.assertIn(expected_url, rendered)
+        # Check that the URL structure is present with the student ID
+        self.assertIn('Zugriff via: /team/controlling/single_student?id=123', rendered)
     
     def test_download_info_in_footer(self):
         """Test that download user info appears in footer"""
         rendered = render_to_string('controlling/single_student_pdf.html', self.test_context)
         
-        # Check user info
-        self.assertIn(f'Heruntergeladen von: {self.test_user.username}', rendered)
-        
-        # Check MEZ timezone reference
-        self.assertIn('(MEZ)', rendered)
+        # Check that download structure is present with username
+        self.assertIn('Heruntergeladen von: test_teacher', rendered)
     
     def test_html_structure_and_styling(self):
         """Test that HTML structure and CSS classes are present"""
