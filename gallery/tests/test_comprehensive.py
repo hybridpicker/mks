@@ -61,7 +61,7 @@ class ComprehensiveLazyLoadingTest(TestCase):
             category=self.category,
             ordering=1
         )
-        self.assertFalse(photo.image_lazy, "❌ Photo sollte noch kein Lazy Image haben")
+        self.assertEqual(photo.image_lazy.name, 'gallery_lazy_imageDefault.jpg', "❌ Photo sollte noch kein echtes Lazy Image haben")
         print("✅ Photo ohne Lazy Image erstellt")
         
         # 2. Rufe Gallery View auf
@@ -71,8 +71,8 @@ class ComprehensiveLazyLoadingTest(TestCase):
         
         # 3. Prüfe ob Lazy Image automatisch erstellt wurde
         photo.refresh_from_db()
-        self.assertTrue(photo.image_lazy, "❌ Lazy Image sollte automatisch erstellt worden sein")
-        self.assertTrue(photo.image_thumbnail, "❌ Thumbnail sollte automatisch erstellt worden sein")
+        self.assertNotEqual(photo.image_lazy.name, 'gallery_lazy_imageDefault.jpg', "❌ Lazy Image sollte automatisch erstellt worden sein")
+        self.assertNotEqual(photo.image_thumbnail.name, 'gallery_thumbnail_imageDefault.jpg', "❌ Thumbnail sollte automatisch erstellt worden sein")
         print("✅ Lazy Images wurden automatisch generiert")
         
         # 4. Prüfe HTML-Struktur

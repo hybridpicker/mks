@@ -54,8 +54,8 @@ class LazyLoadingTestCase(TestCase):
             ordering=1
         )
         
-        # Prüfe dass noch kein Lazy Image existiert
-        self.assertFalse(photo.image_lazy)
+        # Prüfe dass noch kein echtes Lazy Image existiert (nur default)
+        self.assertEqual(photo.image_lazy.name, 'gallery_lazy_imageDefault.jpg')
         
         # Erstelle Lazy Image
         photo.image.open()
@@ -68,8 +68,9 @@ class LazyLoadingTestCase(TestCase):
         photo.image_lazy.save(lazy_image.name, lazy_image)
         photo.refresh_from_db()
         
-        # Prüfe dass Lazy Image gespeichert wurde
+        # Prüfe dass Lazy Image gespeichert wurde (nicht mehr default)
         self.assertTrue(photo.image_lazy)
+        self.assertNotEqual(photo.image_lazy.name, 'gallery_lazy_imageDefault.jpg')
         self.assertIn('_lazy.jpg', photo.image_lazy.name)
     
     def test_thumbnail_creation(self):
@@ -150,8 +151,8 @@ class LazyLoadingTestCase(TestCase):
             ordering=1
         )
         
-        # Prüfe dass kein Lazy Image existiert
-        self.assertFalse(photo.image_lazy)
+        # Prüfe dass kein echtes Lazy Image existiert (nur default)
+        self.assertEqual(photo.image_lazy.name, 'gallery_lazy_imageDefault.jpg')
         
         # Rufe Gallery View auf
         response = self.client.get(reverse('gallery_view'))
@@ -159,8 +160,8 @@ class LazyLoadingTestCase(TestCase):
         
         # Photo neu laden und prüfen ob Lazy Image erstellt wurde
         photo.refresh_from_db()
-        self.assertTrue(photo.image_lazy, "Lazy Image sollte automatisch erstellt worden sein")
-        self.assertTrue(photo.image_thumbnail, "Thumbnail sollte automatisch erstellt worden sein")
+        self.assertNotEqual(photo.image_lazy.name, 'gallery_lazy_imageDefault.jpg', "Lazy Image sollte automatisch erstellt worden sein")
+        self.assertNotEqual(photo.image_thumbnail.name, 'gallery_thumbnail_imageDefault.jpg', "Thumbnail sollte automatisch erstellt worden sein")
     
     def test_admin_automatic_processing(self):
         """Test dass der Admin automatisch Bilder verarbeitet"""

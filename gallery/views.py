@@ -25,8 +25,8 @@ def gallery_view(request):
             
             # Automatische Generierung von Lazy Images wenn nicht vorhanden
             try:
-                # Prüfe ob Lazy Image generiert werden muss
-                if photo.image and not photo.image_lazy:
+                # Prüfe ob Lazy Image generiert werden muss (prüfe ob es der default ist)
+                if photo.image and (not photo.image_lazy or photo.image_lazy.name == 'gallery_lazy_imageDefault.jpg'):
                     logger.info(f"Generiere Lazy Image für Photo ID: {photo.id}")
                     
                     # Öffne das Originalbild
@@ -42,7 +42,7 @@ def gallery_view(request):
                         logger.warning(f"Konnte kein Lazy Image erstellen für Photo ID: {photo.id}")
                 
                 # Optional: Auch Thumbnail generieren wenn nicht vorhanden
-                if photo.image and not photo.image_thumbnail:
+                if photo.image and (not photo.image_thumbnail or photo.image_thumbnail.name == 'gallery_thumbnail_imageDefault.jpg'):
                     logger.info(f"Generiere Thumbnail für Photo ID: {photo.id}")
                     
                     # Reset file pointer
