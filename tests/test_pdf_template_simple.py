@@ -1,8 +1,11 @@
 import os
 from django.test import TestCase
 from django.template.loader import render_to_string
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from unittest.mock import MagicMock
+
+# Get the custom user model
+User = get_user_model()
 
 
 class StudentPDFTemplateTest(TestCase):
