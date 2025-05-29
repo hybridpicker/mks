@@ -24,7 +24,27 @@ jobs:
       - run:
           name: Install system dependencies
           command: |
-            sudo apt-get update
+            # Add retry logic for apt-get update
+            n=0
+            until [ "$n" -ge 5 ]
+            do
+              sudo apt-get update && break
+              n=$((n+1))
+              echo "apt-get update failed, attempt $n/5"
+              sleep 15
+            done
+            
+            # Install packages with retry
+            sudo apt-get install -y \
+              build-essential \
+              libpq-dev \
+              python3-dev \
+              libjpeg-dev \
+              libpng-dev \
+              libfreetype6-dev \
+              libxml2-dev \
+              libxslt1-dev \
+              zlib1g-dev || \
             sudo apt-get install -y \
               build-essential \
               libpq-dev \
