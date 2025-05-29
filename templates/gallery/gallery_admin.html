@@ -1686,7 +1686,8 @@
             
             fetch("{% url 'gallery_upload' %}", {
                 method: 'POST',
-                body: formData
+                body: formData,
+                credentials: 'same-origin'  // Include cookies for CSRF
             })
             .then(response => response.json())
             .then(data => {
@@ -1722,7 +1723,39 @@
             e.preventDefault();
             
             const form = e.target;
-            const formData = new FormData(form);
+            const fileInput = document.getElementById('multiple-file-input');
+            
+            // Check if we have files
+            if (fileInput.files.length === 0) {
+                showMessage('error', 'Keine Dateien ausgewählt');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '⬆️ Alle hochladen';
+                progressContainer.style.display = 'none';
+                return;
+            }
+            
+            // Create new FormData without the form to avoid conflicts
+            const formData = new FormData();
+            
+            // Add form fields manually
+            formData.append('csrfmiddlewaretoken', form.querySelector('[name="csrfmiddlewaretoken"]').value);
+            const categoryId = form.querySelector('[name="category_id"]').value;
+            if (!categoryId) {
+                showMessage('error', 'Keine Kategorie ausgewählt. Bitte wählen Sie eine Kategorie aus.');
+                return;
+            }
+            formData.append('category_id', categoryId);
+            formData.append('is_multiple', 'true');
+            
+            // Debug: Check if files are selected
+            console.log('Files to upload:', fileInput.files.length);
+            
+            // Add files to FormData
+            for (let i = 0; i < fileInput.files.length; i++) {
+                formData.append('images', fileInput.files[i]);
+                console.log('Adding file:', fileInput.files[i].name);
+            }
+            
             const progressBar = document.getElementById('multiple-progress-bar');
             const progressText = document.getElementById('multiple-progress-text');
             const progressContainer = document.getElementById('multiple-progress');
@@ -1744,13 +1777,22 @@
             
             fetch("{% url 'gallery_upload' %}", {
                 method: 'POST',
-                body: formData
+                body: formData,
+                credentials: 'same-origin'  // Include cookies for CSRF
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 clearInterval(progressInterval);
                 progressBar.style.width = '100%';
                 progressText.textContent = '100%';
+                
+                console.log('Response data:', data);
                 
                 if (data.status === 'success') {
                     showMessage('success', data.message);
@@ -1773,6 +1815,7 @@
             })
             .catch(error => {
                 clearInterval(progressInterval);
+                console.error('Upload error:', error);
                 showMessage('error', 'Fehler beim Hochladen: ' + error.message);
             })
             .finally(() => {
