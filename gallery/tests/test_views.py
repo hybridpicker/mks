@@ -38,14 +38,14 @@ class GalleryViewTestCase(TestCase):
     
     def test_gallery_view_loads(self):
         """Test ob Gallery View lädt"""
-        response = self.client.get(reverse('gallery'))
+        response = self.client.get(reverse('gallery_view'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'gallery/gallery.html')
     
     def test_gallery_with_lazy_loading(self):
         """Test Gallery mit Lazy Loading Features"""
         photo = self.create_test_photo()
-        response = self.client.get(reverse('gallery'))
+        response = self.client.get(reverse('gallery_view'))
         
         # Prüfe ob Lazy Loading HTML vorhanden ist
         self.assertContains(response, 'data-src=')

@@ -7,7 +7,7 @@ import json
 from django.test import TestCase, Client, override_settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from gallery.models import Photo, PhotoCategory
 from gallery.image_utils import create_lazy_image, create_thumbnail, process_uploaded_image
 from PIL import Image
@@ -15,6 +15,8 @@ import io
 
 # Temporäres Media-Verzeichnis für Tests
 TEMP_MEDIA_ROOT = tempfile.mkdtemp()
+
+User = get_user_model()
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
 class ComprehensiveLazyLoadingTest(TestCase):
@@ -63,7 +65,7 @@ class ComprehensiveLazyLoadingTest(TestCase):
         print("✅ Photo ohne Lazy Image erstellt")
         
         # 2. Rufe Gallery View auf
-        response = self.client.get('/gallery/')
+        response = self.client.get('/galerie/')
         self.assertEqual(response.status_code, 200)
         print("✅ Gallery View erfolgreich aufgerufen")
         

@@ -3,7 +3,9 @@ import tempfile
 from django.test import TestCase, Client
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 from gallery.models import Photo, PhotoCategory
 from gallery.image_utils import create_lazy_image, create_thumbnail, process_uploaded_image
 from PIL import Image
@@ -124,7 +126,7 @@ class LazyLoadingTestCase(TestCase):
             )
         
         # Rufe Gallery View auf
-        response = self.client.get(reverse('gallery'))
+        response = self.client.get(reverse('gallery_view'))
         
         # Prüfe Response
         self.assertEqual(response.status_code, 200)
@@ -152,7 +154,7 @@ class LazyLoadingTestCase(TestCase):
         self.assertFalse(photo.image_lazy)
         
         # Rufe Gallery View auf
-        response = self.client.get(reverse('gallery'))
+        response = self.client.get(reverse('gallery_view'))
         self.assertEqual(response.status_code, 200)
         
         # Photo neu laden und prüfen ob Lazy Image erstellt wurde

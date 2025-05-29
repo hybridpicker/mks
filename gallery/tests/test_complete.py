@@ -29,7 +29,7 @@ class GalleryLazyLoadingTestCase(TestCase):
         """Testet den kompletten Lazy Loading Workflow"""
         
         # 1. Test: Gallery View lädt ohne Fotos
-        response = self.client.get(reverse('gallery'))
+        response = self.client.get(reverse('gallery_view'))
         self.assertEqual(response.status_code, 200)
         
         # 2. Test: Erstelle Foto und prüfe HTML-Struktur
@@ -39,7 +39,7 @@ class GalleryLazyLoadingTestCase(TestCase):
             category=self.category
         )
         
-        response = self.client.get(reverse('gallery'))
+        response = self.client.get(reverse('gallery_view'))
         self.assertContains(response, 'data-src=')
         self.assertContains(response, 'class="lazy"')
         self.assertContains(response, '<noscript>')

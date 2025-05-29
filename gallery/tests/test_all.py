@@ -27,7 +27,7 @@ class TestLazyLoadingGallery(TestCase):
         """Testet alle Lazy Loading Features"""
         
         # 1. Gallery lädt
-        r = self.client.get(reverse('gallery'))
+        r = self.client.get(reverse('gallery_view'))
         self.assertEqual(r.status_code, 200)
         
         # 2. Photo mit Lazy HTML
@@ -37,7 +37,7 @@ class TestLazyLoadingGallery(TestCase):
             category=self.cat
         )
         
-        r = self.client.get(reverse('gallery'))
+        r = self.client.get(reverse('gallery_view'))
         self.assertIn(b'data-src=', r.content)
         self.assertIn(b'class="lazy"', r.content)
         

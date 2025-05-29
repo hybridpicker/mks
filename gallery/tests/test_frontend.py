@@ -45,7 +45,7 @@ class LazyLoadingFrontendTest(TestCase):
                 photo.image_lazy.save(lazy_image.name, lazy_image)
         
         # Hole Gallery Seite
-        response = self.client.get('/gallery/')
+        response = self.client.get('/galerie/')
         self.assertEqual(response.status_code, 200)
         
         # Prüfe HTML Struktur
