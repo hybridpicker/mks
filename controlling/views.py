@@ -129,17 +129,28 @@ def get_student(request):
 # PDF generation imports
 from django.http import HttpResponse
 from django.template.loader import get_template
-from xhtml2pdf import pisa
 from django.template.defaultfilters import date as date_filter
 import io
 from django.conf import settings
 import os
+
+# Optional PDF import - graceful fallback if not available
+try:
+    from xhtml2pdf import pisa
+    PDF_AVAILABLE = True
+except ImportError:
+    PDF_AVAILABLE = False
 
 
 @login_required(login_url='/team/login/')
 @staff_member_required
 def generate_student_pdf(request, student_id):
     """Generates a PDF of student data with error handling."""
+    
+    # Check if PDF functionality is available
+    if not PDF_AVAILABLE:
+        return HttpResponse("PDF-Funktionalität nicht verfügbar. Bitte xhtml2pdf installieren.", status=500)
+    
     try:
         student = Student.objects.get(id=student_id)
         parent = student.parent

@@ -1,37 +1,42 @@
-# Test settings for Django MKS project
-# This file is used specifically for running tests
+# Fixed test_settings.py - Complete test configuration
+from mks.settings import *
 
-from .settings import *
-import os
-
-# Test database - use SQLite for speed
+# Override database settings for testing with all required keys
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': ':memory:',  # In-memory database for faster tests
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mks',
+        'USER': 'postgres',
+        'PASSWORD': 'Ax9kl3',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'TEST': {
+            'NAME': 'test_mks',
+            'USER': 'postgres',
+            'PASSWORD': 'Ax9kl3',
+            'HOST': 'localhost',
+            'PORT': '5432',
+            'CHARSET': None,
+            'COLLATION': None,
+            'MIRROR': None,
+            'CREATE_DB': True,
+        },
+        'ATOMIC_REQUESTS': False,
+        'AUTOCOMMIT': True,
+        'CONN_MAX_AGE': 0,
+        'OPTIONS': {},
     }
 }
 
-# Speed up tests
+# Disable debug mode for tests
+DEBUG = False
+
+# Faster test execution
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.MD5PasswordHasher',  # Fast but insecure - only for tests
+    'django.contrib.auth.hashers.MD5PasswordHasher',
 ]
 
-# Disable migrations for faster test runs
-class DisableMigrations:
-    def __contains__(self, item):
-        return True
-    
-    def __getitem__(self, item):
-        return None
-
-MIGRATION_MODULES = DisableMigrations()
-
-# Test-specific settings
-DEBUG = False
-TEMPLATE_DEBUG = False
-
-# Disable logging during tests to reduce noise
+# Disable logging during tests
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -44,35 +49,3 @@ LOGGING = {
         'handlers': ['null'],
     },
 }
-
-# Email backend for tests
-EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
-
-# Cache backend for tests
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
-
-# Media files for tests
-MEDIA_ROOT = os.path.join(BASE_DIR, 'test_media')
-
-# Static files for tests
-STATIC_ROOT = os.path.join(BASE_DIR, 'test_static')
-
-# Test runner
-TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-
-# Timezone for tests
-USE_TZ = True
-TIME_ZONE = 'Europe/Vienna'
-
-# Disable CSRF for API tests
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
-
-# Test-specific apps (if any)
-# INSTALLED_APPS += ['test_app']
-
-print("✅ Test settings loaded - using in-memory SQLite database")
