@@ -62,16 +62,12 @@ def upload_photo(request):
     AJAX endpoint for uploading photos with drag and drop.
     Supports multiple file uploads.
     """
-    logger.info(f"Upload request received: method={request.method}, files={request.FILES.keys()}, POST={request.POST}")
-    
     if request.method != 'POST':
         return JsonResponse({'status': 'error', 'message': 'Method not allowed'}, status=405)
     
     try:
         # Check if single or multiple upload
         is_multiple = request.POST.get('is_multiple') == 'true'
-        
-        logger.info(f"Upload type: {'multiple' if is_multiple else 'single'}")
         
         if is_multiple:
             return handle_multiple_uploads(request)
@@ -188,13 +184,18 @@ def handle_multiple_uploads(request):
     
     # Debug log
     logger.info(f"Multiple upload received: {len(files)} files")
-    logger.info(f"Request FILES: {request.FILES}")
-    logger.info(f"Request POST: {request.POST}")
     
     # Check if any files were uploaded
     if not files:
-        logger.error("No files found in request")
-        return JsonResponse({'status': 'error', 'message': 'No images provided'}, status=400)
+        # Try alternative field names
+        files = request.FILES.getlist('files') or request.FILES.getlist('file')
+        if not files:
+            # Log all available files for debugging
+            logger.warning(f"No files found. Available keys: {list(request.FILES.keys())}")
+            return JsonResponse({
+                'status': 'error', 
+                'message': 'Keine Bilder empfangen. Bitte versuchen Sie es erneut.'
+            }, status=400)
     
     # Check number of files
     if len(files) > MAX_FILES:

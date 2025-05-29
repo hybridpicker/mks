@@ -892,7 +892,20 @@
                 <h1 class="mks-title">Galerie verwalten</h1>
                 <p class="mks-subtitle">
                     Verwalten Sie Ihre Galerie-Kategorien und laden Sie Bilder hoch. Alle Bilder werden in der öffentlichen Galerie angezeigt.
+                    <button type="button" class="mks-btn mks-btn-sm" style="margin-left: 10px; padding: 4px 12px; font-size: 0.85rem; background: #6c757d;" onclick="toggleHelp()">
+                        ❓ Hilfe
+                    </button>
                 </p>
+                <div id="help-info" style="display: none; margin-top: 15px; padding: 15px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196f3;">
+                    <strong>💡 Wichtige Hinweise:</strong>
+                    <ul style="margin: 10px 0 0 0; padding-left: 25px; list-style-type: disc;">
+                        <li>Große Bilder werden automatisch auf max. 2048x2048 Pixel verkleinert</li>
+                        <li>Die Dateigröße wird automatisch optimiert (JPEG-Qualität: 85%)</li>
+                        <li>Bei Upload-Problemen: Cache leeren (Strg+Shift+R) und erneut versuchen</li>
+                        <li>Unterstützte Formate: JPG, PNG, GIF, WebP (bis 20MB pro Bild)</li>
+                        <li>Für jedes Bild werden automatisch Thumbnail und Lazy-Loading Versionen erstellt</li>
+                    </ul>
+                </div>
             </div>
         </div>
         
@@ -1075,7 +1088,7 @@
                                 <h3 class="mks-upload-title">Mehrere Bilder hochladen</h3>
                                 <p class="mks-upload-subtitle">
                                     Ziehen Sie mehrere Bilder hier hinein oder klicken Sie, um welche auszuwählen<br>
-                                    <small>Maximale Größe pro Bild: 3MB • Maximale Anzahl: 100 Bilder</small>
+                                    <small>Bilder werden automatisch optimiert • Max. 20MB pro Bild</small>
                                 </p>
                                 
                                 <form id="multiple-upload-form" enctype="multipart/form-data">
@@ -1725,37 +1738,34 @@
             const form = e.target;
             const fileInput = document.getElementById('multiple-file-input');
             
-            // Check if we have files
-            if (fileInput.files.length === 0) {
-                showMessage('error', 'Keine Dateien ausgewählt');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '⬆️ Alle hochladen';
-                progressContainer.style.display = 'none';
+            // Validate files
+            if (!fileInput.files || fileInput.files.length === 0) {
+                showMessage('error', 'Bitte wählen Sie mindestens ein Bild aus');
                 return;
             }
             
-            // Create new FormData without the form to avoid conflicts
+            // Use the native FormData from the form
             const formData = new FormData();
             
-            // Add form fields manually
-            formData.append('csrfmiddlewaretoken', form.querySelector('[name="csrfmiddlewaretoken"]').value);
+            // Add all form fields
+            const csrfToken = form.querySelector('[name="csrfmiddlewaretoken"]').value;
             const categoryId = form.querySelector('[name="category_id"]').value;
+            
             if (!categoryId) {
-                showMessage('error', 'Keine Kategorie ausgewählt. Bitte wählen Sie eine Kategorie aus.');
+                showMessage('error', 'Keine Kategorie ausgewählt');
                 return;
             }
+            
+            formData.append('csrfmiddlewaretoken', csrfToken);
             formData.append('category_id', categoryId);
             formData.append('is_multiple', 'true');
             
-            // Debug: Check if files are selected
-            console.log('Files to upload:', fileInput.files.length);
+            // Add all files
+            Array.from(fileInput.files).forEach((file, index) => {
+                formData.append('images', file);
+            });
             
-            // Add files to FormData
-            for (let i = 0; i < fileInput.files.length; i++) {
-                formData.append('images', fileInput.files[i]);
-                console.log('Adding file:', fileInput.files[i].name);
-            }
-            
+            // UI feedback
             const progressBar = document.getElementById('multiple-progress-bar');
             const progressText = document.getElementById('multiple-progress-text');
             const progressContainer = document.getElementById('multiple-progress');
@@ -1778,12 +1788,13 @@
             fetch("{% url 'gallery_upload' %}", {
                 method: 'POST',
                 body: formData,
-                credentials: 'same-origin'  // Include cookies for CSRF
+                credentials: 'same-origin'
             })
             .then(response => {
-                console.log('Response status:', response.status);
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    return response.text().then(text => {
+                        throw new Error(`Server error (${response.status}): ${text}`);
+                    });
                 }
                 return response.json();
             })
@@ -1792,22 +1803,20 @@
                 progressBar.style.width = '100%';
                 progressText.textContent = '100%';
                 
-                console.log('Response data:', data);
-                
                 if (data.status === 'success') {
-                    showMessage('success', data.message);
+                    showMessage('success', data.message || 'Bilder erfolgreich hochgeladen');
+                    
+                    // Show any warnings
                     if (data.warnings && data.warnings.length > 0) {
                         data.warnings.forEach(warning => showMessage('warning', warning));
                     }
-                    if (data.errors && data.errors.length > 0) {
-                        data.errors.forEach(error => showMessage('error', error));
-                    }
+                    
+                    // Reset form and reload after short delay
                     form.reset();
                     document.getElementById('multiple-file-preview').style.display = 'none';
-                    progressContainer.style.display = 'none';
                     setTimeout(() => location.reload(), 1500);
                 } else {
-                    showMessage('error', data.message || 'Fehler beim Hochladen');
+                    showMessage('error', data.message || 'Upload fehlgeschlagen');
                     if (data.errors && data.errors.length > 0) {
                         data.errors.forEach(error => showMessage('error', error));
                     }
@@ -1816,7 +1825,7 @@
             .catch(error => {
                 clearInterval(progressInterval);
                 console.error('Upload error:', error);
-                showMessage('error', 'Fehler beim Hochladen: ' + error.message);
+                showMessage('error', `Upload-Fehler: ${error.message}`);
             })
             .finally(() => {
                 submitBtn.disabled = false;
@@ -2167,6 +2176,13 @@
                     }
                 }, 300);
             }, 5000);
+        }
+        
+        function toggleHelp() {
+            const helpInfo = document.getElementById('help-info');
+            if (helpInfo) {
+                helpInfo.style.display = helpInfo.style.display === 'none' ? 'block' : 'none';
+            }
         }
         
         function getCookie(name) {
