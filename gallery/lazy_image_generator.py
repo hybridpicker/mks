@@ -47,7 +47,8 @@ def generate_missing_images_async(photo_ids):
                 
                 # Generiere Thumbnail wenn nötig
                 if not photo.image_thumbnail:
-                    logger.info(f"Background: Generiere Thumbnail für Photo ID: {photo_id}")                    photo.image.seek(0)
+                    logger.info(f"Background: Generiere Thumbnail für Photo ID: {photo_id}")
+                    photo.image.seek(0)
                     thumbnail = create_thumbnail(photo.image)
                     if thumbnail:
                         photo.image_thumbnail.save(thumbnail.name, thumbnail, save=True)
