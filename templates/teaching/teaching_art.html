@@ -90,7 +90,7 @@
             {% for blog in blog %}
             <div class="tmcbpb">
               <div class="mti">
-                <a href="blog/{{blog.published_year}}/{{blog.slug}}">
+                <a href="/blog/{{blog.published_year}}/{{blog.slug}}">
                   <picture>
                     {% thumbnail blog.image "400x300" crop="center" format="WEBP" as im %}
                     <source srcset="{{ im.url }}" type="image/webp">
@@ -107,7 +107,7 @@
                 </a>
                 <div class="tctm">
                   <p>{{ blog.meta_description|linebreaks|truncatewords:30 }}</p>
-                  <a href="blog/{{blog.published_year}}/{{blog.slug}}">
+                  <a href="/blog/{{blog.published_year}}/{{blog.slug}}">
                     <button>
                     Weiterlesen
                     </button>

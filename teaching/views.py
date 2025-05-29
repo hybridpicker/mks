@@ -477,7 +477,7 @@ def teaching_dance_view (request):
     return redirect('/tanz-und-bewegung/')
 
 def teaching_art_view (request):
-    blog = BlogPost.objects.filter(category__category__name="Kunstschule")[0:6]
+    blog = BlogPost.objects.filter(published=True, category__category__name="Kunstschule")[0:6]
     teacher_art = get_teachers_from_category("Kunstschule")
     context = { 'blog': blog, 
                 'teacher_art': teacher_art,}
