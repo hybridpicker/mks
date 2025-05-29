@@ -164,6 +164,12 @@
             color: #721c24;
         }
         
+        .mks-alert-warning {
+            background: #fff3cd;
+            border-color: #ffeaa7;
+            color: #856404;
+        }
+        
         /* Category Tabs */
         .mks-category-section {
             margin-bottom: 2rem;
@@ -1595,8 +1601,8 @@
             const previewName = document.getElementById('single-preview-name');
             const submitBtn = document.querySelector('#single-upload-form button[type="submit"]');
             
-            if (file.size > 3 * 1024 * 1024) {
-                showMessage('error', `Die Datei "${file.name}" ist zu groß. Maximale Größe: 3MB.`);
+            if (file.size > 10 * 1024 * 1024) {
+                showMessage('error', `Die Datei "${file.name}" ist zu groß. Maximale Größe: 10MB. Das Bild wird automatisch komprimiert.`);
                 return;
             }
             
@@ -1630,9 +1636,8 @@
             previewGrid.innerHTML = '';
             
             Array.from(files).forEach(file => {
-                if (file.size > 3 * 1024 * 1024) {
-                    showMessage('error', `Die Datei "${file.name}" ist zu groß und wird übersprungen.`);
-                    return;
+                if (file.size > 10 * 1024 * 1024) {
+                    showMessage('warning', `Die Datei "${file.name}" ist größer als 10MB und wird automatisch komprimiert.`);
                 }
                 
                 validFiles++;
@@ -1749,13 +1754,16 @@
                 
                 if (data.status === 'success') {
                     showMessage('success', data.message);
+                    if (data.warnings && data.warnings.length > 0) {
+                        data.warnings.forEach(warning => showMessage('warning', warning));
+                    }
                     if (data.errors && data.errors.length > 0) {
                         data.errors.forEach(error => showMessage('error', error));
                     }
                     form.reset();
                     document.getElementById('multiple-file-preview').style.display = 'none';
                     progressContainer.style.display = 'none';
-                    setTimeout(() => location.reload(), 1000);
+                    setTimeout(() => location.reload(), 1500);
                 } else {
                     showMessage('error', data.message || 'Fehler beim Hochladen');
                     if (data.errors && data.errors.length > 0) {
