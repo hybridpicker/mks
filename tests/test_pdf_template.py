@@ -1,4 +1,3 @@
-import os
 from django.test import TestCase
 from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
@@ -73,9 +72,12 @@ class StudentPDFTemplateTest(TestCase):
     
     def test_template_exists(self):
         """Test that the PDF template file exists"""
-        template_path = '/Users/lukasschonsgibl/Coding/Django/mks/templates/controlling/single_student_pdf.html'
-        self.assertTrue(os.path.exists(template_path), 
-                       f"Template file does not exist: {template_path}")
+        from django.template.loader import get_template
+        try:
+            template = get_template('controlling/single_student_pdf.html')
+            self.assertIsNotNone(template)
+        except Exception as e:
+            self.fail(f"Template file does not exist: {str(e)}")
     
     def test_template_renders_without_errors(self):
         """Test that template renders without syntax errors"""
