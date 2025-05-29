@@ -4,6 +4,8 @@ from gallery.models import Photo, PhotoCategory
 import logging
 import os
 from django.conf import settings
+from gallery.image_utils import create_lazy_image, create_thumbnail
+from django.core.files.base import ContentFile
 
 # Logger einrichten
 logger = logging.getLogger(__name__)
@@ -20,6 +22,45 @@ def gallery_view(request):
         image_path = os.path.join(settings.MEDIA_ROOT, photo.image.name)
         if os.path.exists(image_path):
             photos.append(photo)
+            
+            # Automatische Generierung von Lazy Images wenn nicht vorhanden
+            try:
+                # Prüfe ob Lazy Image generiert werden muss
+                if photo.image and not photo.image_lazy:
+                    logger.info(f"Generiere Lazy Image für Photo ID: {photo.id}")
+                    
+                    # Öffne das Originalbild
+                    photo.image.open()
+                    
+                    # Erstelle Lazy Image
+                    lazy_image = create_lazy_image(photo.image)
+                    if lazy_image:
+                        # Speichere das Lazy Image
+                        photo.image_lazy.save(lazy_image.name, lazy_image, save=True)
+                        logger.info(f"Lazy Image erfolgreich erstellt für Photo ID: {photo.id}")
+                    else:
+                        logger.warning(f"Konnte kein Lazy Image erstellen für Photo ID: {photo.id}")
+                
+                # Optional: Auch Thumbnail generieren wenn nicht vorhanden
+                if photo.image and not photo.image_thumbnail:
+                    logger.info(f"Generiere Thumbnail für Photo ID: {photo.id}")
+                    
+                    # Reset file pointer
+                    photo.image.seek(0)
+                    
+                    # Erstelle Thumbnail
+                    thumbnail = create_thumbnail(photo.image)
+                    if thumbnail:
+                        # Speichere das Thumbnail
+                        photo.image_thumbnail.save(thumbnail.name, thumbnail, save=True)
+                        logger.info(f"Thumbnail erfolgreich erstellt für Photo ID: {photo.id}")
+                    else:
+                        logger.warning(f"Konnte kein Thumbnail erstellen für Photo ID: {photo.id}")
+                        
+            except Exception as e:
+                logger.error(f"Fehler beim Generieren von Lazy/Thumbnail Images für Photo ID {photo.id}: {str(e)}")
+                # Trotzdem das Foto zur Liste hinzufügen, auch wenn Lazy Image fehlt
+                pass
         else:
             logger.warning(f"Bild nicht gefunden: {photo.image.name} (ID: {photo.id})")
     

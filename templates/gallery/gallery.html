@@ -23,6 +23,7 @@ var photo_data = {{ gallery_json_data|safe }}
 </script>
 <!-- Modern Gallery styles -->
 <link rel="stylesheet" href="{% static 'gallery/css/modern/gallery.4.0.9.css' %}">
+<link rel="stylesheet" href="{% static 'gallery/css/lazy-loading.css' %}">
 <style>
 /* Wichtige direkte Stilüberschreibungen */
 body .gallery-header {
@@ -124,22 +125,37 @@ body #closebtn-gallery:hover {
       {% for photo in photos %}
       {% if photo.image %}
           {% if photo.image.width > photo.image.height %}
-          <div class="landscape gallery-item" onclick="showImg({{photo.id}})" style="display: block; position: relative; width: 100%; height: 100%; overflow: hidden; background-color: transparent; box-shadow: none; border-radius: 0;">
-              <img src="{{ photo.image.url }}" 
+          <div class="landscape gallery-item loading" onclick="showImg({{photo.id}})" style="display: block; position: relative; width: 100%; height: 100%; overflow: hidden; background-color: transparent; box-shadow: none; border-radius: 0;">
+              <img class="lazy" 
+                src="{% if photo.image_lazy %}{{ photo.image_lazy.url }}{% else %}data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjIyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjIyMCIgZmlsbD0iI2YwZjBmMCIvPjwvc3ZnPg=={% endif %}"
+                data-src="{{ photo.image.url }}" 
                 alt="{{ photo.title|default:'Gallery Image' }}"
                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <noscript>
+                <img src="{{ photo.image.url }}" alt="{{ photo.title|default:'Gallery Image' }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              </noscript>
           </div>
           {% elif photo.image.width == photo.image.height %}
-          <div class="square gallery-item" onclick="showImg({{photo.id}})" style="display: block; position: relative; width: 100%; height: 100%; overflow: hidden; background-color: transparent; box-shadow: none; border-radius: 0;">
-              <img src="{{ photo.image.url }}" 
+          <div class="square gallery-item loading" onclick="showImg({{photo.id}})" style="display: block; position: relative; width: 100%; height: 100%; overflow: hidden; background-color: transparent; box-shadow: none; border-radius: 0;">
+              <img class="lazy" 
+                src="{% if photo.image_lazy %}{{ photo.image_lazy.url }}{% else %}data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjIyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjIyMCIgZmlsbD0iI2YwZjBmMCIvPjwvc3ZnPg=={% endif %}"
+                data-src="{{ photo.image.url }}" 
                 alt="{{ photo.title|default:'Gallery Image' }}"
                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <noscript>
+                <img src="{{ photo.image.url }}" alt="{{ photo.title|default:'Gallery Image' }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              </noscript>
           </div>
           {% else %}
-          <div class="portrait gallery-item" onclick="showImg({{photo.id}})" style="display: block; position: relative; width: 100%; height: 100%; overflow: hidden; background-color: transparent; box-shadow: none; border-radius: 0;">
-              <img src="{{ photo.image.url }}" 
+          <div class="portrait gallery-item loading" onclick="showImg({{photo.id}})" style="display: block; position: relative; width: 100%; height: 100%; overflow: hidden; background-color: transparent; box-shadow: none; border-radius: 0;">
+              <img class="lazy" 
+                src="{% if photo.image_lazy %}{{ photo.image_lazy.url }}{% else %}data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjIyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjIyMCIgZmlsbD0iI2YwZjBmMCIvPjwvc3ZnPg=={% endif %}"
+                data-src="{{ photo.image.url }}" 
                 alt="{{ photo.title|default:'Gallery Image' }}"
                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <noscript>
+                <img src="{{ photo.image.url }}" alt="{{ photo.title|default:'Gallery Image' }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              </noscript>
           </div>
           {% endif %}
       {% endif %}
@@ -174,6 +190,8 @@ body #closebtn-gallery:hover {
 
 {% endblock %}
 {% block footer %}
+<!-- Lazy Loading Script -->
+<script src="{% static 'gallery/js/lazy-loading.js' %}"></script>
 <!-- Modern Gallery JavaScript -->
 <script>
 // Fixes für die Galerie beim Laden
