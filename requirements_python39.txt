@@ -55,3 +55,9 @@ ua-parser>=0.16.1
 user-agents>=2.2.0
 et_xmlfile>=2.0.0
 tablib>=3.8.0
+
+# PDF Generator with compatible versions
+xhtml2pdf==0.2.15  # Latest stable version
+reportlab==4.0.9   # Compatible with xhtml2pdf 0.2.15
+html5lib==1.1
+PyPDF2==3.0.1

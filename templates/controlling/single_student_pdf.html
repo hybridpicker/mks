@@ -2,216 +2,308 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Schülerdaten - {{ student.first_name }} {{ student.last_name }}</title>
+    <title>{{ student.first_name }} {{ student.last_name }} - Musikschule St. Pölten</title>
     <style type="text/css">
         @page {
             size: A4;
-            margin: 12mm;
+            margin: 20mm 20mm 20mm 20mm;
         }
         
         body {
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 9pt;
-            line-height: 1.2;
-            color: #333;
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #2c3e50;
             margin: 0;
             padding: 0;
-            background-color: white;
         }
         
+        /* Header */
         .header {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        
-        .logo-text {
-            font-size: 12pt;
-            font-weight: bold;
-            color: #d11317;
-            letter-spacing: 1px;
-        }
-        
-        .header h1 {
-            color: #333;
-            font-size: 16pt;
-            margin: 6px 0;
-            font-weight: bold;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        
-        .header .subtitle {
-            color: #666;
-            font-size: 10pt;
-            margin: 3px 0;
-            font-weight: normal;
-        }
-        
-        .section {
-            margin-bottom: 15px;
-            page-break-inside: avoid;
-        }
-        
-        .section-title {
-            color: #d11317;
-            padding: 5px 0;
-            font-size: 10pt;
-            font-weight: bold;
-            margin-bottom: 6px;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-        }
-        
-        .data-table th {
-            background: #f8f8f8;
-            color: #333;
-            padding: 10px 15px;
-            text-align: left;
-            font-weight: bold;
-            width: 35%;
-            font-size: 9pt;
-            font-family: Arial, Helvetica, sans-serif;
-            border-bottom: 1px solid #ddd;
-            border-right: 1px solid #ddd;
-        }
-        
-        .data-table td {
-            background-color: white;
-            padding: 10px 15px;
-            border-bottom: 1px solid #eee;
-            vertical-align: top;
-            font-size: 9pt;
-            border-right: 1px solid #eee;
-            min-width: 150px;
-        }
-        
-        .two-column {
-            width: 47%;
-            float: left;
-            margin-right: 6%;
-        }
-        
-        .two-column:last-child {
-            margin-right: 0;
-        }
-        
-        .clearfix:after {
-            content: "";
             display: table;
+            width: 100%;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #D11317;
+        }
+        
+        .logo-section {
+            display: table-cell;
+            vertical-align: top;
+        }
+        
+        .logo-section h1 {
+            margin: 0;
+            font-size: 18pt;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .logo-section .subtitle {
+            margin-top: 2px;
+            font-size: 11pt;
+            color: #7f8c8d;
+        }
+        
+        .date-section {
+            display: table-cell;
+            vertical-align: top;
+            text-align: right;
+            font-size: 9pt;
+            color: #7f8c8d;
+        }
+        
+        /* Student Header */
+        .student-header {
+            margin-bottom: 25px;
+            margin-top: 25px;
+            padding-top: 25px;
+        }
+        
+        .student-name {
+            font-size: 20pt;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0;
+        }
+        
+        /* Content Table */
+        .content-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 15px 0;
+        }
+        
+        .content-table td {
+            vertical-align: top;
+            width: 50%;
+        }
+        
+        /* Sections */
+        .section {
+            background-color: #ffffff;
+            border: 1px solid #e9ecef;
+            padding: 15px;
+            margin-bottom: 15px;
+            height: 100%;
+        }
+        
+        .section h3 {
+            font-size: 12pt;
+            font-weight: 600;
+            color: #D11317;
+            margin: 0 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e9ecef;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Info Rows */
+        .info-row {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
             clear: both;
         }
         
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #666;
-            font-size: 7pt;
-            border-top: 1px solid #ddd;
-            padding-top: 8px;
-            font-family: Arial, Helvetica, sans-serif;
+        .info-row .label {
+            display: inline-block;
+            width: 40%;
+            font-size: 10pt;
+            color: #6c757d;
+            font-weight: 500;
+            padding-right: 10px;
+            vertical-align: top;
         }
+        
+        .info-row .value {
+            display: inline-block;
+            width: 58%;
+            font-size: 10pt;
+            color: #2c3e50;
+            vertical-align: top;
+        }
+        
+        .info-row .value.empty {
+            color: #ced4da;
+            font-style: italic;
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+            text-align: center;
+            font-size: 9pt;
+            color: #6c757d;
+        }
+        
+        /* Utilities */
+        .accent { color: #D11317; }
+        .text-muted { color: #6c757d; }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="logo-text">Musikschule der Landeshauptstadt St. Pölten</div>
-        <h1>Schülerdaten</h1>
-        <div class="subtitle">{{ student.first_name }} {{ student.last_name }}</div>
+        <div class="logo-section">
+            <h1> {{ student.first_name }}<span class="accent"> {{ student.last_name }}</span></h1>
+        </div>
+        <div class="date-section">
+            Erstellt am: {% now "d. F Y" %}
+        </div>
     </div>
-
-    <div class="clearfix">
-        <div class="two-column">
-            <div class="section">
-                <div class="section-title">Schülerinformationen</div>
-                <table>
-                    <tr>
-                        <th>Anmeldung</th>
-                        <td>{{ start_date|default:"Nicht angegeben" }}</td>
-                    </tr>
-                    <tr>
-                        <th>Vorname</th>
-                        <td>{{ student.first_name|default:"Nicht angegeben" }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nachname</th>
-                        <td>{{ student.last_name|default:"Nicht angegeben" }}</td>
-                    </tr>
-                    <tr>
-                        <th>Geburtstag</th>
-                        <td>{{ birth_date|default:"Nicht angegeben" }}</td>
-                    </tr>
-                    <tr>
-                        <th>Instrument</th>
-                        <td>{{ subject_str|default:"Nicht zugeordnet" }}</td>
-                    </tr>
-                    <tr>
-                        <th>Lehrer/in</th>
-                        <td>{{ teacher_str|default:"Nicht zugeordnet" }}</td>
-                    </tr>
-                    <tr>
-                        <th>Schnupperstunde</th>
-                        <td>{% if student.trial_lesson %}Ja{% else %}Nein{% endif %}</td>
-                    </tr>
-                    {% if student.note %}
-                    <tr>
-                        <th>Anmerkungen</th>
-                        <td>{{ student.note|truncatewords:15 }}</td>
-                    </tr>
+    
+    <table class="content-table">
+        <tr>
+            <td>
+                <!-- Stammdaten -->
+                <div class="section">
+                    <h3>Stammdaten</h3>
+                    
+                    <div class="info-row">
+                        <div class="label">Geburtsdatum:</div>
+                        <div class="value{% if not birth_date %} empty{% endif %}">
+                            {{ birth_date|default:"Nicht angegeben" }}
+                        </div>
+                    </div>
+                    
+                    <div class="info-row">
+                        <div class="label">Voranmeldung:</div>
+                        <div class="value{% if not start_date %} empty{% endif %}">
+                            {{ start_date|default:"Nicht angegeben" }}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Kontaktdaten Schüler -->
+                <div class="section">
+                    <h3>Kontaktdaten Schüler/in</h3>
+                    
+                    <div class="info-row">
+                        <div class="label">E-Mail:</div>
+                        <div class="value{% if not student.email %} empty{% endif %}">
+                            {{ student.email|default:"Nicht angegeben" }}
+                        </div>
+                    </div>
+                    
+                    <div class="info-row">
+                        <div class="label">Telefon:</div>
+                        <div class="value{% if not student.phone %} empty{% endif %}">
+                            {{ student.phone|default:"Nicht angegeben" }}
+                        </div>
+                    </div>
+                    
+                    {% if student.mobile %}
+                    <div class="info-row">
+                        <div class="label">Mobil:</div>
+                        <div class="value">{{ student.mobile }}</div>
+                    </div>
                     {% endif %}
-                </table>
-            </div>
-        </div>
-
-        <div class="two-column">
-            <div class="section">
-                <div class="section-title">Kontaktdaten Erziehungsberechtigte</div>
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <td>
-                            {% if parent.first_name or parent.last_name %}
-                                {{ parent.first_name|default:"" }} {{ parent.last_name|default:"" }}
-                            {% else %}
-                                Nicht angegeben
+                </div>
+            </td>
+            
+            <td>
+                <!-- Unterricht -->
+                <div class="section">
+                    <h3>Unterricht</h3>
+                    
+                    <div class="info-row">
+                        <div class="label">Hauptfach:</div>
+                        <div class="value{% if not subject_str %} empty{% endif %}">
+                            {{ subject_str|default:"Nicht zugewiesen" }}
+                        </div>
+                    </div>
+                    
+                    <div class="info-row">
+                        <div class="label">Fachlehrer/in:</div>
+                        <div class="value{% if not teacher_str %} empty{% endif %}">
+                            {{ teacher_str|default:"Nicht zugewiesen" }}
+                        </div>
+                    </div>
+                    
+                    {% if lesson_duration %}
+                    <div class="info-row">
+                        <div class="label">Dauer:</div>
+                        <div class="value">{{ lesson_duration }} Min.</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if lesson_type %}
+                    <div class="info-row">
+                        <div class="label">Form:</div>
+                        <div class="value">{{ lesson_type }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Kontaktperson -->
+                {% if parent %}
+                <div class="section">
+                    <h3>Kontaktperson</h3>
+                    
+                    <div class="info-row">
+                        <div class="label">Name:</div>
+                        <div class="value">
+                            {{ parent.first_name|default:"" }} {{ parent.last_name|default:"" }}
+                        </div>
+                    </div>
+                    
+                    <div class="info-row">
+                        <div class="label">E-Mail:</div>
+                        <div class="value{% if not parent.email %} empty{% endif %}">
+                            {{ parent.email|default:"Nicht angegeben" }}
+                        </div>
+                    </div>
+                    
+                    <div class="info-row">
+                        <div class="label">Telefon:</div>
+                        <div class="value{% if not parent.phone %} empty{% endif %}">
+                            {{ parent.phone|default:"Nicht angegeben" }}
+                        </div>
+                    </div>
+                    
+                    {% if parent.street or parent.city %}
+                    <div class="info-row">
+                        <div class="label">Adresse:</div>
+                        <div class="value">
+                            {% if parent.street %}{{ parent.street }}{% endif %}
+                            {% if parent.zip_code or parent.city %}
+                                {% if parent.street %}, {% endif %}{{ parent.zip_code }} {{ parent.city }}
                             {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>{{ parent.email|default:"Nicht angegeben" }}</td>
-                    </tr>
-                    <tr>
-                        <th>Telefon</th>
-                        <td>{{ parent.phone|default:"Nicht angegeben" }}</td>
-                    </tr>
-                    <tr>
-                        <th>Straße</th>
-                        <td>{{ parent.adress_line|default:"Nicht angegeben" }}</td>
-                    </tr>
-                    <tr>
-                        <th>Hausnummer</th>
-                        <td>{{ parent.house_number|default:"Nicht angegeben" }}</td>
-                    </tr>
-                    <tr>
-                        <th>PLZ</th>
-                        <td>{{ parent.postal_code|default:"Nicht angegeben" }}</td>
-                    </tr>
-                    <tr>
-                        <th>Ort</th>
-                        <td>{{ parent.city|default:"Nicht angegeben" }}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </td>
+        </tr>
+        
+        <!-- Anmerkungen Sektion -->
+        <tr>
+            <td colspan="2">
+                <div class="section">
+                    <h3>Anmerkungen</h3>
+                    
+                    <div class="info-row">
+                        <div class="value{% if not student.notes %} empty{% endif %}" style="width: 100%; min-height: 80px; padding: 10px; border: 1px solid #e9ecef; background-color: #f8f9fa;">
+                            {{ student.notes|default:"Keine Anmerkungen vorhanden"|linebreaks }}
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    
     <div class="footer">
-        <div>Erstellt am: {% now "d.m.Y H:i" %} Uhr | Musikschule St. Pölten - Schülerdatenblatt</div>
+        Zugriff via: /team/controlling/single_student?id={{student.id}}<br>
+        {% load tz %}
+        {% timezone "Europe/Vienna" %}
+        Heruntergeladen von: {{ request.user.username }} am {% now "d.m.Y H:i" %}<br>
+        {% endtimezone %}
+        <strong>Musikschule der Landeshauptstadt St. Pölten</strong><br>
+        Maria Theresia Straße 23, 3100 St. Pölten | Tel: +43 2742 333-2651 | E-Mail: musikschule@st-poelten.gv.at
     </div>
 </body>
 </html>

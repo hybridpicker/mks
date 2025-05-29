@@ -125,11 +125,105 @@ def get_student(request):
                 }
     return render(request, 'controlling/single_student.html', context)
 
+
+# PDF generation imports
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.template.defaultfilters import date as date_filter
+import io
+from django.conf import settings
+import os
+
+# Optional PDF import - graceful fallback if not available
+try:
+    from xhtml2pdf import pisa
+    PDF_AVAILABLE = True
+except ImportError:
+    PDF_AVAILABLE = False
+
+
 @login_required(login_url='/team/login/')
 @staff_member_required
 def generate_student_pdf(request, student_id):
-    """Temporarily disabled PDF generation"""
-    return HttpResponse("PDF-Generierung ist vorübergehend deaktiviert", status=503)
+    """Generates a PDF of student data with error handling."""
+    
+    # Check if PDF functionality is available
+    if not PDF_AVAILABLE:
+        return HttpResponse("PDF-Funktionalität nicht verfügbar. Bitte xhtml2pdf installieren.", status=500)
+    
+    try:
+        student = Student.objects.get(id=student_id)
+        parent = student.parent
+    except Student.DoesNotExist:
+        return HttpResponse("Schüler nicht gefunden", status=404)
+
+    # Format dates for locale
+    formatted_birth_date = date_filter(student.birth_date, "d.m.Y") if student.birth_date else ""
+    formatted_start_date = date_filter(student.start_date, "d.m.Y") if student.start_date else ""
+
+    # Explicitly convert foreign key objects to strings
+    subject_str = str(student.subject) if student.subject else ""
+    teacher_str = str(student.teacher) if student.teacher else ""
+
+    # Generate a safe filename
+    safe_name = f"{student.first_name}_{student.last_name}".replace(" ", "_").replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")
+    filename = f"schuelerdaten_{safe_name}_{student_id}.pdf"
+
+    context = {
+        'student': student,
+        'parent': parent,
+        'birth_date': formatted_birth_date,
+        'start_date': formatted_start_date,
+        'subject_str': subject_str,
+        'teacher_str': teacher_str,
+        'BASE_DIR': settings.BASE_DIR,  # For static file paths
+    }
+
+    # Get template
+    template_path = 'controlling/single_student_pdf.html'
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # Create PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    # Create PDF with error handling
+    pisa_status = pisa.CreatePDF(
+        io.BytesIO(html.encode("UTF-8")), 
+        dest=response,
+        encoding='UTF-8',
+        link_callback=link_callback
+    )
+    
+    if pisa_status.err:
+        return HttpResponse('Fehler bei der PDF-Erstellung', status=500)
+    
+    return response
+
+
+def link_callback(uri, rel):
+    """
+    Convert HTML URIs to absolute system paths so xhtml2pdf can access those resources
+    """
+    # Use Django static file system
+    sUrl = settings.STATIC_URL
+    sRoot = settings.STATIC_ROOT
+    mUrl = settings.MEDIA_URL
+    mRoot = settings.MEDIA_ROOT
+    
+    if uri.startswith(mUrl):
+        path = os.path.join(mRoot, uri.replace(mUrl, ""))
+    elif uri.startswith(sUrl):
+        path = os.path.join(sRoot, uri.replace(sUrl, ""))
+    else:
+        return uri
+    
+    # Make sure that file exists
+    if not os.path.isfile(path):
+        raise Exception(f'Media/static file not found: {path}')
+    
+    return path
 
 
 @login_required(login_url='/team/login/')
