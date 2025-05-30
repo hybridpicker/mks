@@ -31,6 +31,9 @@ DATABASES = {
 # Disable debug mode for tests
 DEBUG = False
 
+# Enable synchronous processing for tests
+TESTING = True
+
 # Faster test execution
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.MD5PasswordHasher',

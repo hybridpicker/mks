@@ -39,6 +39,7 @@ sitemaps = {
 
 
 urlpatterns = [
+    path('', include('maintenance.urls')),  # Wartungsmodus - muss als erstes kommen
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^blog/', include('blog.urls')),
     re_path(r'^blogedit/', include('blog.edit_urls')),

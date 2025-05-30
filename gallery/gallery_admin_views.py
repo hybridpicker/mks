@@ -75,6 +75,7 @@ def upload_photo(request):
             return handle_single_upload(request)
             
     except Exception as e:
+        logger.error(f"Upload error: {str(e)}", exc_info=True)
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
 def handle_single_upload(request):
@@ -186,7 +187,15 @@ def handle_multiple_uploads(request):
     
     # Check if any files were uploaded
     if not files:
-        return JsonResponse({'status': 'error', 'message': 'No images provided'}, status=400)
+        # Try alternative field names
+        files = request.FILES.getlist('files') or request.FILES.getlist('file')
+        if not files:
+            # Log all available files for debugging
+            logger.warning(f"No files found. Available keys: {list(request.FILES.keys())}")
+            return JsonResponse({
+                'status': 'error', 
+                'message': 'Keine Bilder empfangen. Bitte versuchen Sie es erneut.'
+            }, status=400)
     
     # Check number of files
     if len(files) > MAX_FILES:

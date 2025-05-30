@@ -1,0 +1,29 @@
+{% if maintenance_mode and is_superuser %}
+<div style="
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 9999;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    WARTUNGSMODUS AKTIV
+    <a href="/admin/maintenance/maintenancemode/1/change/" 
+       style="color: white; margin-left: 10px; text-decoration: underline;">
+        Bearbeiten
+    </a>
+</div>
+{% endif %}

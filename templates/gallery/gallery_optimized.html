@@ -1,0 +1,204 @@
+{% extends "templates/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<meta name="title" content="Galerie der Musikschule St. Pölten">
+<meta name="description" content="Bilder und Impressionen der Musikschule St. Pölten">
+
+<!-- Gallery styles -->
+<link rel="stylesheet" href="{% static 'gallery/css/modern/gallery.4.0.9.css' %}">
+<link rel="stylesheet" href="{% static 'gallery/css/lazy-loading.css' %}">
+<style>
+/* Gallery Grid */
+.gallery-show {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-auto-rows: 220px;
+  grid-gap: 12px;
+  margin-bottom: 3rem;
+}
+
+.gallery-item {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Loading States */
+.loading-spinner {
+  text-align: center;
+  padding: 2rem;
+  display: none;
+}
+
+.loading-spinner.active {
+  display: block;
+}
+
+/* Skeleton Loading */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+</style>
+
+<script>
+var photo_data = {{ gallery_json_data|safe }};
+var isLoading = false;
+var hasMore = true;
+var currentOffset = {{ photos|length }};
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="container gallery">
+  <div class="gallery-header">
+    <h1>Galerie</h1>
+    <p class="photo-count">{{ photos|length }} von {{ total_count }} Bildern geladen</p>
+  </div>
+  
+  <section class="gallery-show" id="gallery-grid">
+    {% for photo in photos %}
+    {% if photo.image %}
+    <div class="gallery-item {% if photo.image.width > photo.image.height %}landscape{% elif photo.image.width == photo.image.height %}square{% else %}portrait{% endif %}" 
+         onclick="showImg({{ photo.id }})"
+         data-photo-id="{{ photo.id }}">
+      <img class="lazy" 
+           src="{% if photo.image_lazy and photo.image_lazy.name != 'gallery_lazy_imageDefault.jpg' %}{{ photo.image_lazy.url }}{% else %}data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Crect width='220' height='220' fill='%23f0f0f0'/%3E%3C/svg%3E{% endif %}"
+           data-src="{{ photo.image.url }}" 
+           alt="{{ photo.title|default:'Gallery Image' }}">
+    </div>
+    {% endif %}
+    {% endfor %}
+  </section>
+  
+  <div class="loading-spinner" id="loading-spinner">
+    <div class="spinner"></div>
+    <p>Weitere Bilder werden geladen...</p>
+  </div>
+  
+  <!-- Image Overlay -->
+  <section onclick="blockImg()" id="overlay-image-section" class="overlay image">
+    <img id="overlay-show-img" src="" alt="">
+    <a href="javascript:void(0)" id="closebtn-gallery" class="closebtn" onclick="blockImg()">
+      {% include "templates/svg/nav_bar_crossburger_gallery.html" %}
+    </a>
+    <p id="gallery-text-overlay"></p>
+  </section>
+</div>
+{% endblock %}
+
+{% block footer %}
+<script src="{% static 'gallery/js/lazy-loading.js' %}"></script>
+<script>
+// Infinite Scroll Implementation
+function loadMorePhotos() {
+  if (isLoading || !hasMore) return;
+  
+  isLoading = true;
+  document.getElementById('loading-spinner').classList.add('active');
+  
+  fetch(`/gallery/load-more/?offset=${currentOffset}&limit=24`)
+    .then(response => response.json())
+    .then(data => {
+      const gallery = document.getElementById('gallery-grid');
+      
+      // Füge neue Photo-Daten zu photo_data hinzu
+      Object.assign(photo_data, data.photo_data);
+      
+      // Erstelle neue Gallery Items
+      data.photos.forEach(photo => {
+        const div = document.createElement('div');
+        const orientation = photo.is_portrait ? 'portrait' : (photo.is_landscape ? 'landscape' : 'square');
+        div.className = `gallery-item ${orientation}`;
+        div.onclick = () => showImg(photo.id);
+        div.dataset.photoId = photo.id;
+        
+        const img = document.createElement('img');
+        img.className = 'lazy';
+        img.src = photo.lazy_url || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="220" height="220"%3E%3Crect width="220" height="220" fill="%23f0f0f0"/%3E%3C/svg%3E';
+        img.dataset.src = photo.image_url;
+        img.alt = photo.title || 'Gallery Image';
+        
+        div.appendChild(img);
+        gallery.appendChild(div);
+        
+        // Füge neues Bild zum Lazy Loading Observer hinzu
+        if (window.imageObserver) {
+          window.imageObserver.observe(img);
+        }
+      });
+      
+      currentOffset += data.photos.length;
+      hasMore = data.has_more;
+      
+      // Update Counter
+      document.querySelector('.photo-count').textContent = 
+        `${currentOffset} von {{ total_count }} Bildern geladen`;
+      
+      isLoading = false;
+      document.getElementById('loading-spinner').classList.remove('active');
+    })
+    .catch(error => {
+      console.error('Fehler beim Laden weiterer Bilder:', error);
+      isLoading = false;
+      document.getElementById('loading-spinner').classList.remove('active');
+    });
+}
+
+// Scroll Event Listener
+window.addEventListener('scroll', () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+    loadMorePhotos();
+  }
+});
+
+// Gallery Functions
+function showImg(id) {
+  if (!photo_data[id]) return;
+  
+  const overlay = document.getElementById('overlay-image-section');
+  const overlayImg = document.getElementById('overlay-show-img');
+  
+  overlayImg.src = photo_data[id].image;
+  
+  let caption = '';
+  if (photo_data[id].description) {
+    caption = photo_data[id].description;
+  }
+  if (photo_data[id].copyright_by) {
+    caption += caption ? ' | © ' + photo_data[id].copyright_by : '© ' + photo_data[id].copyright_by;
+  }
+  
+  document.getElementById('gallery-text-overlay').innerHTML = caption;
+  overlay.style.display = 'flex';
+  overlay.classList.add('active');
+}
+
+function blockImg() {
+  const overlay = document.getElementById('overlay-image-section');
+  overlay.classList.remove('active');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+  }, 300);
+}
+</script>
+{% endblock %}
