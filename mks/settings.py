@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'instruments.apps.InstrumentsConfig',
     'events.apps.EventsConfig',
     'gallery.apps.GalleryConfig',
+    'maintenance',  # Wartungsmodus
     'contact.apps.ContactConfig',
     'controlling.apps.ControllingConfig',
     'downloadsection.apps.DownloadsectionConfig',
@@ -85,6 +86,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     # 'users.middleware.TwoFactorSetupRedirectMiddleware',  # TEMPORÄR DEAKTIVIERT
     'django.contrib.messages.middleware.MessageMiddleware',
+    'maintenance.middleware.MaintenanceModeMiddleware',  # Wartungsmodus
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',  # Smart compatibility middleware for allauth (works with all versions)
 ]
@@ -102,6 +104,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'maintenance.context_processors.maintenance_context',  # Wartungsmodus
             ],
         },
     },
