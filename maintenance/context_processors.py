@@ -2,7 +2,7 @@ from .models import MaintenanceMode
 from django.core.cache import cache
 import os
 
-def maintenance_mode(request):
+def maintenance_context(request):
     """
     Context Processor um Maintenance Status in allen Templates verfügbar zu machen
     """
