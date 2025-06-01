@@ -1,0 +1,361 @@
+{% extends "templates/base.html" %}
+{% load static %}
+{% load i18n static %}
+
+{% block title %}Orgelunterricht - Musikschule St. Pölten{% endblock %}
+
+{% block meta_tags %}
+<meta name="description" content="Orgelunterricht an der Musikschule St. Pölten - Entdecken Sie die Königin der Instrumente. Für Kinder ab 7 Jahren und alle mit Klaviererfahrung.">
+<meta name="keywords" content="Orgelunterricht, Orgel, Musikschule, St. Pölten, Pedalspiel, Improvisation, Domorgel">
+<!-- Open Graph Tags -->
+<meta property="og:title" content="Orgelunterricht - Musikschule St. Pölten">
+<meta property="og:description" content="Orgelunterricht an der Musikschule St. Pölten - Entdecken Sie die Königin der Instrumente. Für Kinder ab 7 Jahren und alle mit Klaviererfahrung.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://musikschule-stp.at/orgelunterricht">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'banner/organ/organ_banner.jpg' %}">
+{% endblock %}
+
+{% block extra_head %}
+<style>
+:root {
+  --accent-color: #dc3545;
+  --accent-hover: #c82333;
+  --accent-light: #f8d7da;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --background-white: #ffffff;
+  --background-light: #fafafa;
+  --border-color: #e0e0e0;
+  --hover-bg: #f8f8f8;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.bs{
+  height: 0!important;
+}
+
+.mbs {
+  background-color: var(--background-white);
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  margin-bottom: 3rem;
+  letter-spacing: -0.5px;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--accent-color);
+}
+
+p {
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.intro-text {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 3rem;
+  line-height: 1.7;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1px;
+  margin: 4rem 0;
+  background-color: var(--border-color);
+}
+
+.content-card {
+  background: var(--background-white);
+  padding: 2.5rem;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.content-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.content-card:hover {
+  text-decoration: none;
+  background-color: var(--background-light);
+}
+
+.content-card:hover::before {
+  background-color: var(--accent-color);
+}
+
+.content-card h2 {
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  transition: color 0.2s ease;
+  letter-spacing: -0.02em;
+}
+
+.content-card:hover h2 {
+  color: var(--accent-color);
+}
+
+.content-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.content-list li {
+  margin-bottom: 1.2rem;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.content-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-size: 1.2rem;
+  font-weight: bold;
+  top: 0;
+}
+
+.content-list strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.highlight-section {
+  background-color: #f9f9f9;
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  border-top: 3px solid var(--accent-color);
+  padding: 3rem 2.5rem;
+  margin: 4rem 0;
+  text-align: center;
+}
+
+.highlight-section h2 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.highlight-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-section {
+  background: var(--background-white);
+  padding: 3rem 2.5rem;
+  border-radius: 0;
+  text-align: center;
+  margin: 4rem 0;
+  border: 1px solid var(--border-color);
+}
+
+.contact-section h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.contact-text {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+}
+
+.contact-info {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: var(--background-light);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid var(--border-color);
+}
+
+.contact-item:hover {
+  background: var(--accent-color);
+  color: white;
+  text-decoration: none;
+  border-color: var(--accent-color);
+}
+
+.contact-icon {
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+  
+  .content-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .contact-info {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .highlight-section {
+    padding: 2rem 1.5rem;
+  }
+  
+  .contact-section {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+  
+  .content-card h2 {
+    font-size: 1.2rem;
+  }
+  
+  .content-list li {
+    font-size: 0.9rem;
+  }
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block banner %}
+<img src="{% static 'banner/organ/organ_banner.jpg' %}" alt="Orgelunterricht Banner">
+<img id="mbimg" src="{% static 'banner/organ/organ_banner.jpg' %}" alt="Orgelunterricht Mobile Banner">
+{% endblock %}
+
+{% block body %}
+<div class="mbs">
+  <div class="container">
+    <h1>Orgelunterricht</h1>
+    
+    <p class="intro-text">
+      Hier dreht sich alles um das Erlernen des Spiels auf der Orgel, der beeindruckenden "Königin der Instrumente". 
+      Entdecke die faszinierende Welt des Orgelspiels und lass Dich von diesem kraftvollen Instrument verzaubern.
+    </p>
+    
+    <div style="text-align: center; margin: 3rem 0;">
+      <img src="{% static 'banner/organ/organ_banner.jpg' %}" 
+           alt="Orgel in der Musikschule St. Pölten" 
+           style="width: 100%; max-width: 800px; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);">
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <h2>Unser Angebot richtet sich an</h2>
+        <ul class="content-list">
+          <li>Alle Kinder ab ca. 7 Jahren ohne Vorerfahrungen, die in Form eines kombinierten Klavier-/Orgel-Unterrichts das Spielen auf der Orgel erlernen möchten</li>
+          <li>Kinder und Jugendliche mit Vorerfahrungen am Klavier, die ihr Repertoire um das Orgelspiel erweitern wollen</li>
+        </ul>
+      </div>
+
+      <div class="content-card">
+        <h2>Unterrichtsinhalte</h2>
+        <ul class="content-list">
+          <li><strong>Grundlagen im Klavier- und Orgelspiel inklusive Pedalspiel:</strong> Wir legen großen Wert auf eine solide musikalische Basis</li>
+          <li><strong>Improvisation:</strong> Lass Deiner Kreativität freien Lauf und entdecke die Freude am spontanen Musizieren</li>
+          <li><strong>Funktionsweise und Bau der Orgel:</strong> Lerne die faszinierende Technik und Konstruktion kennen</li>
+          <li><strong>Auftritte an verschiedenen Orgeln:</strong> z.B. der Domorgel St. Pölten - erlebe das Orgelspiel in verschiedenen akustischen Umgebungen</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- YouTube Video Einbindung -->
+    <div style="text-align: center; margin: 4rem 0;">
+      <h2 style="font-size: 1.35rem; font-weight: 500; color: var(--text-primary); margin-bottom: 1.5rem; letter-spacing: -0.02em;">Videovorstellung</h2>
+      <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 800px; margin: 0 auto; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);">
+        <iframe 
+          src="https://www.youtube.com/embed/NaTwXuR4VwM" 
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen
+          title="Orgelspiel Video">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="highlight-section">
+      <h2>Für alle Interessierten</h2>
+      <p class="highlight-text">
+        Wenn Du neugierig geworden bist und das Orgelspiel ausprobieren möchtest, bieten wir Schnupperstunden, 
+        Orgelführungen sowie regulären Orgelunterricht an. Wir freuen uns darauf, Dich auf Deinem Weg in die 
+        Welt der Orgelmusik zu begleiten und gemeinsam wundervolle Klangerlebnisse zu erschaffen!
+      </p>
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

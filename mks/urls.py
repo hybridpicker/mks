@@ -57,6 +57,7 @@ urlpatterns = [
     path('', include('gallery.urls')),
     path('lehrende/', include('teaching.urls', namespace='teaching')),
     # path('standorte/', include('location.urls', namespace='location')), 
+    path('orgelunterricht/', teaching.views.orgelunterricht_view, name='orgelunterricht'),
     path('tanz-und-bewegung/', include('dance.urls', namespace='dance')),
     path('projekte/', include('projects.urls', namespace='projects')),
     path('', include('students.urls')),
