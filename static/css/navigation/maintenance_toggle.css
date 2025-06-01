@@ -1,0 +1,107 @@
+/* Maintenance Mode Toggle Styles */
+.mks-maintenance-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    cursor: default;
+}
+
+.mks-maintenance-toggle:hover {
+    background-color: var(--mks-overlay-item-hover, #f8f9fa);
+}
+
+/* Toggle Switch */
+.mks-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+    margin-left: auto;
+}
+
+.mks-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.mks-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.mks-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .mks-toggle-slider {
+    background-color: #dc3545; /* Rot für Wartungsmodus */
+}
+
+input:focus + .mks-toggle-slider {
+    box-shadow: 0 0 1px #dc3545;
+}
+
+input:checked + .mks-toggle-slider:before {
+    transform: translateX(24px);
+}
+
+/* Wartungsmodus aktiv Indikator */
+.mks-maintenance-toggle span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mks-overlay-nav-section h3 svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Notification Styles (optional) */
+.mks-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10000;
+    animation: slideIn 0.3s ease-out;
+}
+
+.mks-notification.success {
+    border-left: 4px solid #28a745;
+}
+
+.mks-notification.error {
+    border-left: 4px solid #dc3545;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'instruments.apps.InstrumentsConfig',
     'events.apps.EventsConfig',
     'gallery.apps.GalleryConfig',
-    'maintenance',  # Wartungsmodus
+    'maintenance.apps.MaintenanceConfig',  # Wartungsmodus
     'contact.apps.ContactConfig',
     'controlling.apps.ControllingConfig',
     'downloadsection.apps.DownloadsectionConfig',
