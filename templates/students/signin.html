@@ -6,7 +6,11 @@
 {% block tab_id %}id="home_tab"{% endblock %}
 
 {% block extra_head %}
-
+<style>
+  .bs{
+    height:0 !important;
+  }
+</style>
 <!-- Recaptcha -->
 
 <script src='https://www.google.com/recaptcha/api.js?render={{public_key}}'></script>

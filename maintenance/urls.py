@@ -1,5 +1,6 @@
 from django.urls import path
 from django.shortcuts import render
+from .views import toggle_maintenance
 
 app_name = 'maintenance'
 
@@ -16,4 +17,5 @@ def maintenance_view(request):
 
 urlpatterns = [
     path('maintenance/', maintenance_view, name='maintenance_page'),
+    path('maintenance/toggle/', toggle_maintenance, name='toggle'),
 ]
