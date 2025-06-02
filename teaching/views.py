@@ -487,3 +487,7 @@ def teaching_prices_view (request):
     current_school_year = get_current_school_year()
     context = { 'current_school_year': current_school_year,}
     return render (request, 'teaching/prices.html', context)
+
+def orgelunterricht_view (request):
+    context = {}
+    return render (request, 'teaching/orgelunterricht.html', context)
