@@ -1,0 +1,49 @@
+{% load static %}
+{% include "components/nav_urls.html" %}
+
+<!-- MKS Elegant Navigation -->
+<header class="mks-navbar" role="banner">
+  <div class="mks-navbar-container">
+    
+    <!-- Logo -->
+    <div class="mks-navbar-logo">
+      <a href="{% if request.user.is_authenticated %}/team{% else %}{% url 'home_view' %}{% endif %}" 
+         aria-label="{% if request.user.is_authenticated %}Team-Bereich{% else %}MKS Startseite{% endif %}">
+        {% include "templates/svg/nav_bar_icon.html" %}
+      </a>
+    </div>
+    
+    <!-- Desktop Navigation -->
+    <nav class="mks-navbar-nav" role="navigation">
+      
+      {% if not request.user.is_authenticated %}
+      <!-- Public Navigation -->
+      <div class="mks-nav-group">
+        <div class="mks-nav-dropdown">
+          <button class="mks-nav-trigger" aria-expanded="false">
+            <a href="{{ musikschule_url }}">Musikschule</a>
+            <span class="mks-nav-arrow">▼</span>
+          </button>
+          <div class="mks-nav-dropdown-menu">
+            <div class="mks-nav-columns">
+              <div class="mks-nav-column">
+                <h3>Fachgruppen</h3>
+                <a href="{{ blasinstrumente_url }}">Blasinstrumente</a>
+                <a href="{{ eme_url }}">Elementare Musikerziehung</a>
+                <a href="{{ musikkunde_url }}">Musikkunde</a>
+                <a href="{{ schlaginstrumente_url }}">Schlaginstrumente</a>
+                <a href="{{ stimmbildung_url }}">Stimmbildung</a>
+                <a href="{{ streichinstrumente_url }}">Streichinstrumente</a>
+                <a href="{{ tanz_bewegung_url }}">Tanz & Bewegung</a>
+                <a href="{{ tasteninstrumente_url }}">Tasteninstrumente</a>
+                <a href="{{ zupfinstrumente_url }}">Zupfinstrumente</a>
+              </div>
+              <div class="mks-nav-column">
+                <h3>Weitere Angebote</h3>
+                <a href="{{ orgelunterricht_url }}">Orgelunterricht</a>
+                <a href="{{ midi_band_url }}">MIDI Band</a>
+                <a href="{{ preise_url }}">Beiträge & Ermäßigungen</a>
+              </div>
+            </div>
+          </div>
+        </div>

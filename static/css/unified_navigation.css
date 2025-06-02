@@ -1,0 +1,57 @@
+/* MKS Unified Navigation Styles */
+.mks-navigation {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--nav-bg, #ffffff);
+  border-bottom: 1px solid var(--nav-border, #e5e7eb);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Desktop Navigation */
+.mks-nav-desktop {
+  display: block;
+}
+
+.mks-nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+
+.mks-nav-logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.mks-nav-logo svg {
+  height: 40px;
+  width: auto;
+}
+
+.mks-nav-items {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.mks-nav-item a {
+  text-decoration: none;
+  color: var(--nav-text, #374151);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.mks-nav-item a:hover {
+  color: var(--accent-color, #d11317);
+}
+
+/* Dropdown Styles */
+.mks-nav-dropdown {
+  position: relative;
+}

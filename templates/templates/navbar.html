@@ -34,8 +34,8 @@
               </div>
               <div class="dropdown-column">
                 <h3>Weitere Angebote</h3>
-                <a href="/orgelunterricht">Orgelunterricht</a>
-                <a href="/midi-band">MIDI Band</a>
+                <a href="{% url 'orgelunterricht' %}">Orgelunterricht</a>
+                <a href="{% url 'midi_band' %}">MIDI Band</a>
                 <a href="{% url 'teaching:teaching_prices'%}">Beiträge & Ermäßigungen</a>
               </div>
             </div>
@@ -122,8 +122,8 @@
           <a href="{% url 'teaching:teaching_picked'%}">Zupfinstrumente</a>
           
           <div class="mobile-section-divider">Weitere Angebote</div>
-          <a href="/orgelunterricht">Orgelunterricht</a>
-          <a href="/midi-band">MIDI Band</a>
+          <a href="{% url 'orgelunterricht' %}">Orgelunterricht</a>
+          <a href="{% url 'midi_band' %}">MIDI Band</a>
         </div>
       </div>
       
