@@ -1,0 +1,32 @@
+{% comment %}
+Elegant navigation links component
+Centralizes all navigation URLs and avoids duplication
+{% endcomment %}
+
+{% load static %}
+
+<!-- Navigation URLs - centralized definition -->
+{% url 'orgelunterricht' as orgelunterricht_url %}
+{% url 'midi_band' as midi_band_url %}
+{% url 'teaching:teaching_music' as musikschule_url %}
+{% url 'teaching:teaching_art' as kunstschule_url %}
+{% url 'gallery_view' as galerie_url %}
+{% url 'teaching:all_teachers' as team_url %}
+{% url 'contact_email' as kontakt_url %}
+{% url 'history' as geschichte_url %}
+{% url 'blog_summary' as blog_url %}
+{% url 'teaching:teaching_brass' as blasinstrumente_url %}
+{% url 'teaching:teaching_eme' as eme_url %}
+{% url 'teaching:teaching_theory' as musikkunde_url %}
+{% url 'teaching:teaching_drums' as schlaginstrumente_url %}
+{% url 'teaching:teaching_vocal' as stimmbildung_url %}
+{% url 'teaching:teaching_strings' as streichinstrumente_url %}
+{% url 'dance:schedule' as tanz_bewegung_url %}
+{% url 'teaching:teaching_keys' as tasteninstrumente_url %}
+{% url 'teaching:teaching_picked' as zupfinstrumente_url %}
+{% url 'teaching:teaching_prices' as preise_url %}
+
+{% comment %}
+This include provides all navigation URLs as variables
+Include this at the top of any navbar template
+{% endcomment %}

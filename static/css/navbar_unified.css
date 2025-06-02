@@ -1,0 +1,111 @@
+/* ===== MKS Navigation Styles ===== */
+
+/* CSS Custom Properties */
+:root {
+  --mks-primary: #d11317;
+  --mks-primary-dark: #a50f12;
+  --mks-text-dark: #2c3e50;
+  --mks-bg-light: #ffffff;
+  --mks-bg-overlay: rgba(255, 255, 255, 0.95);
+  --mks-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --mks-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --mks-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --mks-border-radius: 8px;
+  --mks-nav-height: 80px;
+}
+
+/* Header */
+.mks-nav-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--mks-bg-overlay);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(209, 19, 23, 0.1);
+  transition: var(--mks-transition);
+  height: var(--mks-nav-height);
+}
+
+.mks-nav-header.scrolled {
+  background: var(--mks-bg-light);
+  box-shadow: var(--mks-shadow);
+}
+
+.mks-nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 100%;
+}
+
+/* Logo */
+.mks-nav-logo {
+  flex-shrink: 0;
+  z-index: 1001;
+}
+
+.mks-nav-logo svg {
+  height: 50px;
+  width: auto;
+  transition: var(--mks-transition);
+}
+
+.mks-nav-logo a:hover svg {
+  transform: scale(1.05);
+}
+
+/* Desktop Navigation */
+.mks-nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-left: auto;
+  margin-right: 2rem;
+}
+
+.mks-nav-item {
+  position: relative;
+}
+
+.mks-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  color: var(--mks-text-dark);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  border-radius: var(--mks-border-radius);
+  transition: var(--mks-transition);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.mks-nav-link a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mks-nav-link:hover {
+  color: var(--mks-primary);
+  background: rgba(209, 19, 23, 0.05);
+}
+
+.mks-nav-arrow {
+  width: 16px;
+  height: 16px;
+  transition: var(--mks-transition);
+}
+
+.mks-nav-dropdown[aria-expanded="true"] .mks-nav-arrow {
+  transform: rotate(180deg);
+}

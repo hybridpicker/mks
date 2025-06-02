@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'controlling.apps.ControllingConfig',
     'downloadsection.apps.DownloadsectionConfig',
     'todo',
+    'tests.apps.TestsConfig',  # Test Suite mit Management Commands
     'projects.apps.ProjectsConfig',
     'faq.apps.FaqConfig',
     'invitation.apps.InvitationConfig',

@@ -1,0 +1,181 @@
+{% load static %}
+
+<!-- MKS Unified Navigation Component -->
+<nav class="mks-navigation" role="navigation" aria-label="Hauptnavigation">
+  
+  <!-- Desktop Navigation -->
+  <div class="mks-nav-desktop">
+    <div class="mks-nav-container">
+      
+      <!-- Logo -->
+      <div class="mks-nav-logo">
+        <a href="{% if request.user.is_authenticated %}/team{% else %}{% url 'home_view' %}{% endif %}" 
+           aria-label="{% if request.user.is_authenticated %}Zum Team-Bereich{% else %}Zur MKS Startseite{% endif %}">
+          {% include "templates/svg/nav_bar_icon.html" %}
+        </a>
+      </div>
+      
+      <!-- Navigation Items -->
+      <div class="mks-nav-items">
+        
+        {% if not request.user.is_authenticated %}
+        <!-- Public Navigation -->
+        <div class="mks-nav-dropdown">
+          <button class="mks-nav-button" aria-expanded="false" aria-haspopup="true">
+            <a href="{% url 'teaching:teaching_music' %}">Musikschule</a>
+          </button>
+          <div class="mks-nav-dropdown-content" role="menu">
+            <div class="mks-nav-dropdown-grid">
+              <div class="mks-nav-dropdown-column">
+                <h3>Fachgruppen</h3>
+                <a href="{% url 'teaching:teaching_brass' %}" role="menuitem">Blasinstrumente</a>
+                <a href="{% url 'teaching:teaching_eme' %}" role="menuitem">Elementare Musikerziehung</a>
+                <a href="{% url 'teaching:teaching_theory' %}" role="menuitem">Musikkunde</a>
+                <a href="{% url 'teaching:teaching_drums' %}" role="menuitem">Schlaginstrumente</a>
+                <a href="{% url 'teaching:teaching_vocal' %}" role="menuitem">Stimmbildung</a>
+                <a href="{% url 'teaching:teaching_strings' %}" role="menuitem">Streichinstrumente</a>
+                <a href="{% url 'dance:schedule' %}" role="menuitem">Tanz & Bewegung</a>
+                <a href="{% url 'teaching:teaching_keys' %}" role="menuitem">Tasteninstrumente</a>
+                <a href="{% url 'teaching:teaching_picked' %}" role="menuitem">Zupfinstrumente</a>
+              </div>
+              <div class="mks-nav-dropdown-column">
+                <h3>Weitere Angebote</h3>
+                <a href="{% url 'orgelunterricht' %}" role="menuitem">Orgelunterricht</a>
+                <a href="{% url 'midi_band' %}" role="menuitem">MIDI Band</a>
+                <a href="{% url 'teaching:teaching_prices' %}" role="menuitem">Beiträge & Ermäßigungen</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mks-nav-item">
+          <a href="{% url 'teaching:teaching_art' %}">Kunstschule</a>
+        </div>
+        
+        <div class="mks-nav-item">
+          <a href="{% url 'gallery_view' %}">Galerie</a>
+        </div>
+        
+        <div class="mks-nav-dropdown">
+          <button class="mks-nav-button" aria-expanded="false" aria-haspopup="true">
+            <a href="{% url 'teaching:all_teachers' %}">Über uns</a>
+          </button>
+          <div class="mks-nav-dropdown-content" role="menu">
+            <a href="{% url 'teaching:all_teachers' %}" role="menuitem">Team</a>
+            <a href="{% url 'history' %}" role="menuitem">Geschichte</a>
+            <a href="{% url 'blog_summary' %}" role="menuitem">Blog</a>
+          </div>
+        </div>
+        
+        <div class="mks-nav-item">
+          <a href="{% url 'contact_email' %}">Kontakt</a>
+        </div>
+        
+        {% else %}
+        <!-- Authenticated User Navigation -->
+        {% include 'navigation/mks_overlay_menu.html' %}
+        {% endif %}
+        
+      </div>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="mks-nav-mobile-toggle" 
+              aria-label="Mobile Menü öffnen" 
+              aria-expanded="false"
+              aria-controls="mks-mobile-menu">
+        <span class="mks-hamburger-line"></span>
+        <span class="mks-hamburger-line"></span>
+        <span class="mks-hamburger-line"></span>
+      </button>
+      
+    </div>
+  </div>
+  
+  <!-- Mobile Navigation -->
+  <div id="mks-mobile-menu" 
+       class="mks-nav-mobile" 
+       role="dialog" 
+       aria-modal="true"
+       aria-hidden="true">
+    
+    <div class="mks-mobile-header">
+      <div class="mks-mobile-logo">
+        <a href="{% if request.user.is_authenticated %}/team{% else %}{% url 'home_view' %}{% endif %}">
+          {% include "templates/svg/nav_bar_icon.html" %}
+        </a>
+      </div>
+      
+      {% if request.user.is_authenticated %}
+      <div class="mks-mobile-user-badge">
+        {% if request.user.is_superuser %}Admin
+        {% elif request.user.is_staff %}Staff
+        {% elif request.user.coordinator %}Koordinator
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+    
+    <div class="mks-mobile-content">
+      
+      {% if not request.user.is_authenticated %}
+      <!-- Public Mobile Menu -->
+      <div class="mks-mobile-section">
+        <button class="mks-mobile-section-header" data-toggle="musikschule">
+          Musikschule
+        </button>
+        <div class="mks-mobile-section-content" id="musikschule">
+          <div class="mks-mobile-subsection">
+            <h4>Fachgruppen</h4>
+            <a href="{% url 'teaching:teaching_brass' %}">Blasinstrumente</a>
+            <a href="{% url 'teaching:teaching_eme' %}">Elementare Musikerziehung</a>
+            <a href="{% url 'teaching:teaching_theory' %}">Musikkunde</a>
+            <a href="{% url 'teaching:teaching_drums' %}">Schlaginstrumente</a>
+            <a href="{% url 'teaching:teaching_vocal' %}">Stimmbildung</a>
+            <a href="{% url 'teaching:teaching_strings' %}">Streichinstrumente</a>
+            <a href="{% url 'dance:schedule' %}">Tanz & Bewegung</a>
+            <a href="{% url 'teaching:teaching_keys' %}">Tasteninstrumente</a>
+            <a href="{% url 'teaching:teaching_picked' %}">Zupfinstrumente</a>
+          </div>
+          <div class="mks-mobile-subsection">
+            <h4>Weitere Angebote</h4>
+            <a href="{% url 'orgelunterricht' %}">Orgelunterricht</a>
+            <a href="{% url 'midi_band' %}">MIDI Band</a>
+            <a href="{% url 'teaching:teaching_prices' %}">Beiträge & Ermäßigungen</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mks-mobile-section">
+        <a href="{% url 'teaching:teaching_art' %}" class="mks-mobile-section-link">Kunstschule</a>
+      </div>
+      
+      <div class="mks-mobile-section">
+        <a href="{% url 'gallery_view' %}" class="mks-mobile-section-link">Galerie</a>
+      </div>
+      
+      <div class="mks-mobile-section">
+        <button class="mks-mobile-section-header" data-toggle="ueber-uns">
+          Über Uns
+        </button>
+        <div class="mks-mobile-section-content" id="ueber-uns">
+          <a href="{% url 'teaching:all_teachers' %}">Team</a>
+          <a href="{% url 'history' %}">Geschichte</a>
+          <a href="{% url 'blog_summary' %}">Blog</a>
+        </div>
+      </div>
+      
+      <div class="mks-mobile-section">
+        <a href="{% url 'contact_email' %}" class="mks-mobile-section-link">Kontakt</a>
+      </div>
+      
+      {% else %}
+      <!-- Use existing user navigation for authenticated users -->
+      <div class="mks-mobile-user-nav">
+        {% include 'templates/user_navbar.html' %}
+      </div>
+      {% endif %}
+      
+    </div>
+  </div>
+  
+</nav>
