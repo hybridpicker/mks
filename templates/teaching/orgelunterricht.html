@@ -2,17 +2,69 @@
 {% load static %}
 {% load i18n static %}
 
-{% block title %}Orgelunterricht - Musikschule St. Pölten{% endblock %}
+{% block title %}Orgelunterricht - Königin der Instrumente | Musikschule St. Pölten{% endblock %}
 
 {% block meta_tags %}
-<meta name="description" content="Orgelunterricht an der Musikschule St. Pölten - Entdecken Sie die Königin der Instrumente. Für Kinder ab 7 Jahren und alle mit Klaviererfahrung.">
-<meta name="keywords" content="Orgelunterricht, Orgel, Musikschule, St. Pölten, Pedalspiel, Improvisation, Domorgel">
-<!-- Open Graph Tags -->
-<meta property="og:title" content="Orgelunterricht - Musikschule St. Pölten">
-<meta property="og:description" content="Orgelunterricht an der Musikschule St. Pölten - Entdecken Sie die Königin der Instrumente. Für Kinder ab 7 Jahren und alle mit Klaviererfahrung.">
+<meta name="description" content="Orgelunterricht für Kinder ab 7 Jahren an der Musikschule St. Pölten. Lernen Sie Pedalspiel, Improvisation und die Technik der Königin der Instrumente. Auftritte an der Domorgel St. Pölten möglich.">
+<meta name="keywords" content="Orgelunterricht St. Pölten, Orgel lernen, Pedalspiel, Klavierorgel Unterricht, Domorgel, Improvisation Orgel, Musikschule Niederösterreich, Pfeifenorgel, Orgelschule">
+<meta name="author" content="Musikschule der Landeshauptstadt St. Pölten">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Open Graph Tags für Social Media -->
+<meta property="og:title" content="Orgelunterricht - Königin der Instrumente | Musikschule St. Pölten">
+<meta property="og:description" content="Entdecken Sie die faszinierende Welt des Orgelspiels! Orgelunterricht für Kinder ab 7 Jahren mit Pedalspiel, Improvisation und Auftritten an der Domorgel St. Pölten.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://musikschule-stp.at/orgelunterricht">
+<meta property="og:url" content="https://musikschule-stp.at/orgelunterricht/">
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'banner/organ/organ_banner.jpg' %}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Orgel der Musikschule St. Pölten - Orgelunterricht">
+<meta property="og:site_name" content="Musikschule St. Pölten">
+<meta property="og:locale" content="de_AT">
+
+<!-- Twitter Card Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Orgelunterricht - Königin der Instrumente | Musikschule St. Pölten">
+<meta name="twitter:description" content="Entdecken Sie die faszinierende Welt des Orgelspiels! Orgelunterricht für Kinder ab 7 Jahren mit Pedalspiel, Improvisation und Auftritten an der Domorgel.">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'banner/organ/organ_banner.jpg' %}">
+<meta name="twitter:image:alt" content="Orgel der Musikschule St. Pölten">
+
+<!-- Zusätzliche SEO Meta Tags -->
+<meta name="geo.region" content="AT-3">
+<meta name="geo.placename" content="St. Pölten">
+<meta name="geo.position" content="48.2058;15.6232">
+<meta name="ICBM" content="48.2058, 15.6232">
+
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Orgelunterricht",
+  "description": "Orgelunterricht für Kinder ab 7 Jahren. Lernen Sie Pedalspiel, Improvisation und die Technik der Königin der Instrumente.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Musikschule der Landeshauptstadt St. Pölten",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "St. Pölten",
+      "addressRegion": "Niederösterreich",
+      "addressCountry": "AT"
+    },
+    "telephone": "+43-2742-333-2682",
+    "email": "musikschule@st-poelten.gv.at"
+  },
+  "courseMode": "In-person",
+  "educationalLevel": "Beginner to Advanced",
+  "teaches": ["Orgelspiel", "Pedalspiel", "Improvisation", "Orgelbau und -technik"],
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student",
+    "audienceType": "Kinder ab 7 Jahren, Klavierspieler"
+  }
+}
+</script>
 {% endblock %}
 
 {% block extra_head %}
