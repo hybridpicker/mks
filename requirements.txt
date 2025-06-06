@@ -2,7 +2,7 @@
 # Security-fixed versions with Python 3.9 compatibility
 
 # Core Django - Latest secure version for Python 3.9
-Django==4.2.21
+Django==4.2.22
 
 # Security-critical packages - All updated to secure versions
 cryptography==45.0.2

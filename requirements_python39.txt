@@ -2,7 +2,7 @@
 # Use this if you must stay on Python 3.9
 
 # Core Django (latest compatible with Python 3.9)
-Django==4.2.21
+Django==4.2.22
 
 # Security packages (compatible versions)
 cryptography==45.0.2
